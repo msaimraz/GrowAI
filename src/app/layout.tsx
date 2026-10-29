@@ -29,6 +29,8 @@ export const viewport: Viewport = {
   maximumScale: 5,
 };
 
+import { AuthProvider } from '@/context/AuthContext';
+
 export default function RootLayout({
   children,
 }: {
@@ -37,7 +39,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="h-full antialiased scroll-smooth">
       <body className="min-h-full flex flex-col bg-[#fbf9f4] text-[#1c261e]">
-        {children}
+        <AuthProvider>{children}</AuthProvider>
       </body>
     </html>
   );

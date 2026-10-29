@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { Menu, X, Plus, Sparkles, Sprout, Library, Layers, BookOpen, LayoutDashboard } from 'lucide-react';
 import { usePathname } from 'next/navigation';
+import { AuthStatus } from '@/components/auth/AuthStatus';
 
 interface AppHeaderProps {
   title?: string;
@@ -60,8 +61,9 @@ export function AppHeader({
             </div>
           </div>
 
-          {/* Right: Quick Action Button */}
+          {/* Right: Quick Action Button & Auth Status */}
           <div className="flex items-center gap-3">
+            <AuthStatus variant="header" />
             {actionLabel && actionHref && (
               <Link
                 href={actionHref}

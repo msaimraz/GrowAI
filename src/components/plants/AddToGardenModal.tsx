@@ -3,9 +3,9 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Plant } from '@/types/plant';
-import { addUserPlant } from '@/lib/storage';
+import { createGardenPlant } from '@/lib/storage';
 import { GrowthStage } from '@/types/garden';
-import { Sprout, X, Check, Calendar, MapPin, Layers } from 'lucide-react';
+import { Sprout, X, Check, Calendar, MapPin, Layers, Loader2, AlertCircle } from 'lucide-react';
 
 interface AddToGardenModalProps {
   plant: Plant;
@@ -30,23 +30,41 @@ export function AddToGardenModal({ plant, isOpen, onClose }: AddToGardenModalPro
   );
   const [location, setLocation] = useState<'Balcony Rack' | 'Window Sill' | 'Living Room' | 'Kitchen Tier' | 'Patio'>('Balcony Rack');
   const [initialNote, setInitialNote] = useState('Sowed in fresh organic potting mix with perlite.');
+  const [saving, setSaving] = useState(false);
+  const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
   if (!isOpen) return null;
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    addUserPlant({
-      plantSlug: plant.slug,
-      nickname,
-      plantedDate,
-      currentStage: stage,
-      location,
-      tier,
-      potSize: plant.potting.recommendedPotSize,
-      initialNote,
-    });
-    onClose();
-    router.push('/app/my-garden');
+    setSaving(true);
+    setErrorMsg(null);
+
+    try {
+      const res = await createGardenPlant({
+        plantSlug: plant.slug,
+        nickname,
+        plantedDate,
+        currentStage: stage,
+        location,
+        tier,
+        potSize: plant.potting.recommendedPotSize,
+        initialNote,
+      });
+
+      if (res.error) {
+        setErrorMsg(`Failed to save plant: ${res.error}`);
+        setSaving(false);
+        return;
+      }
+
+      onClose();
+      router.push('/app/my-garden');
+      router.refresh();
+    } catch (err: any) {
+      setErrorMsg(err.message || 'An unexpected error occurred while saving.');
+      setSaving(false);
+    }
   };
 
   return (
@@ -168,20 +186,38 @@ export function AddToGardenModal({ plant, isOpen, onClose }: AddToGardenModalPro
             />
           </div>
 
+          {errorMsg && (
+            <div className="p-3 rounded-xl bg-[#fbeee9] border border-[#f8d7cb] text-xs text-[#9a3412] flex items-start gap-2">
+              <AlertCircle size={15} className="shrink-0 mt-0.5" />
+              <span>{errorMsg}</span>
+            </div>
+          )}
+
           <div className="pt-2 flex items-center justify-end gap-3">
             <button
               type="button"
               onClick={onClose}
-              className="px-4 py-2 text-xs font-semibold text-[#526a57] hover:bg-[#f4f8f4] rounded-lg border border-[#e2dbce]"
+              disabled={saving}
+              className="px-4 py-2 text-xs font-semibold text-[#526a57] hover:bg-[#f4f8f4] rounded-lg border border-[#e2dbce] cursor-pointer"
             >
               Cancel
             </button>
             <button
               type="submit"
-              className="inline-flex items-center gap-1.5 px-5 py-2 text-xs font-semibold bg-[#144229] hover:bg-[#0c2417] text-white rounded-lg shadow-xs"
+              disabled={saving}
+              className="inline-flex items-center gap-1.5 px-5 py-2 text-xs font-semibold bg-[#144229] hover:bg-[#0c2417] disabled:opacity-50 text-white rounded-lg shadow-xs cursor-pointer"
             >
-              <Check size={14} />
-              <span>Save & Go to My Garden</span>
+              {saving ? (
+                <>
+                  <Loader2 size={14} className="animate-spin" />
+                  <span>Saving...</span>
+                </>
+              ) : (
+                <>
+                  <Check size={14} />
+                  <span>Save & Go to My Garden</span>
+                </>
+              )}
             </button>
           </div>
         </form>

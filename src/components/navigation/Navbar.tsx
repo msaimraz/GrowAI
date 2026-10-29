@@ -4,9 +4,11 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { Logo } from '@/components/ui/Logo';
 import { Menu, X, ArrowRight, Sparkles, BookOpen, Layers, Library } from 'lucide-react';
+import { useAuth } from '@/context/AuthContext';
 
 export function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const { user } = useAuth();
 
   const navLinks = [
     { label: 'Plant Library', href: '/app/plants', icon: Library },
@@ -36,12 +38,22 @@ export function Navbar() {
 
         {/* Right CTA */}
         <div className="hidden md:flex items-center gap-3">
-          <Link
-            href="/app/plants"
-            className="text-sm font-medium text-[#1b5837] hover:text-[#0f2e1d] px-3.5 py-2 rounded-lg transition-colors"
-          >
-            Explore Plants
-          </Link>
+          {user ? (
+            <Link
+              href="/app"
+              className="text-sm font-medium text-[#1b5837] hover:text-[#0f2e1d] px-3.5 py-2 rounded-lg transition-colors flex items-center gap-1.5"
+            >
+              <span className="w-2 h-2 rounded-full bg-[#1b5837]" />
+              <span>{user.email?.split('@')[0]}</span>
+            </Link>
+          ) : (
+            <Link
+              href="/auth/login"
+              className="text-sm font-medium text-[#1b5837] hover:text-[#0f2e1d] px-3.5 py-2 rounded-lg transition-colors"
+            >
+              Sign In
+            </Link>
+          )}
           <Link
             href="/app"
             className="inline-flex items-center gap-2 text-sm font-semibold bg-[#144229] text-[#f4f8f4] hover:bg-[#0f2e1d] px-5 py-2.5 rounded-lg shadow-sm transition-all hover:shadow hover:-translate-y-0.5 active:translate-y-0"

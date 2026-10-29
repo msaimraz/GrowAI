@@ -6,14 +6,18 @@ import { useSearchParams } from 'next/navigation';
 import { AppHeader } from '@/components/navigation/AppHeader';
 import { Badge } from '@/components/ui/Badge';
 import { PLANTS_DATA } from '@/data/plants';
+import { useAuth } from '@/context/AuthContext';
 import {
   getSavedUserPlants,
-  getSavedCareTasks,
-  updateUserPlantStage,
-  addPlantGrowthNote,
-  removeUserPlant,
-  toggleCareTask,
+  fetchUserGarden,
+  fetchCareTasks,
+  updateGardenPlantStage,
+  createGrowthNote,
+  deleteGardenPlant,
+  toggleTaskStatus,
   resetToDemoData,
+  hasLocalDemoData,
+  importLocalDemoDataToCloud,
 } from '@/lib/storage';
 import { UserPlant, GrowthStage, CareTask } from '@/types/garden';
 import {
@@ -31,6 +35,10 @@ import {
   Info,
   ChevronRight,
   Sparkles,
+  Cloud,
+  UploadCloud,
+  AlertCircle,
+  Loader2,
 } from 'lucide-react';
 
 const GROWTH_STAGES: GrowthStage[] = [
@@ -45,77 +53,149 @@ const GROWTH_STAGES: GrowthStage[] = [
 function MyGardenContent() {
   const searchParams = useSearchParams();
   const highlightPlantId = searchParams.get('plantId');
+  const { user, isConfigured } = useAuth();
 
   const [userPlants, setUserPlants] = useState<UserPlant[]>([]);
   const [selectedPlantId, setSelectedPlantId] = useState<string>('');
   const [careTasks, setCareTasks] = useState<CareTask[]>([]);
+  const [isCloud, setIsCloud] = useState<boolean>(false);
   const [noteText, setNoteText] = useState('');
   const [noteHeight, setNoteHeight] = useState<string>('');
   const [noteDate, setNoteDate] = useState<string>('2026-10-29');
-  const [mounted, setMounted] = useState(false);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [submittingNote, setSubmittingNote] = useState<boolean>(false);
+  const [errorBanner, setErrorBanner] = useState<string | null>(null);
+  const [importStatus, setImportStatus] = useState<string | null>(null);
+  const [importing, setImporting] = useState<boolean>(false);
+
+  const loadGardenData = async () => {
+    setLoading(true);
+    setErrorBanner(null);
+    try {
+      const [gardenRes, tasksRes] = await Promise.all([
+        fetchUserGarden(),
+        fetchCareTasks(),
+      ]);
+
+      setIsCloud(gardenRes.isCloud);
+      if (gardenRes.error) {
+        setErrorBanner(`Failed to load cloud garden: ${gardenRes.error}`);
+      } else {
+        setUserPlants(gardenRes.plants);
+        if (gardenRes.plants.length > 0) {
+          if (highlightPlantId && gardenRes.plants.some((p) => p.id === highlightPlantId)) {
+            setSelectedPlantId(highlightPlantId);
+          } else if (!selectedPlantId || !gardenRes.plants.some((p) => p.id === selectedPlantId)) {
+            setSelectedPlantId(gardenRes.plants[0].id);
+          }
+        }
+      }
+
+      if (tasksRes.error) {
+        setErrorBanner((prev) => prev || `Failed to load care tasks: ${tasksRes.error}`);
+      } else {
+        setCareTasks(tasksRes.tasks);
+      }
+    } catch (err: any) {
+      setErrorBanner(err.message || 'Error loading garden.');
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
     setNoteDate(new Date().toISOString().split('T')[0]);
-    const plants = getSavedUserPlants();
-    setUserPlants(plants);
-    setCareTasks(getSavedCareTasks());
-
-    if (highlightPlantId && plants.some((p) => p.id === highlightPlantId)) {
-      setSelectedPlantId(highlightPlantId);
-    } else if (plants.length > 0) {
-      setSelectedPlantId(plants[0].id);
-    }
-    setMounted(true);
-  }, [highlightPlantId]);
+    loadGardenData();
+  }, [user, highlightPlantId]);
 
   const activePlant = userPlants.find((p) => p.id === selectedPlantId) || userPlants[0];
   const activeBotanical = activePlant
     ? PLANTS_DATA.find((p) => p.slug === activePlant.plantSlug)
     : null;
 
-  const handleStageChange = (plantId: string, newStage: GrowthStage) => {
-    updateUserPlantStage(plantId, newStage);
-    setUserPlants(getSavedUserPlants());
+  const handleStageChange = async (plantId: string, newStage: GrowthStage) => {
+    setErrorBanner(null);
+    const res = await updateGardenPlantStage(plantId, newStage);
+    if (res.error) {
+      setErrorBanner(`Failed to update stage in cloud: ${res.error}`);
+      return;
+    }
+    await loadGardenData();
   };
 
-  const handleAddNote = (e: React.FormEvent) => {
+  const handleAddNote = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!activePlant || !noteText.trim()) return;
 
-    addPlantGrowthNote(activePlant.id, {
+    setSubmittingNote(true);
+    setErrorBanner(null);
+
+    const res = await createGrowthNote(activePlant.id, {
       stage: activePlant.currentStage,
       text: noteText.trim(),
       heightCm: noteHeight ? parseFloat(noteHeight) : undefined,
       date: noteDate,
     });
 
+    if (res.error) {
+      setErrorBanner(`Failed to save note to cloud: ${res.error}`);
+      setSubmittingNote(false);
+      return;
+    }
+
     setNoteText('');
     setNoteHeight('');
-    setUserPlants(getSavedUserPlants());
+    setSubmittingNote(false);
+    await loadGardenData();
   };
 
-  const handleDeletePlant = (plantId: string) => {
+  const handleDeletePlant = async (plantId: string) => {
     if (confirm('Are you sure you want to remove this plant from your garden?')) {
-      removeUserPlant(plantId);
-      const remaining = getSavedUserPlants();
-      setUserPlants(remaining);
-      if (remaining.length > 0) {
-        setSelectedPlantId(remaining[0].id);
+      setErrorBanner(null);
+      const res = await deleteGardenPlant(plantId);
+      if (res.error) {
+        setErrorBanner(`Failed to delete plant: ${res.error}`);
+        return;
       }
+      await loadGardenData();
     }
   };
 
-  const handleTaskToggle = (taskId: string) => {
-    const updated = toggleCareTask(taskId);
-    setCareTasks(updated);
+  const handleTaskToggle = async (task: CareTask) => {
+    setErrorBanner(null);
+    const res = await toggleTaskStatus(task.id, task.completed);
+    if (res.error) {
+      setErrorBanner(`Failed to update task: ${res.error}`);
+      return;
+    }
+    await loadGardenData();
   };
 
-  const handleReset = () => {
+  const handleResetDemo = () => {
     resetToDemoData();
-    const refreshed = getSavedUserPlants();
-    setUserPlants(refreshed);
-    setCareTasks(getSavedCareTasks());
-    if (refreshed.length > 0) setSelectedPlantId(refreshed[0].id);
+    loadGardenData();
+  };
+
+  const handleImportLocalToCloud = async () => {
+    setImporting(true);
+    setImportStatus(null);
+    setErrorBanner(null);
+
+    try {
+      const res = await importLocalDemoDataToCloud();
+      if (res.error) {
+        setErrorBanner(`Cloud import failed: ${res.error}`);
+      } else {
+        setImportStatus(
+          `Successfully imported ${res.importedCount} plant(s) to your cloud account! (${res.skippedCount} skipped as duplicate)`
+        );
+        await loadGardenData();
+      }
+    } catch (err: any) {
+      setErrorBanner(err.message || 'Import failed.');
+    } finally {
+      setImporting(false);
+    }
   };
 
   return (
@@ -129,34 +209,119 @@ function MyGardenContent() {
       />
 
       <div className="flex-1 p-4 sm:p-6 lg:p-8 max-w-7xl mx-auto w-full space-y-6">
-        {/* Local Demo Disclaimer Pill */}
-        <div className="bg-[#f7f5ed] border border-[#ded5c5] p-3.5 rounded-xl flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs text-[#4b6351]">
-          <div className="flex items-center gap-2">
-            <Database size={15} className="text-[#144229] shrink-0" />
-            <span>
-              <strong>Local Demo State:</strong> Your plants and dated observations are saved locally in this browser. Supabase cloud sync connects in Phase 2.
-            </span>
+        {/* Error Alert Banner */}
+        {errorBanner && (
+          <div className="bg-[#fbeee9] border border-[#f8d7cb] p-4 rounded-xl flex items-start gap-3 text-xs text-[#9a3412] shadow-xs">
+            <AlertCircle size={18} className="shrink-0 mt-0.5" />
+            <div className="flex-1">
+              <span className="font-bold block">Operation Failed</span>
+              <span>{errorBanner}</span>
+            </div>
+            <button
+              type="button"
+              onClick={() => setErrorBanner(null)}
+              className="text-[#9a3412] underline font-semibold"
+            >
+              Dismiss
+            </button>
           </div>
-          <button
-            type="button"
-            onClick={handleReset}
-            className="text-xs font-semibold text-[#144229] hover:underline self-end sm:self-auto cursor-pointer"
-          >
-            Reset Demo Data
-          </button>
+        )}
+
+        {/* Sync Mode Banner */}
+        <div className="bg-[#f7f5ed] border border-[#ded5c5] p-4 rounded-xl flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs text-[#4b6351]">
+          <div className="flex items-center gap-2.5">
+            {isCloud ? (
+              <>
+                <Cloud size={18} className="text-[#1b5837] shrink-0" />
+                <span>
+                  <strong>Cloud Synchronized:</strong> Logged in as{' '}
+                  <strong className="text-[#0c2417]">{user?.email}</strong>. All garden additions,
+                  stages, and notes are securely isolated via PostgreSQL Row Level Security.
+                </span>
+              </>
+            ) : (
+              <>
+                <Database size={18} className="text-[#c77712] shrink-0" />
+                <span>
+                  <strong>Local Demo Mode:</strong> Plants are currently saved in this browser&apos;s local storage.
+                  {isConfigured && (
+                    <>
+                      {' '}
+                      <Link href="/auth/login" className="font-semibold text-[#144229] underline hover:no-underline">
+                        Sign In
+                      </Link>{' '}
+                      to persist your garden to Supabase cloud.
+                    </>
+                  )}
+                </span>
+              </>
+            )}
+          </div>
+
+          <div className="flex items-center gap-3 self-end sm:self-auto shrink-0">
+            {!isCloud && (
+              <button
+                type="button"
+                onClick={handleResetDemo}
+                className="text-xs font-semibold text-[#144229] hover:underline cursor-pointer"
+              >
+                Reset Demo Data
+              </button>
+            )}
+          </div>
         </div>
 
+        {/* Import Banner when logged in and local plants exist */}
+        {isCloud && hasLocalDemoData() && (
+          <div className="bg-[#eef5ee] border border-[#cfe0cf] p-4 rounded-xl flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs text-[#1e613b]">
+            <div className="flex items-center gap-2">
+              <UploadCloud size={18} className="text-[#144229] shrink-0" />
+              <div>
+                <strong className="block text-[#0c2417]">Local Demo Plants Detected</strong>
+                <span>
+                  You have plants saved in your local browser storage. You can import them into your cloud account now.
+                </span>
+              </div>
+            </div>
+            <button
+              type="button"
+              onClick={handleImportLocalToCloud}
+              disabled={importing}
+              className="inline-flex items-center gap-1.5 px-4 py-2 bg-[#144229] hover:bg-[#0c2417] text-white rounded-lg font-semibold transition-colors disabled:opacity-50 cursor-pointer self-start sm:self-auto shrink-0"
+            >
+              {importing ? (
+                <>
+                  <Loader2 size={13} className="animate-spin" />
+                  <span>Importing...</span>
+                </>
+              ) : (
+                <>
+                  <UploadCloud size={13} />
+                  <span>Import to Cloud</span>
+                </>
+              )}
+            </button>
+          </div>
+        )}
+
+        {importStatus && (
+          <div className="bg-[#eef5ee] border border-[#cfe0cf] p-3 rounded-xl text-xs text-[#1e613b] flex items-center gap-2">
+            <CheckCircle2 size={16} className="shrink-0" />
+            <span>{importStatus}</span>
+          </div>
+        )}
+
         {/* Empty State */}
-        {mounted && userPlants.length === 0 ? (
+        {!loading && userPlants.length === 0 ? (
           <div className="bg-white rounded-2xl border border-[#ded5c5] p-12 text-center space-y-4 max-w-lg mx-auto">
             <span className="w-14 h-14 rounded-full bg-[#f4f8f4] text-[#144229] flex items-center justify-center mx-auto">
               <Sprout size={28} />
             </span>
             <h3 className="font-serif font-bold text-xl text-[#0c2417]">
-              Your Garden is Currently Empty
+              {isCloud ? 'Your Cloud Garden is Empty' : 'Your Garden is Currently Empty'}
             </h3>
             <p className="text-xs sm:text-sm text-[#526a57] leading-relaxed">
-              Explore our 16 curated plant profiles and add your first plant to begin logging stages, measurements, and care tasks.
+              Explore our 16 curated plant profiles and add your first plant to begin logging developmental stages, notes, and care tasks.
             </p>
             <div className="pt-2">
               <Link
@@ -220,7 +385,7 @@ function MyGardenContent() {
                             isSelected ? 'text-[#bed4c5]' : 'text-[#647f6c]'
                           }`}
                         >
-                          {botanical?.commonName} • {plant.notes.length} note(s)
+                          {botanical?.commonName} • {plant.notes?.length || 0} note(s)
                         </p>
                       </div>
                       <ChevronRight
@@ -235,7 +400,7 @@ function MyGardenContent() {
               {/* Plant Care Tasks */}
               <div className="bg-white p-5 rounded-2xl border border-[#ded5c5] space-y-3 pt-4">
                 <h4 className="text-xs font-bold uppercase tracking-wider text-[#144229] flex items-center justify-between">
-                  <span>Pending Care Tasks</span>
+                  <span>Care Tasks</span>
                   <span className="text-[11px] font-normal normal-case text-[#647f6c]">
                     {careTasks.filter((t) => !t.completed).length} to do
                   </span>
@@ -245,7 +410,7 @@ function MyGardenContent() {
                   {careTasks.map((task) => (
                     <div
                       key={task.id}
-                      onClick={() => handleTaskToggle(task.id)}
+                      onClick={() => handleTaskToggle(task)}
                       className={`p-2.5 rounded-lg border text-xs cursor-pointer flex items-start gap-2.5 transition-colors ${
                         task.completed
                           ? 'bg-[#f7f5ed] border-[#e2dbce] opacity-60'
@@ -254,7 +419,8 @@ function MyGardenContent() {
                     >
                       <button
                         type="button"
-                        className="mt-0.5 text-[#144229] focus:outline-none"
+                        className="mt-0.5 text-[#144229] focus:outline-none cursor-pointer"
+                        aria-label={`Toggle task ${task.title}`}
                       >
                         {task.completed ? (
                           <CheckCircle2 size={15} className="text-[#257a4d]" />
@@ -305,13 +471,13 @@ function MyGardenContent() {
                           href={`/app/plants/${activeBotanical.slug}`}
                           className="text-xs font-semibold text-[#144229] hover:bg-[#f4f8f4] px-3 py-1.5 rounded-lg border border-[#cfdfcf]"
                         >
-                          View Botanical Profile
+                          Botanical Profile
                         </Link>
                       )}
                       <button
                         type="button"
                         onClick={() => handleDeletePlant(activePlant.id)}
-                        className="p-1.5 text-[#b95835] hover:bg-[#fbeee9] rounded-lg transition-colors"
+                        className="p-1.5 text-[#b95835] hover:bg-[#fbeee9] rounded-lg transition-colors cursor-pointer"
                         title="Remove plant"
                         aria-label="Remove plant"
                       >
@@ -350,7 +516,7 @@ function MyGardenContent() {
                   <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 text-xs pt-2">
                     <div className="p-3 rounded-xl bg-[#f7f5ed] border border-[#e2dbce]">
                       <span className="text-[#6d8573] block text-[11px]">Location</span>
-                      <strong className="text-[#0c2417]">{activePlant.location || 'Balcony'}</strong>
+                      <strong className="text-[#0c2417]">{activePlant.location || 'Balcony Rack'}</strong>
                     </div>
                     <div className="p-3 rounded-xl bg-[#f7f5ed] border border-[#e2dbce]">
                       <span className="text-[#6d8573] block text-[11px]">Rack Tier</span>
@@ -417,10 +583,20 @@ function MyGardenContent() {
                     <div className="flex justify-end pt-1">
                       <button
                         type="submit"
-                        className="inline-flex items-center gap-1.5 px-4 py-2 text-xs font-semibold bg-[#144229] hover:bg-[#0c2417] text-white rounded-xl shadow-xs"
+                        disabled={submittingNote}
+                        className="inline-flex items-center gap-1.5 px-4 py-2 text-xs font-semibold bg-[#144229] hover:bg-[#0c2417] disabled:opacity-50 text-white rounded-xl shadow-xs cursor-pointer"
                       >
-                        <Plus size={14} />
-                        <span>Add Observation to Log</span>
+                        {submittingNote ? (
+                          <>
+                            <Loader2 size={13} className="animate-spin" />
+                            <span>Saving Observation...</span>
+                          </>
+                        ) : (
+                          <>
+                            <Plus size={14} />
+                            <span>Add Observation to Log</span>
+                          </>
+                        )}
                       </button>
                     </div>
                   </form>
@@ -431,12 +607,12 @@ function MyGardenContent() {
                   <div className="flex items-center justify-between pb-3 border-b border-[#f0ebe0]">
                     <h3 className="font-serif font-bold text-base text-[#0c2417] flex items-center gap-2">
                       <Clock size={18} className="text-[#1e613b]" />
-                      <span>Developmental History ({activePlant.notes.length} records)</span>
+                      <span>Developmental History ({activePlant.notes?.length || 0} records)</span>
                     </h3>
                     <span className="text-xs text-[#647f6c]">Chronological order</span>
                   </div>
 
-                  {activePlant.notes.length === 0 ? (
+                  {!activePlant.notes || activePlant.notes.length === 0 ? (
                     <p className="text-xs text-[#647f6c] italic text-center py-6">
                       No growth notes recorded yet. Add your first note using the form above!
                     </p>

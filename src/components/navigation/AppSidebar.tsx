@@ -15,6 +15,7 @@ import {
   Database,
   Info,
 } from 'lucide-react';
+import { AuthStatus } from '@/components/auth/AuthStatus';
 
 export function AppSidebar() {
   const pathname = usePathname();
@@ -118,16 +119,8 @@ export function AppSidebar() {
 
       {/* Bottom Status & Info */}
       <div className="pt-4 border-t border-[#1b4a30] space-y-3">
-        {/* Storage State Indicator */}
-        <div className="bg-[#143a25] p-3 rounded-xl border border-[#1e5235] text-xs space-y-1.5">
-          <div className="flex items-center gap-1.5 text-[#9dc2a8] font-semibold text-[11px]">
-            <Database size={13} className="text-[#64b584]" />
-            <span>Local Demo Storage</span>
-          </div>
-          <p className="text-[11px] text-[#84a990] leading-relaxed">
-            Data is stored safely in your browser. Supabase cloud sync connects in Phase 2.
-          </p>
-        </div>
+        {/* Dynamic Auth & Storage State Indicator */}
+        <AuthStatus variant="sidebar" />
 
         {/* Public Site Link */}
         <Link

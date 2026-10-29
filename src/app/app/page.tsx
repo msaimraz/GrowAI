@@ -5,10 +5,11 @@ import Link from 'next/link';
 import { AppHeader } from '@/components/navigation/AppHeader';
 import { Badge } from '@/components/ui/Badge';
 import { PLANTS_DATA, getFeaturedPlants } from '@/data/plants';
+import { useAuth } from '@/context/AuthContext';
 import {
-  getSavedUserPlants,
-  getSavedCareTasks,
-  toggleCareTask,
+  fetchUserGarden,
+  fetchCareTasks,
+  toggleTaskStatus,
   resetToDemoData,
 } from '@/lib/storage';
 import { UserPlant, CareTask } from '@/types/garden';
@@ -26,28 +27,44 @@ import {
   Droplets,
   RotateCcw,
   Plus,
+  Cloud,
 } from 'lucide-react';
 
 export default function DashboardPage() {
+  const { user } = useAuth();
   const [userPlants, setUserPlants] = useState<UserPlant[]>([]);
   const [careTasks, setCareTasks] = useState<CareTask[]>([]);
+  const [isCloud, setIsCloud] = useState<boolean>(false);
   const [mounted, setMounted] = useState(false);
 
-  useEffect(() => {
-    setUserPlants(getSavedUserPlants());
-    setCareTasks(getSavedCareTasks());
-    setMounted(true);
-  }, []);
-
-  const handleTaskToggle = (taskId: string) => {
-    const updated = toggleCareTask(taskId);
-    setCareTasks(updated);
+  const loadDashboardData = async () => {
+    try {
+      const [gardenRes, tasksRes] = await Promise.all([
+        fetchUserGarden(),
+        fetchCareTasks(),
+      ]);
+      setUserPlants(gardenRes.plants);
+      setCareTasks(tasksRes.tasks);
+      setIsCloud(gardenRes.isCloud);
+    } catch (err) {
+      console.error('Failed to load dashboard data', err);
+    } finally {
+      setMounted(true);
+    }
   };
 
-  const handleResetData = () => {
+  useEffect(() => {
+    loadDashboardData();
+  }, [user]);
+
+  const handleTaskToggle = async (task: CareTask) => {
+    await toggleTaskStatus(task.id, task.completed);
+    await loadDashboardData();
+  };
+
+  const handleResetData = async () => {
     resetToDemoData();
-    setUserPlants(getSavedUserPlants());
-    setCareTasks(getSavedCareTasks());
+    await loadDashboardData();
   };
 
   const featuredPlants = getFeaturedPlants().slice(0, 3);
@@ -282,7 +299,7 @@ export default function DashboardPage() {
               {careTasks.map((task) => (
                 <div
                   key={task.id}
-                  onClick={() => handleTaskToggle(task.id)}
+                  onClick={() => handleTaskToggle(task)}
                   className={`p-3 rounded-xl border transition-all cursor-pointer flex items-start gap-3 ${
                     task.completed
                       ? 'bg-[#f7f5ed] border-[#e2dbce] opacity-70'
