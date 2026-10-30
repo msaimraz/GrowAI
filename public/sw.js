@@ -13,7 +13,7 @@
  * 4. Listens for CLEAR_USER_CACHE to safely purge sensitive data upon user sign out.
  */
 
-const CACHE_VERSION = 'growai-v1.1';
+const CACHE_VERSION = 'growai-v1.2';
 const STATIC_CACHE = `growai-static-${CACHE_VERSION}`;
 const PUBLIC_CATALOG_CACHE = `growai-public-catalog-${CACHE_VERSION}`;
 const PAGES_CACHE = `growai-pages-${CACHE_VERSION}`;
@@ -42,12 +42,27 @@ const NEVER_CACHE_PATTERNS = [
   /\/admin/,
   /\/_next\/webpack-hmr/,
   /\/auth\/callback/,
+  /\/app\/my-garden/,
 ];
 
 // Helper to determine if a request should be bypassed
-function shouldBypassCache(url, method) {
+function shouldBypassCache(request, url) {
   // Only cache idempotent GET requests
-  if (method !== 'GET') return true;
+  if (request.method !== 'GET') return true;
+
+  // Next.js React Server Component requests & Server Actions
+  if (
+    url.searchParams.has('_rsc') ||
+    request.headers.get('RSC') === '1' ||
+    request.headers.has('Next-Action')
+  ) {
+    return true;
+  }
+
+  // Supabase API requests (authentication, database queries)
+  if (url.hostname.includes('supabase.co')) {
+    return true;
+  }
 
   // Check URL against forbidden patterns
   for (const pattern of NEVER_CACHE_PATTERNS) {
@@ -106,7 +121,7 @@ self.addEventListener('fetch', (event) => {
   const url = new URL(request.url);
 
   // 1. Bypass check
-  if (shouldBypassCache(url, request.method)) {
+  if (shouldBypassCache(request, url)) {
     return; // Pass through directly to network
   }
 
@@ -177,10 +192,16 @@ self.addEventListener('fetch', (event) => {
 
   // 4. HTML Navigation Requests for App Shell (Network-first with offline fallback)
   if (request.mode === 'navigate') {
+    const isPublicPage =
+      url.pathname === '/' ||
+      url.pathname === '/app' ||
+      url.pathname.startsWith('/app/plants') ||
+      url.pathname.startsWith('/app/learn');
+
     event.respondWith(
       fetch(request)
         .then((networkResponse) => {
-          if (networkResponse && networkResponse.ok) {
+          if (networkResponse && networkResponse.ok && isPublicPage) {
             const clone = networkResponse.clone();
             caches.open(PAGES_CACHE).then((cache) => {
               cache.put(request, clone);
