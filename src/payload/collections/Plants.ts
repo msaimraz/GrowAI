@@ -1,0 +1,466 @@
+import type { CollectionConfig } from 'payload';
+
+export const Plants: CollectionConfig = {
+  slug: 'plants',
+  admin: {
+    useAsTitle: 'commonName',
+    defaultColumns: ['commonName', 'scientificName', 'categorySlug', 'difficultyLevel', '_status'],
+  },
+  versions: {
+    drafts: true,
+  },
+  access: {
+    // Only published plants are publicly visible; editors and admins can see drafts
+    read: ({ req: { user } }) => {
+      if (user) return true;
+      return {
+        _status: {
+          equals: 'published',
+        },
+      };
+    },
+    create: ({ req: { user } }) => Boolean(user?.role === 'admin' || user?.role === 'editor'),
+    update: ({ req: { user } }) => Boolean(user?.role === 'admin' || user?.role === 'editor'),
+    delete: ({ req: { user } }) => Boolean(user?.role === 'admin'),
+  },
+  fields: [
+    // Identification & Basic Classification
+    {
+      name: 'commonName',
+      type: 'text',
+      required: true,
+      label: 'Common Botanical Name',
+    },
+    {
+      name: 'scientificName',
+      type: 'text',
+      required: true,
+      label: 'Scientific Name (Binomial Nomenclature)',
+    },
+    {
+      name: 'slug',
+      type: 'text',
+      required: true,
+      unique: true,
+      index: true,
+      label: 'Unique URL Slug',
+    },
+    {
+      name: 'category',
+      type: 'relationship',
+      relationTo: 'categories',
+      label: 'Plant Category Relation',
+    },
+    {
+      name: 'categorySlug',
+      type: 'select',
+      required: true,
+      label: 'Category Taxonomy Code',
+      options: [
+        { label: 'Vegetables & Fruits', value: 'vegetables-fruits' },
+        { label: 'Herbs & Leafy Greens', value: 'herbs-greens' },
+        { label: 'Indoor & Decorative', value: 'indoor-decorative' },
+        { label: 'Flowering Plants', value: 'flowering' },
+        { label: 'Traditional Medicinal & Aromatic', value: 'medicinal-aromatic' },
+        { label: 'Microgreens & Quick-Harvest', value: 'microgreens' },
+      ],
+    },
+    {
+      name: 'summary',
+      type: 'textarea',
+      required: true,
+      label: 'Botanical Summary / Agronomic Profile',
+    },
+    {
+      name: 'badge',
+      type: 'text',
+      label: 'Special Badge / Accolade (e.g., Space Efficient, Fast Yield)',
+    },
+    {
+      name: 'featured',
+      type: 'checkbox',
+      defaultValue: false,
+      label: 'Feature on Homepage Hero / Recommendations',
+    },
+
+    // Media & Imagery
+    {
+      name: 'featuredImage',
+      type: 'relationship',
+      relationTo: 'media',
+      label: 'Featured Botanical Image',
+    },
+    {
+      name: 'featuredImageUrl',
+      type: 'text',
+      label: 'Direct Image URL Fallback',
+    },
+    {
+      name: 'gallery',
+      type: 'array',
+      label: 'Botanical Gallery Images',
+      fields: [
+        {
+          name: 'image',
+          type: 'relationship',
+          relationTo: 'media',
+        },
+        {
+          name: 'caption',
+          type: 'text',
+        },
+      ],
+    },
+
+    // Environmental Parameters
+    {
+      name: 'environments',
+      type: 'select',
+      hasMany: true,
+      required: true,
+      label: 'Viable Growing Environments',
+      options: [
+        { label: 'Indoor Apartment', value: 'indoor' },
+        { label: 'Balcony', value: 'balcony' },
+        { label: 'Patio', value: 'patio' },
+        { label: 'Greenhouse', value: 'greenhouse' },
+        { label: 'Vertical Rack / Tower', value: 'vertical-rack' },
+      ],
+    },
+    {
+      name: 'temperatureRange',
+      type: 'group',
+      label: 'Temperature Tolerances (°C)',
+      fields: [
+        {
+          name: 'min',
+          type: 'number',
+          required: true,
+          label: 'Minimum Survival Temperature (°C)',
+        },
+        {
+          name: 'max',
+          type: 'number',
+          required: true,
+          label: 'Maximum Heat Tolerance (°C)',
+        },
+        {
+          name: 'unit',
+          type: 'text',
+          defaultValue: 'C',
+          admin: { readOnly: true },
+        },
+        {
+          name: 'idealRange',
+          type: 'text',
+          label: 'Ideal Daytime/Nighttime Range (e.g. 18°C–24°C)',
+        },
+      ],
+    },
+    {
+      name: 'sunlight',
+      type: 'select',
+      required: true,
+      label: 'Photoperiod & Sunlight Requirements',
+      options: [
+        { label: 'Full Sun (6+ hrs direct sun)', value: 'full-sun' },
+        { label: 'Partial Sun (3–6 hrs direct sun)', value: 'partial-sun' },
+        { label: 'Bright Indirect Light', value: 'bright-indirect' },
+        { label: 'Low Light / Shade Tolerant', value: 'low-light' },
+      ],
+    },
+    {
+      name: 'sunlightHours',
+      type: 'text',
+      required: true,
+      label: 'Recommended Sunlight Hours (e.g. 6–8 hours daily)',
+    },
+
+    // Hydration, Soil & Potting Specifications
+    {
+      name: 'watering',
+      type: 'group',
+      label: 'Watering & Moisture Guidance',
+      fields: [
+        {
+          name: 'frequency',
+          type: 'text',
+          required: true,
+          label: 'Watering Frequency',
+        },
+        {
+          name: 'guidance',
+          type: 'textarea',
+          required: true,
+          label: 'Application Guidance',
+        },
+        {
+          name: 'moistureLevel',
+          type: 'select',
+          required: true,
+          options: [
+            { label: 'Low (drought tolerant / allow drying)', value: 'low' },
+            { label: 'Moderate (dry top 2-3 cm between waterings)', value: 'moderate' },
+            { label: 'High (keep evenly moist)', value: 'high' },
+          ],
+        },
+      ],
+    },
+    {
+      name: 'soil',
+      type: 'group',
+      label: 'Growing Medium & Soil Requirements',
+      fields: [
+        {
+          name: 'type',
+          type: 'text',
+          required: true,
+          label: 'Soil / Medium Texture',
+        },
+        {
+          name: 'drainage',
+          type: 'text',
+          required: true,
+          label: 'Drainage Characteristics',
+        },
+        {
+          name: 'recommendedMix',
+          type: 'text',
+          label: 'Suggested Potting Blend Recipe',
+        },
+      ],
+    },
+    {
+      name: 'potting',
+      type: 'group',
+      label: 'Container Dimensions & Spatial Requirements',
+      fields: [
+        {
+          name: 'minDepthCm',
+          type: 'number',
+          required: true,
+          label: 'Minimum Container Depth (cm)',
+        },
+        {
+          name: 'spacingCm',
+          type: 'number',
+          required: true,
+          label: 'Minimum Plant Spacing (cm)',
+        },
+        {
+          name: 'recommendedPotSize',
+          type: 'text',
+          required: true,
+          label: 'Recommended Container Capacity (e.g., 5–7 Liters)',
+        },
+      ],
+    },
+    {
+      name: 'humidity',
+      type: 'group',
+      label: 'Relative Humidity Preferences',
+      fields: [
+        { name: 'min', type: 'number', label: 'Minimum RH (%)' },
+        { name: 'max', type: 'number', label: 'Maximum RH (%)' },
+        { name: 'note', type: 'text', label: 'Humidity Notes' },
+      ],
+    },
+    {
+      name: 'ph',
+      type: 'group',
+      label: 'Substrate pH Preferences',
+      fields: [
+        { name: 'min', type: 'number', label: 'Minimum pH' },
+        { name: 'max', type: 'number', label: 'Maximum pH' },
+        { name: 'note', type: 'text', label: 'pH Buffering Notes' },
+      ],
+    },
+
+    // Phenological Timelines
+    {
+      name: 'timelines',
+      type: 'group',
+      label: 'Phenological Growth Timelines',
+      fields: [
+        {
+          name: 'germinationMin',
+          type: 'number',
+          required: true,
+          label: 'Germination Min Days',
+        },
+        {
+          name: 'germinationMax',
+          type: 'number',
+          required: true,
+          label: 'Germination Max Days',
+        },
+        {
+          name: 'seedlingMin',
+          type: 'number',
+          required: true,
+          label: 'Seedling Min Days',
+        },
+        {
+          name: 'seedlingMax',
+          type: 'number',
+          required: true,
+          label: 'Seedling Max Days',
+        },
+        {
+          name: 'harvestMin',
+          type: 'number',
+          label: 'First Harvest Min Days',
+        },
+        {
+          name: 'harvestMax',
+          type: 'number',
+          label: 'First Harvest Max Days',
+        },
+        {
+          name: 'floweringMin',
+          type: 'number',
+          label: 'Flowering Min Days',
+        },
+        {
+          name: 'floweringMax',
+          type: 'number',
+          label: 'Flowering Max Days',
+        },
+        {
+          name: 'maturityMin',
+          type: 'number',
+          required: true,
+          label: 'Full Maturity Min Days',
+        },
+        {
+          name: 'maturityMax',
+          type: 'number',
+          required: true,
+          label: 'Full Maturity Max Days',
+        },
+        {
+          name: 'timelineNotes',
+          type: 'textarea',
+          label: 'Timeline Observations & Temperature Influences',
+        },
+      ],
+    },
+
+    // Vertical Suitability & Difficulty
+    {
+      name: 'verticalSuitability',
+      type: 'group',
+      label: 'Vertical Agriculture Architecture Suitability',
+      fields: [
+        {
+          name: 'isSuitable',
+          type: 'checkbox',
+          defaultValue: true,
+          label: 'Suitable for Vertical Farming / Shelving',
+        },
+        {
+          name: 'rating',
+          type: 'select',
+          required: true,
+          options: [
+            { label: 'Ideal (Naturally compact, shallow roots)', value: 'ideal' },
+            { label: 'Moderate (Requires pruning or training)', value: 'moderate' },
+            { label: 'Challenging (Heavy feeder or root volume)', value: 'challenging' },
+            { label: 'Unsuitable (Excessive vine length / root tap)', value: 'unsuitable' },
+          ],
+        },
+        {
+          name: 'recommendedTier',
+          type: 'select',
+          required: true,
+          options: [
+            { label: 'Top Tier (High Light, Unrestricted Overhead)', value: 'top' },
+            { label: 'Middle Tier (Balanced Light, Microclimate)', value: 'middle' },
+            { label: 'Bottom Tier (Dappled / Low Light, Heavy Pots)', value: 'bottom' },
+            { label: 'Any Tier', value: 'any' },
+          ],
+        },
+        {
+          name: 'notes',
+          type: 'textarea',
+          label: 'Vertical Stacking Guidance',
+        },
+      ],
+    },
+    {
+      name: 'difficulty',
+      type: 'group',
+      label: 'Grower Difficulty & Care Demands',
+      fields: [
+        {
+          name: 'level',
+          type: 'select',
+          required: true,
+          options: [
+            { label: 'Beginner Friendly', value: 'beginner' },
+            { label: 'Intermediate Care', value: 'intermediate' },
+            { label: 'Advanced Horticultural Skill', value: 'advanced' },
+          ],
+        },
+        {
+          name: 'score',
+          type: 'number',
+          required: true,
+          min: 1,
+          max: 5,
+          label: 'Difficulty Score (1 to 5)',
+        },
+        {
+          name: 'methodologyNotes',
+          type: 'textarea',
+          label: 'Horticultural Demands Justification',
+        },
+      ],
+    },
+
+    // Phytopathology, Remediation & Uses
+    {
+      name: 'commonProblems',
+      type: 'array',
+      label: 'Documented Phytopathological Issues & Organic Remedies',
+      fields: [
+        { name: 'issue', type: 'text', required: true, label: 'Problem / Pest Name' },
+        { name: 'symptoms', type: 'text', required: true, label: 'Diagnostic Symptoms' },
+        { name: 'prevention', type: 'text', required: true, label: 'Preventive Measure' },
+        { name: 'organicRemedy', type: 'text', required: true, label: 'Organic Remediation' },
+      ],
+    },
+    {
+      name: 'practicalUses',
+      type: 'array',
+      label: 'Culinary, Aesthetic or Functional Practical Uses',
+      fields: [
+        { name: 'item', type: 'text', required: true },
+      ],
+    },
+    {
+      name: 'safetyNotes',
+      type: 'textarea',
+      label: 'Toxicity, Pet Warnings & Handling Precautions',
+    },
+    {
+      name: 'sourceUrls',
+      type: 'array',
+      label: 'Agronomic Research References & Citations',
+      fields: [
+        { name: 'url', type: 'text', required: true },
+      ],
+    },
+    {
+      name: 'dataReviewStatus',
+      type: 'select',
+      required: true,
+      defaultValue: 'verified',
+      options: [
+        { label: 'Agronomist Verified', value: 'verified' },
+        { label: 'Peer-Reviewed Literature', value: 'peer-reviewed' },
+        { label: 'Community Field Draft', value: 'community-draft' },
+      ],
+    },
+  ],
+};

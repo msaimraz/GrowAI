@@ -1,9 +1,8 @@
-'use client';
-
 import React from 'react';
 import Link from 'next/link';
 import { AppHeader } from '@/components/navigation/AppHeader';
 import { Badge } from '@/components/ui/Badge';
+import { fetchPublishedArticles } from '@/lib/payload';
 import {
   Sprout,
   Droplet,
@@ -17,9 +16,12 @@ import {
   CheckCircle2,
   Box,
   Compass,
+  BookOpen,
 } from 'lucide-react';
+export const instant = false;
 
-export default function LearnPage() {
+export default async function LearnPage() {
+  const articles = await fetchPublishedArticles();
   const essentials = [
     {
       title: 'Water (Precision Hydration)',
@@ -333,6 +335,65 @@ export default function LearnPage() {
                 </p>
               </div>
             </div>
+          </div>
+        </section>
+
+        {/* Section 4: Editorial Articles from Payload CMS */}
+        <section id="articles" className="space-y-6">
+          <div className="flex items-center justify-between pb-3 border-b border-[#e5dfd3]">
+            <div>
+              <h3 className="text-2xl font-serif font-bold text-[#0c2417]">
+                Curated Agronomic & Vertical Farming Guides
+              </h3>
+              <p className="text-xs text-[#526a57]">
+                In-depth editorial articles managed via Payload CMS with actionable home botany workflows
+              </p>
+            </div>
+            <Badge variant="sage" size="sm">Editorial Series</Badge>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {articles.map((art) => (
+              <div
+                key={art.id}
+                className="bg-white rounded-2xl p-6 border border-[#ded5c5] shadow-xs hover:shadow-md transition-all flex flex-col justify-between"
+              >
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between gap-2">
+                    <span className="text-[10px] font-bold uppercase tracking-wider text-[#144229] bg-[#eef5ee] px-2.5 py-1 rounded-md">
+                      {art.categoryLabel || art.category}
+                    </span>
+                    {art.publishedAt && (
+                      <span className="text-[10px] font-mono text-[#7a9382]">
+                        {art.publishedAt}
+                      </span>
+                    )}
+                  </div>
+
+                  <h4 className="font-serif font-bold text-lg text-[#0c2417] leading-snug">
+                    {art.title}
+                  </h4>
+
+                  <p className="text-xs text-[#4b6351] leading-relaxed">
+                    {art.summary}
+                  </p>
+
+                  {art.keyTakeaways && art.keyTakeaways.length > 0 && (
+                    <div className="pt-2 border-t border-[#f0ebe0] space-y-1.5">
+                      <span className="text-[10px] font-bold uppercase tracking-wider text-[#144229] block">
+                        Key Takeaways:
+                      </span>
+                      {art.keyTakeaways.map((takeaway, idx) => (
+                        <div key={idx} className="flex items-start gap-1.5 text-xs text-[#354b3c]">
+                          <CheckCircle2 size={13} className="text-[#1e613b] shrink-0 mt-0.5" />
+                          <span>{takeaway}</span>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              </div>
+            ))}
           </div>
         </section>
 

@@ -4,30 +4,34 @@ import React, { useState, useMemo } from 'react';
 import Link from 'next/link';
 import { AppHeader } from '@/components/navigation/AppHeader';
 import { Badge } from '@/components/ui/Badge';
-import { PLANTS_DATA } from '@/data/plants';
-import { PLANT_CATEGORIES } from '@/data/categories';
-import { PlantCategory, GrowingEnvironment } from '@/types/plant';
+import { Plant, CategoryMetadata, GrowingEnvironment } from '@/types/plant';
 import {
   Search,
-  Filter,
   Thermometer,
   Sun,
   Clock,
   Layers,
-  Sprout,
   X,
   ArrowRight,
   ShieldCheck,
 } from 'lucide-react';
 
-export default function PlantLibraryPage() {
+interface PlantLibraryClientProps {
+  initialPlants: Plant[];
+  initialCategories: CategoryMetadata[];
+}
+
+export function PlantLibraryClient({
+  initialPlants,
+  initialCategories,
+}: PlantLibraryClientProps) {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [selectedEnvironment, setSelectedEnvironment] = useState<string>('all');
   const [selectedDifficulty, setSelectedDifficulty] = useState<string>('all');
 
   const filteredPlants = useMemo(() => {
-    return PLANTS_DATA.filter((plant) => {
+    return initialPlants.filter((plant) => {
       // Search filter
       const matchesSearch =
         plant.commonName.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -50,7 +54,7 @@ export default function PlantLibraryPage() {
 
       return matchesSearch && matchesCategory && matchesEnvironment && matchesDifficulty;
     });
-  }, [searchQuery, selectedCategory, selectedEnvironment, selectedDifficulty]);
+  }, [initialPlants, searchQuery, selectedCategory, selectedEnvironment, selectedDifficulty]);
 
   const hasActiveFilters =
     searchQuery ||
@@ -69,7 +73,7 @@ export default function PlantLibraryPage() {
     <div className="min-h-screen flex flex-col">
       <AppHeader
         title="Plant Library & Botanical Index"
-        subtitle="16 curated balcony, indoor, and vertical species with verified agronomic parameters."
+        subtitle={`${initialPlants.length} curated balcony, indoor, and vertical species with verified agronomic parameters.`}
         actionHref="/app/planner"
         actionLabel="Arrange on Rack"
         actionIcon="plus"
@@ -87,10 +91,10 @@ export default function PlantLibraryPage() {
                 : 'bg-white text-[#3e5644] border border-[#ded5c5] hover:bg-[#f4f8f4]'
             }`}
           >
-            All Categories ({PLANTS_DATA.length})
+            All Categories ({initialPlants.length})
           </button>
-          {PLANT_CATEGORIES.map((cat) => {
-            const count = PLANTS_DATA.filter((p) => p.category === cat.id).length;
+          {initialCategories.map((cat) => {
+            const count = initialPlants.filter((p) => p.category === cat.id).length;
             const isSelected = selectedCategory === cat.id;
             return (
               <button
@@ -177,7 +181,7 @@ export default function PlantLibraryPage() {
           <div className="flex items-center justify-between text-xs text-[#526a57] pt-1">
             <span>
               Showing <strong className="text-[#0c2417]">{filteredPlants.length}</strong> of{' '}
-              {PLANTS_DATA.length} verified plants
+              {initialPlants.length} verified plants
             </span>
             <span className="flex items-center gap-1 text-[11px] text-[#1b5837]">
               <ShieldCheck size={14} />
