@@ -169,7 +169,7 @@ async function runAudit() {
   // --------------------------------------------------------------------------
   console.log('\n--- 4. Live Server HTTP Endpoints & MIME Types ---');
   const endpoints = [
-    { url: 'http://localhost:3000/manifest.json', expectedType: 'application/json' },
+    { url: 'http://localhost:3000/manifest.json', expectedType: 'manifest+json' },
     { url: 'http://localhost:3000/sw.js', expectedType: 'application/javascript' },
     { url: 'http://localhost:3000/offline.html', expectedType: 'text/html' },
     { url: 'http://localhost:3000/icons/icon-192.png', expectedType: 'image/png' },
