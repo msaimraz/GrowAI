@@ -81,6 +81,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }, [isConfigured]);
 
   const signOut = async () => {
+    // Clear sensitive user caches in Service Worker
+    if (typeof window !== 'undefined' && 'serviceWorker' in navigator && navigator.serviceWorker.controller) {
+      navigator.serviceWorker.controller.postMessage({ type: 'CLEAR_USER_CACHE' });
+    }
     if (!isConfigured) {
       setUser(null);
       return;

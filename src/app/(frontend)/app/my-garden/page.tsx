@@ -41,6 +41,8 @@ import {
   Loader2,
 } from 'lucide-react';
 
+import { usePwa } from '@/context/PwaContext';
+
 const GROWTH_STAGES: GrowthStage[] = [
   'Seed',
   'Germination',
@@ -54,6 +56,7 @@ function MyGardenContent() {
   const searchParams = useSearchParams();
   const highlightPlantId = searchParams.get('plantId');
   const { user, isConfigured } = useAuth();
+  const { isOffline } = usePwa();
 
   const [userPlants, setUserPlants] = useState<UserPlant[]>([]);
   const [selectedPlantId, setSelectedPlantId] = useState<string>('');
@@ -114,6 +117,10 @@ function MyGardenContent() {
     : null;
 
   const handleStageChange = async (plantId: string, newStage: GrowthStage) => {
+    if (isOffline && isCloud) {
+      setErrorBanner('You are currently offline. Cloud synchronization requires an active internet connection to update stages.');
+      return;
+    }
     setErrorBanner(null);
     const res = await updateGardenPlantStage(plantId, newStage);
     if (res.error) {
@@ -126,6 +133,11 @@ function MyGardenContent() {
   const handleAddNote = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!activePlant || !noteText.trim()) return;
+
+    if (isOffline && isCloud) {
+      setErrorBanner('You are currently offline. Cloud synchronization requires an active internet connection to record new growth observations.');
+      return;
+    }
 
     setSubmittingNote(true);
     setErrorBanner(null);

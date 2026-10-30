@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Offline Mode — GrowAI</title>
+  <link rel="icon" href="/favicon.ico">
+  <meta name="theme-color" content="#0e2a1b">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      background-color: #fbf9f4;
+      color: #14281c;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      line-height: 1.6;
+    }
+    .card {
+      background: #ffffff;
+      border: 1px solid #ded5c5;
+      border-radius: 20px;
+      padding: 36px 32px;
+      max-width: 480px;
+      width: 100%;
+      text-align: center;
+      box-shadow: 0 4px 20px rgba(14, 42, 27, 0.06);
+    }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: #eef5ee;
+      color: #144229;
+      border: 1px solid #cfdfcf;
+      padding: 4px 12px;
+      border-radius: 9999px;
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 20px;
+    }
+    .icon-container {
+      width: 64px;
+      height: 64px;
+      border-radius: 16px;
+      background: #144229;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+    }
+    h1 {
+      font-size: 24px;
+      font-weight: 700;
+      color: #0c2417;
+      margin-bottom: 12px;
+      letter-spacing: -0.02em;
+    }
+    p {
+      font-size: 15px;
+      color: #384e3e;
+      margin-bottom: 20px;
+      line-height: 1.6;
+    }
+    .offline-tips {
+      background: #fbf9f4;
+      border: 1px solid #e7dfcf;
+      border-radius: 14px;
+      padding: 16px;
+      text-align: left;
+      font-size: 14px;
+      color: #273d2d;
+      margin-bottom: 24px;
+    }
+    .offline-tips li {
+      margin-bottom: 8px;
+      list-style-type: none;
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+    }
+    .offline-tips li:last-child {
+      margin-bottom: 0;
+    }
+    .bullet {
+      color: #144229;
+      font-weight: bold;
+    }
+    .actions {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    @media (min-width: 480px) {
+      .actions {
+        flex-direction: row;
+      }
+    }
+    .btn {
+      flex: 1;
+      padding: 12px 18px;
+      border-radius: 12px;
+      font-size: 14px;
+      font-weight: 600;
+      text-decoration: none;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: all 0.15s ease;
+      border: none;
+    }
+    .btn-primary {
+      background: #144229;
+      color: #ffffff;
+    }
+    .btn-primary:hover {
+      background: #0c2417;
+    }
+    .btn-secondary {
+      background: #f4f8f4;
+      color: #144229;
+      border: 1px solid #cfdfcf;
+    }
+    .btn-secondary:hover {
+      background: #e6efe6;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="icon-container">
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 18a8 8 0 1 1 8-8 8 8 0 0 1-8 8z"/>
+        <line x1="1" y1="1" x2="23" y2="23"/>
+        <path d="M16.72 11.06A10.94 10.94 0 0 1 19 12.55"/>
+        <path d="M5 12.55a10.94 10.94 0 0 1 5.17-2.39"/>
+      </svg>
+    </div>
+
+    <span class="badge">🌿 GrowAI Offline Mode</span>
+    <h1>Working Without Internet</h1>
+    <p>
+      You are currently browsing offline. GrowAI keeps your cached botanical data and guides available so your home gardening never stops.
+    </p>
+
+    <div class="offline-tips">
+      <ul>
+        <li><span class="bullet">✓</span> <span><strong>Plant Library:</strong> Previously viewed plant profiles and care cards remain available.</span></li>
+        <li><span class="bullet">✓</span> <span><strong>Learn Guides:</strong> Cached 3Rs principles and sustainability articles can be read anytime.</span></li>
+        <li><span class="bullet">ℹ</span> <span><strong>Cloud Sync & AI Doctor:</strong> Gemini Multimodal Vision requires an internet connection and will reactivate once reconnected.</span></li>
+      </ul>
+    </div>
+
+    <div class="actions">
+      <button class="btn btn-primary" onclick="window.location.reload()">
+        Try Reconnecting
+      </button>
+      <a href="/app/plants" class="btn btn-secondary">
+        Browse Saved Plants
+      </a>
+    </div>
+  </div>
+</body>
+</html>

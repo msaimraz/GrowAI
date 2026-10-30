@@ -3,7 +3,6 @@
 import React from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Logo } from '@/components/ui/Logo';
 import {
   LayoutDashboard,
   Sprout,
@@ -12,13 +11,15 @@ import {
   Sparkles,
   BookOpen,
   ArrowUpRight,
-  Database,
   Info,
+  DownloadCloud,
 } from 'lucide-react';
 import { AuthStatus } from '@/components/auth/AuthStatus';
+import { usePwa } from '@/context/PwaContext';
 
 export function AppSidebar() {
   const pathname = usePathname();
+  const { canInstall, isIos, promptInstall, setShowIosInstructions } = usePwa();
 
   const navItems = [
     {
@@ -48,7 +49,7 @@ export function AppSidebar() {
       label: 'AI Plant Doctor',
       href: '/app/ai-doctor',
       icon: Sparkles,
-      badge: 'Demo',
+      badge: 'Vision AI',
     },
     {
       label: 'Learn & Sustainability',
@@ -60,7 +61,7 @@ export function AppSidebar() {
   return (
     <aside className="hidden lg:flex lg:flex-col w-64 bg-[#0e2a1b] text-[#e3ece5] border-r border-[#19402a] min-h-screen p-5 shrink-0 select-none">
       {/* Brand Header */}
-      <div className="pb-6 border-b border-[#1b4a30]">
+      <div className="pb-5 border-b border-[#1b4a30]">
         <Link href="/" className="inline-block focus:outline-none focus:ring-2 focus:ring-[#58855e] rounded-lg">
           <div className="flex items-center gap-2.5">
             <span className="flex items-center justify-center w-8 h-8 rounded-lg bg-[#257a4d] text-white shadow-sm">
@@ -71,13 +72,13 @@ export function AppSidebar() {
             </span>
           </div>
         </Link>
-        <p className="text-[11px] text-[#86aa91] mt-1.5 font-medium tracking-wide uppercase">
+        <p className="text-xs text-[#86aa91] mt-1.5 font-medium tracking-wider uppercase">
           Vertical Agriculture OS
         </p>
       </div>
 
       {/* Navigation */}
-      <nav className="flex-1 py-6 space-y-1.5" aria-label="App Navigation">
+      <nav className="flex-1 py-5 space-y-1.5" aria-label="App Navigation">
         {navItems.map((item) => {
           const Icon = item.icon;
           const isActive = item.exact
@@ -88,7 +89,7 @@ export function AppSidebar() {
             <Link
               key={item.href}
               href={item.href}
-              className={`flex items-center justify-between px-3.5 py-2.5 rounded-xl text-sm font-medium transition-all ${
+              className={`flex items-center justify-between px-3.5 py-3 rounded-xl text-sm font-medium transition-all min-h-[44px] ${
                 isActive
                   ? 'bg-[#1a472d] text-white shadow-sm font-semibold border border-[#2a6844]'
                   : 'text-[#bed4c5] hover:text-white hover:bg-[#143824]'
@@ -96,14 +97,14 @@ export function AppSidebar() {
             >
               <div className="flex items-center gap-3">
                 <Icon
-                  size={18}
+                  size={19}
                   className={isActive ? 'text-[#64b584]' : 'text-[#86aa91]'}
                 />
                 <span>{item.label}</span>
               </div>
               {item.badge && (
                 <span
-                  className={`text-[10px] px-2 py-0.5 rounded-full font-medium ${
+                  className={`text-xs px-2 py-0.5 rounded-full font-medium ${
                     isActive
                       ? 'bg-[#257a4d] text-white'
                       : 'bg-[#183d27] text-[#9dc2a8]'
@@ -119,19 +120,42 @@ export function AppSidebar() {
 
       {/* Bottom Status & Info */}
       <div className="pt-4 border-t border-[#1b4a30] space-y-3">
+        {/* PWA Install Button if available */}
+        {canInstall && (
+          <button
+            type="button"
+            onClick={promptInstall}
+            className="w-full flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl bg-[#257a4d] text-white font-semibold text-xs shadow-sm hover:bg-[#1e663f] transition-colors cursor-pointer min-h-[40px]"
+          >
+            <DownloadCloud size={16} />
+            <span>Install GrowAI App</span>
+          </button>
+        )}
+
+        {isIos && (
+          <button
+            type="button"
+            onClick={() => setShowIosInstructions(true)}
+            className="w-full flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl bg-[#257a4d] text-white font-semibold text-xs shadow-sm hover:bg-[#1e663f] transition-colors cursor-pointer min-h-[40px]"
+          >
+            <DownloadCloud size={16} />
+            <span>Install on iOS</span>
+          </button>
+        )}
+
         {/* Dynamic Auth & Storage State Indicator */}
         <AuthStatus variant="sidebar" />
 
         {/* Public Site Link */}
         <Link
           href="/"
-          className="flex items-center justify-between text-xs font-medium text-[#9dc2a8] hover:text-white px-3 py-2 rounded-lg hover:bg-[#143824] transition-colors"
+          className="flex items-center justify-between text-xs font-medium text-[#9dc2a8] hover:text-white px-3 py-2.5 rounded-lg hover:bg-[#143824] transition-colors min-h-[40px]"
         >
           <span className="flex items-center gap-1.5">
-            <Info size={14} />
+            <Info size={15} />
             Landing Page
           </span>
-          <ArrowUpRight size={14} />
+          <ArrowUpRight size={15} />
         </Link>
       </div>
     </aside>

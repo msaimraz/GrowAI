@@ -28,9 +28,12 @@ import {
   ExternalLink,
   Sliders,
   Check,
+  WifiOff,
 } from 'lucide-react';
+import { usePwa } from '@/context/PwaContext';
 
 export default function AiDoctorPage() {
+  const { isOffline } = usePwa();
   // Grower Context State
   const [selectedPlantSlug, setSelectedPlantSlug] = useState<string>('');
   const [symptoms, setSymptoms] = useState('');
@@ -131,6 +134,11 @@ export default function AiDoctorPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
+    if (isOffline) {
+      setError('You are currently offline. Gemini Vision AI Plant Doctor requires an active internet connection to evaluate photos.');
+      return;
+    }
+
     if (!symptoms.trim()) {
       setError('Please describe what symptoms or visual issues you observe on the plant.');
       return;
@@ -206,14 +214,37 @@ export default function AiDoctorPage() {
       />
 
       <div className="flex-1 p-4 sm:p-6 lg:p-8 max-w-5xl mx-auto w-full space-y-8">
+        {/* Offline Warning Notice if disconnected */}
+        {isOffline && (
+          <div className="bg-[#fff8e6] border border-[#fde68a] p-4 sm:p-5 rounded-2xl flex items-start gap-3.5 text-sm text-[#92400e] shadow-2xs">
+            <WifiOff size={22} className="shrink-0 mt-0.5 text-[#b45309]" />
+            <div className="space-y-1.5">
+              <h4 className="font-bold text-base text-[#78350f]">
+                Offline Mode: Gemini Vision Requires Internet Connectivity
+              </h4>
+              <p className="leading-relaxed text-[#92400e]">
+                Photographic diagnosis and Gemini 3.8 Flash model execution run securely on server infrastructure. While offline, you can explore peer-reviewed care parameters and organic pest remedies in the cached Plant Library.
+              </p>
+              <div className="pt-1">
+                <Link
+                  href="/app/plants"
+                  className="inline-flex items-center gap-1.5 font-semibold text-[#144229] hover:underline"
+                >
+                  <span>Explore Cached Plant Library Remedies →</span>
+                </Link>
+              </div>
+            </div>
+          </div>
+        )}
+
         {/* Educational Disclaimer Banner */}
-        <div className="bg-[#eff6ff] border border-[#bfdbfe] p-4 rounded-2xl flex items-start gap-3.5 text-xs text-[#1e40af] shadow-2xs">
+        <div className="bg-[#eff6ff] border border-[#bfdbfe] p-4 sm:p-5 rounded-2xl flex items-start gap-3.5 text-xs sm:text-sm text-[#1e40af] shadow-2xs">
           <Info size={18} className="shrink-0 mt-0.5 text-[#2563eb]" />
           <div className="space-y-1">
-            <h4 className="font-bold text-sm text-[#1e3a8a]">
+            <h4 className="font-bold text-sm sm:text-base text-[#1e3a8a]">
               Educational Agronomic Assistance (Not a Certified Laboratory Assay)
             </h4>
-            <p className="leading-relaxed">
+            <p className="leading-relaxed text-[#1e40af]">
               GrowAI utilizes multimodal vision to detect observable visual symptoms and recommend non-toxic, cultural plant care. It does not replace a certified university agricultural extension lab diagnosis.
             </p>
           </div>
@@ -485,10 +516,15 @@ export default function AiDoctorPage() {
 
               <button
                 type="submit"
-                disabled={loading}
-                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 text-sm font-semibold bg-[#144229] hover:bg-[#0c2417] text-white px-8 py-3 rounded-xl shadow-xs transition-all hover:shadow cursor-pointer disabled:opacity-50"
+                disabled={loading || isOffline}
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 text-sm font-semibold bg-[#144229] hover:bg-[#0c2417] text-white px-8 py-3 rounded-xl shadow-xs transition-all hover:shadow cursor-pointer disabled:opacity-50 min-h-[44px]"
               >
-                {loading ? (
+                {isOffline ? (
+                  <>
+                    <WifiOff size={16} />
+                    <span>Offline — Reconnect to Run AI Diagnostics</span>
+                  </>
+                ) : loading ? (
                   <>
                     <RefreshCw size={16} className="animate-spin" />
                     <span>{loadingStep || 'Analyzing Specimen...'}</span>

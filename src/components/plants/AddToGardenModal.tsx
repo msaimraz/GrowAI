@@ -96,7 +96,7 @@ export function AddToGardenModal({ plant, isOpen, onClose }: AddToGardenModalPro
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label className="block text-xs font-semibold text-[#0c2417] mb-1">
+            <label className="block text-xs sm:text-sm font-semibold text-[#071c11] mb-1.5">
               Plant Nickname
             </label>
             <input
@@ -104,13 +104,13 @@ export function AddToGardenModal({ plant, isOpen, onClose }: AddToGardenModalPro
               value={nickname}
               onChange={(e) => setNickname(e.target.value)}
               required
-              className="w-full px-3.5 py-2 text-sm rounded-xl border border-[#ded5c5] bg-[#fbf9f4] text-[#0c2417] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#1b5837]"
+              className="w-full h-11 px-3.5 text-sm rounded-xl border border-[#ded5c5] bg-[#fbf9f4] text-[#071c11] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#1b5837]"
             />
           </div>
 
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div>
-              <label className="block text-xs font-semibold text-[#0c2417] mb-1">
+              <label className="block text-xs sm:text-sm font-semibold text-[#071c11] mb-1.5">
                 Planted Date
               </label>
               <input
@@ -118,18 +118,18 @@ export function AddToGardenModal({ plant, isOpen, onClose }: AddToGardenModalPro
                 value={plantedDate}
                 onChange={(e) => setPlantedDate(e.target.value)}
                 required
-                className="w-full px-3 py-2 text-xs rounded-xl border border-[#ded5c5] bg-[#fbf9f4] text-[#0c2417] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#1b5837]"
+                className="w-full h-11 px-3.5 text-sm rounded-xl border border-[#ded5c5] bg-[#fbf9f4] text-[#071c11] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#1b5837]"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-[#0c2417] mb-1">
+              <label className="block text-xs sm:text-sm font-semibold text-[#071c11] mb-1.5">
                 Starting Stage
               </label>
               <select
                 value={stage}
                 onChange={(e) => setStage(e.target.value as GrowthStage)}
-                className="w-full px-3 py-2 text-xs rounded-xl border border-[#ded5c5] bg-[#fbf9f4] text-[#0c2417] focus:outline-none focus:ring-2 focus:ring-[#1b5837]"
+                className="w-full h-11 px-3.5 text-sm rounded-xl border border-[#ded5c5] bg-[#fbf9f4] text-[#071c11] focus:outline-none focus:ring-2 focus:ring-[#1b5837] cursor-pointer"
               >
                 <option value="Seed">Seed (Day 0)</option>
                 <option value="Germination">Germination (Sprout)</option>
@@ -140,15 +140,15 @@ export function AddToGardenModal({ plant, isOpen, onClose }: AddToGardenModalPro
             </div>
           </div>
 
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div>
-              <label className="block text-xs font-semibold text-[#0c2417] mb-1">
+              <label className="block text-xs sm:text-sm font-semibold text-[#071c11] mb-1.5">
                 Growing Location
               </label>
               <select
                 value={location}
                 onChange={(e) => setLocation(e.target.value as any)}
-                className="w-full px-3 py-2 text-xs rounded-xl border border-[#ded5c5] bg-[#fbf9f4] text-[#0c2417] focus:outline-none focus:ring-2 focus:ring-[#1b5837]"
+                className="w-full h-11 px-3.5 text-sm rounded-xl border border-[#ded5c5] bg-[#fbf9f4] text-[#071c11] focus:outline-none focus:ring-2 focus:ring-[#1b5837] cursor-pointer"
               >
                 <option value="Balcony Rack">Balcony Rack</option>
                 <option value="Kitchen Tier">Kitchen Tier</option>
@@ -159,13 +159,13 @@ export function AddToGardenModal({ plant, isOpen, onClose }: AddToGardenModalPro
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-[#0c2417] mb-1">
+              <label className="block text-xs sm:text-sm font-semibold text-[#071c11] mb-1.5">
                 Vertical Rack Tier
               </label>
               <select
                 value={tier}
                 onChange={(e) => setTier(e.target.value as any)}
-                className="w-full px-3 py-2 text-xs rounded-xl border border-[#ded5c5] bg-[#fbf9f4] text-[#0c2417] focus:outline-none focus:ring-2 focus:ring-[#1b5837]"
+                className="w-full h-11 px-3.5 text-sm rounded-xl border border-[#ded5c5] bg-[#fbf9f4] text-[#071c11] focus:outline-none focus:ring-2 focus:ring-[#1b5837] cursor-pointer"
               >
                 <option value="top">Top Tier (Sun/Heat)</option>
                 <option value="middle">Middle Tier (Greens/Herbs)</option>
@@ -175,46 +175,46 @@ export function AddToGardenModal({ plant, isOpen, onClose }: AddToGardenModalPro
           </div>
 
           <div>
-            <label className="block text-xs font-semibold text-[#0c2417] mb-1">
+            <label className="block text-xs sm:text-sm font-semibold text-[#071c11] mb-1.5">
               Initial Growth Note (Optional)
             </label>
             <textarea
               value={initialNote}
               onChange={(e) => setInitialNote(e.target.value)}
               rows={2}
-              className="w-full px-3.5 py-2 text-xs rounded-xl border border-[#ded5c5] bg-[#fbf9f4] text-[#0c2417] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#1b5837]"
+              className="w-full px-3.5 py-2.5 text-sm rounded-xl border border-[#ded5c5] bg-[#fbf9f4] text-[#071c11] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#1b5837]"
             />
           </div>
 
           {errorMsg && (
-            <div className="p-3 rounded-xl bg-[#fbeee9] border border-[#f8d7cb] text-xs text-[#9a3412] flex items-start gap-2">
-              <AlertCircle size={15} className="shrink-0 mt-0.5" />
+            <div className="p-3.5 rounded-xl bg-[#fbeee9] border border-[#f8d7cb] text-xs sm:text-sm text-[#9a3412] flex items-start gap-2">
+              <AlertCircle size={18} className="shrink-0 mt-0.5" />
               <span>{errorMsg}</span>
             </div>
           )}
 
-          <div className="pt-2 flex items-center justify-end gap-3">
+          <div className="pt-2 flex flex-col-reverse sm:flex-row items-center justify-end gap-3">
             <button
               type="button"
               onClick={onClose}
               disabled={saving}
-              className="px-4 py-2 text-xs font-semibold text-[#526a57] hover:bg-[#f4f8f4] rounded-lg border border-[#e2dbce] cursor-pointer"
+              className="w-full sm:w-auto px-5 py-2.5 text-sm font-semibold text-[#2e4435] hover:bg-[#f4f8f4] rounded-xl border border-[#ded5c5] cursor-pointer min-h-[44px]"
             >
               Cancel
             </button>
             <button
               type="submit"
               disabled={saving}
-              className="inline-flex items-center gap-1.5 px-5 py-2 text-xs font-semibold bg-[#144229] hover:bg-[#0c2417] disabled:opacity-50 text-white rounded-lg shadow-xs cursor-pointer"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-2.5 text-sm font-semibold bg-[#144229] hover:bg-[#071c11] disabled:opacity-50 text-white rounded-xl shadow-xs cursor-pointer min-h-[44px]"
             >
               {saving ? (
                 <>
-                  <Loader2 size={14} className="animate-spin" />
+                  <Loader2 size={16} className="animate-spin" />
                   <span>Saving...</span>
                 </>
               ) : (
                 <>
-                  <Check size={14} />
+                  <Check size={16} />
                   <span>Save & Go to My Garden</span>
                 </>
               )}

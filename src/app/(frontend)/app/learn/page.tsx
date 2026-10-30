@@ -125,12 +125,12 @@ export default async function LearnPage() {
       <div className="flex-1 p-4 sm:p-6 lg:p-8 max-w-7xl mx-auto w-full space-y-12">
         {/* Intro Hero Card */}
         <div className="bg-[#0e2a1b] text-white p-6 sm:p-8 rounded-2xl relative overflow-hidden shadow-sm">
-          <div className="max-w-3xl space-y-3">
+          <div className="max-w-3xl space-y-3.5">
             <Badge variant="forest" size="md">Foundational Plant Science</Badge>
-            <h2 className="text-2xl sm:text-3xl font-serif font-bold text-white tracking-tight">
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-serif font-bold text-white tracking-tight">
               Cultivating Knowledge Alongside Your Crops
             </h2>
-            <p className="text-sm text-[#bed4c5] leading-relaxed">
+            <p className="text-sm sm:text-base text-[#d1e6d7] leading-relaxed">
               Successful urban gardening is not a mystical &ldquo;green thumb&rdquo; gift — it is an understanding of five environmental essentials and closed-loop ecological stewardship.
             </p>
           </div>
@@ -140,10 +140,10 @@ export default async function LearnPage() {
         <section className="space-y-6">
           <div className="flex items-center justify-between pb-3 border-b border-[#e5dfd3]">
             <div>
-              <h3 className="text-2xl font-serif font-bold text-[#0c2417]">
+              <h3 className="text-xl sm:text-2xl font-serif font-bold text-[#071c11]">
                 The Five Growth Essentials
               </h3>
-              <p className="text-xs text-[#526a57]">
+              <p className="text-sm text-[#2e4435] mt-0.5">
                 Every plant thrives when these environmental inputs are kept in balance
               </p>
             </div>
@@ -156,30 +156,30 @@ export default async function LearnPage() {
               return (
                 <div
                   key={item.title}
-                  className="bg-white rounded-2xl p-6 border border-[#ded5c5] shadow-xs hover:shadow-md transition-all flex flex-col justify-between"
+                  className="bg-white rounded-2xl p-6 sm:p-7 border border-[#ded5c5] shadow-xs hover:shadow-md transition-all flex flex-col justify-between"
                 >
-                  <div className="space-y-3">
+                  <div className="space-y-3.5">
                     <div className="flex items-center gap-3">
-                      <span className={`p-2.5 rounded-xl ${item.color}`}>
-                        <Icon size={22} />
+                      <span className={`p-3 rounded-xl ${item.color}`}>
+                        <Icon size={24} />
                       </span>
-                      <h4 className="font-serif font-bold text-base text-[#0c2417]">
+                      <h4 className="font-serif font-bold text-lg text-[#071c11]">
                         {item.title}
                       </h4>
                     </div>
 
-                    <p className="text-xs text-[#4b6351] leading-relaxed">
+                    <p className="text-sm text-[#2e4435] leading-relaxed">
                       {item.summary}
                     </p>
 
-                    <div className="space-y-1.5 pt-2 border-t border-[#f0ebe0]">
-                      <span className="text-[10px] font-bold uppercase tracking-wider text-[#144229] block">
+                    <div className="space-y-2 pt-3 border-t border-[#f0ebe0]">
+                      <span className="text-xs font-bold uppercase tracking-wider text-[#144229] block">
                         Balcony Best Practices:
                       </span>
                       {item.bestPractices.map((bp) => (
-                        <div key={bp} className="flex items-start gap-1.5 text-xs text-[#354b3c]">
-                          <CheckCircle2 size={13} className="text-[#1e613b] shrink-0 mt-0.5" />
-                          <span>{bp}</span>
+                        <div key={bp} className="flex items-start gap-2 text-xs sm:text-sm text-[#1c261e]">
+                          <CheckCircle2 size={16} className="text-[#144229] shrink-0 mt-0.5" />
+                          <span className="leading-relaxed">{bp}</span>
                         </div>
                       ))}
                     </div>
@@ -194,10 +194,10 @@ export default async function LearnPage() {
         <section id="lifecycle" className="space-y-6">
           <div className="flex items-center justify-between pb-3 border-b border-[#e5dfd3]">
             <div>
-              <h3 className="text-2xl font-serif font-bold text-[#0c2417]">
+              <h3 className="text-xl sm:text-2xl font-serif font-bold text-[#071c11]">
                 The Botanical Life Cycle
               </h3>
-              <p className="text-xs text-[#526a57]">
+              <p className="text-sm text-[#2e4435] mt-0.5">
                 From dormant seed embryo to reproductive flowering and seed saving
               </p>
             </div>
@@ -210,27 +210,27 @@ export default async function LearnPage() {
                 key={lc.stage}
                 className="bg-white rounded-2xl p-6 border border-[#ded5c5] shadow-xs space-y-4 flex flex-col justify-between"
               >
-                <div className="space-y-2">
+                <div className="space-y-2.5">
                   <div className="flex items-center justify-between">
-                    <span className="text-2xl">{lc.icon}</span>
-                    <span className="text-[11px] font-mono font-semibold text-[#1e613b] bg-[#eef5ee] px-2 py-0.5 rounded-md">
+                    <span className="text-3xl">{lc.icon}</span>
+                    <span className="text-xs font-mono font-semibold text-[#144229] bg-[#eef5ee] px-2.5 py-1 rounded-md">
                       {lc.time}
                     </span>
                   </div>
 
-                  <h4 className="font-serif font-bold text-base text-[#0c2417]">
+                  <h4 className="font-serif font-bold text-lg text-[#071c11]">
                     {lc.stage}
                   </h4>
 
-                  <p className="text-xs text-[#4b6351] leading-relaxed">
+                  <p className="text-sm text-[#2e4435] leading-relaxed">
                     {lc.description}
                   </p>
                 </div>
 
-                <div className="space-y-1 pt-3 border-t border-[#f0ebe0]">
+                <div className="space-y-1.5 pt-3 border-t border-[#f0ebe0]">
                   {lc.checklist.map((c) => (
-                    <div key={c} className="flex items-center gap-1.5 text-[11px] text-[#354b3c]">
-                      <span className="w-1.5 h-1.5 rounded-full bg-[#1e613b]" />
+                    <div key={c} className="flex items-center gap-2 text-xs sm:text-sm text-[#1c261e]">
+                      <span className="w-2 h-2 rounded-full bg-[#144229]" />
                       <span>{c}</span>
                     </div>
                   ))}
@@ -244,10 +244,10 @@ export default async function LearnPage() {
         <section id="sustainability" className="space-y-6">
           <div className="flex items-center justify-between pb-3 border-b border-[#e5dfd3]">
             <div>
-              <h3 className="text-2xl font-serif font-bold text-[#0c2417]">
+              <h3 className="text-xl sm:text-2xl font-serif font-bold text-[#071c11]">
                 The 3Rs of Sustainable Home Agriculture
               </h3>
-              <p className="text-xs text-[#526a57]">
+              <p className="text-sm text-[#2e4435] mt-0.5">
                 Zero-waste principles: Reduce inputs, Reuse containers, and Recycle organics
               </p>
             </div>
@@ -256,52 +256,52 @@ export default async function LearnPage() {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {/* Reduce */}
-            <div id="reduce" className="bg-white rounded-2xl p-6 border border-[#ded5c5] shadow-xs space-y-4">
-              <div className="flex items-center gap-2.5">
-                <span className="p-2.5 rounded-xl bg-[#e7efe7] text-[#144229]">
-                  <Droplet size={22} />
+            <div id="reduce" className="bg-white rounded-2xl p-6 sm:p-7 border border-[#ded5c5] shadow-xs space-y-4">
+              <div className="flex items-center gap-3">
+                <span className="p-3 rounded-xl bg-[#e7efe7] text-[#144229]">
+                  <Droplet size={24} />
                 </span>
                 <div>
-                  <h4 className="font-serif font-bold text-lg text-[#0c2417]">
+                  <h4 className="font-serif font-bold text-lg text-[#071c11]">
                     1. Reduce
                   </h4>
-                  <p className="text-xs text-[#1e613b] font-medium">Conserve Water & Fertilizer</p>
+                  <p className="text-xs sm:text-sm text-[#144229] font-semibold">Conserve Water & Fertilizer</p>
                 </div>
               </div>
 
-              <p className="text-xs text-[#4b6351] leading-relaxed">
+              <p className="text-sm text-[#2e4435] leading-relaxed">
                 Vertical gardening excels at water reduction because top tier drainage can be directed to cascade into lower tiers rather than running down household storm drains.
               </p>
 
-              <div className="bg-[#f7f5ed] p-3.5 rounded-xl border border-[#ded5c5] space-y-1.5 text-xs text-[#354b3c]">
-                <strong className="text-[#144229] block">Actionable Home Project:</strong>
-                <p>
+              <div className="bg-[#f7f5ed] p-4 rounded-xl border border-[#ded5c5] space-y-2 text-xs sm:text-sm text-[#1c261e]">
+                <strong className="text-[#144229] block font-bold">Actionable Home Project:</strong>
+                <p className="leading-relaxed">
                   Place shallow collection trays underneath middle and top vertical shelves to catch nutrient-rich runoff, re-using it for thirsty bottom-tier crops.
                 </p>
               </div>
             </div>
 
             {/* Reuse */}
-            <div id="reuse" className="bg-white rounded-2xl p-6 border border-[#ded5c5] shadow-xs space-y-4">
-              <div className="flex items-center gap-2.5">
-                <span className="p-2.5 rounded-xl bg-[#fef3c7] text-[#92400e]">
-                  <RefreshCw size={22} />
+            <div id="reuse" className="bg-white rounded-2xl p-6 sm:p-7 border border-[#ded5c5] shadow-xs space-y-4">
+              <div className="flex items-center gap-3">
+                <span className="p-3 rounded-xl bg-[#fef3c7] text-[#92400e]">
+                  <RefreshCw size={24} />
                 </span>
                 <div>
-                  <h4 className="font-serif font-bold text-lg text-[#0c2417]">
+                  <h4 className="font-serif font-bold text-lg text-[#071c11]">
                     2. Reuse
                   </h4>
-                  <p className="text-xs text-[#92400e] font-medium">Upcycle Food-Grade Planters</p>
+                  <p className="text-xs sm:text-sm text-[#92400e] font-semibold">Upcycle Food-Grade Planters</p>
                 </div>
               </div>
 
-              <p className="text-xs text-[#4b6351] leading-relaxed">
+              <p className="text-sm text-[#2e4435] leading-relaxed">
                 Never purchase unnecessary virgin plastic pots when safe food containers are entering your home weekly.
               </p>
 
-              <div className="bg-[#f7f5ed] p-3.5 rounded-xl border border-[#ded5c5] space-y-1.5 text-xs text-[#354b3c]">
-                <strong className="text-[#144229] block">How to Safely Prep a Container:</strong>
-                <ol className="list-decimal pl-4 space-y-1">
+              <div className="bg-[#f7f5ed] p-4 rounded-xl border border-[#ded5c5] space-y-2 text-xs sm:text-sm text-[#1c261e]">
+                <strong className="text-[#144229] block font-bold">How to Safely Prep a Container:</strong>
+                <ol className="list-decimal pl-5 space-y-1 leading-relaxed">
                   <li>Use #2 (HDPE) or #5 (PP) food-grade plastic containers.</li>
                   <li>Clean thoroughly with hot water and baking soda.</li>
                   <li>Drill 4–6 drainage holes (8 mm diameter) in the bottom.</li>
@@ -311,26 +311,26 @@ export default async function LearnPage() {
             </div>
 
             {/* Recycle */}
-            <div id="recycle" className="bg-white rounded-2xl p-6 border border-[#ded5c5] shadow-xs space-y-4">
-              <div className="flex items-center gap-2.5">
-                <span className="p-2.5 rounded-xl bg-[#fbeee9] text-[#9a3412]">
-                  <Recycle size={22} />
+            <div id="recycle" className="bg-white rounded-2xl p-6 sm:p-7 border border-[#ded5c5] shadow-xs space-y-4">
+              <div className="flex items-center gap-3">
+                <span className="p-3 rounded-xl bg-[#fbeee9] text-[#9a3412]">
+                  <Recycle size={24} />
                 </span>
                 <div>
-                  <h4 className="font-serif font-bold text-lg text-[#0c2417]">
+                  <h4 className="font-serif font-bold text-lg text-[#071c11]">
                     3. Recycle
                   </h4>
-                  <p className="text-xs text-[#9a3412] font-medium">Balcony & Kitchen Composting</p>
+                  <p className="text-xs sm:text-sm text-[#9a3412] font-semibold">Balcony & Kitchen Composting</p>
                 </div>
               </div>
 
-              <p className="text-xs text-[#4b6351] leading-relaxed">
+              <p className="text-sm text-[#2e4435] leading-relaxed">
                 Over 30% of municipal landfill waste consists of organic plant trimmings that can be recycled directly back into fertile potting soil.
               </p>
 
-              <div className="bg-[#f7f5ed] p-3.5 rounded-xl border border-[#ded5c5] space-y-1.5 text-xs text-[#354b3c]">
-                <strong className="text-[#144229] block">The 2:1 Balcony Rule:</strong>
-                <p>
+              <div className="bg-[#f7f5ed] p-4 rounded-xl border border-[#ded5c5] space-y-2 text-xs sm:text-sm text-[#1c261e]">
+                <strong className="text-[#144229] block font-bold">The 2:1 Balcony Rule:</strong>
+                <p className="leading-relaxed">
                   For every 1 handful of wet kitchen scraps (coffee grounds, peelings), mix in 2 handfuls of dry brown carbon (crushed dry leaves, shredded non-glossy cardboard) to keep it completely odorless.
                 </p>
               </div>
@@ -342,10 +342,10 @@ export default async function LearnPage() {
         <section id="articles" className="space-y-6">
           <div className="flex items-center justify-between pb-3 border-b border-[#e5dfd3]">
             <div>
-              <h3 className="text-2xl font-serif font-bold text-[#0c2417]">
+              <h3 className="text-xl sm:text-2xl font-serif font-bold text-[#071c11]">
                 Curated Agronomic & Vertical Farming Guides
               </h3>
-              <p className="text-xs text-[#526a57]">
+              <p className="text-sm text-[#2e4435] mt-0.5">
                 In-depth editorial articles managed via Payload CMS with actionable home botany workflows
               </p>
             </div>
@@ -356,37 +356,37 @@ export default async function LearnPage() {
             {articles.map((art) => (
               <div
                 key={art.id}
-                className="bg-white rounded-2xl p-6 border border-[#ded5c5] shadow-xs hover:shadow-md transition-all flex flex-col justify-between"
+                className="bg-white rounded-2xl p-6 sm:p-7 border border-[#ded5c5] shadow-xs hover:shadow-md transition-all flex flex-col justify-between space-y-4"
               >
                 <div className="space-y-3">
                   <div className="flex items-center justify-between gap-2">
-                    <span className="text-[10px] font-bold uppercase tracking-wider text-[#144229] bg-[#eef5ee] px-2.5 py-1 rounded-md">
+                    <span className="text-xs font-bold uppercase tracking-wider text-[#144229] bg-[#eef5ee] px-2.5 py-1 rounded-md">
                       {art.categoryLabel || art.category}
                     </span>
                     {art.publishedAt && (
-                      <span className="text-[10px] font-mono text-[#7a9382]">
+                      <span className="text-xs font-mono text-[#2e4435]">
                         {art.publishedAt}
                       </span>
                     )}
                   </div>
 
-                  <h4 className="font-serif font-bold text-lg text-[#0c2417] leading-snug">
+                  <h4 className="font-serif font-bold text-lg text-[#071c11] leading-snug">
                     {art.title}
                   </h4>
 
-                  <p className="text-xs text-[#4b6351] leading-relaxed">
+                  <p className="text-sm text-[#2e4435] leading-relaxed">
                     {art.summary}
                   </p>
 
                   {art.keyTakeaways && art.keyTakeaways.length > 0 && (
-                    <div className="pt-2 border-t border-[#f0ebe0] space-y-1.5">
-                      <span className="text-[10px] font-bold uppercase tracking-wider text-[#144229] block">
+                    <div className="pt-3 border-t border-[#f0ebe0] space-y-2">
+                      <span className="text-xs font-bold uppercase tracking-wider text-[#144229] block">
                         Key Takeaways:
                       </span>
                       {art.keyTakeaways.map((takeaway, idx) => (
-                        <div key={idx} className="flex items-start gap-1.5 text-xs text-[#354b3c]">
-                          <CheckCircle2 size={13} className="text-[#1e613b] shrink-0 mt-0.5" />
-                          <span>{takeaway}</span>
+                        <div key={idx} className="flex items-start gap-2 text-xs sm:text-sm text-[#1c261e]">
+                          <CheckCircle2 size={16} className="text-[#144229] shrink-0 mt-0.5" />
+                          <span className="leading-relaxed">{takeaway}</span>
                         </div>
                       ))}
                     </div>
@@ -399,27 +399,27 @@ export default async function LearnPage() {
 
         {/* Bottom CTA to test in My Garden */}
         <div className="p-6 sm:p-8 rounded-2xl bg-[#eef5ee] border border-[#cfe0cf] flex flex-col sm:flex-row items-center justify-between gap-4">
-          <div className="space-y-1 text-center sm:text-left">
-            <h4 className="font-serif font-bold text-lg text-[#0c2417]">
+          <div className="space-y-1.5 text-center sm:text-left">
+            <h4 className="font-serif font-bold text-xl text-[#071c11]">
               Put These Principles Into Practice
             </h4>
-            <p className="text-xs sm:text-sm text-[#4b6351]">
+            <p className="text-sm text-[#2e4435]">
               Log your plant stages in My Garden or arrange your tiered layout in the Vertical Planner.
             </p>
           </div>
           <div className="flex items-center gap-3">
             <Link
               href="/app/my-garden"
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs font-semibold bg-[#144229] text-white hover:bg-[#0c2417] shadow-xs transition-colors"
+              className="inline-flex items-center gap-2 px-5 py-3 rounded-xl text-sm font-semibold bg-[#144229] text-white hover:bg-[#071c11] shadow-xs transition-colors min-h-[44px]"
             >
-              <Sprout size={15} />
+              <Sprout size={16} />
               <span>Open My Garden</span>
             </Link>
             <Link
               href="/app/planner"
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs font-semibold bg-white text-[#144229] border border-[#cfdfcf] hover:bg-[#f4f8f4] transition-colors"
+              className="inline-flex items-center gap-2 px-5 py-3 rounded-xl text-sm font-semibold bg-white text-[#144229] border border-[#cfdfcf] hover:bg-[#f4f8f4] transition-colors min-h-[44px]"
             >
-              <Layers size={15} />
+              <Layers size={16} />
               <span>Launch Planner</span>
             </Link>
           </div>

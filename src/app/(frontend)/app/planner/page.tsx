@@ -164,23 +164,23 @@ export default function PlannerPage() {
 
       <div className="flex-1 p-4 sm:p-6 lg:p-8 max-w-7xl mx-auto w-full space-y-6">
         {/* Conceptual Engineering Disclaimer */}
-        <div className="bg-[#f7f5ed] border border-[#ded5c5] p-4 rounded-2xl flex items-start gap-3 text-xs text-[#526a57]">
-          <Info size={18} className="shrink-0 mt-0.5 text-[#144229]" />
+        <div className="bg-[#f7f5ed] border border-[#ded5c5] p-4 sm:p-5 rounded-2xl flex items-start gap-3.5 text-xs sm:text-sm text-[#2e4435] shadow-2xs">
+          <Info size={20} className="shrink-0 mt-0.5 text-[#144229]" />
           <div>
             <p className="leading-relaxed">
-              <strong>Conceptual Planning Tool:</strong> This interactive visual layout offers botanical, light, and spacing recommendations. It does not replace structural engineering, electrical load ratings, or professional irrigation certifications. Always verify manufacturer weight capacity for your physical rack.
+              <strong className="text-[#071c11]">Conceptual Planning Tool:</strong> This interactive visual layout offers botanical, light, and spacing recommendations. It does not replace structural engineering, electrical load ratings, or professional irrigation certifications. Always verify manufacturer weight capacity for your physical rack.
             </p>
           </div>
         </div>
 
         {/* Rack Header & Reset Controls */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white p-5 rounded-2xl border border-[#ded5c5] shadow-xs">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white p-5 sm:p-6 rounded-2xl border border-[#ded5c5] shadow-xs">
           <div>
-            <h2 className="font-serif font-bold text-lg text-[#0c2417] flex items-center gap-2">
-              <Layers size={20} className="text-[#144229]" />
+            <h2 className="font-serif font-bold text-xl text-[#071c11] flex items-center gap-2.5">
+              <Layers size={22} className="text-[#144229]" />
               <span>Modular 3-Tier Balcony Stand (90 cm width)</span>
             </h2>
-            <p className="text-xs text-[#637d6a] mt-0.5">
+            <p className="text-xs sm:text-sm text-[#2e4435] mt-1">
               {slots.length} of 9 total slots occupied • Balanced vertical weight distribution
             </p>
           </div>
@@ -189,9 +189,9 @@ export default function PlannerPage() {
             <button
               type="button"
               onClick={handleResetRack}
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-[#ded5c5] text-xs font-semibold text-[#445b49] hover:bg-[#f4f8f4] transition-colors cursor-pointer"
+              className="inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl border border-[#ded5c5] text-xs sm:text-sm font-semibold text-[#2e4435] hover:bg-[#f4f8f4] transition-colors cursor-pointer min-h-[44px]"
             >
-              <RotateCcw size={13} />
+              <RotateCcw size={15} />
               <span>Reset Default Layout</span>
             </button>
           </div>
@@ -211,30 +211,30 @@ export default function PlannerPage() {
                 {/* Tier Info Header */}
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-[#f0ebe0]">
                   <div className="space-y-1">
-                    <div className="flex items-center gap-2">
-                      <span className="font-serif font-bold text-base text-[#0c2417]">
+                    <div className="flex items-center gap-2.5">
+                      <span className="font-serif font-bold text-lg text-[#071c11]">
                         {tier.name}
                       </span>
                       <Badge variant={tier.id === 'top' ? 'amber' : tier.id === 'middle' ? 'sage' : 'neutral'} size="sm">
                         {tier.lightLevel}
                       </Badge>
                     </div>
-                    <p className="text-xs text-[#637d6a]">
+                    <p className="text-xs sm:text-sm text-[#2e4435]">
                       {tier.lightProfile} • {tier.wateringCharacteristics}
                     </p>
                   </div>
 
-                  <div className="flex items-center gap-2 self-start sm:self-auto">
-                    <span className="text-xs font-mono font-medium text-[#1e613b] bg-[#eef5ee] px-2.5 py-1 rounded-md border border-[#cfe0cf]">
+                  <div className="flex items-center gap-3 self-start sm:self-auto">
+                    <span className="text-xs font-mono font-semibold text-[#144229] bg-[#eef5ee] px-3 py-1.5 rounded-lg border border-[#cfe0cf]">
                       {placedPlants.length} / {tier.maxSlots} Pots
                     </span>
                     {!isFull && (
                       <button
                         type="button"
                         onClick={() => setSelectedTierForAdd(tier.id)}
-                        className="inline-flex items-center gap-1 text-xs font-semibold bg-[#144229] hover:bg-[#0c2417] text-white px-3 py-1 rounded-md shadow-xs transition-colors cursor-pointer"
+                        className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-semibold bg-[#144229] hover:bg-[#071c11] text-white px-4 py-2 rounded-xl shadow-xs transition-colors cursor-pointer min-h-[40px]"
                       >
-                        <Plus size={13} />
+                        <Plus size={15} />
                         <span>Add Plant</span>
                       </button>
                     )}
@@ -249,41 +249,41 @@ export default function PlannerPage() {
                     return (
                       <div
                         key={slot.id}
-                        className="p-4 rounded-xl bg-[#fbf9f4] border border-[#ded5c5] flex flex-col justify-between space-y-3 group"
+                        className="p-5 rounded-xl bg-[#fbf9f4] border border-[#ded5c5] flex flex-col justify-between space-y-3.5 group"
                       >
-                        <div className="space-y-1.5">
+                        <div className="space-y-2">
                           <div className="flex items-center justify-between">
-                            <span className="text-[10px] font-semibold text-[#1e613b] bg-[#e7efe7] px-2 py-0.5 rounded-full">
+                            <span className="text-xs font-semibold text-[#144229] bg-[#e7efe7] px-2.5 py-0.5 rounded-full capitalize">
                               {slot.category.replace('-', ' ')}
                             </span>
                             <button
                               type="button"
                               onClick={() => handleRemoveSlot(slot.id)}
-                              className="text-[#9a3412] hover:bg-[#fbeee9] p-1 rounded-md transition-colors"
+                              className="text-[#9a3412] hover:bg-[#fbeee9] p-1.5 rounded-lg transition-colors cursor-pointer min-h-[32px] min-w-[32px] flex items-center justify-center"
                               title="Remove plant from tier"
                               aria-label="Remove plant from tier"
                             >
-                              <Trash2 size={13} />
+                              <Trash2 size={15} />
                             </button>
                           </div>
 
-                          <h4 className="font-serif font-bold text-sm text-[#0c2417]">
+                          <h4 className="font-serif font-bold text-base text-[#071c11]">
                             {slot.plantName}
                           </h4>
 
-                          <div className="space-y-1 text-[11px] text-[#556e5c]">
-                            <p>Required Depth: <strong>{slot.potDepthCm} cm</strong></p>
-                            <p>Spacing: <strong>{slot.spacingCm} cm</strong></p>
+                          <div className="space-y-1 text-xs sm:text-sm text-[#2e4435]">
+                            <p>Required Depth: <strong className="text-[#071c11]">{slot.potDepthCm} cm</strong></p>
+                            <p>Spacing: <strong className="text-[#071c11]">{slot.spacingCm} cm</strong></p>
                           </div>
                         </div>
 
                         {plantData && (
                           <Link
                             href={`/app/plants/${plantData.slug}`}
-                            className="text-[11px] font-semibold text-[#144229] hover:underline flex items-center justify-between pt-2 border-t border-[#ede7da]"
+                            className="text-xs sm:text-sm font-semibold text-[#144229] hover:underline flex items-center justify-between pt-2.5 border-t border-[#ede7da] min-h-[36px]"
                           >
                             <span>Botanical Specs</span>
-                            <ArrowRight size={11} />
+                            <ArrowRight size={14} />
                           </Link>
                         )}
                       </div>

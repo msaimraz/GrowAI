@@ -1,5 +1,7 @@
 import type { Metadata, Viewport } from 'next';
 import './globals.css';
+import { AuthProvider } from '@/context/AuthContext';
+import { PwaProvider } from '@/context/PwaContext';
 
 export const metadata: Metadata = {
   title: 'GrowAI — AI-Assisted Home Gardening & Vertical Farming',
@@ -17,19 +19,28 @@ export const metadata: Metadata = {
   authors: [{ name: 'GrowAI Botanical Systems' }],
   manifest: '/manifest.json',
   icons: {
-    icon: '/favicon.ico',
-    apple: '/icon-192.png',
+    icon: [
+      { url: '/favicon.ico' },
+      { url: '/icons/icon-192.png', sizes: '192x192', type: 'image/png' },
+      { url: '/icons/icon-512.png', sizes: '512x512', type: 'image/png' },
+    ],
+    apple: [
+      { url: '/apple-touch-icon.png', sizes: '180x180', type: 'image/png' },
+    ],
+  },
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: 'black-translucent',
+    title: 'GrowAI',
   },
 };
 
 export const viewport: Viewport = {
-  themeColor: '#0f2e1d',
+  themeColor: '#0e2a1b',
   width: 'device-width',
   initialScale: 1,
   maximumScale: 5,
 };
-
-import { AuthProvider } from '@/context/AuthContext';
 
 export default function RootLayout({
   children,
@@ -39,8 +50,11 @@ export default function RootLayout({
   return (
     <html lang="en" className="h-full antialiased scroll-smooth">
       <body className="min-h-full flex flex-col bg-[#fbf9f4] text-[#1c261e]">
-        <AuthProvider>{children}</AuthProvider>
+        <PwaProvider>
+          <AuthProvider>{children}</AuthProvider>
+        </PwaProvider>
       </body>
     </html>
   );
 }
+
