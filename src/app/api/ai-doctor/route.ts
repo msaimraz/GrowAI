@@ -25,12 +25,8 @@ export async function POST(req: NextRequest) {
       console.warn('Supabase auth session check non-fatal warning:', authErr);
     }
 
-    // Determine client identifier for rate limiting
-    const clientIp =
-      req.headers.get('x-forwarded-for')?.split(',')[0].trim() ||
-      req.headers.get('x-real-ip') ||
-      'anonymous_client';
-
+    // Determine client identifier for rate limiting (authoritative proxy header priority)
+    const clientIp = extractClientIp(req);
     const rateLimitIdentifier = isAuthenticated && userId ? userId : clientIp;
 
     // 2. Enforce Distributed Rate Limiting (Cross-Instance Persistent)
@@ -196,4 +192,45 @@ export async function POST(req: NextRequest) {
       { status: 500 }
     );
   }
+}
+
+/**
+ * Extract trusted client IP from reverse proxy headers.
+ * Authoritative precedence:
+ * 1. x-vercel-forwarded-for (authoritative when deployed on Vercel Edge/Serverless)
+ * 2. cf-connecting-ip (authoritative when deployed behind Cloudflare)
+ * 3. x-real-ip (authoritative on standard Nginx / AWS ALB setups)
+ * 4. x-forwarded-for (fallback, takes leftmost entry)
+ * 5. req.ip (Next.js server connection IP)
+ */
+export function extractClientIp(req: NextRequest | { headers: Headers }): string {
+  const vercelIp = req.headers.get('x-vercel-forwarded-for')?.trim();
+  if (vercelIp) return sanitizeIp(vercelIp);
+
+  const cfIp = req.headers.get('cf-connecting-ip')?.trim();
+  if (cfIp) return sanitizeIp(cfIp);
+
+  const realIp = req.headers.get('x-real-ip')?.trim();
+  if (realIp) return sanitizeIp(realIp);
+
+  const forwardedFor = req.headers.get('x-forwarded-for');
+  if (forwardedFor) {
+    const firstIp = forwardedFor.split(',')[0].trim();
+    if (firstIp) return sanitizeIp(firstIp);
+  }
+
+  const directIp = (req as any).ip;
+  if (directIp) return sanitizeIp(String(directIp));
+
+  return 'anonymous_guest';
+}
+
+const IPV4_OR_IPV6_REGEX = /^(?:(?:\d{1,3}\.){3}\d{1,3}|[a-fA-F0-9:]+)$/;
+
+function sanitizeIp(ip: string): string {
+  const clean = ip.split('%')[0].split(';')[0].split(' ')[0].trim();
+  if (IPV4_OR_IPV6_REGEX.test(clean)) {
+    return clean.slice(0, 45);
+  }
+  return 'anonymous_guest';
 }
