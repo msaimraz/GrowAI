@@ -10,7 +10,6 @@ import {
   Layers,
   Sparkles,
   BookOpen,
-  ArrowUpRight,
   ArrowRight,
   Info,
   DownloadCloud,
@@ -30,7 +29,7 @@ export function AppSidebar() {
       exact: true,
     },
     {
-      label: 'My Garden & Tracker',
+      label: 'My Garden',
       href: '/app/my-garden',
       icon: Sprout,
       badge: 'Active Log',
@@ -50,7 +49,7 @@ export function AppSidebar() {
       label: 'AI Plant Doctor',
       href: '/app/ai-doctor',
       icon: Sparkles,
-      badge: 'Vision AI',
+      badge: 'AI',
     },
     {
       label: 'Learn & Sustainability',
@@ -60,9 +59,9 @@ export function AppSidebar() {
   ];
 
   return (
-    <aside className="hidden lg:flex lg:flex-col w-64 bg-[#0d2a1b] text-[#e3ece5] border-r border-[#1a4b30] min-h-screen p-5 shrink-0 select-none">
+    <aside className="hidden lg:flex lg:flex-col w-64 bg-[#0d2a1b] text-[#e3ece5] border-r border-[#1a4b30] h-[100dvh] max-h-[100dvh] sticky top-0 shrink-0 select-none z-30 p-4 overflow-hidden">
       {/* Brand Header */}
-      <div className="pb-5 border-b border-[#1a4b30]">
+      <div className="pb-3.5 border-b border-[#1a4b30] shrink-0">
         <Link href="/" className="inline-block focus:outline-none focus:ring-2 focus:ring-[#64b584] rounded-xl">
           <div className="flex items-center gap-2.5">
             <span className="flex items-center justify-center w-8 h-8 rounded-xl bg-[#1e663f] text-white shadow-xs">
@@ -73,62 +72,64 @@ export function AppSidebar() {
             </span>
           </div>
         </Link>
-        <p className="text-xs text-[#86aa91] mt-1.5 font-medium tracking-wider uppercase">
+        <p className="text-[11px] text-[#86aa91] mt-1 font-medium tracking-wider uppercase">
           Vertical Agriculture OS
         </p>
       </div>
 
-      {/* Navigation */}
-      <nav className="flex-1 py-5 space-y-1.5" aria-label="App Navigation">
-        {navItems.map((item) => {
-          const Icon = item.icon;
-          const isActive = item.exact
-            ? pathname === item.href
-            : pathname === item.href || pathname.startsWith(`${item.href}/`);
+      {/* Navigation Group (12-16px vertical spacing, scrollable on short screens) */}
+      <div className="flex-1 min-h-0 overflow-y-auto py-3.5 space-y-3.5 scrollbar-none">
+        <nav className="space-y-3.5" aria-label="App Navigation">
+          {navItems.map((item) => {
+            const Icon = item.icon;
+            const isActive = item.exact
+              ? pathname === item.href
+              : pathname === item.href || pathname.startsWith(`${item.href}/`);
 
-          return (
-            <Link
-              key={item.href}
-              href={item.href}
-              className={`flex items-center justify-between px-3.5 py-2.5 rounded-xl text-sm font-medium transition-all min-h-[44px] ${
-                isActive
-                  ? 'bg-[#1b5837] text-white shadow-xs font-semibold border border-[#348b56]'
-                  : 'text-[#bed4c5] hover:text-white hover:bg-[#143d26]'
-              }`}
-            >
-              <div className="flex items-center gap-3">
-                <Icon
-                  size={19}
-                  className={isActive ? 'text-[#86efac]' : 'text-[#86aa91]'}
-                />
-                <span>{item.label}</span>
-              </div>
-              {item.badge && (
-                <span
-                  className={`text-xs px-2 py-0.5 rounded-full font-medium ${
-                    isActive
-                      ? 'bg-[#257a4d] text-white'
-                      : 'bg-[#183d27] text-[#9dc2a8]'
-                  }`}
-                >
-                  {item.badge}
-                </span>
-              )}
-            </Link>
-          );
-        })}
-      </nav>
+            return (
+              <Link
+                key={item.href}
+                href={item.href}
+                className={`flex items-center justify-between px-3 py-2.5 rounded-xl text-sm font-medium transition-all min-h-[44px] ${
+                  isActive
+                    ? 'bg-[#1b5837] text-white shadow-xs font-semibold border border-[#348b56]'
+                    : 'text-[#bed4c5] hover:text-white hover:bg-[#143d26]'
+                }`}
+              >
+                <div className="flex items-center gap-2.5 min-w-0">
+                  <Icon
+                    size={19}
+                    className={`shrink-0 ${isActive ? 'text-[#86efac]' : 'text-[#86aa91]'}`}
+                  />
+                  <span className="truncate">{item.label}</span>
+                </div>
+                {item.badge && (
+                  <span
+                    className={`text-[11px] px-2 py-0.5 rounded-full font-medium shrink-0 ml-1.5 ${
+                      isActive
+                        ? 'bg-[#257a4d] text-white'
+                        : 'bg-[#183d27] text-[#9dc2a8]'
+                    }`}
+                  >
+                    {item.badge}
+                  </span>
+                )}
+              </Link>
+            );
+          })}
+        </nav>
+      </div>
 
-      {/* Bottom Status & Info */}
-      <div className="pt-4 border-t border-[#1a4b30] space-y-3">
+      {/* Bottom Compact Footer (Install, AuthStatus, Landing Page) */}
+      <div className="pt-3 border-t border-[#1a4b30] space-y-2 shrink-0">
         {/* PWA Install Button if available */}
         {canInstall && (
           <button
             type="button"
             onClick={promptInstall}
-            className="w-full flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl bg-[#1e663f] hover:bg-[#257a4d] text-white font-semibold text-xs shadow-xs transition-colors cursor-pointer min-h-[44px]"
+            className="w-full flex items-center justify-center gap-2 py-2 px-3 rounded-xl bg-[#1e663f] hover:bg-[#257a4d] text-white font-semibold text-xs shadow-xs transition-colors cursor-pointer min-h-[40px]"
           >
-            <DownloadCloud size={16} />
+            <DownloadCloud size={15} />
             <span>Install GrowAI App</span>
           </button>
         )}
@@ -137,9 +138,9 @@ export function AppSidebar() {
           <button
             type="button"
             onClick={() => setShowIosInstructions(true)}
-            className="w-full flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl bg-[#1e663f] hover:bg-[#257a4d] text-white font-semibold text-xs shadow-xs transition-colors cursor-pointer min-h-[44px]"
+            className="w-full flex items-center justify-center gap-2 py-2 px-3 rounded-xl bg-[#1e663f] hover:bg-[#257a4d] text-white font-semibold text-xs shadow-xs transition-colors cursor-pointer min-h-[40px]"
           >
-            <DownloadCloud size={16} />
+            <DownloadCloud size={15} />
             <span>Install on iOS</span>
           </button>
         )}
@@ -150,13 +151,13 @@ export function AppSidebar() {
         {/* Public Site Link */}
         <Link
           href="/"
-          className="flex items-center justify-between text-xs font-medium text-[#9dc2a8] hover:text-white px-3 py-2.5 rounded-xl hover:bg-[#143d26] transition-colors min-h-[44px]"
+          className="flex items-center justify-between text-xs font-medium text-[#9dc2a8] hover:text-white px-3 py-2 rounded-xl hover:bg-[#143d26] transition-colors min-h-[38px]"
         >
           <span className="flex items-center gap-1.5">
-            <Info size={15} />
+            <Info size={14} />
             Landing Page
           </span>
-          <ArrowRight size={15} />
+          <ArrowRight size={14} />
         </Link>
       </div>
     </aside>

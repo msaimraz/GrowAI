@@ -282,7 +282,7 @@ export default function PlannerPage() {
                     return (
                       <div
                         key={slot.id}
-                        className="p-5 rounded-2xl bg-[#fbf9f4] border border-[#ded5c5] flex flex-col justify-between space-y-4 shadow-2xs hover:border-[#144229] transition-all"
+                        className="p-5 rounded-2xl bg-[#fbf9f4] border border-[#ded5c5] flex flex-col justify-between space-y-4 shadow-2xs hover:border-[#144229] transition-all min-h-[260px] h-full"
                       >
                         <div className="space-y-3">
                           <div className="flex items-center justify-between">
@@ -313,13 +313,13 @@ export default function PlannerPage() {
                           <div className="pt-1">
                             {isOptimalMatch ? (
                               <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-[#eef5ee] border border-[#cfe0cf] text-[11px] font-semibold text-[#1e613b]">
-                                <CheckCircle2 size={13} className="text-[#144229]" />
+                                <CheckCircle2 size={13} className="text-[#144229] shrink-0" />
                                 <span>Recommended Tier Match</span>
                               </div>
                             ) : (
                               <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-[#fff8e6] border border-[#fde68a] text-[11px] font-semibold text-[#92400e]">
-                                <AlertTriangle size={13} className="text-[#b45309]" />
-                                <span>User Placed (Prefers {plantData?.verticalSuitability.recommendedTier} tier)</span>
+                                <AlertTriangle size={13} className="text-[#b45309] shrink-0" />
+                                <span className="leading-tight">Prefers {plantData?.verticalSuitability.recommendedTier} tier</span>
                               </div>
                             )}
                           </div>
@@ -350,7 +350,7 @@ export default function PlannerPage() {
                     );
                   })}
 
-                  {/* Empty placeholder slots */}
+                  {/* Empty placeholder slots matching occupied card height */}
                   {Array.from({ length: tier.maxSlots - placedPlants.length }).map((_, idx) => (
                     <div
                       key={`empty-${tier.id}-${idx}`}
@@ -358,15 +358,15 @@ export default function PlannerPage() {
                         setSelectedTierForAdd(tier.id);
                         setSearchQuery('');
                       }}
-                      className="border-2 border-dashed border-[#ded5c5] hover:border-[#144229] rounded-2xl p-6 sm:p-8 flex flex-col items-center justify-center text-center cursor-pointer transition-all bg-[#fdfcf9] hover:bg-[#eef5ee] min-h-[180px] group"
+                      className="border-2 border-dashed border-[#ded5c5] hover:border-[#144229] rounded-2xl p-6 sm:p-8 flex flex-col items-center justify-center text-center cursor-pointer transition-all bg-[#fdfcf9] hover:bg-[#eef5ee] min-h-[260px] h-full group"
                     >
-                      <div className="w-10 h-10 rounded-full bg-[#f4f2eb] group-hover:bg-white text-[#8ba391] group-hover:text-[#144229] flex items-center justify-center mb-2 transition-colors">
+                      <div className="w-11 h-11 rounded-full bg-[#f4f2eb] group-hover:bg-white text-[#8ba391] group-hover:text-[#144229] flex items-center justify-center mb-2.5 transition-colors shadow-2xs">
                         <Plus size={22} />
                       </div>
                       <span className="text-sm font-serif font-bold text-[#4b6351] group-hover:text-[#0c2417]">
                         Empty Slot
                       </span>
-                      <span className="text-xs text-[#8ba391] mt-0.5">
+                      <span className="text-xs text-[#8ba391] mt-1 max-w-[180px]">
                         Click to assign a companion plant
                       </span>
                     </div>

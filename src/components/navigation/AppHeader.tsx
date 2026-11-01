@@ -73,14 +73,14 @@ export function AppHeader({
             >
               <Menu size={22} />
             </button>
-            <div className="min-w-0 flex-1">
+            <div className="min-w-0 flex-1 pr-2 sm:pr-4">
               {title && (
-                <h1 className="text-base sm:text-xl lg:text-2xl font-serif font-bold text-[#071c11] tracking-tight leading-snug sm:leading-tight line-clamp-2">
+                <h1 className="text-lg sm:text-xl lg:text-2xl font-serif font-bold text-[#071c11] tracking-tight leading-snug sm:leading-tight">
                   {title}
                 </h1>
               )}
               {subtitle && (
-                <p className="hidden md:block text-xs sm:text-sm text-[#2e4435] mt-0.5 font-medium truncate max-w-2xl">
+                <p className="hidden md:block text-xs sm:text-sm text-[#2e4435] mt-0.5 font-medium leading-normal">
                   {subtitle}
                 </p>
               )}
@@ -97,20 +97,20 @@ export function AppHeader({
                 aria-live="polite"
               >
                 <WifiOff size={14} className="stroke-[2.5]" />
-                <span className="hidden sm:inline">Offline Mode</span>
+                <span className="hidden sm:inline">Offline</span>
               </span>
             )}
 
-            {/* PWA Install Button (desktop / tablet prompt) */}
+            {/* PWA Install Button (tablet prompt only; desktop sidebar already has install action) */}
             {canInstall && (
               <button
                 type="button"
                 onClick={promptInstall}
-                className="hidden sm:inline-flex items-center gap-1.5 px-3 py-2 text-xs sm:text-sm font-semibold bg-[#eef5ee] text-[#144229] hover:bg-[#dfeadf] border border-[#cfe0cf] rounded-xl shadow-2xs transition-all cursor-pointer min-h-[44px]"
+                className="hidden sm:inline-flex lg:hidden items-center gap-1.5 px-3 py-2 text-xs sm:text-sm font-semibold bg-[#eef5ee] text-[#144229] hover:bg-[#dfeadf] border border-[#cfe0cf] rounded-xl shadow-2xs transition-all cursor-pointer min-h-[40px]"
                 aria-label="Install GrowAI Progressive Web App"
               >
-                <DownloadCloud size={16} />
-                <span>Install App</span>
+                <DownloadCloud size={15} />
+                <span>Install</span>
               </button>
             )}
 
@@ -118,10 +118,10 @@ export function AppHeader({
               <button
                 type="button"
                 onClick={() => setShowIosInstructions(true)}
-                className="hidden sm:inline-flex items-center gap-1.5 px-3 py-2 text-xs sm:text-sm font-semibold bg-[#eef5ee] text-[#144229] hover:bg-[#dfeadf] border border-[#cfe0cf] rounded-xl shadow-2xs transition-all cursor-pointer min-h-[44px]"
+                className="hidden sm:inline-flex lg:hidden items-center gap-1.5 px-3 py-2 text-xs sm:text-sm font-semibold bg-[#eef5ee] text-[#144229] hover:bg-[#dfeadf] border border-[#cfe0cf] rounded-xl shadow-2xs transition-all cursor-pointer min-h-[40px]"
                 aria-label="How to install GrowAI on iOS"
               >
-                <DownloadCloud size={16} />
+                <DownloadCloud size={15} />
                 <span>Install</span>
               </button>
             )}
@@ -131,18 +131,18 @@ export function AppHeader({
               <AuthStatus variant="header" />
             </div>
 
-            {/* Primary Action Button - responsive label */}
+            {/* Primary Action Button */}
             {actionLabel && actionHref && (
               <Link
                 href={actionHref}
-                className="inline-flex items-center justify-center gap-1.5 px-3 sm:px-3.5 py-2 text-xs sm:text-sm font-semibold bg-[#144229] text-white hover:bg-[#071c11] rounded-xl shadow-xs transition-all hover:shadow hover:-translate-y-0.5 active:translate-y-0 focus:outline-none focus:ring-2 focus:ring-[#144229] min-h-[44px] shrink-0"
+                className="inline-flex items-center justify-center gap-1.5 px-3 sm:px-3.5 py-2 text-xs sm:text-sm font-semibold bg-[#144229] text-white hover:bg-[#071c11] rounded-xl shadow-xs transition-all hover:shadow hover:-translate-y-0.5 active:translate-y-0 focus:outline-none focus:ring-2 focus:ring-[#144229] min-h-[40px] shrink-0"
                 aria-label={actionLabel}
               >
-                {actionIcon === 'plus' && <Plus size={16} className="shrink-0" />}
-                {actionIcon === 'sparkles' && <Sparkles size={16} className="shrink-0" />}
+                {actionIcon === 'plus' && <Plus size={15} className="shrink-0" />}
+                {actionIcon === 'sparkles' && <Sparkles size={15} className="shrink-0" />}
                 <span className="hidden sm:inline">{actionLabel}</span>
                 <span className="sm:hidden font-medium">
-                  {actionLabel.includes(' ') ? actionLabel.split(' ')[actionLabel.split(' ').length - 1] : actionLabel}
+                  {actionLabel === 'Add from Library' ? 'Add' : actionLabel === 'Explore Plants' ? 'Plants' : actionLabel}
                 </span>
               </Link>
             )}

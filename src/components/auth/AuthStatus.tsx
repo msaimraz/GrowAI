@@ -58,17 +58,17 @@ export function AuthStatus({ variant = 'sidebar', onImportSuccess }: AuthStatusP
   if (variant === 'header') {
     if (user) {
       return (
-        <div className="flex items-center gap-2">
-          <div className="hidden sm:flex items-center gap-1.5 text-xs text-[#1e613b] bg-[#eef5ee] px-2.5 py-1 rounded-lg border border-[#cfe0cf]">
+        <div className="flex items-center gap-1.5 sm:gap-2">
+          <div className="hidden xl:flex items-center gap-1.5 text-xs text-[#1e613b] bg-[#eef5ee] px-2.5 py-1 rounded-lg border border-[#cfe0cf]">
             <Cloud size={13} className="text-[#257a4d]" />
-            <span className="font-medium truncate max-w-[140px]">
+            <span className="font-medium truncate max-w-[120px]">
               {user.email?.split('@')[0]}
             </span>
           </div>
           <button
             type="button"
             onClick={() => signOut()}
-            className="p-1.5 text-xs text-[#526a57] hover:text-[#9a3412] hover:bg-[#fbeee9] rounded-lg transition-colors cursor-pointer"
+            className="p-1.5 text-xs text-[#526a57] hover:text-[#9a3412] hover:bg-[#fbeee9] rounded-lg transition-colors cursor-pointer min-h-[38px] min-w-[38px] flex items-center justify-center"
             title="Sign Out"
             aria-label="Sign Out"
           >
@@ -80,13 +80,9 @@ export function AuthStatus({ variant = 'sidebar', onImportSuccess }: AuthStatusP
 
     return (
       <div className="flex items-center gap-2">
-        <span className="hidden sm:inline-flex items-center gap-1 text-xs text-[#6d8573] bg-[#f7f5ed] px-2.5 py-1 rounded-lg border border-[#e2dbce]">
-          <HardDrive size={13} />
-          Demo Mode
-        </span>
         <Link
           href="/auth/login"
-          className="text-xs font-semibold text-[#144229] hover:text-white hover:bg-[#144229] px-3 py-1.5 rounded-lg border border-[#cfdfcf] transition-all"
+          className="text-xs font-semibold text-[#144229] hover:text-white hover:bg-[#144229] px-3 py-1.5 rounded-lg border border-[#cfdfcf] transition-all min-h-[38px] flex items-center"
         >
           Sign In
         </Link>
