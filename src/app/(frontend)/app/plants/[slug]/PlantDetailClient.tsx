@@ -207,31 +207,39 @@ export function PlantDetailClient({ plant }: PlantDetailClientProps) {
                 </div>
 
                 {/* Key Agronomic Highlights Grid */}
-                <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-3 border-t border-[#f0ebe0]">
-                  <div className="space-y-1">
-                    <span className="text-xs text-[#5a7662] font-medium block">Sunlight:</span>
-                    <span className="text-sm sm:text-base font-bold text-[#071c11] capitalize block">
+                <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-3.5 pt-4 border-t border-[#f0ebe0]">
+                  <div className="bg-[#fbf9f4] p-3.5 rounded-2xl border border-[#ded5c5]/70 space-y-1 min-w-0">
+                    <span className="text-xs font-mono font-bold uppercase tracking-wider text-[#5a7662] block">
+                      Sunlight
+                    </span>
+                    <span className="text-sm sm:text-base font-bold text-[#071c11] capitalize block leading-snug">
                       {plant.sunlight.replace('-', ' ')}
                     </span>
                   </div>
 
-                  <div className="space-y-1">
-                    <span className="text-xs text-[#5a7662] font-medium block">Daily Light:</span>
-                    <span className="text-sm sm:text-base font-bold text-[#071c11] block">
+                  <div className="bg-[#fbf9f4] p-3.5 rounded-2xl border border-[#ded5c5]/70 space-y-1 min-w-0">
+                    <span className="text-xs font-mono font-bold uppercase tracking-wider text-[#5a7662] block">
+                      Daily Light
+                    </span>
+                    <span className="text-sm sm:text-base font-bold text-[#071c11] block leading-snug">
                       {plant.sunlightHours}
                     </span>
                   </div>
 
-                  <div className="space-y-1">
-                    <span className="text-xs text-[#5a7662] font-medium block">Water Moisture:</span>
-                    <span className="text-sm sm:text-base font-bold text-[#071c11] capitalize block">
+                  <div className="bg-[#fbf9f4] p-3.5 rounded-2xl border border-[#ded5c5]/70 space-y-1 min-w-0">
+                    <span className="text-xs font-mono font-bold uppercase tracking-wider text-[#5a7662] block">
+                      Moisture Strategy
+                    </span>
+                    <span className="text-sm sm:text-base font-bold text-[#071c11] capitalize block leading-snug">
                       {plant.watering.moistureLevel}
                     </span>
                   </div>
 
-                  <div className="space-y-1">
-                    <span className="text-xs text-[#5a7662] font-medium block">Temperature:</span>
-                    <span className="text-sm sm:text-base font-bold text-[#071c11] block">
+                  <div className="bg-[#fbf9f4] p-3.5 rounded-2xl border border-[#ded5c5]/70 space-y-1 min-w-0">
+                    <span className="text-xs font-mono font-bold uppercase tracking-wider text-[#5a7662] block">
+                      Temperature
+                    </span>
+                    <span className="text-sm sm:text-base font-bold text-[#071c11] block leading-snug">
                       {plant.temperatureRange.min}°C – {plant.temperatureRange.max}°C
                     </span>
                   </div>
@@ -285,12 +293,12 @@ export function PlantDetailClient({ plant }: PlantDetailClientProps) {
                 </div>
 
                 <div className="space-y-3.5 text-base">
-                  <div className="flex items-start justify-between gap-4">
-                    <span className="text-[#5a7662] font-medium flex items-center gap-1.5">
+                  <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-1 sm:gap-4">
+                    <span className="text-[#5a7662] font-medium flex items-center gap-1.5 shrink-0">
                       <Thermometer size={18} className="text-[#144229]" />
                       Temperature Range:
                     </span>
-                    <span className="text-right text-[#071c11]">
+                    <span className="sm:text-right text-[#071c11]">
                       <strong>{plant.temperatureRange.min}°C to {plant.temperatureRange.max}°C</strong>
                       {plant.temperatureRange.idealRange && (
                         <span className="block text-xs sm:text-sm text-[#144229] font-medium mt-0.5">
@@ -300,16 +308,16 @@ export function PlantDetailClient({ plant }: PlantDetailClientProps) {
                     </span>
                   </div>
 
-                  <div className="flex items-start justify-between gap-4 border-t border-[#f0ebe0] pt-2.5">
-                    <span className="text-[#5a7662] font-medium">Sunlight Exposure:</span>
-                    <span className="text-right text-[#071c11] font-semibold capitalize">
+                  <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-1 sm:gap-4 border-t border-[#f0ebe0] pt-2.5">
+                    <span className="text-[#5a7662] font-medium shrink-0">Sunlight Exposure:</span>
+                    <span className="sm:text-right text-[#071c11] font-semibold capitalize">
                       {plant.sunlight.replace('-', ' ')}
                     </span>
                   </div>
 
-                  <div className="flex items-start justify-between gap-4 border-t border-[#f0ebe0] pt-2.5">
-                    <span className="text-[#5a7662] font-medium">Daily Photoperiod:</span>
-                    <span className="text-right text-[#071c11] font-semibold">
+                  <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-1 sm:gap-4 border-t border-[#f0ebe0] pt-2.5">
+                    <span className="text-[#5a7662] font-medium shrink-0">Daily Photoperiod:</span>
+                    <span className="sm:text-right text-[#071c11] font-semibold leading-relaxed">
                       {plant.sunlightHours}
                     </span>
                   </div>

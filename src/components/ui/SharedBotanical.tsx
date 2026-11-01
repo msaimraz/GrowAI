@@ -43,12 +43,12 @@ export function SectionHeader({
             {category}
           </span>
         )}
-        <div className="flex items-center gap-3">
+        <div className="flex flex-wrap items-center gap-2.5 sm:gap-3">
           <h2 className="text-2xl sm:text-3xl font-serif font-bold text-[#071c11] tracking-tight">
             {title}
           </h2>
           {badge && (
-            <span className="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-[#eef5ee] border border-[#cfe0cf] text-[#144229]">
+            <span className="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-[#eef5ee] border border-[#cfe0cf] text-[#144229] shrink-0">
               {badge}
             </span>
           )}

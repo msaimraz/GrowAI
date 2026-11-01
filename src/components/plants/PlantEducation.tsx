@@ -73,23 +73,36 @@ export function DidYouKnowCard({ plant }: DidYouKnowCardProps) {
     `${plant.commonName} (${plant.scientificName}) is selectively adapted to grow in container gardens and compact spaces, using sunlight and water efficiently.`;
 
   return (
-    <div className="bg-[#f7f5ed] rounded-3xl border border-[#ded5c5] p-5 sm:p-6 shadow-xs relative overflow-hidden flex flex-col sm:flex-row items-start sm:items-center gap-4">
-      <div className="w-12 h-12 rounded-2xl bg-white border border-[#ded5c5] flex items-center justify-center text-[#c77712] shrink-0 shadow-2xs">
-        <Lightbulb size={24} />
-      </div>
+    <div className="bg-[#f7f5ed] rounded-3xl border border-[#ded5c5] p-6 sm:p-7 shadow-xs space-y-4 flex flex-col justify-between h-full">
+      <div className="space-y-3.5">
+        <div className="flex flex-wrap items-start justify-between gap-2.5 pb-3 border-b border-[#ded5c5]/80">
+          <div className="flex items-center gap-2.5 min-w-0">
+            <span className="w-10 h-10 rounded-xl bg-white border border-[#ded5c5] flex items-center justify-center text-[#c77712] shrink-0 shadow-2xs">
+              <Lightbulb size={20} />
+            </span>
+            <div className="min-w-0">
+              <span className="text-xs font-mono font-bold uppercase tracking-wider text-[#144229] block">
+                Fascinating Science
+              </span>
+              <h4 className="text-lg sm:text-xl font-serif font-bold text-[#071c11] leading-tight">
+                Did You Know?
+              </h4>
+            </div>
+          </div>
 
-      <div className="space-y-1 flex-1">
-        <div className="flex items-center gap-2">
-          <span className="text-xs font-mono font-bold uppercase tracking-wider text-[#144229]">
-            Did You Know?
-          </span>
-          <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-white border border-[#cfe0cf] text-[#144229]">
+          <span className="text-xs font-semibold px-2.5 py-1 rounded-full bg-white border border-[#cfe0cf] text-[#144229] shrink-0">
             Verified Botanical Fact
           </span>
         </div>
-        <p className="text-sm sm:text-base text-[#1c261e] leading-relaxed">
+
+        <p className="text-base text-[#1c261e] leading-relaxed">
           {fact}
         </p>
+      </div>
+
+      <div className="pt-2 text-xs text-[#5a7662] flex items-center gap-1.5 font-medium border-t border-[#ded5c5]/60">
+        <Sparkles size={14} className="text-[#c77712]" />
+        <span>Curated photobiology & agronomic trivia</span>
       </div>
     </div>
   );
@@ -162,44 +175,46 @@ export function GardeningChallengeCard({ plant }: GardeningChallengeProps) {
   const challenge = getChallengeActivity();
 
   return (
-    <div className="bg-white rounded-3xl border border-[#ded5c5] p-6 sm:p-7 shadow-xs space-y-4">
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-3 border-b border-[#f0ebe0]">
-        <div className="flex items-center gap-2.5">
-          <span className="w-9 h-9 rounded-xl bg-[#eef5ee] border border-[#cfe0cf] flex items-center justify-center text-[#144229] shrink-0">
-            <Compass size={18} />
-          </span>
-          <div>
-            <span className="text-xs font-mono font-bold uppercase tracking-wider text-[#144229]">
-              Hands-On Activity
+    <div className="bg-white rounded-3xl border border-[#ded5c5] p-6 sm:p-7 shadow-xs space-y-4 flex flex-col justify-between h-full">
+      <div className="space-y-4">
+        <div className="flex flex-wrap items-start justify-between gap-2.5 pb-3 border-b border-[#f0ebe0]">
+          <div className="flex items-center gap-2.5 min-w-0">
+            <span className="w-10 h-10 rounded-xl bg-[#eef5ee] border border-[#cfe0cf] flex items-center justify-center text-[#144229] shrink-0">
+              <Compass size={20} />
             </span>
-            <h4 className="text-lg sm:text-xl font-serif font-bold text-[#071c11]">
-              Today’s Gardening Challenge
-            </h4>
+            <div className="min-w-0">
+              <span className="text-xs font-mono font-bold uppercase tracking-wider text-[#144229] block">
+                Hands-On Activity
+              </span>
+              <h4 className="text-lg sm:text-xl font-serif font-bold text-[#071c11] leading-tight">
+                Today’s Gardening Challenge
+              </h4>
+            </div>
           </div>
+
+          <span className="text-xs font-semibold px-2.5 py-1 rounded-full bg-[#f7f5ed] border border-[#ded5c5] text-[#2e4435] shrink-0">
+            Beginner-Friendly • 3 Min
+          </span>
         </div>
 
-        <span className="text-xs font-semibold px-3 py-1 rounded-full bg-[#f7f5ed] border border-[#ded5c5] text-[#2e4435] self-start sm:self-auto">
-          Beginner-Friendly • 3 Minutes
-        </span>
+        <div className="space-y-2.5">
+          <h5 className="font-bold text-base text-[#071c11]">
+            {challenge.title}
+          </h5>
+          <p className="text-sm sm:text-base text-[#1c261e] leading-relaxed">
+            {challenge.step}
+          </p>
+          <p className="text-xs sm:text-sm text-[#5a7662] bg-[#fbf9f4] p-3 rounded-xl border border-[#ded5c5] leading-relaxed">
+            💡 <strong>Gardener’s Tip:</strong> {challenge.tip}
+          </p>
+        </div>
       </div>
 
-      <div className="space-y-2">
-        <h5 className="font-bold text-base text-[#071c11]">
-          {challenge.title}
-        </h5>
-        <p className="text-sm sm:text-base text-[#1c261e] leading-relaxed">
-          {challenge.step}
-        </p>
-        <p className="text-xs sm:text-sm text-[#5a7662] bg-[#fbf9f4] p-3 rounded-xl border border-[#ded5c5]">
-          💡 <strong>Gardener’s Tip:</strong> {challenge.tip}
-        </p>
-      </div>
-
-      <div className="pt-1 flex items-center justify-between gap-3">
+      <div className="pt-2 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 border-t border-[#f0ebe0]">
         <button
           type="button"
           onClick={toggleChallenge}
-          className={`min-h-[44px] px-5 py-2.5 rounded-xl font-semibold text-sm transition-all flex items-center gap-2 cursor-pointer ${
+          className={`min-h-[44px] px-5 py-2.5 rounded-xl font-semibold text-sm transition-all flex items-center justify-center gap-2 cursor-pointer ${
             isCompleted
               ? 'bg-[#144229] text-white shadow-xs'
               : 'bg-[#eef5ee] text-[#144229] hover:bg-[#dcecdc] border border-[#cfe0cf]'
@@ -210,7 +225,7 @@ export function GardeningChallengeCard({ plant }: GardeningChallengeProps) {
         </button>
 
         {isCompleted && (
-          <span className="text-xs sm:text-sm font-semibold text-[#144229] flex items-center gap-1.5 animate-fadeIn">
+          <span className="text-xs sm:text-sm font-semibold text-[#144229] flex items-center justify-center sm:justify-start gap-1.5 animate-fadeIn">
             <Sparkles size={16} className="text-[#c77712]" />
             Great job tending your garden!
           </span>
@@ -329,22 +344,22 @@ export function PlantQuizCard({ plant }: PlantQuizProps) {
 
   return (
     <div className="bg-white rounded-3xl border border-[#ded5c5] p-6 sm:p-8 shadow-xs space-y-6">
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-[#f0ebe0]">
-        <div className="flex items-center gap-3">
+      <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3 pb-4 border-b border-[#f0ebe0]">
+        <div className="flex items-center gap-3 min-w-0">
           <span className="w-10 h-10 rounded-2xl bg-[#fef9ee] border border-[#fed7aa] flex items-center justify-center text-[#c77712] shrink-0">
             <Trophy size={20} />
           </span>
-          <div>
-            <h3 className="text-xl sm:text-2xl font-serif font-bold text-[#071c11]">
+          <div className="min-w-0">
+            <h3 className="text-xl sm:text-2xl font-serif font-bold text-[#071c11] leading-tight">
               Quick Knowledge Check
             </h3>
-            <p className="text-xs sm:text-sm text-[#5a7662]">
+            <p className="text-xs sm:text-sm text-[#5a7662] mt-0.5">
               Test what you’ve learned about {plant.commonName} with this 3-question quiz!
             </p>
           </div>
         </div>
 
-        <span className="text-xs sm:text-sm font-semibold px-3 py-1 rounded-full bg-[#f4f8f4] border border-[#cfe0cf] text-[#144229] self-start sm:self-auto">
+        <span className="text-xs sm:text-sm font-semibold px-3 py-1 rounded-full bg-[#f4f8f4] border border-[#cfe0cf] text-[#144229] shrink-0 self-start sm:self-auto">
           3 Questions • Instant Feedback
         </span>
       </div>
@@ -359,7 +374,7 @@ export function PlantQuizCard({ plant }: PlantQuizProps) {
           return (
             <div
               key={qIdx}
-              className="p-5 rounded-2xl bg-[#fbf9f4] border border-[#ded5c5] space-y-3.5"
+              className="p-4 sm:p-5 rounded-2xl bg-[#fbf9f4] border border-[#ded5c5] space-y-3.5"
             >
               <div className="flex items-start gap-2.5">
                 <span className="w-6 h-6 rounded-full bg-[#144229] text-white text-xs font-bold flex items-center justify-center shrink-0 mt-0.5">
@@ -370,7 +385,7 @@ export function PlantQuizCard({ plant }: PlantQuizProps) {
                 </h4>
               </div>
 
-              <div className="space-y-2 pl-8">
+              <div className="space-y-2 sm:pl-8">
                 {q.options.map((option, optIdx) => {
                   const isThisSelected = selected === optIdx;
                   let optionStyle =
@@ -394,9 +409,9 @@ export function PlantQuizCard({ plant }: PlantQuizProps) {
                       type="button"
                       disabled={hasAnswered}
                       onClick={() => handleSelect(qIdx, optIdx)}
-                      className={`w-full text-left p-3.5 rounded-xl border text-sm sm:text-base transition-all flex items-center justify-between gap-3 cursor-pointer min-h-[44px] ${optionStyle}`}
+                      className={`w-full text-left p-3.5 sm:p-4 rounded-xl border text-sm sm:text-base transition-all flex items-center justify-between gap-3 cursor-pointer min-h-[48px] ${optionStyle}`}
                     >
-                      <span>{option}</span>
+                      <span className="leading-snug">{option}</span>
                       {hasAnswered && optIdx === q.correctIndex && (
                         <CheckCircle2 size={18} className="text-[#144229] shrink-0" />
                       )}
@@ -411,7 +426,7 @@ export function PlantQuizCard({ plant }: PlantQuizProps) {
               {/* Instant explanation */}
               {hasAnswered && (
                 <div
-                  className={`mt-2 ml-8 p-3.5 rounded-xl text-xs sm:text-sm leading-relaxed ${
+                  className={`mt-2 sm:ml-8 p-3.5 sm:p-4 rounded-xl text-xs sm:text-sm leading-relaxed ${
                     isCorrect
                       ? 'bg-[#eef5ee] text-[#144229] border border-[#cfe0cf]'
                       : 'bg-[#fee2e2] text-[#991b1b] border border-[#fca5a5]'
@@ -445,7 +460,7 @@ export function PlantQuizCard({ plant }: PlantQuizProps) {
           <button
             type="button"
             onClick={handleReset}
-            className="min-h-[44px] px-4 py-2 rounded-xl border border-[#ded5c5] text-xs sm:text-sm font-semibold text-[#2e4435] hover:bg-[#f7f5ed] flex items-center gap-1.5 cursor-pointer"
+            className="w-full sm:w-auto min-h-[44px] px-4 py-2 rounded-xl border border-[#ded5c5] text-xs sm:text-sm font-semibold text-[#2e4435] hover:bg-[#f7f5ed] flex items-center justify-center gap-1.5 cursor-pointer"
           >
             <RotateCcw size={15} />
             <span>Try Again</span>

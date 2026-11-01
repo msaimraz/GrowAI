@@ -374,14 +374,14 @@ export function LearnDiscoveryClient({ articles, plants }: LearnDiscoveryClientP
         </div>
 
         {activeQuizPlant && (
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            <div className="lg:col-span-1">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 items-stretch">
+            <div className="col-span-1 flex flex-col">
               <DidYouKnowCard plant={activeQuizPlant} />
             </div>
-            <div className="lg:col-span-1">
+            <div className="col-span-1 flex flex-col">
               <GardeningChallengeCard plant={activeQuizPlant} />
             </div>
-            <div className="lg:col-span-1">
+            <div className="col-span-1 md:col-span-2 lg:col-span-1 flex flex-col">
               <PlantQuizCard plant={activeQuizPlant} />
             </div>
           </div>

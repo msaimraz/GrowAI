@@ -233,9 +233,9 @@ export default function PlannerPage() {
                 className="bg-white rounded-3xl border border-[#ded5c5] p-6 sm:p-8 shadow-xs space-y-5"
               >
                 {/* Tier Info Header */}
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-[#f0ebe0]">
-                  <div className="space-y-1">
-                    <div className="flex items-center gap-3">
+                <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 pb-4 border-b border-[#f0ebe0]">
+                  <div className="space-y-1.5 min-w-0">
+                    <div className="flex flex-wrap items-center gap-2.5">
                       <span className="font-serif font-bold text-xl text-[#0c2417]">
                         {tier.name}
                       </span>
@@ -246,13 +246,13 @@ export default function PlannerPage() {
                         {tier.lightLevel}
                       </Badge>
                     </div>
-                    <p className="text-xs sm:text-sm text-[#526a57]">
+                    <p className="text-xs sm:text-sm text-[#526a57] leading-relaxed">
                       {tier.lightProfile} • {tier.wateringCharacteristics}
                     </p>
                   </div>
 
-                  <div className="flex items-center gap-3 self-start sm:self-auto">
-                    <span className="text-xs font-mono font-semibold text-[#144229] bg-[#eef5ee] px-3.5 py-1.5 rounded-xl border border-[#cfe0cf]">
+                  <div className="flex flex-wrap items-center gap-2.5 sm:gap-3">
+                    <span className="text-xs font-mono font-semibold text-[#144229] bg-[#eef5ee] px-3.5 py-1.5 rounded-xl border border-[#cfe0cf] shrink-0">
                       {placedPlants.length} / {tier.maxSlots} Slots Placed
                     </span>
                     {!isFull && (
@@ -262,7 +262,7 @@ export default function PlannerPage() {
                           setSelectedTierForAdd(tier.id);
                           setSearchQuery('');
                         }}
-                        className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-semibold bg-[#144229] hover:bg-[#0c2417] text-white px-5 py-2.5 rounded-xl shadow-xs transition-colors cursor-pointer min-h-[44px]"
+                        className="inline-flex items-center justify-center gap-1.5 text-xs sm:text-sm font-semibold bg-[#144229] hover:bg-[#0c2417] text-white px-4 sm:px-5 py-2 sm:py-2.5 rounded-xl shadow-xs transition-colors cursor-pointer min-h-[44px] shrink-0"
                       >
                         <Plus size={16} />
                         <span>Assign Plant</span>
@@ -272,7 +272,7 @@ export default function PlannerPage() {
                 </div>
 
                 {/* Slots Grid */}
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-5">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
                   {placedPlants.map((slot) => {
                     const plantData = PLANTS_DATA.find((p) => p.slug === slot.plantSlug);
                     const isOptimalMatch =

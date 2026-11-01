@@ -303,11 +303,11 @@ export function PlantLibraryClient({
                 {/* Visual Header / Specimen Header */}
                 <div className="p-6 space-y-4">
                   {/* Top Badges */}
-                  <div className="flex items-center justify-between gap-2">
+                  <div className="flex flex-wrap items-center justify-between gap-2">
                     <Badge variant="sage" size="sm">
                       {plant.category.replace('-', ' ')}
                     </Badge>
-                    <div className="flex items-center gap-2">
+                    <div className="flex flex-wrap items-center gap-1.5 sm:gap-2">
                       <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#f7f5ed] border border-[#ded5c5] text-xs font-semibold text-[#144229]">
                         <span className="capitalize">{plant.difficulty.level}</span>
                         {renderDifficultyScore(plant.difficulty.score)}
