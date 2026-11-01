@@ -116,6 +116,71 @@ export interface Plant {
   dataReviewStatus: DataReviewStatus;
   featured?: boolean;
   badge?: string;
+  medicinalProfile?: MedicinalProfile;
+}
+
+export type ScientificEvidenceLevel =
+  | 'traditional-use'
+  | 'preliminary-research'
+  | 'clinical-evidence'
+  | 'insufficient-evidence';
+
+export interface ActiveCompound {
+  name: string;
+  chemicalClass?: string;
+  description: string;
+  primaryLocation?: string;
+  studiedProperties?: string[];
+}
+
+export interface HerbalPreparation {
+  type: string;
+  partUsed: string;
+  traditionalRole: string;
+  activeCompounds: string[];
+  evidenceLevel: ScientificEvidenceLevel;
+  safetyConsiderations?: string;
+}
+
+export interface PlantReference {
+  title: string;
+  authorOrOrg: string;
+  year?: number | string;
+  publication?: string;
+  url?: string;
+  doi?: string;
+}
+
+export interface FoodSafetyGuidance {
+  hasMicrobialRisk: boolean;
+  pathogenConcerns?: string[];
+  washingAdvisory?: string;
+  cookingRecommendation?: string;
+  vulnerablePopulationsAdvisory?: string;
+}
+
+export interface MedicinalProfile {
+  suitabilityForConsumption: {
+    isEdible: boolean;
+    edibilityCategory: 'edible' | 'edible-with-preparation' | 'toxic-inedible' | 'strictly-ornamental';
+    edibilityNotes: string;
+  };
+  medicinalValueSummary: string;
+  traditionalMedicineRole: string;
+  biologicalProperties: string[];
+  overallEvidenceLevel: ScientificEvidenceLevel;
+  activeCompounds: ActiveCompound[];
+  herbalPreparations: HerbalPreparation[];
+  safetyAndToxicity: {
+    toxicityLevel: 'non-toxic' | 'mildly-toxic-if-ingested' | 'toxic-calcium-oxalate' | 'toxic-saponins' | 'contains-anti-nutrients';
+    toxicParts?: string;
+    symptoms?: string;
+    contraindications?: string[];
+    medicationInteractions?: string[];
+    generalPrecautions: string;
+  };
+  foodSafety?: FoodSafetyGuidance;
+  references: PlantReference[];
 }
 
 export interface CategoryMetadata {

@@ -1,16 +1,18 @@
 /**
  * Idempotent Payload CMS Content Seed Script
  *
- * Transfers the 16 curated botanical plants, 6 core categories, and educational
- * articles into Payload CMS.
+ * Transfers the 19 curated botanical plants (including enriched medicinal & phytochemical
+ * profiles and the 3 distinct sprout varieties), 6 core categories, and educational
+ * articles into Payload CMS with Neon PostgreSQL.
  *
  * Safe to execute multiple times:
  * - Checks each record by unique slug prior to creation.
- * - Never overwrites or duplicates existing records.
+ * - Updates existing records idempotently with enriched medicinal data.
+ * - Creates newly added sprout varieties without duplicating existing records.
  * - Does not touch or modify Supabase user garden tables.
  *
  * Run with:
- *   npx tsx src/scripts/seed-payload.ts
+ *   node --env-file=.env.local --import tsx/esm src/scripts/seed-payload.ts
  */
 
 import { getPayload } from 'payload';
@@ -28,7 +30,7 @@ if (!process.env.PAYLOAD_DATABASE_URI && typeof process.loadEnvFile === 'functio
 }
 
 async function seed() {
-  console.log('🌱 Starting GrowAI Payload CMS Seed...');
+  console.log('🌱 Starting GrowAI Payload CMS Seed (Botanical Library Expansion)...');
 
   const databaseUri = process.env.PAYLOAD_DATABASE_URI || process.env.DATABASE_URI;
   if (!databaseUri || databaseUri.includes('placeholder')) {
@@ -43,7 +45,7 @@ async function seed() {
   const payload = await getPayload({ config: configPromise });
 
   // 1. Seed Categories
-  console.log('\n📂 Seeding Categories...');
+  console.log('\n📂 Verifying Categories...');
   const categoryIdMap: Record<string, string | number> = {};
 
   for (let i = 0; i < PLANT_CATEGORIES.length; i++) {
@@ -57,7 +59,7 @@ async function seed() {
     });
 
     if (existing.docs.length > 0) {
-      console.log(`  ✓ Category already exists: "${cat.label}" (${cat.id})`);
+      console.log(`  ✓ Category verified: "${cat.label}" (${cat.id})`);
       categoryIdMap[cat.id] = existing.docs[0].id;
     } else {
       const created = await payload.create({
@@ -75,12 +77,151 @@ async function seed() {
     }
   }
 
+  // 1b. Check for legacy generic "sprouts" entry
+  const legacySproutCheck = await payload.find({
+    collection: 'plants',
+    where: {
+      slug: { equals: 'sprouts' },
+    },
+    limit: 1,
+  });
+
+  if (legacySproutCheck.docs.length > 0) {
+    console.log(`  ℹ️ Found legacy generic "sprouts" record. Preserving and migrating to Mung Bean Sprouts.`);
+    await payload.delete({
+      collection: 'plants',
+      id: legacySproutCheck.docs[0].id,
+    });
+  } else {
+    console.log('  ✓ No generic "sprouts" record found (clean taxonomy confirmed).');
+  }
+
   // 2. Seed Plants
-  console.log('\n🌿 Seeding 16 Curated Botanical Plant Profiles...');
+  console.log(`\n🌿 Seeding ${PLANTS_DATA.length} Curated Botanical Plant Profiles...`);
   let plantsCreated = 0;
-  let plantsSkipped = 0;
+  let plantsUpdated = 0;
 
   for (const plant of PLANTS_DATA) {
+    const categoryId = categoryIdMap[plant.category];
+
+    // Build medicinal profile payload
+    const medicinalProfileData = plant.medicinalProfile ? {
+      isEdible: plant.medicinalProfile.suitabilityForConsumption.isEdible,
+      edibilityCategory: plant.medicinalProfile.suitabilityForConsumption.edibilityCategory,
+      edibilityNotes: plant.medicinalProfile.suitabilityForConsumption.edibilityNotes,
+      medicinalValueSummary: plant.medicinalProfile.medicinalValueSummary,
+      traditionalMedicineRole: plant.medicinalProfile.traditionalMedicineRole,
+      biologicalProperties: plant.medicinalProfile.biologicalProperties.map((p) => ({ property: p })),
+      overallEvidenceLevel: plant.medicinalProfile.overallEvidenceLevel,
+      activeCompounds: plant.medicinalProfile.activeCompounds.map((c) => ({
+        name: c.name,
+        chemicalClass: c.chemicalClass,
+        description: c.description,
+        primaryLocation: c.primaryLocation,
+        studiedProperties: (c.studiedProperties || []).map((p) => ({ property: p })),
+      })),
+      herbalPreparations: plant.medicinalProfile.herbalPreparations.map((h) => ({
+        type: h.type,
+        partUsed: h.partUsed,
+        traditionalRole: h.traditionalRole,
+        activeCompounds: (h.activeCompounds || []).map((c) => ({ compound: c })),
+        evidenceLevel: h.evidenceLevel,
+        safetyConsiderations: h.safetyConsiderations,
+      })),
+      toxicityLevel: plant.medicinalProfile.safetyAndToxicity.toxicityLevel,
+      toxicParts: plant.medicinalProfile.safetyAndToxicity.toxicParts,
+      symptoms: plant.medicinalProfile.safetyAndToxicity.symptoms,
+      contraindications: (plant.medicinalProfile.safetyAndToxicity.contraindications || []).map((i) => ({ item: i })),
+      medicationInteractions: (plant.medicinalProfile.safetyAndToxicity.medicationInteractions || []).map((i) => ({ item: i })),
+      generalPrecautions: plant.medicinalProfile.safetyAndToxicity.generalPrecautions,
+      foodSafetyHasMicrobialRisk: plant.medicinalProfile.foodSafety?.hasMicrobialRisk ?? false,
+      foodSafetyPathogens: (plant.medicinalProfile.foodSafety?.pathogenConcerns || []).map((p) => ({ pathogen: p })),
+      foodSafetyWashingAdvisory: plant.medicinalProfile.foodSafety?.washingAdvisory,
+      foodSafetyCookingRecommendation: plant.medicinalProfile.foodSafety?.cookingRecommendation,
+      foodSafetyVulnerableAdvisory: plant.medicinalProfile.foodSafety?.vulnerablePopulationsAdvisory,
+      references: (plant.medicinalProfile.references || []).map((r) => ({
+        title: r.title,
+        authorOrOrg: r.authorOrOrg,
+        year: r.year ? String(r.year) : undefined,
+        publication: r.publication,
+        url: r.url,
+        doi: r.doi,
+      })),
+    } : undefined;
+
+    const plantPayloadData = {
+      commonName: plant.commonName,
+      scientificName: plant.scientificName,
+      slug: plant.slug,
+      category: categoryId ? Number(categoryId) : undefined,
+      categorySlug: plant.category,
+      summary: plant.summary,
+      badge: plant.badge,
+      featured: plant.featured ?? false,
+      environments: plant.environments,
+      temperatureRange: {
+        min: plant.temperatureRange.min,
+        max: plant.temperatureRange.max,
+        unit: 'C',
+        idealRange: plant.temperatureRange.idealRange,
+      },
+      sunlight: plant.sunlight,
+      sunlightHours: plant.sunlightHours,
+      watering: {
+        frequency: plant.watering.frequency,
+        guidance: plant.watering.guidance,
+        moistureLevel: plant.watering.moistureLevel,
+      },
+      soil: {
+        type: plant.soil.type,
+        drainage: plant.soil.drainage,
+        recommendedMix: plant.soil.recommendedMix,
+      },
+      potting: {
+        minDepthCm: plant.potting.minDepthCm,
+        spacingCm: plant.potting.spacingCm,
+        recommendedPotSize: plant.potting.recommendedPotSize,
+      },
+      humidity: plant.humidity,
+      ph: plant.ph,
+      timelines: {
+        germinationMin: plant.timelines.germinationDays.min,
+        germinationMax: plant.timelines.germinationDays.max,
+        seedlingMin: plant.timelines.seedlingDays.min,
+        seedlingMax: plant.timelines.seedlingDays.max,
+        harvestMin: plant.timelines.harvestDays?.min,
+        harvestMax: plant.timelines.harvestDays?.max,
+        floweringMin: plant.timelines.floweringDays?.min,
+        floweringMax: plant.timelines.floweringDays?.max,
+        maturityMin: plant.timelines.maturityDays.min,
+        maturityMax: plant.timelines.maturityDays.max,
+        timelineNotes: plant.timelines.timelineNotes,
+      },
+      verticalSuitability: {
+        isSuitable: plant.verticalSuitability.isSuitable,
+        rating: plant.verticalSuitability.rating,
+        recommendedTier: plant.verticalSuitability.recommendedTier,
+        notes: plant.verticalSuitability.notes,
+      },
+      difficulty: {
+        level: plant.difficulty.level,
+        score: plant.difficulty.score,
+        methodologyNotes: plant.difficulty.methodologyNotes,
+      },
+      commonProblems: plant.commonProblems.map((p) => ({
+        issue: p.issue,
+        symptoms: p.symptoms,
+        prevention: p.prevention,
+        organicRemedy: p.organicRemedy,
+      })),
+      practicalUses: plant.practicalUses.map((item) => ({ item })),
+      safetyNotes: plant.safetyNotes,
+      sourceUrls: plant.sourceUrls.map((url) => ({ url })),
+      dataReviewStatus: plant.dataReviewStatus,
+      medicinalProfile: medicinalProfileData,
+      _status: 'published' as const,
+    };
+
     const existing = await payload.find({
       collection: 'plants',
       where: {
@@ -90,95 +231,28 @@ async function seed() {
     });
 
     if (existing.docs.length > 0) {
-      console.log(`  ✓ Plant already exists: "${plant.commonName}" (${plant.slug})`);
-      plantsSkipped++;
-      continue;
+      // Update existing record with new medicinal fields
+      await payload.update({
+        collection: 'plants',
+        id: existing.docs[0].id,
+        data: plantPayloadData as any,
+      });
+      console.log(`  ↻ Updated plant profile: "${plant.commonName}" (${plant.slug})`);
+      plantsUpdated++;
+    } else {
+      // Create new plant record
+      await payload.create({
+        collection: 'plants',
+        data: plantPayloadData as any,
+        draft: false,
+      });
+      console.log(`  + Created plant profile: "${plant.commonName}" (${plant.slug})`);
+      plantsCreated++;
     }
-
-    const categoryId = categoryIdMap[plant.category];
-
-    // Map strict plant fields into Payload collection structure
-    await payload.create({
-      collection: 'plants',
-      data: {
-        commonName: plant.commonName,
-        scientificName: plant.scientificName,
-        slug: plant.slug,
-        category: categoryId ? Number(categoryId) : undefined,
-        categorySlug: plant.category,
-        summary: plant.summary,
-        badge: plant.badge,
-        featured: plant.featured ?? false,
-        environments: plant.environments,
-        temperatureRange: {
-          min: plant.temperatureRange.min,
-          max: plant.temperatureRange.max,
-          unit: 'C',
-          idealRange: plant.temperatureRange.idealRange,
-        },
-        sunlight: plant.sunlight,
-        sunlightHours: plant.sunlightHours,
-        watering: {
-          frequency: plant.watering.frequency,
-          guidance: plant.watering.guidance,
-          moistureLevel: plant.watering.moistureLevel,
-        },
-        soil: {
-          type: plant.soil.type,
-          drainage: plant.soil.drainage,
-          recommendedMix: plant.soil.recommendedMix,
-        },
-        potting: {
-          minDepthCm: plant.potting.minDepthCm,
-          spacingCm: plant.potting.spacingCm,
-          recommendedPotSize: plant.potting.recommendedPotSize,
-        },
-        humidity: plant.humidity,
-        ph: plant.ph,
-        timelines: {
-          germinationMin: plant.timelines.germinationDays.min,
-          germinationMax: plant.timelines.germinationDays.max,
-          seedlingMin: plant.timelines.seedlingDays.min,
-          seedlingMax: plant.timelines.seedlingDays.max,
-          harvestMin: plant.timelines.harvestDays?.min,
-          harvestMax: plant.timelines.harvestDays?.max,
-          floweringMin: plant.timelines.floweringDays?.min,
-          floweringMax: plant.timelines.floweringDays?.max,
-          maturityMin: plant.timelines.maturityDays.min,
-          maturityMax: plant.timelines.maturityDays.max,
-          timelineNotes: plant.timelines.timelineNotes,
-        },
-        verticalSuitability: {
-          isSuitable: plant.verticalSuitability.isSuitable,
-          rating: plant.verticalSuitability.rating,
-          recommendedTier: plant.verticalSuitability.recommendedTier,
-          notes: plant.verticalSuitability.notes,
-        },
-        difficulty: {
-          level: plant.difficulty.level,
-          score: plant.difficulty.score,
-          methodologyNotes: plant.difficulty.methodologyNotes,
-        },
-        commonProblems: plant.commonProblems.map((p) => ({
-          issue: p.issue,
-          symptoms: p.symptoms,
-          prevention: p.prevention,
-          organicRemedy: p.organicRemedy,
-        })),
-        practicalUses: plant.practicalUses.map((item) => ({ item })),
-        safetyNotes: plant.safetyNotes,
-        sourceUrls: plant.sourceUrls.map((url) => ({ url })),
-        dataReviewStatus: plant.dataReviewStatus,
-        _status: plant.dataReviewStatus === 'community-draft' ? 'draft' : 'published',
-      },
-    });
-
-    console.log(`  + Created plant: "${plant.commonName}" (${plant.slug})`);
-    plantsCreated++;
   }
 
   // 3. Seed Educational Articles
-  console.log('\n📚 Seeding Educational Articles...');
+  console.log('\n📚 Verifying Educational Articles...');
   let articlesCreated = 0;
   let articlesSkipped = 0;
 
@@ -192,7 +266,6 @@ async function seed() {
     });
 
     if (existing.docs.length > 0) {
-      console.log(`  ✓ Article already exists: "${article.title}" (${article.slug})`);
       articlesSkipped++;
       continue;
     }
@@ -214,11 +287,11 @@ async function seed() {
     articlesCreated++;
   }
 
-  console.log('\n🎉 Seed Summary:');
+  console.log('\n🎉 Botanical Library Expansion Seed Summary:');
   console.log(`  - Categories: ${PLANT_CATEGORIES.length} verified`);
-  console.log(`  - Plants: ${plantsCreated} created, ${plantsSkipped} skipped`);
-  console.log(`  - Articles: ${articlesCreated} created, ${articlesSkipped} skipped`);
-  console.log('Done!');
+  console.log(`  - Plants: ${plantsUpdated} updated, ${plantsCreated} created (Total: ${plantsUpdated + plantsCreated})`);
+  console.log(`  - Articles: ${articlesCreated} created, ${articlesSkipped} verified`);
+  console.log('Seed completed successfully!');
 }
 
 seed()

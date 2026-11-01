@@ -181,6 +181,139 @@ function mapPayloadDocToPlant(doc: Record<string, any>): Plant | null {
       dataReviewStatus: doc.dataReviewStatus || 'verified',
       featured: Boolean(doc.featured),
       badge: doc.badge || undefined,
+      medicinalProfile: doc.medicinalProfile
+        ? {
+            suitabilityForConsumption: {
+              isEdible: Boolean(
+                doc.medicinalProfile.isEdible ??
+                doc.medicinalProfile.suitabilityForConsumption?.isEdible ??
+                true
+              ),
+              edibilityCategory:
+                doc.medicinalProfile.edibilityCategory ||
+                doc.medicinalProfile.suitabilityForConsumption?.edibilityCategory ||
+                'edible',
+              edibilityNotes: String(
+                doc.medicinalProfile.edibilityNotes ||
+                doc.medicinalProfile.suitabilityForConsumption?.edibilityNotes ||
+                ''
+              ),
+            },
+            medicinalValueSummary: String(doc.medicinalProfile.medicinalValueSummary || ''),
+            traditionalMedicineRole: String(doc.medicinalProfile.traditionalMedicineRole || ''),
+            biologicalProperties: Array.isArray(doc.medicinalProfile.biologicalProperties)
+              ? doc.medicinalProfile.biologicalProperties.map((b: any) =>
+                  typeof b === 'string' ? b : String(b.property || '')
+                )
+              : [],
+            overallEvidenceLevel: doc.medicinalProfile.overallEvidenceLevel || 'preliminary-research',
+            activeCompounds: Array.isArray(doc.medicinalProfile.activeCompounds)
+              ? doc.medicinalProfile.activeCompounds.map((c: any) => ({
+                  name: String(c.name || ''),
+                  chemicalClass: c.chemicalClass || undefined,
+                  description: String(c.description || ''),
+                  primaryLocation: c.primaryLocation || undefined,
+                  studiedProperties: Array.isArray(c.studiedProperties)
+                    ? c.studiedProperties.map((p: any) =>
+                        typeof p === 'string' ? p : String(p.property || '')
+                      )
+                    : [],
+                }))
+              : [],
+            herbalPreparations: Array.isArray(doc.medicinalProfile.herbalPreparations)
+              ? doc.medicinalProfile.herbalPreparations.map((h: any) => ({
+                  type: String(h.type || ''),
+                  partUsed: String(h.partUsed || ''),
+                  traditionalRole: String(h.traditionalRole || ''),
+                  activeCompounds: Array.isArray(h.activeCompounds)
+                    ? h.activeCompounds.map((ac: any) =>
+                        typeof ac === 'string' ? ac : String(ac.compound || '')
+                      )
+                    : [],
+                  evidenceLevel: h.evidenceLevel || 'traditional-use',
+                  safetyConsiderations: h.safetyConsiderations || undefined,
+                }))
+              : [],
+            safetyAndToxicity: {
+              toxicityLevel:
+                doc.medicinalProfile.toxicityLevel ||
+                doc.medicinalProfile.safetyAndToxicity?.toxicityLevel ||
+                'non-toxic',
+              toxicParts:
+                doc.medicinalProfile.toxicParts ||
+                doc.medicinalProfile.safetyAndToxicity?.toxicParts ||
+                undefined,
+              symptoms:
+                doc.medicinalProfile.symptoms ||
+                doc.medicinalProfile.safetyAndToxicity?.symptoms ||
+                undefined,
+              contraindications: Array.isArray(
+                doc.medicinalProfile.contraindications ||
+                doc.medicinalProfile.safetyAndToxicity?.contraindications
+              )
+                ? (
+                    doc.medicinalProfile.contraindications ||
+                    doc.medicinalProfile.safetyAndToxicity?.contraindications
+                  ).map((ci: any) => (typeof ci === 'string' ? ci : String(ci.item || '')))
+                : [],
+              medicationInteractions: Array.isArray(
+                doc.medicinalProfile.medicationInteractions ||
+                doc.medicinalProfile.safetyAndToxicity?.medicationInteractions
+              )
+                ? (
+                    doc.medicinalProfile.medicationInteractions ||
+                    doc.medicinalProfile.safetyAndToxicity?.medicationInteractions
+                  ).map((mi: any) => (typeof mi === 'string' ? mi : String(mi.item || '')))
+                : [],
+              generalPrecautions: String(
+                doc.medicinalProfile.generalPrecautions ||
+                doc.medicinalProfile.safetyAndToxicity?.generalPrecautions ||
+                ''
+              ),
+            },
+            foodSafety:
+              doc.medicinalProfile.foodSafetyHasMicrobialRisk !== undefined ||
+              doc.medicinalProfile.foodSafety !== undefined
+                ? {
+                    hasMicrobialRisk: Boolean(
+                      doc.medicinalProfile.foodSafetyHasMicrobialRisk ??
+                      doc.medicinalProfile.foodSafety?.hasMicrobialRisk
+                    ),
+                    pathogenConcerns: Array.isArray(
+                      doc.medicinalProfile.foodSafetyPathogens ||
+                      doc.medicinalProfile.foodSafety?.pathogenConcerns
+                    )
+                      ? (
+                          doc.medicinalProfile.foodSafetyPathogens ||
+                          doc.medicinalProfile.foodSafety?.pathogenConcerns
+                        ).map((pc: any) => (typeof pc === 'string' ? pc : String(pc.pathogen || '')))
+                      : [],
+                    washingAdvisory:
+                      doc.medicinalProfile.foodSafetyWashingAdvisory ||
+                      doc.medicinalProfile.foodSafety?.washingAdvisory ||
+                      undefined,
+                    cookingRecommendation:
+                      doc.medicinalProfile.foodSafetyCookingRecommendation ||
+                      doc.medicinalProfile.foodSafety?.cookingRecommendation ||
+                      undefined,
+                    vulnerablePopulationsAdvisory:
+                      doc.medicinalProfile.foodSafetyVulnerableAdvisory ||
+                      doc.medicinalProfile.foodSafety?.vulnerablePopulationsAdvisory ||
+                      undefined,
+                  }
+                : undefined,
+            references: Array.isArray(doc.medicinalProfile.references)
+              ? doc.medicinalProfile.references.map((r: any) => ({
+                  title: String(r.title || ''),
+                  authorOrOrg: String(r.authorOrOrg || ''),
+                  year: r.year || undefined,
+                  publication: r.publication || undefined,
+                  url: r.url || undefined,
+                  doi: r.doi || undefined,
+                }))
+              : [],
+          }
+        : undefined,
     };
   } catch (err) {
     console.warn(`Error mapping CMS plant document "${doc.slug}":`, err);

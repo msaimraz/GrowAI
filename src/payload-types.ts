@@ -256,6 +256,89 @@ export interface Plant {
       }[]
     | null;
   dataReviewStatus: 'verified' | 'peer-reviewed' | 'community-draft';
+  medicinalProfile: {
+    isEdible?: boolean | null;
+    edibilityCategory: 'edible' | 'edible-with-preparation' | 'toxic-inedible' | 'strictly-ornamental';
+    edibilityNotes?: string | null;
+    medicinalValueSummary?: string | null;
+    traditionalMedicineRole?: string | null;
+    biologicalProperties?:
+      | {
+          property: string;
+          id?: string | null;
+        }[]
+      | null;
+    overallEvidenceLevel: 'traditional-use' | 'preliminary-research' | 'clinical-evidence' | 'insufficient-evidence';
+    activeCompounds?:
+      | {
+          name: string;
+          chemicalClass?: string | null;
+          description: string;
+          primaryLocation?: string | null;
+          studiedProperties?:
+            | {
+                property: string;
+                id?: string | null;
+              }[]
+            | null;
+          id?: string | null;
+        }[]
+      | null;
+    herbalPreparations?:
+      | {
+          type: string;
+          partUsed: string;
+          traditionalRole: string;
+          activeCompounds?:
+            | {
+                compound: string;
+                id?: string | null;
+              }[]
+            | null;
+          evidenceLevel: 'traditional-use' | 'preliminary-research' | 'clinical-evidence' | 'insufficient-evidence';
+          safetyConsiderations?: string | null;
+          id?: string | null;
+        }[]
+      | null;
+    toxicityLevel:
+      'non-toxic' | 'mildly-toxic-if-ingested' | 'toxic-calcium-oxalate' | 'toxic-saponins' | 'contains-anti-nutrients';
+    toxicParts?: string | null;
+    symptoms?: string | null;
+    contraindications?:
+      | {
+          item: string;
+          id?: string | null;
+        }[]
+      | null;
+    medicationInteractions?:
+      | {
+          item: string;
+          id?: string | null;
+        }[]
+      | null;
+    generalPrecautions: string;
+    foodSafetyHasMicrobialRisk?: boolean | null;
+    foodSafetyPathogens?:
+      | {
+          pathogen: string;
+          id?: string | null;
+        }[]
+      | null;
+    foodSafetyWashingAdvisory?: string | null;
+    foodSafetyCookingRecommendation?: string | null;
+    foodSafetyVulnerableAdvisory?: string | null;
+    references?:
+      | {
+          title: string;
+          authorOrOrg: string;
+          year?: string | null;
+          publication?: string | null;
+          url?: string | null;
+          doi?: string | null;
+          id?: string | null;
+        }[]
+      | null;
+  };
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
@@ -591,6 +674,90 @@ export interface PlantsSelect<T extends boolean = true> {
         id?: T;
       };
   dataReviewStatus?: T;
+  medicinalProfile?:
+    | T
+    | {
+        isEdible?: T;
+        edibilityCategory?: T;
+        edibilityNotes?: T;
+        medicinalValueSummary?: T;
+        traditionalMedicineRole?: T;
+        biologicalProperties?:
+          | T
+          | {
+              property?: T;
+              id?: T;
+            };
+        overallEvidenceLevel?: T;
+        activeCompounds?:
+          | T
+          | {
+              name?: T;
+              chemicalClass?: T;
+              description?: T;
+              primaryLocation?: T;
+              studiedProperties?:
+                | T
+                | {
+                    property?: T;
+                    id?: T;
+                  };
+              id?: T;
+            };
+        herbalPreparations?:
+          | T
+          | {
+              type?: T;
+              partUsed?: T;
+              traditionalRole?: T;
+              activeCompounds?:
+                | T
+                | {
+                    compound?: T;
+                    id?: T;
+                  };
+              evidenceLevel?: T;
+              safetyConsiderations?: T;
+              id?: T;
+            };
+        toxicityLevel?: T;
+        toxicParts?: T;
+        symptoms?: T;
+        contraindications?:
+          | T
+          | {
+              item?: T;
+              id?: T;
+            };
+        medicationInteractions?:
+          | T
+          | {
+              item?: T;
+              id?: T;
+            };
+        generalPrecautions?: T;
+        foodSafetyHasMicrobialRisk?: T;
+        foodSafetyPathogens?:
+          | T
+          | {
+              pathogen?: T;
+              id?: T;
+            };
+        foodSafetyWashingAdvisory?: T;
+        foodSafetyCookingRecommendation?: T;
+        foodSafetyVulnerableAdvisory?: T;
+        references?:
+          | T
+          | {
+              title?: T;
+              authorOrOrg?: T;
+              year?: T;
+              publication?: T;
+              url?: T;
+              doi?: T;
+              id?: T;
+            };
+      };
   updatedAt?: T;
   createdAt?: T;
   _status?: T;

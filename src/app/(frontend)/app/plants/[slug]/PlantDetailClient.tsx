@@ -22,6 +22,13 @@ import {
   Info,
   Bug,
   Leaf,
+  FlaskConical,
+  Pill,
+  BookOpen,
+  ShieldAlert,
+  FileText,
+  CheckCircle2,
+  AlertCircle,
 } from 'lucide-react';
 
 interface PlantDetailClientProps {
@@ -398,6 +405,455 @@ export function PlantDetailClient({ plant }: PlantDetailClientProps) {
             </div>
           </div>
         </div>
+
+        {/* Medicinal & Phytochemical Profile Architecture */}
+        {plant.medicinalProfile ? (
+          <div className="space-y-6">
+            {/* Section Banner */}
+            <div className="bg-[#144229] text-white rounded-2xl p-6 sm:p-8 shadow-xs relative overflow-hidden">
+              <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                <div className="space-y-1.5">
+                  <span className="text-xs font-mono uppercase tracking-wider text-[#a3c2a3] font-semibold flex items-center gap-2">
+                    <FlaskConical size={16} />
+                    Botanical Pharmacognosy & Phytochemistry
+                  </span>
+                  <h2 className="text-2xl sm:text-3xl font-serif font-bold text-white">
+                    Medicinal & Phytochemical Profile
+                  </h2>
+                  <p className="text-sm text-[#e2ede2] max-w-2xl leading-relaxed">
+                    Evidence-graded pharmacognostic data, active constituents, ethnobotanical context, and safety toxicology.
+                  </p>
+                </div>
+                <div className="shrink-0 flex items-center gap-2 bg-[#0d2e1c] px-4 py-2.5 rounded-xl border border-[#205e3b]">
+                  <ShieldCheck size={18} className="text-[#86efac]" />
+                  <span className="text-xs font-medium text-white">Evidence-Graded</span>
+                </div>
+              </div>
+            </div>
+
+            {/* 1. Medicinal Value & Edibility Assessment */}
+            <div className="bg-white rounded-2xl border border-[#ded5c5] p-6 sm:p-8 shadow-xs space-y-4">
+              <div className="flex flex-wrap items-center justify-between gap-3 pb-3 border-b border-[#f0ebe0]">
+                <h3 className="text-xl font-serif font-bold text-[#071c11] flex items-center gap-2.5">
+                  <Heart size={22} className="text-[#144229]" />
+                  <span>1. Medicinal Value & Edibility Assessment</span>
+                </h3>
+                <div>
+                  {plant.medicinalProfile.suitabilityForConsumption.edibilityCategory === 'edible' && (
+                    <span className="px-3 py-1 rounded-xl bg-[#eef5ee] text-[#144229] border border-[#cfe0cf] text-xs font-semibold inline-flex items-center gap-1.5">
+                      <CheckCircle2 size={14} />
+                      Edible (Food / Culinary)
+                    </span>
+                  )}
+                  {plant.medicinalProfile.suitabilityForConsumption.edibilityCategory === 'edible-with-preparation' && (
+                    <span className="px-3 py-1 rounded-xl bg-[#fef3c7] text-[#92400e] border border-[#fde68a] text-xs font-semibold inline-flex items-center gap-1.5">
+                      <AlertTriangle size={14} />
+                      Edible with Preparation / Cooking Required
+                    </span>
+                  )}
+                  {plant.medicinalProfile.suitabilityForConsumption.edibilityCategory === 'toxic-inedible' && (
+                    <span className="px-3 py-1 rounded-xl bg-[#fee2e2] text-[#991b1b] border border-[#fca5a5] text-xs font-semibold inline-flex items-center gap-1.5">
+                      <AlertCircle size={14} />
+                      Toxic / Inedible (Not Safe for Consumption)
+                    </span>
+                  )}
+                  {plant.medicinalProfile.suitabilityForConsumption.edibilityCategory === 'strictly-ornamental' && (
+                    <span className="px-3 py-1 rounded-xl bg-[#fee2e2] text-[#991b1b] border border-[#fca5a5] text-xs font-semibold inline-flex items-center gap-1.5">
+                      <AlertCircle size={14} />
+                      Strictly Ornamental (Not for Consumption)
+                    </span>
+                  )}
+                </div>
+              </div>
+
+              <p className="text-base text-[#1c261e] leading-relaxed">
+                {plant.medicinalProfile.medicinalValueSummary}
+              </p>
+
+              <div className="p-4 rounded-xl bg-[#f7f5ed] border border-[#ded5c5] space-y-1">
+                <span className="text-xs font-bold uppercase tracking-wider text-[#144229] block">
+                  Consumption & Dietary Guidance:
+                </span>
+                <p className="text-sm text-[#2e4435] leading-relaxed">
+                  {plant.medicinalProfile.suitabilityForConsumption.edibilityNotes}
+                </p>
+              </div>
+            </div>
+
+            {/* 2. Active Compounds & Phytochemicals */}
+            <div className="bg-white rounded-2xl border border-[#ded5c5] p-6 sm:p-8 shadow-xs space-y-4">
+              <div className="flex items-center justify-between pb-3 border-b border-[#f0ebe0]">
+                <h3 className="text-xl font-serif font-bold text-[#071c11] flex items-center gap-2.5">
+                  <Sparkles size={22} className="text-[#c77712]" />
+                  <span>2. Active Compounds & Phytochemicals</span>
+                </h3>
+                <span className="text-xs text-[#2e4435]">Identified Secondary Metabolites</span>
+              </div>
+
+              {plant.medicinalProfile.activeCompounds.length > 0 ? (
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  {plant.medicinalProfile.activeCompounds.map((comp) => (
+                    <div
+                      key={comp.name}
+                      className="p-5 rounded-2xl bg-[#fbf9f4] border border-[#ded5c5] space-y-2.5"
+                    >
+                      <div className="flex flex-wrap items-center justify-between gap-2">
+                        <h4 className="font-bold text-[#071c11] text-base">{comp.name}</h4>
+                        {comp.chemicalClass && (
+                          <span className="text-xs font-mono bg-white px-2.5 py-0.5 rounded-full border border-[#ded5c5] text-[#2e4435]">
+                            {comp.chemicalClass}
+                          </span>
+                        )}
+                      </div>
+
+                      {comp.primaryLocation && (
+                        <p className="text-xs font-medium text-[#144229]">
+                          Location: <span className="text-[#2e4435] font-normal">{comp.primaryLocation}</span>
+                        </p>
+                      )}
+
+                      <p className="text-sm text-[#2e4435] leading-relaxed">
+                        {comp.description}
+                      </p>
+
+                      {comp.studiedProperties && comp.studiedProperties.length > 0 && (
+                        <div className="pt-1 flex flex-wrap gap-1.5">
+                          {comp.studiedProperties.map((prop) => (
+                            <span
+                              key={prop}
+                              className="text-xs px-2 py-0.5 rounded bg-white border border-[#cfdfcf] text-[#144229] font-medium"
+                            >
+                              {prop}
+                            </span>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <p className="text-sm text-[#2e4435] italic p-4 bg-[#fbf9f4] rounded-xl border border-[#ded5c5]">
+                  No well-established active compounds identified in the reviewed sources.
+                </p>
+              )}
+            </div>
+
+            {/* 3. Herbal Preparations & Formulations */}
+            <div className="bg-white rounded-2xl border border-[#ded5c5] p-6 sm:p-8 shadow-xs space-y-4">
+              <div className="flex items-center justify-between pb-3 border-b border-[#f0ebe0]">
+                <h3 className="text-xl font-serif font-bold text-[#071c11] flex items-center gap-2.5">
+                  <Pill size={22} className="text-[#2563eb]" />
+                  <span>3. Herbal Preparations & Formulations</span>
+                </h3>
+                <span className="text-xs text-[#2e4435]">Documented Formulations</span>
+              </div>
+
+              {plant.medicinalProfile.herbalPreparations.length > 0 ? (
+                <div className="space-y-4">
+                  {plant.medicinalProfile.herbalPreparations.map((prep, i) => (
+                    <div
+                      key={i}
+                      className="p-5 rounded-2xl bg-[#f7f5ed] border border-[#e2dbce] space-y-3"
+                    >
+                      <div className="flex flex-wrap items-center justify-between gap-2">
+                        <div className="flex items-center gap-2">
+                          <span className="font-bold text-[#071c11] text-base">{prep.type}</span>
+                          {prep.partUsed && prep.partUsed !== 'None' && (
+                            <span className="text-xs bg-white text-[#2e4435] px-2.5 py-0.5 rounded-full border border-[#ded5c5]">
+                              Part used: {prep.partUsed}
+                            </span>
+                          )}
+                        </div>
+                        <span className="text-xs font-semibold px-2.5 py-0.5 rounded-full capitalize bg-white border border-[#cfdfcf] text-[#144229]">
+                          Evidence: {prep.evidenceLevel.replace('-', ' ')}
+                        </span>
+                      </div>
+
+                      <p className="text-sm text-[#1c261e] leading-relaxed">
+                        {prep.traditionalRole}
+                      </p>
+
+                      {prep.activeCompounds && prep.activeCompounds.length > 0 && (
+                        <p className="text-xs text-[#2e4435]">
+                          <strong className="text-[#071c11]">Key Associated Compounds:</strong>{' '}
+                          {prep.activeCompounds.join(', ')}
+                        </p>
+                      )}
+
+                      {prep.safetyConsiderations && (
+                        <div className="p-3 rounded-xl bg-white border border-[#e2dbce] text-xs text-[#92400e] leading-relaxed flex items-start gap-2">
+                          <AlertTriangle size={15} className="shrink-0 mt-0.5" />
+                          <span>{prep.safetyConsiderations}</span>
+                        </div>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <p className="text-sm text-[#2e4435] italic p-4 bg-[#fbf9f4] rounded-xl border border-[#ded5c5]">
+                  No well-established medicinal preparation identified in the reviewed sources.
+                </p>
+              )}
+            </div>
+
+            {/* 4. Traditional Uses & Role in Herbal Medicine */}
+            <div className="bg-white rounded-2xl border border-[#ded5c5] p-6 sm:p-8 shadow-xs space-y-4">
+              <h3 className="text-xl font-serif font-bold text-[#071c11] flex items-center gap-2.5 pb-3 border-b border-[#f0ebe0]">
+                <BookOpen size={22} className="text-[#6c5940]" />
+                <span>4. Role in Traditional Herbal Medicine</span>
+              </h3>
+
+              <p className="text-base text-[#1c261e] leading-relaxed">
+                {plant.medicinalProfile.traditionalMedicineRole}
+              </p>
+
+              <div className="p-3.5 rounded-xl bg-[#fbf9f4] border border-[#ded5c5] text-xs sm:text-sm text-[#6c5940] leading-relaxed flex items-center gap-2">
+                <Info size={16} className="shrink-0" />
+                <span>
+                  Traditional and ethnobotanical reports represent historical folk practices and do not constitute clinical efficacy proof.
+                </span>
+              </div>
+            </div>
+
+            {/* 5. Scientific Research & Biological Properties */}
+            <div className="bg-white rounded-2xl border border-[#ded5c5] p-6 sm:p-8 shadow-xs space-y-4">
+              <div className="flex flex-wrap items-center justify-between gap-3 pb-3 border-b border-[#f0ebe0]">
+                <h3 className="text-xl font-serif font-bold text-[#071c11] flex items-center gap-2.5">
+                  <FlaskConical size={22} className="text-[#144229]" />
+                  <span>5. Scientific Research & Biological Properties</span>
+                </h3>
+                <span className="text-xs font-semibold px-3 py-1 rounded-xl bg-[#eef5ee] text-[#144229] border border-[#cfe0cf] capitalize">
+                  Overall Evidence: {plant.medicinalProfile.overallEvidenceLevel.replace('-', ' ')}
+                </span>
+              </div>
+
+              {plant.medicinalProfile.biologicalProperties.length > 0 && (
+                <ul className="space-y-2.5 text-sm text-[#1c261e]">
+                  {plant.medicinalProfile.biologicalProperties.map((prop) => (
+                    <li key={prop} className="flex items-start gap-2.5">
+                      <ShieldCheck size={16} className="text-[#144229] shrink-0 mt-0.5" />
+                      <span className="leading-relaxed">{prop}</span>
+                    </li>
+                  ))}
+                </ul>
+              )}
+
+              <div className="p-3.5 rounded-xl bg-[#fef3c7]/60 border border-[#fde68a] text-xs sm:text-sm text-[#92400e] leading-relaxed">
+                <strong>Scientific Rigor Note:</strong> In vitro laboratory assays and animal models demonstrate biological mechanisms but do not prove therapeutic clinical efficacy in humans.
+              </div>
+            </div>
+
+            {/* 6. Safety, Toxicity, Contraindications & Sprout Guidance */}
+            <div className="bg-white rounded-2xl border border-[#ded5c5] p-6 sm:p-8 shadow-xs space-y-5">
+              <div className="flex items-center justify-between pb-3 border-b border-[#f0ebe0]">
+                <h3 className="text-xl font-serif font-bold text-[#071c11] flex items-center gap-2.5">
+                  <AlertTriangle size={22} className="text-[#9a3412]" />
+                  <span>6. Safety, Toxicity & Contraindications</span>
+                </h3>
+                <span className="text-xs text-[#2e4435]">Toxicological Assessment</span>
+              </div>
+
+              {/* Toxicity Level Banner */}
+              {plant.medicinalProfile.safetyAndToxicity.toxicityLevel === 'toxic-calcium-oxalate' && (
+                <div className="p-4 rounded-xl bg-[#fee2e2] border border-[#fca5a5] text-[#991b1b] space-y-1">
+                  <span className="font-bold text-sm flex items-center gap-2">
+                    <ShieldAlert size={18} />
+                    Severe Toxicity: Insoluble Calcium Oxalate Crystals
+                  </span>
+                  <p className="text-xs sm:text-sm leading-relaxed">
+                    Mechanical needle-like crystals cause acute mucosal burning, swelling of lips, tongue, and pharynx. Strictly inedible for humans and pets.
+                  </p>
+                </div>
+              )}
+
+              {plant.medicinalProfile.safetyAndToxicity.toxicityLevel === 'toxic-saponins' && (
+                <div className="p-4 rounded-xl bg-[#fee2e2] border border-[#fca5a5] text-[#991b1b] space-y-1">
+                  <span className="font-bold text-sm flex items-center gap-2">
+                    <ShieldAlert size={18} />
+                    Ingestion Toxicity: Steroidal Saponins
+                  </span>
+                  <p className="text-xs sm:text-sm leading-relaxed">
+                    Contains surfactant saponins irritating to gastrointestinal mucosa. Ingestion causes nausea, vomiting, salivation, and diarrhea in humans and pets.
+                  </p>
+                </div>
+              )}
+
+              {plant.medicinalProfile.safetyAndToxicity.toxicityLevel === 'contains-anti-nutrients' && (
+                <div className="p-4 rounded-xl bg-[#fef3c7] border border-[#fde68a] text-[#92400e] space-y-1">
+                  <span className="font-bold text-sm flex items-center gap-2">
+                    <AlertTriangle size={18} />
+                    Nutritional Advisory: Contains Active Anti-Nutrients / Compounds
+                  </span>
+                  <p className="text-xs sm:text-sm leading-relaxed">
+                    Contains compounds (such as L-canavanine or phytic complexes) requiring culinary cooking or medical precautions for autoimmune and sensitive populations.
+                  </p>
+                </div>
+              )}
+
+              {plant.medicinalProfile.safetyAndToxicity.toxicityLevel === 'mildly-toxic-if-ingested' && (
+                <div className="p-4 rounded-xl bg-[#fef3c7] border border-[#fde68a] text-[#92400e] space-y-1">
+                  <span className="font-bold text-sm flex items-center gap-2">
+                    <AlertTriangle size={18} />
+                    Caution: Mild Ingestion Toxicity
+                  </span>
+                  <p className="text-xs sm:text-sm leading-relaxed">
+                    Certain plant parts contain irritants or purgatives requiring separation before consumption.
+                  </p>
+                </div>
+              )}
+
+              {plant.medicinalProfile.safetyAndToxicity.toxicityLevel === 'non-toxic' && (
+                <div className="p-4 rounded-xl bg-[#eef5ee] border border-[#cfe0cf] text-[#144229] space-y-1">
+                  <span className="font-bold text-sm flex items-center gap-2">
+                    <ShieldCheck size={18} />
+                    Non-Toxic in Customary Food Amounts
+                  </span>
+                  <p className="text-xs sm:text-sm leading-relaxed">
+                    Generally recognized as safe for dietary and culinary use under normal handling.
+                  </p>
+                </div>
+              )}
+
+              {plant.medicinalProfile.safetyAndToxicity.toxicParts && (
+                <p className="text-sm text-[#2e4435]">
+                  <strong className="text-[#071c11]">Toxic / Irritant Parts:</strong>{' '}
+                  {plant.medicinalProfile.safetyAndToxicity.toxicParts}
+                </p>
+              )}
+
+              {plant.medicinalProfile.safetyAndToxicity.symptoms && (
+                <p className="text-sm text-[#2e4435]">
+                  <strong className="text-[#071c11]">Reported Symptoms:</strong>{' '}
+                  {plant.medicinalProfile.safetyAndToxicity.symptoms}
+                </p>
+              )}
+
+              {/* Contraindications */}
+              {plant.medicinalProfile.safetyAndToxicity.contraindications &&
+                plant.medicinalProfile.safetyAndToxicity.contraindications.length > 0 && (
+                  <div className="space-y-1.5">
+                    <strong className="text-xs font-bold uppercase tracking-wider text-[#991b1b] block">
+                      Contraindications:
+                    </strong>
+                    <ul className="space-y-1 text-sm text-[#2e4435]">
+                      {plant.medicinalProfile.safetyAndToxicity.contraindications.map((ci) => (
+                        <li key={ci} className="flex items-start gap-2">
+                          <span className="text-[#991b1b] font-bold">•</span>
+                          <span>{ci}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+
+              {/* Medication Interactions */}
+              {plant.medicinalProfile.safetyAndToxicity.medicationInteractions &&
+                plant.medicinalProfile.safetyAndToxicity.medicationInteractions.length > 0 && (
+                  <div className="space-y-1.5">
+                    <strong className="text-xs font-bold uppercase tracking-wider text-[#92400e] block">
+                      Potential Medication Interactions:
+                    </strong>
+                    <ul className="space-y-1 text-sm text-[#2e4435]">
+                      {plant.medicinalProfile.safetyAndToxicity.medicationInteractions.map((mi) => (
+                        <li key={mi} className="flex items-start gap-2">
+                          <span className="text-[#92400e] font-bold">•</span>
+                          <span>{mi}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+
+              <p className="text-sm text-[#2e4435] leading-relaxed pt-1">
+                <strong className="text-[#071c11]">General Precautions:</strong>{' '}
+                {plant.medicinalProfile.safetyAndToxicity.generalPrecautions}
+              </p>
+
+              {/* DEDICATED SPROUT FOOD SAFETY ALERT */}
+              {plant.medicinalProfile.foodSafety && plant.medicinalProfile.foodSafety.hasMicrobialRisk && (
+                <div className="p-5 rounded-2xl bg-[#fff5f5] border-2 border-[#fca5a5] space-y-3.5 mt-4">
+                  <div className="flex items-center gap-2 text-[#991b1b]">
+                    <ShieldAlert size={22} className="shrink-0" />
+                    <h4 className="font-bold text-base sm:text-lg">
+                      Dedicated Sprout Food Safety Guidance
+                    </h4>
+                  </div>
+
+                  {plant.medicinalProfile.foodSafety.pathogenConcerns &&
+                    plant.medicinalProfile.foodSafety.pathogenConcerns.length > 0 && (
+                      <p className="text-xs sm:text-sm text-[#7f1d1d]">
+                        <strong>Documented Bacterial Pathogens:</strong>{' '}
+                        {plant.medicinalProfile.foodSafety.pathogenConcerns.join(', ')}
+                      </p>
+                    )}
+
+                  {plant.medicinalProfile.foodSafety.washingAdvisory && (
+                    <div className="p-3 bg-white rounded-xl border border-[#fca5a5] text-xs sm:text-sm text-[#7f1d1d] leading-relaxed">
+                      <strong>Washing Notice:</strong> {plant.medicinalProfile.foodSafety.washingAdvisory}
+                    </div>
+                  )}
+
+                  {plant.medicinalProfile.foodSafety.cookingRecommendation && (
+                    <p className="text-xs sm:text-sm text-[#7f1d1d] leading-relaxed">
+                      <strong>Cooking Recommendation:</strong>{' '}
+                      {plant.medicinalProfile.foodSafety.cookingRecommendation}
+                    </p>
+                  )}
+
+                  {plant.medicinalProfile.foodSafety.vulnerablePopulationsAdvisory && (
+                    <div className="p-3 bg-[#fee2e2] rounded-xl border border-[#f87171] text-xs sm:text-sm text-[#991b1b] font-medium leading-relaxed">
+                      <strong>High-Risk Populations Advisory:</strong>{' '}
+                      {plant.medicinalProfile.foodSafety.vulnerablePopulationsAdvisory}
+                    </div>
+                  )}
+                </div>
+              )}
+            </div>
+
+            {/* 7. References */}
+            <div className="bg-[#f7f5ed] p-6 rounded-2xl border border-[#ded5c5] space-y-3">
+              <h4 className="text-xs font-bold uppercase tracking-wider text-[#144229] flex items-center gap-2">
+                <FileText size={16} />
+                <span>7. Traceable Scientific & Regulatory References</span>
+              </h4>
+
+              {plant.medicinalProfile.references.length > 0 ? (
+                <div className="space-y-2.5">
+                  {plant.medicinalProfile.references.map((ref, idx) => (
+                    <div
+                      key={idx}
+                      className="p-3.5 rounded-xl bg-white border border-[#cfdfcf] text-xs sm:text-sm text-[#1c261e] space-y-1"
+                    >
+                      <p className="font-semibold text-[#071c11]">{ref.title}</p>
+                      <p className="text-xs text-[#2e4435]">
+                        {ref.authorOrOrg} {ref.year && `(${ref.year})`}. {ref.publication}
+                      </p>
+                      {ref.url && (
+                        <a
+                          href={ref.url}
+                          target="_blank"
+                          rel="noreferrer noopener"
+                          className="inline-flex items-center gap-1 text-xs text-[#144229] hover:underline font-medium pt-0.5"
+                        >
+                          <span>View Reference Source</span>
+                          <ExternalLink size={12} />
+                        </a>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <p className="text-xs text-[#2e4435] italic">
+                  No individual pharmacological citations linked.
+                </p>
+              )}
+            </div>
+          </div>
+        ) : (
+          <div className="bg-[#f7f5ed] p-6 rounded-2xl border border-[#ded5c5] text-xs sm:text-sm text-[#2e4435] italic">
+            No medicinal or phytochemical profile documented for this plant entry.
+          </div>
+        )}
 
         {/* References & Scientific Sources */}
         <div className="bg-[#f7f5ed] p-6 rounded-2xl border border-[#ded5c5] space-y-3">

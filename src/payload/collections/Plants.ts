@@ -462,5 +462,207 @@ export const Plants: CollectionConfig = {
         { label: 'Community Field Draft', value: 'community-draft' },
       ],
     },
+
+    // Medicinal & Phytochemical Information Architecture
+    {
+      name: 'medicinalProfile',
+      type: 'group',
+      label: 'Medicinal & Phytochemical Profile',
+      fields: [
+        // Suitability for Consumption
+        {
+          name: 'isEdible',
+          type: 'checkbox',
+          defaultValue: true,
+          label: 'Is Edible / Safe for Ingestion',
+        },
+        {
+          name: 'edibilityCategory',
+          type: 'select',
+          required: true,
+          defaultValue: 'edible',
+          enumName: 'enum_plants_edibility_cat',
+          options: [
+            { label: 'Edible (Food / Culinary)', value: 'edible' },
+            { label: 'Edible with Preparation (Cooking / Soaking required)', value: 'edible-with-preparation' },
+            { label: 'Toxic / Inedible (Not safe for consumption)', value: 'toxic-inedible' },
+            { label: 'Strictly Ornamental (Not for consumption)', value: 'strictly-ornamental' },
+          ],
+        },
+        {
+          name: 'edibilityNotes',
+          type: 'textarea',
+          label: 'Consumption Notes & Guidance',
+        },
+
+        // Medicinal Value & Role in Traditional Medicine
+        {
+          name: 'medicinalValueSummary',
+          type: 'textarea',
+          label: 'Medicinal Value Summary',
+        },
+        {
+          name: 'traditionalMedicineRole',
+          type: 'textarea',
+          label: 'Role in Traditional Herbal Medicine',
+        },
+        {
+          name: 'biologicalProperties',
+          type: 'array',
+          label: 'Scientifically Studied Biological Properties',
+          dbName: 'plants_bio_properties',
+          fields: [
+            { name: 'property', type: 'text', required: true },
+          ],
+        },
+        {
+          name: 'overallEvidenceLevel',
+          type: 'select',
+          required: true,
+          defaultValue: 'preliminary-research',
+          enumName: 'enum_plants_evidence_level',
+          options: [
+            { label: 'Traditional use: historically documented use without sufficient clinical confirmation', value: 'traditional-use' },
+            { label: 'Preliminary research: laboratory or animal research, or early human research', value: 'preliminary-research' },
+            { label: 'Clinical evidence: supported by relevant human clinical studies', value: 'clinical-evidence' },
+            { label: 'Insufficient evidence: claims cannot be adequately substantiated', value: 'insufficient-evidence' },
+          ],
+        },
+
+        // Active Compounds
+        {
+          name: 'activeCompounds',
+          type: 'array',
+          label: 'Important Active Compounds & Phytochemicals',
+          dbName: 'plants_active_compounds',
+          fields: [
+            { name: 'name', type: 'text', required: true, label: 'Compound Name' },
+            { name: 'chemicalClass', type: 'text', label: 'Chemical Class (e.g. Glucosinolate, Flavonoid, Polyphenol)' },
+            { name: 'description', type: 'textarea', required: true, label: 'Description & Biological Significance' },
+            { name: 'primaryLocation', type: 'text', label: 'Primary Location in Plant (e.g. Sprouts, Leaves, Seeds)' },
+            {
+              name: 'studiedProperties',
+              type: 'array',
+              label: 'Studied Biological Properties',
+              dbName: 'plants_compound_properties',
+              fields: [{ name: 'property', type: 'text', required: true }],
+            },
+          ],
+        },
+
+        // Herbal Preparations
+        {
+          name: 'herbalPreparations',
+          type: 'array',
+          label: 'Herbal Preparations & Formulations',
+          dbName: 'plants_herbal_preps',
+          fields: [
+            { name: 'type', type: 'text', required: true, label: 'Preparation Type' },
+            { name: 'partUsed', type: 'text', required: true, label: 'Plant Part Used' },
+            { name: 'traditionalRole', type: 'textarea', required: true, label: 'Traditional or Intended Role' },
+            {
+              name: 'activeCompounds',
+              type: 'array',
+              label: 'Associated Active Compounds',
+              dbName: 'plants_prep_compounds',
+              fields: [{ name: 'compound', type: 'text', required: true }],
+            },
+            {
+              name: 'evidenceLevel',
+              type: 'select',
+              required: true,
+              defaultValue: 'traditional-use',
+              enumName: 'enum_plants_prep_evidence',
+              options: [
+                { label: 'Traditional Use', value: 'traditional-use' },
+                { label: 'Preliminary Research', value: 'preliminary-research' },
+                { label: 'Clinical Evidence', value: 'clinical-evidence' },
+                { label: 'Insufficient Evidence', value: 'insufficient-evidence' },
+              ],
+            },
+            { name: 'safetyConsiderations', type: 'textarea', label: 'Safety Considerations & Risks' },
+          ],
+        },
+
+        // Safety, Toxicity & Contraindications
+        {
+          name: 'toxicityLevel',
+          type: 'select',
+          required: true,
+          defaultValue: 'non-toxic',
+          enumName: 'enum_plants_toxicity_level',
+          options: [
+            { label: 'Non-toxic (Food safe in customary amounts)', value: 'non-toxic' },
+            { label: 'Mildly toxic if ingested', value: 'mildly-toxic-if-ingested' },
+            { label: 'Toxic due to Calcium Oxalate crystals', value: 'toxic-calcium-oxalate' },
+            { label: 'Toxic due to Saponins', value: 'toxic-saponins' },
+            { label: 'Contains anti-nutrients (e.g. lectins, phytoestrogens)', value: 'contains-anti-nutrients' },
+          ],
+        },
+        { name: 'toxicParts', type: 'text', label: 'Toxic Parts (if any)' },
+        { name: 'symptoms', type: 'textarea', label: 'Reported Symptoms upon Ingestion / Exposure' },
+        {
+          name: 'contraindications',
+          type: 'array',
+          label: 'Contraindications',
+          dbName: 'plants_contraindications',
+          fields: [{ name: 'item', type: 'text', required: true }],
+        },
+        {
+          name: 'medicationInteractions',
+          type: 'array',
+          label: 'Medication Interactions',
+          dbName: 'plants_med_interactions',
+          fields: [{ name: 'item', type: 'text', required: true }],
+        },
+        { name: 'generalPrecautions', type: 'textarea', required: true, label: 'General Precautions & Guidance' },
+
+        // Food Safety & Microbial Risks (dedicated for sprouts)
+        {
+          name: 'foodSafetyHasMicrobialRisk',
+          type: 'checkbox',
+          defaultValue: false,
+          label: 'Has Microbial Food Safety Risk (Sprout Guidance)',
+        },
+        {
+          name: 'foodSafetyPathogens',
+          type: 'array',
+          label: 'Pathogen Concerns (e.g. Salmonella, E. coli, Listeria)',
+          dbName: 'plants_sprout_pathogens',
+          fields: [{ name: 'pathogen', type: 'text', required: true }],
+        },
+        {
+          name: 'foodSafetyWashingAdvisory',
+          type: 'textarea',
+          label: 'Washing Advisory (Washing alone does not guarantee safety)',
+        },
+        {
+          name: 'foodSafetyCookingRecommendation',
+          type: 'textarea',
+          label: 'Cooking Recommendation',
+        },
+        {
+          name: 'foodSafetyVulnerableAdvisory',
+          type: 'textarea',
+          label: 'Vulnerable Populations Advisory',
+        },
+
+        // References
+        {
+          name: 'references',
+          type: 'array',
+          label: 'Traceable Scientific & Regulatory References',
+          dbName: 'plants_references',
+          fields: [
+            { name: 'title', type: 'text', required: true, label: 'Study / Document Title' },
+            { name: 'authorOrOrg', type: 'text', required: true, label: 'Author or Organization (e.g. WHO, FDA, USDA, PubMed journal)' },
+            { name: 'year', type: 'text', label: 'Publication Year' },
+            { name: 'publication', type: 'text', label: 'Journal / Source Publication' },
+            { name: 'url', type: 'text', label: 'Traceable URL / Link' },
+            { name: 'doi', type: 'text', label: 'Digital Object Identifier (DOI)' },
+          ],
+        },
+      ],
+    },
   ],
 };
