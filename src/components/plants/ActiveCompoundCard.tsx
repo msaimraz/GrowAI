@@ -2,23 +2,55 @@
 
 import React, { useState } from 'react';
 import { ActiveCompound } from '@/types/plant';
-import { Sparkles, MapPin, ChevronDown, ChevronUp, Atom, ShieldCheck } from 'lucide-react';
+import { Sparkles, MapPin, ChevronDown, ChevronUp, Atom, ShieldCheck, Microscope } from 'lucide-react';
 
 interface ActiveCompoundCardProps {
   compound: ActiveCompound;
 }
 
+// Plain-English translations of complex phytochemical names for teenagers & beginners
+const COMPOUND_PLAIN_EXPLANATIONS: Record<string, string> = {
+  'Glucoraphanin':
+    'A natural compound found in broccoli sprouts. When the plant is chopped or chewed, an enzyme can help convert it into sulforaphane.',
+  'Sulforaphane':
+    'A beneficial sulfur compound created when broccoli tissues are chewed. Researchers study its ability to turn on natural antioxidant defenses inside human cells.',
+  'Rosmarinic Acid':
+    'A fragrant antioxidant made by herbs like basil and mint to protect their green leaves against intense sunlight and insect damage.',
+  'Eugenol':
+    'The warm, spicy aromatic oil that gives sweet basil and cloves their distinctive scent. In nature, it acts as the plant’s personal insect deterrent.',
+  'L-Canavanine':
+    'A natural defense chemical found in raw legume seeds like alfalfa. As seeds sprout and are cooked, canavanine levels decrease significantly.',
+  'Menthol':
+    'A cool essential oil that activates cold-sensing receptors on the tongue and skin, creating an instant refreshing chill without changing actual temperature.',
+  'Citral':
+    'The intense citrus-scented oil in lemongrass that keeps hungry plant pests away while giving dishes a bright lemon aroma.',
+  'Aloin':
+    'A yellow, bitter sap located right under aloe leaf skin that wild plants produce to deter desert herbivores from eating their juicy water storage.',
+  'Calcium Oxalate Crystals':
+    'Microscopic needle-like crystals bundled inside plant cells that cause immediate mouth burning if chewed, protecting decorative plants from being eaten.',
+  'Steroidal Saponins':
+    'Natural protective compounds in snake plants that foam like soap in water and upset digestive tracts if ingested by pets or humans.',
+  'Lycopene':
+    'The deep red antioxidant pigment in tomatoes that acts like natural botanical sunscreen, protecting ripening fruit from harsh UV light.',
+  'Lutein':
+    'A brilliant yellow-green carotenoid pigment that helps plant leaves absorb light energy and supports human eye health by filtering blue light.',
+  'Curcumin':
+    'The vibrant golden compound in turmeric roots studied worldwide for its gentle cellular antioxidant and anti-inflammatory properties.',
+};
+
 export function ActiveCompoundCard({ compound }: ActiveCompoundCardProps) {
   const [isExpanded, setIsExpanded] = useState(false);
 
-  // If description is long (>180 chars) or there are multiple properties, provide expandable depth
-  const isDetailed = compound.description.length > 180 || (compound.studiedProperties && compound.studiedProperties.length > 2);
+  // Look for curated beginner explanation or craft a readable plain-English lead
+  const plainExplanation =
+    COMPOUND_PLAIN_EXPLANATIONS[compound.name] ||
+    COMPOUND_PLAIN_EXPLANATIONS[compound.name.split(' ')[0]];
 
   return (
-    <div className="bg-white rounded-2xl border border-[#ded5c5] p-5 sm:p-6 shadow-xs hover:border-[#144229]/40 transition-all space-y-3.5 flex flex-col justify-between">
-      <div className="space-y-3">
+    <div className="bg-white rounded-3xl border border-[#ded5c5] p-5 sm:p-6 shadow-xs hover:border-[#144229]/40 transition-all space-y-4 flex flex-col justify-between">
+      <div className="space-y-3.5">
         {/* Card Header: Compound name + Chemical Class */}
-        <div className="flex flex-wrap items-start justify-between gap-2.5 pb-2 border-b border-[#f0ebe0]">
+        <div className="flex flex-wrap items-start justify-between gap-2.5 pb-2.5 border-b border-[#f0ebe0]">
           <div className="space-y-1">
             <h4 className="text-lg sm:text-xl font-serif font-bold text-[#071c11] flex items-center gap-2">
               <Sparkles size={18} className="text-[#c77712] shrink-0" />
@@ -27,28 +59,40 @@ export function ActiveCompoundCard({ compound }: ActiveCompoundCardProps) {
             {compound.primaryLocation && (
               <p className="text-xs sm:text-sm text-[#5a7662] font-medium flex items-center gap-1.5">
                 <MapPin size={14} className="text-[#144229] shrink-0" />
-                <span>Tissue Location: <strong className="text-[#2e4435] font-semibold">{compound.primaryLocation}</strong></span>
+                <span>Found in: <strong className="text-[#2e4435] font-semibold">{compound.primaryLocation}</strong></span>
               </p>
             )}
           </div>
 
           {compound.chemicalClass && (
-            <span className="text-xs sm:text-sm font-mono px-3 py-1 rounded-full bg-[#f4f8f4] border border-[#cfdfcf] text-[#144229] font-medium self-start">
+            <span className="text-xs font-mono px-3 py-1 rounded-full bg-[#f4f8f4] border border-[#cfdfcf] text-[#144229] font-medium self-start">
               {compound.chemicalClass}
             </span>
           )}
         </div>
 
-        {/* Primary Description (Minimum 16px body text) */}
-        <p className="text-base text-[#1c261e] leading-relaxed">
-          {compound.description}
-        </p>
+        {/* Teen-Friendly / Beginner Plain-English Explanation */}
+        {plainExplanation ? (
+          <div className="space-y-2">
+            <div className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-[#144229]">
+              <Microscope size={14} className="text-[#144229]" />
+              <span>In Simple Terms:</span>
+            </div>
+            <p className="text-base text-[#1c261e] leading-relaxed">
+              {plainExplanation}
+            </p>
+          </div>
+        ) : (
+          <p className="text-base text-[#1c261e] leading-relaxed">
+            {compound.description}
+          </p>
+        )}
 
         {/* Studied Bioactivities Cluster */}
         {compound.studiedProperties && compound.studiedProperties.length > 0 && (
           <div className="space-y-1.5 pt-1">
             <span className="text-xs font-bold uppercase tracking-wider text-[#5a7662] block">
-              Investigated Bioactivities:
+              What Scientists Study It For:
             </span>
             <div className="flex flex-wrap gap-1.5">
               {compound.studiedProperties.map((prop) => (
@@ -65,31 +109,43 @@ export function ActiveCompoundCard({ compound }: ActiveCompoundCardProps) {
         )}
       </div>
 
-      {/* Expandable Pharmacological Context */}
-      {isDetailed && (
-        <div className="pt-2 border-t border-[#f0ebe0]">
-          <button
-            type="button"
-            onClick={() => setIsExpanded(!isExpanded)}
-            className="text-xs sm:text-sm font-semibold text-[#144229] hover:text-[#071c11] flex items-center gap-1.5 cursor-pointer py-1"
-          >
-            <Atom size={15} />
-            <span>{isExpanded ? 'Hide Molecular Details' : 'View Biochemical Context'}</span>
-            {isExpanded ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
-          </button>
+      {/* Expandable "Explore the science" Section */}
+      <div className="pt-2.5 border-t border-[#f0ebe0]">
+        <button
+          type="button"
+          onClick={() => setIsExpanded(!isExpanded)}
+          aria-expanded={isExpanded}
+          className="text-xs sm:text-sm font-semibold text-[#144229] hover:text-[#071c11] flex items-center justify-between w-full cursor-pointer py-1 px-2 -mx-2 rounded-lg hover:bg-[#f7f5ed] transition-colors"
+        >
+          <span className="flex items-center gap-1.5">
+            <Atom size={16} className="text-[#144229]" />
+            <span>{isExpanded ? 'Hide scientific details' : 'Explore the science'}</span>
+          </span>
+          {isExpanded ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
+        </button>
 
-          {isExpanded && (
-            <div className="mt-2.5 p-3.5 bg-[#fbf9f4] rounded-xl border border-[#ded5c5] text-xs sm:text-sm text-[#2e4435] leading-relaxed space-y-1.5 animate-fadeIn">
-              <p>
-                <strong>Pharmacognostic Notes:</strong> Concentrations of {compound.name} vary dynamically based on plant growth phase, harvest age, environmental temperature, and post-harvest culinary preparation.
-              </p>
-              <p className="text-[#5a7662]">
-                For culinary species, cooking methods (heat exposure, steaming, boiling) significantly alter compound stability, active enzyme hydrolysis, and human systemic bioavailability.
+        {isExpanded && (
+          <div className="mt-3 p-4 bg-[#fbf9f4] rounded-2xl border border-[#ded5c5] text-xs sm:text-sm text-[#2e4435] leading-relaxed space-y-2.5 animate-fadeIn">
+            <div>
+              <span className="font-bold text-[#071c11] block mb-0.5">Scientific Biochemical Description:</span>
+              <p className="text-[#1c261e] leading-relaxed">
+                {compound.description}
               </p>
             </div>
-          )}
-        </div>
-      )}
+
+            {compound.chemicalClass && (
+              <p className="text-[#5a7662]">
+                <strong className="text-[#2e4435]">Chemical Family:</strong> {compound.chemicalClass}. Secondary plant metabolites synthesized for stress adaptation, pathogen defense, and cellular signaling.
+              </p>
+            )}
+
+            <p className="text-[#5a7662] pt-1 border-t border-[#ede7dc]">
+              <strong>Laboratory & Culinary Note:</strong> Natural concentrations of {compound.name} fluctuate with harvest timing, sunlight exposure, and temperature. For culinary species, food preparation methods like chopping, heat exposure, or steaming directly influence compound stability and systemic bioavailability.
+            </p>
+          </div>
+        )}
+      </div>
     </div>
   );
 }
+
