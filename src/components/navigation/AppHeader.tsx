@@ -44,19 +44,19 @@ export function AppHeader({
     { label: 'Plant Library', href: '/app/plants', icon: Library },
     { label: 'Vertical Planner', href: '/app/planner', icon: Layers },
     { label: 'AI Plant Doctor', href: '/app/ai-doctor', icon: Sparkles },
-    { label: 'Learn & 3Rs', href: '/app/learn', icon: BookOpen },
+    { label: 'Learn & Sustainability', href: '/app/learn', icon: BookOpen },
   ];
 
   return (
     <>
-      <header className="sticky top-0 z-30 w-full bg-[#fbf9f4]/95 backdrop-blur-md border-b border-[#e5dfd3] px-4 sm:px-8 py-3.5">
+      <header className="sticky top-0 z-30 w-full bg-[#fbf9f4]/95 backdrop-blur-md border-b border-[#ded5c5] px-4 sm:px-8 py-3 sm:py-3.5 shadow-2xs">
         <div className="flex items-center justify-between gap-4">
           {/* Left: Title or Mobile Toggle */}
           <div className="flex items-center gap-3">
             <button
               type="button"
               onClick={() => setMobileMenuOpen(true)}
-              className="lg:hidden p-2.5 rounded-xl text-[#144229] hover:bg-[#ede7da] focus:outline-none focus:ring-2 focus:ring-[#1b5837] min-h-[44px] min-w-[44px] flex items-center justify-center cursor-pointer"
+              className="lg:hidden p-2 rounded-xl text-[#144229] hover:bg-[#ede7da] focus:outline-none focus:ring-2 focus:ring-[#144229] min-h-[44px] min-w-[44px] flex items-center justify-center cursor-pointer transition-colors"
               aria-label="Open navigation menu"
             >
               <Menu size={22} />
@@ -119,7 +119,7 @@ export function AppHeader({
             {actionLabel && actionHref && (
               <Link
                 href={actionHref}
-                className="inline-flex items-center gap-1.5 px-3.5 py-2 text-xs sm:text-sm font-semibold bg-[#144229] text-white hover:bg-[#0f2e1d] rounded-xl shadow-xs transition-all hover:shadow hover:-translate-y-0.5 active:translate-y-0 focus:outline-none focus:ring-2 focus:ring-[#1b5837] min-h-[40px]"
+                className="inline-flex items-center gap-1.5 px-3.5 py-2 text-xs sm:text-sm font-semibold bg-[#144229] text-white hover:bg-[#071c11] rounded-xl shadow-xs transition-all hover:shadow hover:-translate-y-0.5 active:translate-y-0 focus:outline-none focus:ring-2 focus:ring-[#144229] min-h-[44px]"
               >
                 {actionIcon === 'plus' && <Plus size={16} />}
                 {actionIcon === 'sparkles' && <Sparkles size={16} />}

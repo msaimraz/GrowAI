@@ -105,21 +105,25 @@ interface GardeningChallengeProps {
 
 export function GardeningChallengeCard({ plant }: GardeningChallengeProps) {
   const [isCompleted, setIsCompleted] = useState(false);
-  const storageKey = `growai_challenge_${plant.slug}_${new Date().toISOString().split('T')[0]}`;
+  const [storageKey, setStorageKey] = useState<string>('');
 
   useEffect(() => {
+    const key = `growai_challenge_${plant.slug}_${new Date().toISOString().split('T')[0]}`;
+    setStorageKey(key);
     try {
-      const stored = localStorage.getItem(storageKey);
+      const stored = localStorage.getItem(key);
       if (stored === 'true') setIsCompleted(true);
     } catch {}
-  }, [storageKey]);
+  }, [plant.slug]);
 
   const toggleChallenge = () => {
     const nextState = !isCompleted;
     setIsCompleted(nextState);
-    try {
-      localStorage.setItem(storageKey, String(nextState));
-    } catch {}
+    if (storageKey) {
+      try {
+        localStorage.setItem(storageKey, String(nextState));
+      } catch {}
+    }
   };
 
   // Safe, age-appropriate gardening challenge tailored to the plant

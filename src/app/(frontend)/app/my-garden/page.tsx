@@ -5,10 +5,10 @@ import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import { AppHeader } from '@/components/navigation/AppHeader';
 import { Badge } from '@/components/ui/Badge';
+import { SectionHeader, InformationCard } from '@/components/ui/SharedBotanical';
 import { PLANTS_DATA } from '@/data/plants';
 import { useAuth } from '@/context/AuthContext';
 import {
-  getSavedUserPlants,
   fetchUserGarden,
   fetchCareTasks,
   updateGardenPlantStage,
@@ -39,6 +39,10 @@ import {
   UploadCloud,
   AlertCircle,
   Loader2,
+  Droplets,
+  Sun,
+  HeartHandshake,
+  BookOpen,
 } from 'lucide-react';
 
 import { usePwa } from '@/context/PwaContext';
@@ -52,6 +56,25 @@ const GROWTH_STAGES: GrowthStage[] = [
   'Harvested',
 ];
 
+function getStageSupportiveMessage(plantNickname: string, stage: GrowthStage, commonName?: string): string {
+  switch (stage) {
+    case 'Seed':
+      return `Your ${plantNickname} is resting as a dormant seed. Maintain gentle moisture and ambient warmth to trigger emergence.`;
+    case 'Germination':
+      return `Your ${plantNickname} is waking up! Watch for the embryonic radicle and baby cotyledons breaking the surface.`;
+    case 'Seedling':
+      return `Your ${plantNickname} is at the seedling stage. Ensure 6+ hours of filtered sunlight and bottom-water gently to protect delicate stems.`;
+    case 'Growing':
+      return `Your ${plantNickname} is growing vigorously! Foliage is expanding and root architecture is establishing healthy container depth.`;
+    case 'Mature':
+      return `Your ${plantNickname} has reached prime maturity. Leaves and stems are ready for regular harvesting or bloom maintenance.`;
+    case 'Harvested':
+      return `Your ${plantNickname} has completed its harvest cycle. You can celebrate this yield and prepare your planter for succession sowing!`;
+    default:
+      return `Your ${plantNickname} is thriving under mindful daily botanical care.`;
+  }
+}
+
 function MyGardenContent() {
   const searchParams = useSearchParams();
   const highlightPlantId = searchParams.get('plantId');
@@ -64,7 +87,7 @@ function MyGardenContent() {
   const [isCloud, setIsCloud] = useState<boolean>(false);
   const [noteText, setNoteText] = useState('');
   const [noteHeight, setNoteHeight] = useState<string>('');
-  const [noteDate, setNoteDate] = useState<string>('2026-10-29');
+  const [noteDate, setNoteDate] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(true);
   const [submittingNote, setSubmittingNote] = useState<boolean>(false);
   const [errorBanner, setErrorBanner] = useState<string | null>(null);
@@ -211,10 +234,10 @@ function MyGardenContent() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col bg-[#fbf9f4]">
       <AppHeader
-        title="My Garden & Growth Log"
-        subtitle="Record dated growth observations, update developmental stages, and complete care tasks."
+        title="My Garden Journal"
+        subtitle="Track developmental milestones, log daily observations, and manage container care."
         actionHref="/app/plants"
         actionLabel="Add from Library"
         actionIcon="plus"
@@ -223,16 +246,16 @@ function MyGardenContent() {
       <div className="flex-1 p-4 sm:p-6 lg:p-8 max-w-7xl mx-auto w-full space-y-6">
         {/* Error Alert Banner */}
         {errorBanner && (
-          <div className="bg-[#fbeee9] border border-[#f8d7cb] p-4 rounded-xl flex items-start gap-3 text-xs text-[#9a3412] shadow-xs">
-            <AlertCircle size={18} className="shrink-0 mt-0.5" />
+          <div className="bg-[#fbeee9] border border-[#f8d7cb] p-4 rounded-2xl flex items-start gap-3.5 text-sm text-[#9a3412] shadow-xs">
+            <AlertCircle size={20} className="shrink-0 mt-0.5" />
             <div className="flex-1">
-              <span className="font-bold block">Operation Failed</span>
+              <span className="font-bold block">Action Alert</span>
               <span>{errorBanner}</span>
             </div>
             <button
               type="button"
               onClick={() => setErrorBanner(null)}
-              className="text-[#9a3412] underline font-semibold"
+              className="text-[#9a3412] underline font-semibold min-h-[44px] flex items-center cursor-pointer"
             >
               Dismiss
             </button>
@@ -240,32 +263,37 @@ function MyGardenContent() {
         )}
 
         {/* Sync Mode Banner */}
-        <div className="bg-[#f7f5ed] border border-[#ded5c5] p-4 rounded-xl flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs text-[#4b6351]">
-          <div className="flex items-center gap-2.5">
+        <div className="bg-white border border-[#ded5c5] p-4 sm:p-5 rounded-2xl flex flex-col sm:flex-row sm:items-center justify-between gap-4 text-xs sm:text-sm text-[#4b6351] shadow-xs">
+          <div className="flex items-center gap-3">
             {isCloud ? (
               <>
-                <Cloud size={18} className="text-[#1b5837] shrink-0" />
-                <span>
-                  <strong>Cloud Synchronized:</strong> Logged in as{' '}
-                  <strong className="text-[#0c2417]">{user?.email}</strong>. All garden additions,
-                  stages, and notes are securely isolated via PostgreSQL Row Level Security.
-                </span>
+                <div className="w-9 h-9 rounded-xl bg-[#eef5ee] text-[#144229] flex items-center justify-center shrink-0">
+                  <Cloud size={20} />
+                </div>
+                <div>
+                  <span className="font-bold text-[#0c2417] block">Supabase Cloud Synchronized</span>
+                  <span className="text-xs text-[#526a57]">
+                    Logged in as <strong>{user?.email}</strong>. Data isolated with PostgreSQL Row Level Security.
+                  </span>
+                </div>
               </>
             ) : (
               <>
-                <Database size={18} className="text-[#c77712] shrink-0" />
-                <span>
-                  <strong>Local Demo Mode:</strong> Plants are currently saved in this browser&apos;s local storage.
-                  {isConfigured && (
-                    <>
-                      {' '}
+                <div className="w-9 h-9 rounded-xl bg-[#fef3c7] text-[#92400e] flex items-center justify-center shrink-0">
+                  <Database size={20} />
+                </div>
+                <div>
+                  <span className="font-bold text-[#0c2417] block">Local Browser Storage Mode</span>
+                  <span className="text-xs text-[#526a57]">
+                    Plants are safely cached on this device.{' '}
+                    {isConfigured && (
                       <Link href="/auth/login" className="font-semibold text-[#144229] underline hover:no-underline">
                         Sign In
-                      </Link>{' '}
-                      to persist your garden to Supabase cloud.
-                    </>
-                  )}
-                </span>
+                      </Link>
+                    )}{' '}
+                    to enable multi-device Supabase cloud sync.
+                  </span>
+                </div>
               </>
             )}
           </div>
@@ -275,9 +303,9 @@ function MyGardenContent() {
               <button
                 type="button"
                 onClick={handleResetDemo}
-                className="text-xs font-semibold text-[#144229] hover:underline cursor-pointer"
+                className="text-xs font-semibold text-[#144229] hover:underline cursor-pointer min-h-[44px] flex items-center"
               >
-                Reset Demo Data
+                Reset Demo Plants
               </button>
             )}
           </div>
@@ -285,13 +313,15 @@ function MyGardenContent() {
 
         {/* Import Banner when logged in and local plants exist */}
         {isCloud && hasLocalDemoData() && (
-          <div className="bg-[#eef5ee] border border-[#cfe0cf] p-4 rounded-xl flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs text-[#1e613b]">
-            <div className="flex items-center gap-2">
-              <UploadCloud size={18} className="text-[#144229] shrink-0" />
+          <div className="bg-[#eef5ee] border border-[#cfe0cf] p-4 sm:p-5 rounded-2xl flex flex-col sm:flex-row sm:items-center justify-between gap-4 text-xs sm:text-sm text-[#1e613b]">
+            <div className="flex items-center gap-3">
+              <div className="w-9 h-9 rounded-xl bg-[#d8ebd8] text-[#144229] flex items-center justify-center shrink-0">
+                <UploadCloud size={20} />
+              </div>
               <div>
-                <strong className="block text-[#0c2417]">Local Demo Plants Detected</strong>
-                <span>
-                  You have plants saved in your local browser storage. You can import them into your cloud account now.
+                <strong className="block text-[#0c2417] font-serif text-base">Local Browser Plants Detected</strong>
+                <span className="text-xs text-[#3d6e49]">
+                  You have plants saved from local browsing. Bring them into your cloud account in one tap.
                 </span>
               </div>
             </div>
@@ -299,16 +329,16 @@ function MyGardenContent() {
               type="button"
               onClick={handleImportLocalToCloud}
               disabled={importing}
-              className="inline-flex items-center gap-1.5 px-4 py-2 bg-[#144229] hover:bg-[#0c2417] text-white rounded-lg font-semibold transition-colors disabled:opacity-50 cursor-pointer self-start sm:self-auto shrink-0"
+              className="inline-flex items-center gap-2 px-5 py-2.5 bg-[#144229] hover:bg-[#0c2417] text-white rounded-xl font-semibold transition-colors disabled:opacity-50 cursor-pointer self-start sm:self-auto shrink-0 min-h-[44px]"
             >
               {importing ? (
                 <>
-                  <Loader2 size={13} className="animate-spin" />
+                  <Loader2 size={16} className="animate-spin" />
                   <span>Importing...</span>
                 </>
               ) : (
                 <>
-                  <UploadCloud size={13} />
+                  <UploadCloud size={16} />
                   <span>Import to Cloud</span>
                 </>
               )}
@@ -317,52 +347,56 @@ function MyGardenContent() {
         )}
 
         {importStatus && (
-          <div className="bg-[#eef5ee] border border-[#cfe0cf] p-3 rounded-xl text-xs text-[#1e613b] flex items-center gap-2">
-            <CheckCircle2 size={16} className="shrink-0" />
+          <div className="bg-[#eef5ee] border border-[#cfe0cf] p-4 rounded-2xl text-xs sm:text-sm text-[#1e613b] flex items-center gap-2.5">
+            <CheckCircle2 size={18} className="shrink-0" />
             <span>{importStatus}</span>
           </div>
         )}
 
         {/* Empty State */}
         {!loading && userPlants.length === 0 ? (
-          <div className="bg-white rounded-2xl border border-[#ded5c5] p-12 text-center space-y-4 max-w-lg mx-auto">
-            <span className="w-14 h-14 rounded-full bg-[#f4f8f4] text-[#144229] flex items-center justify-center mx-auto">
-              <Sprout size={28} />
-            </span>
-            <h3 className="font-serif font-bold text-xl text-[#0c2417]">
-              {isCloud ? 'Your Cloud Garden is Empty' : 'Your Garden is Currently Empty'}
+          <div className="bg-white rounded-3xl border border-[#ded5c5] p-12 sm:p-16 text-center space-y-5 max-w-xl mx-auto shadow-xs">
+            <div className="w-16 h-16 rounded-2xl bg-[#eef5ee] text-[#144229] flex items-center justify-center mx-auto shadow-inner">
+              <Sprout size={32} />
+            </div>
+            <h3 className="font-serif font-bold text-2xl text-[#0c2417]">
+              {isCloud ? 'Your Cloud Garden is Empty' : 'Your Garden Journal is Ready'}
             </h3>
-            <p className="text-xs sm:text-sm text-[#526a57] leading-relaxed">
-              Explore our 16 curated plant profiles and add your first plant to begin logging developmental stages, notes, and care tasks.
+            <p className="text-sm text-[#526a57] leading-relaxed max-w-md mx-auto">
+              Add your first companion plant from our curated 19 botanical profiles. You will be able to log daily observations, track growth stages, and complete care tasks.
             </p>
             <div className="pt-2">
               <Link
                 href="/app/plants"
-                className="inline-flex items-center gap-2 text-sm font-semibold bg-[#144229] text-white px-5 py-2.5 rounded-xl shadow-xs"
+                className="inline-flex items-center gap-2 text-sm font-semibold bg-[#144229] hover:bg-[#0c2417] text-white px-6 py-3 rounded-xl shadow-xs transition-colors min-h-[44px]"
               >
-                <Plus size={16} />
-                <span>Browse Plant Library</span>
+                <Plus size={18} />
+                <span>Explore Plant Catalog</span>
               </Link>
             </div>
           </div>
         ) : (
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
             {/* Left Column: Plant Selection Sidebar */}
-            <div className="lg:col-span-4 space-y-4">
-              <div className="flex items-center justify-between">
-                <h3 className="text-sm font-serif font-bold text-[#0c2417]">
-                  My Plant Collection ({userPlants.length})
-                </h3>
+            <div className="lg:col-span-4 space-y-5">
+              <div className="flex items-center justify-between pb-1">
+                <div>
+                  <h3 className="text-base font-serif font-bold text-[#0c2417]">
+                    My Garden ({userPlants.length})
+                  </h3>
+                  <p className="text-xs text-[#526a57]">Select a specimen to open its journal</p>
+                </div>
                 <Link
                   href="/app/plants"
-                  className="text-xs font-semibold text-[#144229] hover:underline flex items-center gap-1"
+                  className="text-xs font-semibold text-[#144229] hover:text-[#0c2417] flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-[#cfdfcf] bg-white hover:bg-[#f4f8f4] transition-colors min-h-[44px]"
                 >
-                  <Plus size={13} />
+                  <Plus size={14} />
                   <span>Add Plant</span>
                 </Link>
               </div>
 
-              <div className="space-y-2.5">
+              {/* Plant selection list */}
+              <div className="space-y-3">
                 {userPlants.map((plant) => {
                   const isSelected = plant.id === activePlant?.id;
                   const botanical = PLANTS_DATA.find((p) => p.slug === plant.plantSlug);
@@ -371,37 +405,37 @@ function MyGardenContent() {
                     <div
                       key={plant.id}
                       onClick={() => setSelectedPlantId(plant.id)}
-                      className={`p-4 rounded-xl border transition-all cursor-pointer flex items-center justify-between ${
+                      className={`p-4 rounded-2xl border transition-all cursor-pointer flex items-center justify-between min-h-[56px] ${
                         isSelected
-                          ? 'bg-[#144229] text-white border-[#0f2e1d] shadow-sm'
-                          : 'bg-white text-[#0c2417] border-[#ded5c5] hover:bg-[#fbf9f4]'
+                          ? 'bg-[#144229] text-white border-[#0f2e1d] shadow-sm ring-2 ring-[#144229]/20'
+                          : 'bg-white text-[#0c2417] border-[#ded5c5] hover:bg-[#fbf9f4] hover:border-[#144229]'
                       }`}
                     >
-                      <div className="min-w-0 pr-2">
+                      <div className="min-w-0 pr-3">
                         <div className="flex items-center gap-2">
-                          <h4 className="font-serif font-bold text-sm truncate">
+                          <h4 className="font-serif font-bold text-base truncate">
                             {plant.nickname}
                           </h4>
                           <span
-                            className={`text-[10px] px-2 py-0.5 rounded-full font-medium ${
+                            className={`text-[11px] px-2.5 py-0.5 rounded-full font-semibold ${
                               isSelected
                                 ? 'bg-[#257a4d] text-white'
-                                : 'bg-[#eef5ee] text-[#1e613b]'
+                                : 'bg-[#eef5ee] text-[#144229]'
                             }`}
                           >
                             {plant.currentStage}
                           </span>
                         </div>
                         <p
-                          className={`text-[11px] truncate mt-0.5 ${
-                            isSelected ? 'text-[#bed4c5]' : 'text-[#647f6c]'
+                          className={`text-xs truncate mt-1 ${
+                            isSelected ? 'text-[#bed4c5]' : 'text-[#526a57]'
                           }`}
                         >
-                          {botanical?.commonName} • {plant.notes?.length || 0} note(s)
+                          {botanical?.commonName} • {plant.notes?.length || 0} observation(s)
                         </p>
                       </div>
                       <ChevronRight
-                        size={16}
+                        size={18}
                         className={isSelected ? 'text-white' : 'text-[#8ba391]'}
                       />
                     </div>
@@ -409,35 +443,38 @@ function MyGardenContent() {
                 })}
               </div>
 
-              {/* Plant Care Tasks */}
-              <div className="bg-white p-5 rounded-2xl border border-[#ded5c5] space-y-3 pt-4">
-                <h4 className="text-xs font-bold uppercase tracking-wider text-[#144229] flex items-center justify-between">
-                  <span>Care Tasks</span>
-                  <span className="text-[11px] font-normal normal-case text-[#647f6c]">
-                    {careTasks.filter((t) => !t.completed).length} to do
+              {/* Plant Care Tasks Card */}
+              <div className="bg-white p-5 sm:p-6 rounded-2xl border border-[#ded5c5] space-y-4 shadow-xs">
+                <div className="flex items-center justify-between pb-2 border-b border-[#f0ebe0]">
+                  <h4 className="font-serif font-bold text-sm text-[#0c2417] flex items-center gap-2">
+                    <Droplets size={16} className="text-[#144229]" />
+                    <span>Care Tasks</span>
+                  </h4>
+                  <span className="text-xs font-semibold text-[#144229] bg-[#eef5ee] px-2.5 py-0.5 rounded-full">
+                    {careTasks.filter((t) => !t.completed).length} pending
                   </span>
-                </h4>
+                </div>
 
-                <div className="space-y-2">
+                <div className="space-y-2.5">
                   {careTasks.map((task) => (
                     <div
                       key={task.id}
                       onClick={() => handleTaskToggle(task)}
-                      className={`p-2.5 rounded-lg border text-xs cursor-pointer flex items-start gap-2.5 transition-colors ${
+                      className={`p-3 rounded-xl border text-xs sm:text-sm cursor-pointer flex items-start gap-3 transition-colors min-h-[48px] ${
                         task.completed
                           ? 'bg-[#f7f5ed] border-[#e2dbce] opacity-60'
-                          : 'bg-white border-[#ded5c5] hover:border-[#144229]'
+                          : 'bg-[#fbf9f4] border-[#ded5c5] hover:border-[#144229] hover:bg-white'
                       }`}
                     >
                       <button
                         type="button"
-                        className="mt-0.5 text-[#144229] focus:outline-none cursor-pointer"
+                        className="mt-0.5 text-[#144229] focus:outline-none cursor-pointer min-w-[24px] min-h-[24px] flex items-center justify-center"
                         aria-label={`Toggle task ${task.title}`}
                       >
                         {task.completed ? (
-                          <CheckCircle2 size={15} className="text-[#257a4d]" />
+                          <CheckCircle2 size={18} className="text-[#257a4d]" />
                         ) : (
-                          <Circle size={15} className="text-[#9ab8a3]" />
+                          <Circle size={18} className="text-[#9ab8a3]" />
                         )}
                       </button>
                       <div className="flex-1 min-w-0">
@@ -448,8 +485,8 @@ function MyGardenContent() {
                         >
                           {task.title}
                         </p>
-                        <p className="text-[10px] text-[#6d8573]">
-                          {task.plantName.split('(')[0]} • {task.dueDate}
+                        <p className="text-xs text-[#6d8573] mt-0.5">
+                          {task.plantName.split('(')[0]} • Due {task.dueDate}
                         </p>
                       </div>
                     </div>
@@ -462,17 +499,17 @@ function MyGardenContent() {
             {activePlant && (
               <div className="lg:col-span-8 space-y-6">
                 {/* Active Plant Banner Card */}
-                <div className="bg-white rounded-2xl border border-[#ded5c5] p-6 shadow-xs space-y-5">
-                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-[#f0ebe0]">
+                <div className="bg-white rounded-3xl border border-[#ded5c5] p-6 sm:p-8 shadow-xs space-y-6">
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-5 border-b border-[#f0ebe0]">
                     <div>
-                      <div className="flex items-center gap-2">
-                        <h2 className="text-2xl font-serif font-bold text-[#0c2417]">
+                      <div className="flex items-center gap-3">
+                        <h2 className="text-2xl sm:text-3xl font-serif font-bold text-[#0c2417]">
                           {activePlant.nickname}
                         </h2>
                         <Badge variant="sage" size="md">{activePlant.currentStage}</Badge>
                       </div>
-                      <p className="text-xs text-[#526a57] mt-0.5">
-                        {activeBotanical?.commonName} ({activeBotanical?.scientificName}) • Planted on{' '}
+                      <p className="text-xs sm:text-sm text-[#526a57] mt-1">
+                        {activeBotanical?.commonName} (<em>{activeBotanical?.scientificName}</em>) • Planted on{' '}
                         {activePlant.plantedDate}
                       </p>
                     </div>
@@ -481,43 +518,63 @@ function MyGardenContent() {
                       {activeBotanical && (
                         <Link
                           href={`/app/plants/${activeBotanical.slug}`}
-                          className="text-xs font-semibold text-[#144229] hover:bg-[#f4f8f4] px-3 py-1.5 rounded-lg border border-[#cfdfcf]"
+                          className="text-xs sm:text-sm font-semibold text-[#144229] hover:bg-[#eef5ee] px-4 py-2.5 rounded-xl border border-[#cfdfcf] bg-white transition-colors flex items-center gap-1.5 min-h-[44px]"
                         >
-                          Botanical Profile
+                          <BookOpen size={15} />
+                          <span>Botanical Guide</span>
                         </Link>
                       )}
                       <button
                         type="button"
                         onClick={() => handleDeletePlant(activePlant.id)}
-                        className="p-1.5 text-[#b95835] hover:bg-[#fbeee9] rounded-lg transition-colors cursor-pointer"
+                        className="p-2.5 text-[#b95835] hover:bg-[#fbeee9] rounded-xl transition-colors cursor-pointer min-h-[44px] min-w-[44px] flex items-center justify-center"
                         title="Remove plant"
                         aria-label="Remove plant"
                       >
-                        <Trash2 size={16} />
+                        <Trash2 size={18} />
                       </button>
                     </div>
                   </div>
 
-                  {/* Growth Stage Selector Buttons */}
-                  <div className="space-y-2">
+                  {/* Supportive Botanical Message Box */}
+                  <div className="bg-[#eef5ee] border border-[#cfe0cf] p-4 sm:p-5 rounded-2xl flex items-start gap-3.5 text-xs sm:text-sm text-[#1e613b]">
+                    <Sparkles size={20} className="text-[#144229] shrink-0 mt-0.5" />
+                    <div>
+                      <strong className="block text-[#0c2417] font-serif text-sm sm:text-base mb-0.5">
+                        Botanist Guidance
+                      </strong>
+                      <p className="leading-relaxed">
+                        {getStageSupportiveMessage(activePlant.nickname, activePlant.currentStage, activeBotanical?.commonName)}
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Growth Stage Stepper */}
+                  <div className="space-y-3 pt-2">
                     <label className="text-xs font-bold uppercase tracking-wider text-[#144229] block">
-                      Update Current Growth Stage:
+                      Growth Stage Milestone (Click to update):
                     </label>
-                    <div className="grid grid-cols-3 sm:grid-cols-6 gap-2">
-                      {GROWTH_STAGES.map((st) => {
+                    <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2.5">
+                      {GROWTH_STAGES.map((st, index) => {
                         const isCurrent = activePlant.currentStage === st;
+                        const currentIndex = GROWTH_STAGES.indexOf(activePlant.currentStage);
+                        const isPast = index < currentIndex;
+
                         return (
                           <button
                             key={st}
                             type="button"
                             onClick={() => handleStageChange(activePlant.id, st)}
-                            className={`py-2 px-1 text-xs font-semibold rounded-xl border text-center transition-colors cursor-pointer ${
+                            className={`py-3 px-2 text-xs font-semibold rounded-xl border text-center transition-all cursor-pointer min-h-[44px] flex flex-col items-center justify-center gap-1 ${
                               isCurrent
-                                ? 'bg-[#144229] text-white border-[#0f2e1d] shadow-xs'
-                                : 'bg-[#fbf9f4] text-[#4b6351] border-[#ded5c5] hover:bg-[#eef5ee]'
+                                ? 'bg-[#144229] text-white border-[#0f2e1d] shadow-sm ring-2 ring-[#144229]/20 font-bold'
+                                : isPast
+                                ? 'bg-[#eef5ee] text-[#1e613b] border-[#cfe0cf] hover:bg-[#d8ebd8]'
+                                : 'bg-[#fbf9f4] text-[#526a57] border-[#ded5c5] hover:bg-white'
                             }`}
                           >
-                            {st}
+                            <span className="text-[10px] opacity-75">Step {index + 1}</span>
+                            <span>{st}</span>
                           </button>
                         );
                       })}
@@ -525,46 +582,55 @@ function MyGardenContent() {
                   </div>
 
                   {/* Environment & Placement Info */}
-                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 text-xs pt-2">
-                    <div className="p-3 rounded-xl bg-[#f7f5ed] border border-[#e2dbce]">
-                      <span className="text-[#6d8573] block text-[11px]">Location</span>
-                      <strong className="text-[#0c2417]">{activePlant.location || 'Balcony Rack'}</strong>
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5 text-xs sm:text-sm pt-2">
+                    <div className="p-4 rounded-2xl bg-[#fbf9f4] border border-[#ded5c5]">
+                      <span className="text-[#6d8573] block text-xs mb-1">Assigned Location</span>
+                      <strong className="text-[#0c2417] text-sm">{activePlant.location || 'Balcony Vertical Rack'}</strong>
                     </div>
-                    <div className="p-3 rounded-xl bg-[#f7f5ed] border border-[#e2dbce]">
-                      <span className="text-[#6d8573] block text-[11px]">Rack Tier</span>
-                      <strong className="text-[#0c2417] capitalize">{activePlant.tier || 'Middle'} Shelf</strong>
+                    <div className="p-4 rounded-2xl bg-[#fbf9f4] border border-[#ded5c5]">
+                      <span className="text-[#6d8573] block text-xs mb-1">Recommended Shelf</span>
+                      <strong className="text-[#0c2417] text-sm capitalize">{activePlant.tier || 'Middle'} Shelf</strong>
                     </div>
-                    <div className="p-3 rounded-xl bg-[#f7f5ed] border border-[#e2dbce] col-span-2 sm:col-span-1">
-                      <span className="text-[#6d8573] block text-[11px]">Container Depth</span>
-                      <strong className="text-[#0c2417]">{activeBotanical?.potting.minDepthCm || 20} cm depth</strong>
+                    <div className="p-4 rounded-2xl bg-[#fbf9f4] border border-[#ded5c5]">
+                      <span className="text-[#6d8573] block text-xs mb-1">Container Depth</span>
+                      <strong className="text-[#0c2417] text-sm">{activeBotanical?.potting.minDepthCm || 20} cm depth</strong>
                     </div>
                   </div>
                 </div>
 
                 {/* Add New Dated Growth Note Form */}
-                <div className="bg-white rounded-2xl border border-[#ded5c5] p-6 shadow-xs space-y-4">
-                  <h3 className="font-serif font-bold text-base text-[#0c2417] flex items-center gap-2">
-                    <Sprout size={18} className="text-[#1e613b]" />
-                    <span>Record Growth Observation</span>
-                  </h3>
+                <div className="bg-white rounded-3xl border border-[#ded5c5] p-6 sm:p-8 shadow-xs space-y-5">
+                  <div className="flex items-center gap-3 pb-3 border-b border-[#f0ebe0]">
+                    <div className="w-9 h-9 rounded-xl bg-[#eef5ee] text-[#144229] flex items-center justify-center">
+                      <Sprout size={20} />
+                    </div>
+                    <div>
+                      <h3 className="font-serif font-bold text-lg text-[#0c2417]">
+                        Record Growth Observation
+                      </h3>
+                      <p className="text-xs text-[#526a57]">
+                        Log height, stem branching, pests, or watering adjustments
+                      </p>
+                    </div>
+                  </div>
 
-                  <form onSubmit={handleAddNote} className="space-y-3">
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <form onSubmit={handleAddNote} className="space-y-4">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       <div>
-                        <label className="block text-xs font-semibold text-[#0c2417] mb-1">
-                          Log Date
+                        <label className="block text-xs font-semibold text-[#0c2417] mb-1.5">
+                          Observation Date
                         </label>
                         <input
                           type="date"
                           value={noteDate}
                           onChange={(e) => setNoteDate(e.target.value)}
                           required
-                          className="w-full px-3 py-2 text-xs rounded-xl border border-[#ded5c5] bg-[#fbf9f4] text-[#0c2417] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#1b5837]"
+                          className="w-full px-4 py-2.5 text-xs sm:text-sm rounded-xl border border-[#ded5c5] bg-[#fbf9f4] text-[#0c2417] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#144229] min-h-[44px]"
                         />
                       </div>
 
                       <div>
-                        <label className="block text-xs font-semibold text-[#0c2417] mb-1">
+                        <label className="block text-xs font-semibold text-[#0c2417] mb-1.5">
                           Measured Height (cm, optional)
                         </label>
                         <input
@@ -573,40 +639,40 @@ function MyGardenContent() {
                           placeholder="e.g. 14.5"
                           value={noteHeight}
                           onChange={(e) => setNoteHeight(e.target.value)}
-                          className="w-full px-3 py-2 text-xs rounded-xl border border-[#ded5c5] bg-[#fbf9f4] text-[#0c2417] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#1b5837]"
+                          className="w-full px-4 py-2.5 text-xs sm:text-sm rounded-xl border border-[#ded5c5] bg-[#fbf9f4] text-[#0c2417] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#144229] min-h-[44px]"
                         />
                       </div>
                     </div>
 
                     <div>
-                      <label className="block text-xs font-semibold text-[#0c2417] mb-1">
-                        Observation / Action Taken
+                      <label className="block text-xs font-semibold text-[#0c2417] mb-1.5">
+                        Botanical Notes & Actions Taken
                       </label>
                       <textarea
-                        rows={2}
+                        rows={3}
                         value={noteText}
                         onChange={(e) => setNoteText(e.target.value)}
-                        placeholder="e.g. Pinched center bud, saw first true leaf, watered with diluted seaweed..."
+                        placeholder="e.g. Emergence of third set of serrated leaves, trimmed center tip to encourage side branching, topsoil moist..."
                         required
-                        className="w-full px-3.5 py-2 text-xs rounded-xl border border-[#ded5c5] bg-[#fbf9f4] text-[#0c2417] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#1b5837]"
+                        className="w-full px-4 py-3 text-xs sm:text-sm rounded-xl border border-[#ded5c5] bg-[#fbf9f4] text-[#0c2417] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#144229] leading-relaxed"
                       />
                     </div>
 
-                    <div className="flex justify-end pt-1">
+                    <div className="flex justify-end pt-2">
                       <button
                         type="submit"
                         disabled={submittingNote}
-                        className="inline-flex items-center gap-1.5 px-4 py-2 text-xs font-semibold bg-[#144229] hover:bg-[#0c2417] disabled:opacity-50 text-white rounded-xl shadow-xs cursor-pointer"
+                        className="inline-flex items-center gap-2 px-6 py-2.5 text-xs sm:text-sm font-semibold bg-[#144229] hover:bg-[#0c2417] disabled:opacity-50 text-white rounded-xl shadow-xs cursor-pointer min-h-[44px] transition-colors"
                       >
                         {submittingNote ? (
                           <>
-                            <Loader2 size={13} className="animate-spin" />
+                            <Loader2 size={16} className="animate-spin" />
                             <span>Saving Observation...</span>
                           </>
                         ) : (
                           <>
-                            <Plus size={14} />
-                            <span>Add Observation to Log</span>
+                            <Plus size={16} />
+                            <span>Save to Plant Log</span>
                           </>
                         )}
                       </button>
@@ -615,44 +681,56 @@ function MyGardenContent() {
                 </div>
 
                 {/* Growth History Timeline */}
-                <div className="bg-white rounded-2xl border border-[#ded5c5] p-6 shadow-xs space-y-4">
+                <div className="bg-white rounded-3xl border border-[#ded5c5] p-6 sm:p-8 shadow-xs space-y-5">
                   <div className="flex items-center justify-between pb-3 border-b border-[#f0ebe0]">
-                    <h3 className="font-serif font-bold text-base text-[#0c2417] flex items-center gap-2">
-                      <Clock size={18} className="text-[#1e613b]" />
-                      <span>Developmental History ({activePlant.notes?.length || 0} records)</span>
-                    </h3>
-                    <span className="text-xs text-[#647f6c]">Chronological order</span>
+                    <div className="flex items-center gap-3">
+                      <div className="w-9 h-9 rounded-xl bg-[#eef5ee] text-[#144229] flex items-center justify-center">
+                        <Clock size={20} />
+                      </div>
+                      <div>
+                        <h3 className="font-serif font-bold text-lg text-[#0c2417]">
+                          Observation Timeline
+                        </h3>
+                        <p className="text-xs text-[#526a57]">
+                          {activePlant.notes?.length || 0} chronological records logged
+                        </p>
+                      </div>
+                    </div>
                   </div>
 
                   {!activePlant.notes || activePlant.notes.length === 0 ? (
-                    <p className="text-xs text-[#647f6c] italic text-center py-6">
-                      No growth notes recorded yet. Add your first note using the form above!
-                    </p>
+                    <div className="text-center py-10 space-y-2 bg-[#fbf9f4] rounded-2xl border border-dashed border-[#ded5c5]">
+                      <Sprout size={28} className="text-[#8ba391] mx-auto" />
+                      <p className="text-sm font-serif font-bold text-[#0c2417]">No Observations Yet</p>
+                      <p className="text-xs text-[#526a57] max-w-sm mx-auto">
+                        Record your first dated entry above to start building this plant&apos;s botanical growth timeline.
+                      </p>
+                    </div>
                   ) : (
-                    <div className="space-y-3">
+                    <div className="space-y-3.5">
                       {activePlant.notes
                         .slice()
                         .reverse()
                         .map((note) => (
                           <div
                             key={note.id}
-                            className="p-3.5 rounded-xl bg-[#fbf9f4] border border-[#ded5c5] flex items-start justify-between gap-4 text-xs"
+                            className="p-4 sm:p-5 rounded-2xl bg-[#fbf9f4] border border-[#ded5c5] flex flex-col sm:flex-row sm:items-start justify-between gap-4 text-xs sm:text-sm"
                           >
-                            <div className="space-y-1">
-                              <div className="flex items-center gap-2">
+                            <div className="space-y-1.5 flex-1">
+                              <div className="flex items-center gap-2.5">
                                 <Badge variant="sage" size="sm">{note.stage}</Badge>
-                                <span className="text-[#647f6c] flex items-center gap-1 text-[11px]">
-                                  <Calendar size={12} /> {note.date}
+                                <span className="text-[#647f6c] flex items-center gap-1.5 text-xs">
+                                  <Calendar size={13} /> {note.date}
                                 </span>
                               </div>
-                              <p className="text-[#2c3d30] leading-relaxed pt-0.5">
+                              <p className="text-[#2c3d30] leading-relaxed pt-1 text-sm">
                                 {note.text}
                               </p>
                             </div>
 
                             {note.heightCm !== undefined && (
-                              <span className="shrink-0 font-mono text-[11px] font-semibold text-[#1e613b] bg-white px-2.5 py-1 rounded-lg border border-[#cfdfcf] flex items-center gap-1">
-                                <Ruler size={12} /> {note.heightCm} cm
+                              <span className="shrink-0 font-mono text-xs font-semibold text-[#144229] bg-white px-3 py-1.5 rounded-xl border border-[#cfe0cf] flex items-center gap-1.5 self-start sm:self-auto">
+                                <Ruler size={13} /> {note.heightCm} cm
                               </span>
                             )}
                           </div>
@@ -673,8 +751,8 @@ export default function MyGardenPage() {
   return (
     <React.Suspense
       fallback={
-        <div className="min-h-screen flex items-center justify-center text-xs text-[#526a57]">
-          Loading your garden log...
+        <div className="min-h-screen flex items-center justify-center text-sm text-[#526a57] bg-[#fbf9f4]">
+          Loading your garden journal...
         </div>
       }
     >

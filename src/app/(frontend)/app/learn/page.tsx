@@ -1,81 +1,87 @@
 import React from 'react';
-import Link from 'next/link';
 import { AppHeader } from '@/components/navigation/AppHeader';
 import { Badge } from '@/components/ui/Badge';
-import { fetchPublishedArticles } from '@/lib/payload';
+import { fetchPublishedArticles, fetchPublishedPlants } from '@/lib/payload';
+import { LearnDiscoveryClient } from './LearnDiscoveryClient';
 import {
-  Sprout,
   Droplet,
   Sun,
   Wind,
   Layers,
+  Box,
+  CheckCircle2,
   Recycle,
   RefreshCw,
   Sparkles,
-  ArrowRight,
-  CheckCircle2,
-  Box,
-  Compass,
-  BookOpen,
 } from 'lucide-react';
+
 export const instant = false;
 
 export default async function LearnPage() {
-  const articles = await fetchPublishedArticles();
+  const [articles, plants] = await Promise.all([
+    fetchPublishedArticles(),
+    fetchPublishedPlants(),
+  ]);
+
   const essentials = [
     {
       title: 'Water (Precision Hydration)',
       icon: Droplet,
-      color: 'text-[#3b82f6] bg-[#eff6ff]',
-      summary: 'Plants are up to 90% water. Transpiration draws soil minerals up through xylem tissues.',
+      color: 'text-[#144229] bg-[#eef5ee]',
+      summary:
+        'Plants are up to 90% water. Transpiration draws soil minerals up through xylem tissues to fuel cellular expansion.',
       bestPractices: [
         'Water when the top 3 cm of soil is dry to the touch, not on a rigid calendar.',
-        'Always bottom-water shallow seed trays to prevent damping-off fungal disease.',
-        'Morning watering gives foliage time to dry, avoiding overnight spore germination.',
+        'Bottom-water shallow seed trays to prevent damping-off fungal infection.',
+        'Morning watering allows foliage to dry, preventing overnight fungal spores.',
       ],
     },
     {
       title: 'Sunlight (Photoperiod Energy)',
       icon: Sun,
-      color: 'text-[#c77712] bg-[#fef3c7]',
-      summary: 'Photons drive chlorophyll carbon fixation. Fruiting crops need 6+ hours; leafy greens thrive on 3–4 hours.',
+      color: 'text-[#92400e] bg-[#fef3c7]',
+      summary:
+        'Photons drive chlorophyll carbon fixation. Fruiting crops need 6+ hours; leafy greens thrive on 3–4 hours of bright light.',
       bestPractices: [
         'Place sun-hungry crops (tomatoes, basil) on top tiers with unobstructed exposure.',
         'Use south- or west-facing balconies for fruit-bearing vegetables.',
-        'Supplement dark indoor apartments with full-spectrum 4000K–6500K LED grow bars.',
+        'Supplement indoor rooms with full-spectrum 4000K–6500K LED grow bars.',
       ],
     },
     {
       title: 'Air & Aeration (Gas Exchange)',
       icon: Wind,
       color: 'text-[#475569] bg-[#f1f5f9]',
-      summary: 'Roots need oxygen (O2) just as leaves need carbon dioxide (CO2). Stagnant air invites fungal spore growth.',
+      summary:
+        'Roots need oxygen (O2) just as leaves need carbon dioxide (CO2). Stagnant air invites mold and root rot.',
       bestPractices: [
-        'Incorporate perlite, pumice, or rice hulls to create permanent air pore spaces in soil.',
-        'Leave 10–15 cm clearance between vertical pots to encourage air convection currents.',
+        'Incorporate perlite, pumice, or rice hulls to create permanent air pores in soil.',
+        'Leave 10–15 cm clearance between vertical pots to encourage natural airflow.',
         'Run a low-speed oscillating household fan near indoor vertical setups.',
       ],
     },
     {
-      title: 'Nutrients (Living Soil Bio-Chemistry)',
+      title: 'Living Soil & Nutrition (Bio-Chemistry)',
       icon: Layers,
       color: 'text-[#1e613b] bg-[#eef5ee]',
-      summary: 'Macronutrients (Nitrogen for leafy foliage, Phosphorus for roots/flowers, Potassium for fruit vigor).',
+      summary:
+        'Macronutrients (Nitrogen for lush leaves, Phosphorus for roots, Potassium for vigor) thrive in organic living soil.',
       bestPractices: [
-        'Top-dress containers monthly with aged vermicompost or composted kitchen scrap mulch.',
-        'Use liquid kelp or seaweed meal for gentle micronutrients without burning root hairs.',
+        'Top-dress containers monthly with aged vermicompost or composted kitchen mulch.',
+        'Use diluted liquid kelp or seaweed meal for gentle micronutrients without root burn.',
         'Avoid heavy synthetic high-salt fertilizers in small balcony containers.',
       ],
     },
     {
-      title: 'Space & Root Volume (Root Architecture)',
+      title: 'Root Volume & Spacing (Root Architecture)',
       icon: Box,
       color: 'text-[#9a3412] bg-[#fbeee9]',
-      summary: 'A plant’s top canopy mirrors its below-ground root volume. Root-bound plants stunt quickly.',
+      summary:
+        'A plant’s top canopy mirrors its below-ground root architecture. Root-bound plants stunt quickly without proper depth.',
       bestPractices: [
         'Give tomatoes at least 25–30 cm container depth; lettuces need only 15 cm.',
         'Thin seedlings promptly to recommended spacings to avoid light competition.',
-        'Use breathable fabric pots to naturally "air-prune" roots and prevent circling.',
+        'Use breathable fabric pots to naturally air-prune roots and prevent root circling.',
       ],
     },
   ];
@@ -95,7 +101,7 @@ export default async function LearnPage() {
       icon: '🌿',
       description:
         'The taproot (radicle) punches downward, anchoring the seedling. Soon after, embryonic seed leaves (cotyledons) unfurl and turn green in response to light.',
-      checklist: ['Move immediately to bright light', 'Ensure gentle bottom airflow', 'Discontinue plastic humidity domes'],
+      checklist: ['Move immediately to bright light', 'Ensure gentle bottom airflow', 'Remove humidity domes'],
     },
     {
       stage: '3. Seedling & True Leaves',
@@ -110,44 +116,47 @@ export default async function LearnPage() {
       time: 'Day 30–90+',
       icon: '🍅',
       description:
-        'The plant achieves full physiological canopy volume. Reproductive crops produce pollinator flowers and develop plump fruits; leafy greens yield continuous cut-and-come-again harvests.',
+        'The plant achieves full physiological canopy volume. Reproductive crops produce pollinator flowers and develop fruits; leafy greens yield continuous cut-and-come-again harvests.',
       checklist: ['Harvest outer leaves regularly', 'Support fruiting vines with stakes', 'Save mature seeds for next season'],
     },
   ];
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col bg-[#fbf9f4]">
       <AppHeader
-        title="Gardening Education & Sustainability"
-        subtitle="Master botanical growth essentials, the plant lifecycle, and practical home 3R practices."
+        title="Botanical Learning & Sustainability Hub"
+        subtitle="Explore peer-reviewed plant science, balcony vertical microclimates, and closed-loop home gardening."
       />
 
       <div className="flex-1 p-4 sm:p-6 lg:p-8 max-w-7xl mx-auto w-full space-y-12">
         {/* Intro Hero Card */}
-        <div className="bg-[#0e2a1b] text-white p-6 sm:p-8 rounded-2xl relative overflow-hidden shadow-sm">
-          <div className="max-w-3xl space-y-3.5">
-            <Badge variant="forest" size="md">Foundational Plant Science</Badge>
-            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-serif font-bold text-white tracking-tight">
-              Cultivating Knowledge Alongside Your Crops
+        <div className="bg-[#0e2a1b] text-white p-6 sm:p-10 rounded-3xl relative overflow-hidden shadow-sm space-y-4">
+          <div className="max-w-3xl space-y-3">
+            <Badge variant="forest" size="md">Botanical Science & Urban Sustainability</Badge>
+            <h2 className="text-2xl sm:text-4xl font-serif font-bold text-white tracking-tight">
+              Cultivating Botanical Understanding Alongside Your Crops
             </h2>
             <p className="text-sm sm:text-base text-[#d1e6d7] leading-relaxed">
-              Successful urban gardening is not a mystical &ldquo;green thumb&rdquo; gift — it is an understanding of five environmental essentials and closed-loop ecological stewardship.
+              Successful urban gardening is not a mystical &ldquo;green thumb&rdquo; gift — it is an understanding of environmental inputs, plant biology, and closed-loop ecological stewardship.
             </p>
           </div>
         </div>
 
-        {/* Section 1: The 5 Growth Essentials */}
-        <section className="space-y-6">
-          <div className="flex items-center justify-between pb-3 border-b border-[#e5dfd3]">
+        {/* Client Interactive Discovery Hub: Categories, Expandable Topics, Quiz */}
+        <LearnDiscoveryClient articles={articles} plants={plants} />
+
+        {/* The 5 Growth Essentials */}
+        <section className="space-y-6 pt-4">
+          <div className="flex items-center justify-between pb-3 border-b border-[#f0ebe0]">
             <div>
-              <h3 className="text-xl sm:text-2xl font-serif font-bold text-[#071c11]">
+              <h3 className="text-xl sm:text-2xl font-serif font-bold text-[#0c2417]">
                 The Five Growth Essentials
               </h3>
-              <p className="text-sm text-[#2e4435] mt-0.5">
-                Every plant thrives when these environmental inputs are kept in balance
+              <p className="text-xs sm:text-sm text-[#526a57] mt-0.5">
+                Every plant flourishes when these five environmental inputs remain in balance
               </p>
             </div>
-            <Badge variant="sage" size="sm">Botany 101</Badge>
+            <Badge variant="sage" size="md">Foundational Botany</Badge>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -156,14 +165,14 @@ export default async function LearnPage() {
               return (
                 <div
                   key={item.title}
-                  className="bg-white rounded-2xl p-6 sm:p-7 border border-[#ded5c5] shadow-xs hover:shadow-md transition-all flex flex-col justify-between"
+                  className="bg-white rounded-3xl p-6 sm:p-7 border border-[#ded5c5] shadow-xs hover:shadow-md transition-all flex flex-col justify-between"
                 >
                   <div className="space-y-3.5">
                     <div className="flex items-center gap-3">
-                      <span className={`p-3 rounded-xl ${item.color}`}>
-                        <Icon size={24} />
+                      <span className={`p-3 rounded-2xl ${item.color}`}>
+                        <Icon size={22} />
                       </span>
-                      <h4 className="font-serif font-bold text-lg text-[#071c11]">
+                      <h4 className="font-serif font-bold text-lg text-[#0c2417]">
                         {item.title}
                       </h4>
                     </div>
@@ -177,7 +186,7 @@ export default async function LearnPage() {
                         Balcony Best Practices:
                       </span>
                       {item.bestPractices.map((bp) => (
-                        <div key={bp} className="flex items-start gap-2 text-xs sm:text-sm text-[#1c261e]">
+                        <div key={bp} className="flex items-start gap-2 text-xs sm:text-sm text-[#2e4435]">
                           <CheckCircle2 size={16} className="text-[#144229] shrink-0 mt-0.5" />
                           <span className="leading-relaxed">{bp}</span>
                         </div>
@@ -190,35 +199,35 @@ export default async function LearnPage() {
           </div>
         </section>
 
-        {/* Section 2: Plant Life Cycle */}
+        {/* Plant Life Cycle Section */}
         <section id="lifecycle" className="space-y-6">
-          <div className="flex items-center justify-between pb-3 border-b border-[#e5dfd3]">
+          <div className="flex items-center justify-between pb-3 border-b border-[#f0ebe0]">
             <div>
-              <h3 className="text-xl sm:text-2xl font-serif font-bold text-[#071c11]">
+              <h3 className="text-xl sm:text-2xl font-serif font-bold text-[#0c2417]">
                 The Botanical Life Cycle
               </h3>
-              <p className="text-sm text-[#2e4435] mt-0.5">
-                From dormant seed embryo to reproductive flowering and seed saving
+              <p className="text-xs sm:text-sm text-[#526a57] mt-0.5">
+                From dormant seed embryo to true leaves, flowering, and seed saving
               </p>
             </div>
-            <Badge variant="sage" size="sm">4 Key Milestones</Badge>
+            <Badge variant="sage" size="md">4 Key Milestones</Badge>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {lifecycleStages.map((lc) => (
               <div
                 key={lc.stage}
-                className="bg-white rounded-2xl p-6 border border-[#ded5c5] shadow-xs space-y-4 flex flex-col justify-between"
+                className="bg-white rounded-3xl p-6 border border-[#ded5c5] shadow-xs space-y-4 flex flex-col justify-between"
               >
                 <div className="space-y-2.5">
                   <div className="flex items-center justify-between">
                     <span className="text-3xl">{lc.icon}</span>
-                    <span className="text-xs font-mono font-semibold text-[#144229] bg-[#eef5ee] px-2.5 py-1 rounded-md">
+                    <span className="text-xs font-mono font-semibold text-[#144229] bg-[#eef5ee] px-2.5 py-1 rounded-lg">
                       {lc.time}
                     </span>
                   </div>
 
-                  <h4 className="font-serif font-bold text-lg text-[#071c11]">
+                  <h4 className="font-serif font-bold text-lg text-[#0c2417]">
                     {lc.stage}
                   </h4>
 
@@ -229,8 +238,8 @@ export default async function LearnPage() {
 
                 <div className="space-y-1.5 pt-3 border-t border-[#f0ebe0]">
                   {lc.checklist.map((c) => (
-                    <div key={c} className="flex items-center gap-2 text-xs sm:text-sm text-[#1c261e]">
-                      <span className="w-2 h-2 rounded-full bg-[#144229]" />
+                    <div key={c} className="flex items-center gap-2 text-xs text-[#2e4435]">
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#144229]" />
                       <span>{c}</span>
                     </div>
                   ))}
@@ -240,32 +249,32 @@ export default async function LearnPage() {
           </div>
         </section>
 
-        {/* Section 3: The 3Rs of Sustainable Urban Gardening */}
+        {/* The 3Rs of Sustainable Home Agriculture */}
         <section id="sustainability" className="space-y-6">
-          <div className="flex items-center justify-between pb-3 border-b border-[#e5dfd3]">
+          <div className="flex items-center justify-between pb-3 border-b border-[#f0ebe0]">
             <div>
-              <h3 className="text-xl sm:text-2xl font-serif font-bold text-[#071c11]">
+              <h3 className="text-xl sm:text-2xl font-serif font-bold text-[#0c2417]">
                 The 3Rs of Sustainable Home Agriculture
               </h3>
-              <p className="text-sm text-[#2e4435] mt-0.5">
+              <p className="text-xs sm:text-sm text-[#526a57] mt-0.5">
                 Zero-waste principles: Reduce inputs, Reuse containers, and Recycle organics
               </p>
             </div>
-            <Badge variant="forest" size="sm">Ecological Closed Loop</Badge>
+            <Badge variant="forest" size="md">Ecological Closed Loop</Badge>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {/* Reduce */}
-            <div id="reduce" className="bg-white rounded-2xl p-6 sm:p-7 border border-[#ded5c5] shadow-xs space-y-4">
+            <div id="reduce" className="bg-white rounded-3xl p-6 sm:p-7 border border-[#ded5c5] shadow-xs space-y-4">
               <div className="flex items-center gap-3">
-                <span className="p-3 rounded-xl bg-[#e7efe7] text-[#144229]">
-                  <Droplet size={24} />
+                <span className="p-3 rounded-2xl bg-[#eef5ee] text-[#144229]">
+                  <Droplet size={22} />
                 </span>
                 <div>
-                  <h4 className="font-serif font-bold text-lg text-[#071c11]">
+                  <h4 className="font-serif font-bold text-lg text-[#0c2417]">
                     1. Reduce
                   </h4>
-                  <p className="text-xs sm:text-sm text-[#144229] font-semibold">Conserve Water & Fertilizer</p>
+                  <p className="text-xs font-semibold text-[#144229]">Conserve Water & Fertilizer</p>
                 </div>
               </div>
 
@@ -273,7 +282,7 @@ export default async function LearnPage() {
                 Vertical gardening excels at water reduction because top tier drainage can be directed to cascade into lower tiers rather than running down household storm drains.
               </p>
 
-              <div className="bg-[#f7f5ed] p-4 rounded-xl border border-[#ded5c5] space-y-2 text-xs sm:text-sm text-[#1c261e]">
+              <div className="bg-[#fbf9f4] p-4 rounded-2xl border border-[#ded5c5] space-y-1.5 text-xs sm:text-sm text-[#2e4435]">
                 <strong className="text-[#144229] block font-bold">Actionable Home Project:</strong>
                 <p className="leading-relaxed">
                   Place shallow collection trays underneath middle and top vertical shelves to catch nutrient-rich runoff, re-using it for thirsty bottom-tier crops.
@@ -282,16 +291,16 @@ export default async function LearnPage() {
             </div>
 
             {/* Reuse */}
-            <div id="reuse" className="bg-white rounded-2xl p-6 sm:p-7 border border-[#ded5c5] shadow-xs space-y-4">
+            <div id="reuse" className="bg-white rounded-3xl p-6 sm:p-7 border border-[#ded5c5] shadow-xs space-y-4">
               <div className="flex items-center gap-3">
-                <span className="p-3 rounded-xl bg-[#fef3c7] text-[#92400e]">
-                  <RefreshCw size={24} />
+                <span className="p-3 rounded-2xl bg-[#fef3c7] text-[#92400e]">
+                  <RefreshCw size={22} />
                 </span>
                 <div>
-                  <h4 className="font-serif font-bold text-lg text-[#071c11]">
+                  <h4 className="font-serif font-bold text-lg text-[#0c2417]">
                     2. Reuse
                   </h4>
-                  <p className="text-xs sm:text-sm text-[#92400e] font-semibold">Upcycle Food-Grade Planters</p>
+                  <p className="text-xs font-semibold text-[#92400e]">Upcycle Food-Grade Planters</p>
                 </div>
               </div>
 
@@ -299,9 +308,9 @@ export default async function LearnPage() {
                 Never purchase unnecessary virgin plastic pots when safe food containers are entering your home weekly.
               </p>
 
-              <div className="bg-[#f7f5ed] p-4 rounded-xl border border-[#ded5c5] space-y-2 text-xs sm:text-sm text-[#1c261e]">
+              <div className="bg-[#fbf9f4] p-4 rounded-2xl border border-[#ded5c5] space-y-1.5 text-xs sm:text-sm text-[#2e4435]">
                 <strong className="text-[#144229] block font-bold">How to Safely Prep a Container:</strong>
-                <ol className="list-decimal pl-5 space-y-1 leading-relaxed">
+                <ol className="list-decimal pl-4 space-y-1 leading-relaxed">
                   <li>Use #2 (HDPE) or #5 (PP) food-grade plastic containers.</li>
                   <li>Clean thoroughly with hot water and baking soda.</li>
                   <li>Drill 4–6 drainage holes (8 mm diameter) in the bottom.</li>
@@ -311,119 +320,32 @@ export default async function LearnPage() {
             </div>
 
             {/* Recycle */}
-            <div id="recycle" className="bg-white rounded-2xl p-6 sm:p-7 border border-[#ded5c5] shadow-xs space-y-4">
+            <div id="recycle" className="bg-white rounded-3xl p-6 sm:p-7 border border-[#ded5c5] shadow-xs space-y-4">
               <div className="flex items-center gap-3">
-                <span className="p-3 rounded-xl bg-[#fbeee9] text-[#9a3412]">
-                  <Recycle size={24} />
+                <span className="p-3 rounded-2xl bg-[#fbeee9] text-[#9a3412]">
+                  <Recycle size={22} />
                 </span>
                 <div>
-                  <h4 className="font-serif font-bold text-lg text-[#071c11]">
+                  <h4 className="font-serif font-bold text-lg text-[#0c2417]">
                     3. Recycle
                   </h4>
-                  <p className="text-xs sm:text-sm text-[#9a3412] font-semibold">Balcony & Kitchen Composting</p>
+                  <p className="text-xs font-semibold text-[#9a3412]">Balcony Kitchen Composting</p>
                 </div>
               </div>
 
               <p className="text-sm text-[#2e4435] leading-relaxed">
-                Over 30% of municipal landfill waste consists of organic plant trimmings that can be recycled directly back into fertile potting soil.
+                Over 30% of domestic waste consists of organic plant trimmings that can be recycled directly back into fertile potting soil.
               </p>
 
-              <div className="bg-[#f7f5ed] p-4 rounded-xl border border-[#ded5c5] space-y-2 text-xs sm:text-sm text-[#1c261e]">
+              <div className="bg-[#fbf9f4] p-4 rounded-2xl border border-[#ded5c5] space-y-1.5 text-xs sm:text-sm text-[#2e4435]">
                 <strong className="text-[#144229] block font-bold">The 2:1 Balcony Rule:</strong>
                 <p className="leading-relaxed">
-                  For every 1 handful of wet kitchen scraps (coffee grounds, peelings), mix in 2 handfuls of dry brown carbon (crushed dry leaves, shredded non-glossy cardboard) to keep it completely odorless.
+                  For every 1 handful of wet kitchen scraps (coffee grounds, peelings), mix in 2 handfuls of dry brown carbon (crushed dry leaves, shredded cardboard) to keep it completely odorless.
                 </p>
               </div>
             </div>
           </div>
         </section>
-
-        {/* Section 4: Editorial Articles from Payload CMS */}
-        <section id="articles" className="space-y-6">
-          <div className="flex items-center justify-between pb-3 border-b border-[#e5dfd3]">
-            <div>
-              <h3 className="text-xl sm:text-2xl font-serif font-bold text-[#071c11]">
-                Curated Agronomic & Vertical Farming Guides
-              </h3>
-              <p className="text-sm text-[#2e4435] mt-0.5">
-                In-depth editorial articles managed via Payload CMS with actionable home botany workflows
-              </p>
-            </div>
-            <Badge variant="sage" size="sm">Editorial Series</Badge>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {articles.map((art) => (
-              <div
-                key={art.id}
-                className="bg-white rounded-2xl p-6 sm:p-7 border border-[#ded5c5] shadow-xs hover:shadow-md transition-all flex flex-col justify-between space-y-4"
-              >
-                <div className="space-y-3">
-                  <div className="flex items-center justify-between gap-2">
-                    <span className="text-xs font-bold uppercase tracking-wider text-[#144229] bg-[#eef5ee] px-2.5 py-1 rounded-md">
-                      {art.categoryLabel || art.category}
-                    </span>
-                    {art.publishedAt && (
-                      <span className="text-xs font-mono text-[#2e4435]">
-                        {art.publishedAt}
-                      </span>
-                    )}
-                  </div>
-
-                  <h4 className="font-serif font-bold text-lg text-[#071c11] leading-snug">
-                    {art.title}
-                  </h4>
-
-                  <p className="text-sm text-[#2e4435] leading-relaxed">
-                    {art.summary}
-                  </p>
-
-                  {art.keyTakeaways && art.keyTakeaways.length > 0 && (
-                    <div className="pt-3 border-t border-[#f0ebe0] space-y-2">
-                      <span className="text-xs font-bold uppercase tracking-wider text-[#144229] block">
-                        Key Takeaways:
-                      </span>
-                      {art.keyTakeaways.map((takeaway, idx) => (
-                        <div key={idx} className="flex items-start gap-2 text-xs sm:text-sm text-[#1c261e]">
-                          <CheckCircle2 size={16} className="text-[#144229] shrink-0 mt-0.5" />
-                          <span className="leading-relaxed">{takeaway}</span>
-                        </div>
-                      ))}
-                    </div>
-                  )}
-                </div>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* Bottom CTA to test in My Garden */}
-        <div className="p-6 sm:p-8 rounded-2xl bg-[#eef5ee] border border-[#cfe0cf] flex flex-col sm:flex-row items-center justify-between gap-4">
-          <div className="space-y-1.5 text-center sm:text-left">
-            <h4 className="font-serif font-bold text-xl text-[#071c11]">
-              Put These Principles Into Practice
-            </h4>
-            <p className="text-sm text-[#2e4435]">
-              Log your plant stages in My Garden or arrange your tiered layout in the Vertical Planner.
-            </p>
-          </div>
-          <div className="flex items-center gap-3">
-            <Link
-              href="/app/my-garden"
-              className="inline-flex items-center gap-2 px-5 py-3 rounded-xl text-sm font-semibold bg-[#144229] text-white hover:bg-[#071c11] shadow-xs transition-colors min-h-[44px]"
-            >
-              <Sprout size={16} />
-              <span>Open My Garden</span>
-            </Link>
-            <Link
-              href="/app/planner"
-              className="inline-flex items-center gap-2 px-5 py-3 rounded-xl text-sm font-semibold bg-white text-[#144229] border border-[#cfdfcf] hover:bg-[#f4f8f4] transition-colors min-h-[44px]"
-            >
-              <Layers size={16} />
-              <span>Launch Planner</span>
-            </Link>
-          </div>
-        </div>
       </div>
     </div>
   );

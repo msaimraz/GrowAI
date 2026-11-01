@@ -11,6 +11,7 @@ import {
   Sparkles,
   BookOpen,
   ArrowUpRight,
+  ArrowRight,
   Info,
   DownloadCloud,
 } from 'lucide-react';
@@ -38,7 +39,7 @@ export function AppSidebar() {
       label: 'Plant Library',
       href: '/app/plants',
       icon: Library,
-      badge: '16 Species',
+      badge: '19 Species',
     },
     {
       label: 'Vertical Planner',
@@ -59,16 +60,16 @@ export function AppSidebar() {
   ];
 
   return (
-    <aside className="hidden lg:flex lg:flex-col w-64 bg-[#0e2a1b] text-[#e3ece5] border-r border-[#19402a] min-h-screen p-5 shrink-0 select-none">
+    <aside className="hidden lg:flex lg:flex-col w-64 bg-[#0d2a1b] text-[#e3ece5] border-r border-[#1a4b30] min-h-screen p-5 shrink-0 select-none">
       {/* Brand Header */}
-      <div className="pb-5 border-b border-[#1b4a30]">
-        <Link href="/" className="inline-block focus:outline-none focus:ring-2 focus:ring-[#58855e] rounded-lg">
+      <div className="pb-5 border-b border-[#1a4b30]">
+        <Link href="/" className="inline-block focus:outline-none focus:ring-2 focus:ring-[#64b584] rounded-xl">
           <div className="flex items-center gap-2.5">
-            <span className="flex items-center justify-center w-8 h-8 rounded-lg bg-[#257a4d] text-white shadow-sm">
+            <span className="flex items-center justify-center w-8 h-8 rounded-xl bg-[#1e663f] text-white shadow-xs">
               <Sprout size={20} className="stroke-[2.5]" />
             </span>
             <span className="font-serif font-bold text-xl tracking-tight text-white">
-              Grow<span className="text-[#64b584] font-sans font-semibold">AI</span>
+              Grow<span className="text-[#86efac] font-sans font-semibold">AI</span>
             </span>
           </div>
         </Link>
@@ -89,16 +90,16 @@ export function AppSidebar() {
             <Link
               key={item.href}
               href={item.href}
-              className={`flex items-center justify-between px-3.5 py-3 rounded-xl text-sm font-medium transition-all min-h-[44px] ${
+              className={`flex items-center justify-between px-3.5 py-2.5 rounded-xl text-sm font-medium transition-all min-h-[44px] ${
                 isActive
-                  ? 'bg-[#1a472d] text-white shadow-sm font-semibold border border-[#2a6844]'
-                  : 'text-[#bed4c5] hover:text-white hover:bg-[#143824]'
+                  ? 'bg-[#1b5837] text-white shadow-xs font-semibold border border-[#348b56]'
+                  : 'text-[#bed4c5] hover:text-white hover:bg-[#143d26]'
               }`}
             >
               <div className="flex items-center gap-3">
                 <Icon
                   size={19}
-                  className={isActive ? 'text-[#64b584]' : 'text-[#86aa91]'}
+                  className={isActive ? 'text-[#86efac]' : 'text-[#86aa91]'}
                 />
                 <span>{item.label}</span>
               </div>
@@ -119,13 +120,13 @@ export function AppSidebar() {
       </nav>
 
       {/* Bottom Status & Info */}
-      <div className="pt-4 border-t border-[#1b4a30] space-y-3">
+      <div className="pt-4 border-t border-[#1a4b30] space-y-3">
         {/* PWA Install Button if available */}
         {canInstall && (
           <button
             type="button"
             onClick={promptInstall}
-            className="w-full flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl bg-[#257a4d] text-white font-semibold text-xs shadow-sm hover:bg-[#1e663f] transition-colors cursor-pointer min-h-[40px]"
+            className="w-full flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl bg-[#1e663f] hover:bg-[#257a4d] text-white font-semibold text-xs shadow-xs transition-colors cursor-pointer min-h-[44px]"
           >
             <DownloadCloud size={16} />
             <span>Install GrowAI App</span>
@@ -136,7 +137,7 @@ export function AppSidebar() {
           <button
             type="button"
             onClick={() => setShowIosInstructions(true)}
-            className="w-full flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl bg-[#257a4d] text-white font-semibold text-xs shadow-sm hover:bg-[#1e663f] transition-colors cursor-pointer min-h-[40px]"
+            className="w-full flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl bg-[#1e663f] hover:bg-[#257a4d] text-white font-semibold text-xs shadow-xs transition-colors cursor-pointer min-h-[44px]"
           >
             <DownloadCloud size={16} />
             <span>Install on iOS</span>
@@ -149,13 +150,13 @@ export function AppSidebar() {
         {/* Public Site Link */}
         <Link
           href="/"
-          className="flex items-center justify-between text-xs font-medium text-[#9dc2a8] hover:text-white px-3 py-2.5 rounded-lg hover:bg-[#143824] transition-colors min-h-[40px]"
+          className="flex items-center justify-between text-xs font-medium text-[#9dc2a8] hover:text-white px-3 py-2.5 rounded-xl hover:bg-[#143d26] transition-colors min-h-[44px]"
         >
           <span className="flex items-center gap-1.5">
             <Info size={15} />
             Landing Page
           </span>
-          <ArrowUpRight size={15} />
+          <ArrowRight size={15} />
         </Link>
       </div>
     </aside>
