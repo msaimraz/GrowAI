@@ -1,8 +1,18 @@
-import { UserPlant, CareTask, GrowthStage, GrowthNote, TaskType } from '@/types/garden';
+import {
+  UserPlant,
+  CareTask,
+  GrowthStage,
+  GrowthNote,
+  TaskType,
+  PropagationMethod,
+  PlantAgeInfo,
+  HarvestWindowResult,
+} from '@/types/garden';
 import { createClient } from '@/lib/supabase/client';
 import { isSupabaseConfigured } from '@/lib/supabase/config';
 import type { SupabaseClient } from '@supabase/supabase-js';
 import type { DatabaseSchema } from './supabase';
+import { PLANTS_DATA } from '@/data/plants';
 
 const STORAGE_KEYS = {
   USER_PLANTS: 'growai_demo_user_plants',
@@ -10,7 +20,170 @@ const STORAGE_KEYS = {
   LOCAL_MIGRATED: 'growai_local_migrated_to_cloud',
 };
 
-// Initial curated demo data to demonstrate realistic garden state immediately in demo mode
+// ==============================================================================
+// TIMEZONE-SAFE CALENDAR DAY & PHENOLOGICAL HARVEST CALCULATIONS
+// ==============================================================================
+
+/**
+ * Deterministically extracts { year, month, day } in the specified timeZone
+ * using Intl.DateTimeFormat.formatToParts, preventing locale string order assumptions.
+ */
+export function getCalendarParts(
+  date: Date,
+  timeZone: string
+): { year: number; month: number; day: number } {
+  try {
+    const formatter = new Intl.DateTimeFormat('en-US', {
+      timeZone,
+      year: 'numeric',
+      month: 'numeric',
+      day: 'numeric',
+    });
+    const parts = formatter.formatToParts(date);
+    let year = 0;
+    let month = 0;
+    let day = 0;
+    for (const part of parts) {
+      if (part.type === 'year') year = parseInt(part.value, 10);
+      if (part.type === 'month') month = parseInt(part.value, 10);
+      if (part.type === 'day') day = parseInt(part.value, 10);
+    }
+    return { year, month, day };
+  } catch {
+    return {
+      year: date.getUTCFullYear(),
+      month: date.getUTCMonth() + 1,
+      day: date.getUTCDate(),
+    };
+  }
+}
+
+/**
+ * Calculates calendar day difference between plantedDateStr ('YYYY-MM-DD') and today in the given timezone.
+ */
+export function calculatePlantAge(
+  plantedDateStr: string,
+  timeZone: string = typeof Intl !== 'undefined' ? Intl.DateTimeFormat().resolvedOptions().timeZone : 'UTC'
+): PlantAgeInfo {
+  if (!plantedDateStr) {
+    return { daysSincePlanting: 0, formattedPlantedDate: 'Unknown' };
+  }
+
+  const [pYear, pMonth, pDay] = plantedDateStr.split('-').map((v) => parseInt(v, 10));
+  if (isNaN(pYear) || isNaN(pMonth) || isNaN(pDay)) {
+    return { daysSincePlanting: 0, formattedPlantedDate: plantedDateStr };
+  }
+
+  const plantedUtc = Date.UTC(pYear, pMonth - 1, pDay);
+  const todayParts = getCalendarParts(new Date(), timeZone);
+  const todayUtc = Date.UTC(todayParts.year, todayParts.month - 1, todayParts.day);
+
+  const daysSincePlanting = Math.max(0, Math.round((todayUtc - plantedUtc) / 86400000));
+
+  const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  const formattedPlantedDate = `${monthNames[pMonth - 1]} ${pDay}, ${pYear}`;
+
+  return { daysSincePlanting, formattedPlantedDate };
+}
+
+/**
+ * Computes phenological harvest window comparing actual growth days against botanical timelines.
+ */
+export function calculateHarvestWindow(
+  plantedDateStr: string,
+  plantSlug: string,
+  currentStage: GrowthStage,
+  actualHarvestDate?: string | null,
+  timeZone: string = typeof Intl !== 'undefined' ? Intl.DateTimeFormat().resolvedOptions().timeZone : 'UTC'
+): HarvestWindowResult {
+  const botanical = PLANTS_DATA.find((p) => p.slug === plantSlug);
+
+  if (currentStage === 'Harvested') {
+    const harvestDisplay = actualHarvestDate
+      ? calculatePlantAge(actualHarvestDate, timeZone).formattedPlantedDate
+      : 'Recorded';
+    return {
+      status: 'harvested',
+      headline: 'Harvest Cycle Complete',
+      detail: `Harvested on ${harvestDisplay}. Ready for succession sowing!`,
+    };
+  }
+
+  if (!botanical || !botanical.timelines) {
+    return {
+      status: 'no_timeline',
+      headline: 'Horticultural Timeline',
+      detail: 'Monitoring daily growth and visual flowering cues.',
+    };
+  }
+
+  const timelines = botanical.timelines;
+  // Use harvestDays if defined, otherwise fallback to maturityDays
+  const minDays = timelines.harvestDays?.min ?? timelines.maturityDays.min;
+  const maxDays = timelines.harvestDays?.max ?? timelines.maturityDays.max;
+
+  if (!minDays || !maxDays) {
+    return {
+      status: 'no_timeline',
+      headline: 'Horticultural Timeline',
+      detail: 'Observing vegetative development.',
+    };
+  }
+
+  const { daysSincePlanting } = calculatePlantAge(plantedDateStr, timeZone);
+
+  // Compute calendar dates for window
+  const [pYear, pMonth, pDay] = plantedDateStr.split('-').map(Number);
+  const minUtc = Date.UTC(pYear, pMonth - 1, pDay) + minDays * 86400000;
+  const maxUtc = Date.UTC(pYear, pMonth - 1, pDay) + maxDays * 86400000;
+
+  const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  const minD = new Date(minUtc);
+  const maxD = new Date(maxUtc);
+  const estimatedMinDate = `${monthNames[minD.getUTCMonth()]} ${minD.getUTCDate()}`;
+  const estimatedMaxDate = `${monthNames[maxD.getUTCMonth()]} ${maxD.getUTCDate()}, ${maxD.getUTCFullYear()}`;
+
+  if (daysSincePlanting >= minDays && daysSincePlanting <= maxDays) {
+    return {
+      status: 'in_window',
+      headline: 'Prime Harvest Window: Active Now',
+      detail: `Harvest window active (${estimatedMinDate} – ${estimatedMaxDate}). Harvest outer foliage or ripe produce.`,
+      estimatedMinDate,
+      estimatedMaxDate,
+      daysRemainingMin: 0,
+      daysRemainingMax: maxDays - daysSincePlanting,
+    };
+  }
+
+  if (daysSincePlanting > maxDays) {
+    return {
+      status: 'past_window',
+      headline: 'Mature — Peak Harvest Window Passed',
+      detail: `Exceeded estimated harvest window (${maxDays} days). Check for over-ripeness, bolting, or harvest immediately.`,
+      estimatedMinDate,
+      estimatedMaxDate,
+    };
+  }
+
+  // Upcoming
+  const remainingMin = minDays - daysSincePlanting;
+  const remainingMax = maxDays - daysSincePlanting;
+
+  return {
+    status: 'upcoming',
+    headline: `Estimated Harvest: In ${remainingMin}–${remainingMax} days`,
+    detail: `Projected harvest window: ${estimatedMinDate} – ${estimatedMaxDate}.`,
+    estimatedMinDate,
+    estimatedMaxDate,
+    daysRemainingMin: remainingMin,
+    daysRemainingMax: remainingMax,
+  };
+}
+
+// ==============================================================================
+// INITIAL DEMO DATA
+// ==============================================================================
+
 export const INITIAL_DEMO_PLANTS: UserPlant[] = [
   {
     id: 'demo-plant-1',
@@ -21,6 +194,10 @@ export const INITIAL_DEMO_PLANTS: UserPlant[] = [
     location: 'Balcony Rack',
     tier: 'top',
     potSize: '4 Liter Terracotta',
+    parentPlantId: null,
+    propagationMethod: 'seed',
+    propagationDate: '2026-10-10',
+    actualHarvestDate: null,
     notes: [
       {
         id: 'note-1',
@@ -54,6 +231,10 @@ export const INITIAL_DEMO_PLANTS: UserPlant[] = [
     location: 'Kitchen Tier',
     tier: 'middle',
     potSize: 'Shallow 15 cm Trough',
+    parentPlantId: null,
+    propagationMethod: 'nursery_transplant',
+    propagationDate: '2026-10-05',
+    actualHarvestDate: null,
     notes: [
       {
         id: 'note-4',
@@ -80,6 +261,10 @@ export const INITIAL_DEMO_PLANTS: UserPlant[] = [
     location: 'Balcony Rack',
     tier: 'top',
     potSize: '12 Liter Smart Pot',
+    parentPlantId: null,
+    propagationMethod: 'seed',
+    propagationDate: '2026-09-28',
+    actualHarvestDate: null,
     notes: [
       {
         id: 'note-6',
@@ -200,8 +385,10 @@ export function resetToDemoData(): void {
   localStorage.removeItem(STORAGE_KEYS.LOCAL_MIGRATED);
 }
 
-// Legacy synchronous wrappers for backwards compatibility
-export function addUserPlant(newPlant: Omit<UserPlant, 'id' | 'notes'> & { initialNote?: string }): UserPlant {
+// Synchronous wrappers for demo mode
+export function addUserPlant(
+  newPlant: Omit<UserPlant, 'id' | 'notes'> & { initialNote?: string }
+): UserPlant {
   const current = getSavedUserPlants();
   const created: UserPlant = {
     id: `user-plant-${Date.now()}`,
@@ -212,6 +399,10 @@ export function addUserPlant(newPlant: Omit<UserPlant, 'id' | 'notes'> & { initi
     location: newPlant.location,
     tier: newPlant.tier,
     potSize: newPlant.potSize,
+    parentPlantId: newPlant.parentPlantId || null,
+    propagationMethod: newPlant.propagationMethod || null,
+    propagationDate: newPlant.propagationDate || null,
+    actualHarvestDate: newPlant.actualHarvestDate || null,
     notes: newPlant.initialNote
       ? [
           {
@@ -231,16 +422,18 @@ export function addUserPlant(newPlant: Omit<UserPlant, 'id' | 'notes'> & { initi
 
 export function updateUserPlantStage(plantId: string, stage: GrowthStage): void {
   const current = getSavedUserPlants();
+  const today = new Date().toISOString().split('T')[0];
   const updated = current.map((p) => {
     if (p.id !== plantId) return p;
     return {
       ...p,
       currentStage: stage,
+      actualHarvestDate: stage === 'Harvested' ? today : null,
       notes: [
         ...p.notes,
         {
           id: `note-${Date.now()}`,
-          date: new Date().toISOString().split('T')[0],
+          date: today,
           stage,
           text: `Stage updated to ${stage}.`,
         },
@@ -274,7 +467,15 @@ export function addPlantGrowthNote(
 
 export function removeUserPlant(plantId: string): void {
   const current = getSavedUserPlants();
-  const updated = current.filter((p) => p.id !== plantId);
+  // Mimics database ON DELETE SET NULL on parentPlantId for offspring
+  const updated = current
+    .filter((p) => p.id !== plantId)
+    .map((p) => {
+      if (p.parentPlantId === plantId) {
+        return { ...p, parentPlantId: null };
+      }
+      return p;
+    });
   saveUserPlants(updated);
 }
 
@@ -323,6 +524,10 @@ export async function fetchUserGarden(
           tier,
           pot_size,
           custom_image,
+          parent_plant_id,
+          propagation_method,
+          propagation_date,
+          actual_harvest_date,
           growth_notes (
             id,
             observation_date,
@@ -360,6 +565,10 @@ export async function fetchUserGarden(
           tier: row.tier || undefined,
           potSize: row.pot_size || undefined,
           customImage: row.custom_image || undefined,
+          parentPlantId: row.parent_plant_id || null,
+          propagationMethod: row.propagation_method || null,
+          propagationDate: row.propagation_date || null,
+          actualHarvestDate: row.actual_harvest_date || null,
           notes: sortedNotes,
         };
       });
@@ -414,7 +623,6 @@ export async function fetchCareTasks(
 
 /**
  * Add a plant to the garden.
- * Never silently falls back to local storage if a cloud write fails.
  */
 export async function createGardenPlant(
   newPlant: Omit<UserPlant, 'id' | 'notes'> & { initialNote?: string },
@@ -441,6 +649,10 @@ export async function createGardenPlant(
           tier: newPlant.tier || null,
           pot_size: newPlant.potSize || null,
           custom_image: newPlant.customImage || null,
+          parent_plant_id: newPlant.parentPlantId || null,
+          propagation_method: newPlant.propagationMethod || null,
+          propagation_date: newPlant.propagationDate || null,
+          actual_harvest_date: newPlant.actualHarvestDate || null,
         })
         .select()
         .single();
@@ -491,6 +703,10 @@ export async function createGardenPlant(
         tier: plantData.tier || undefined,
         potSize: plantData.pot_size || undefined,
         customImage: plantData.custom_image || undefined,
+        parentPlantId: plantData.parent_plant_id || null,
+        propagationMethod: plantData.propagation_method || null,
+        propagationDate: plantData.propagation_date || null,
+        actualHarvestDate: plantData.actual_harvest_date || null,
         notes: createdNotes,
       };
 
@@ -504,7 +720,50 @@ export async function createGardenPlant(
 }
 
 /**
+ * Create a child plant linked to an existing parent plant.
+ * Enforces species inheritance by querying parent plant record directly.
+ */
+export async function createPropagatedPlant(params: {
+  parentPlant: UserPlant;
+  propagationMethod: PropagationMethod;
+  nickname: string;
+  location?: UserPlant['location'];
+  tier?: UserPlant['tier'];
+  potSize?: string;
+  customClient?: SupabaseClient<DatabaseSchema> | null;
+}): Promise<{ plant: UserPlant; isCloud: boolean; error?: string }> {
+  const today = new Date().toISOString().split('T')[0];
+
+  const methodLabels: Record<PropagationMethod, string> = {
+    seed: 'harvested seed',
+    cutting: 'stem cutting',
+    division: 'crown division',
+    runner: 'daughter runner',
+    layering: 'stem layering',
+    nursery_transplant: 'transplant',
+  };
+
+  const newPlantData: Omit<UserPlant, 'id' | 'notes'> & { initialNote?: string } = {
+    plantSlug: params.parentPlant.plantSlug, // Strictly inherits parent species
+    nickname: params.nickname.trim() || `${params.parentPlant.nickname} (New ${params.propagationMethod})`,
+    currentStage: params.propagationMethod === 'seed' ? 'Seed' : 'Seedling',
+    plantedDate: today,
+    location: params.location || params.parentPlant.location,
+    tier: params.tier,
+    potSize: params.potSize || 'Small Starter Pot',
+    parentPlantId: params.parentPlant.id,
+    propagationMethod: params.propagationMethod,
+    propagationDate: today,
+    actualHarvestDate: null,
+    initialNote: `Propagated via ${methodLabels[params.propagationMethod]} from parent "${params.parentPlant.nickname}".`,
+  };
+
+  return createGardenPlant(newPlantData, params.customClient);
+}
+
+/**
  * Update developmental stage of a plant.
+ * Automatically logs an audit growth note and handles actual_harvest_date setting and clearing.
  */
 export async function updateGardenPlantStage(
   plantId: string,
@@ -520,11 +779,19 @@ export async function updateGardenPlantStage(
 
     if (user) {
       const today = new Date().toISOString().split('T')[0];
+      const updatePayload: any = { current_stage: stage };
 
-      // Update plant current_stage
+      if (stage === 'Harvested') {
+        updatePayload.actual_harvest_date = today;
+      } else {
+        // If transitioning from Harvested back to active stage, reset actual_harvest_date
+        updatePayload.actual_harvest_date = null;
+      }
+
+      // Update plant current_stage and harvest date
       const { error: updateError } = await supabase
         .from('user_plants')
-        .update({ current_stage: stage })
+        .update(updatePayload)
         .eq('id', plantId)
         .eq('user_id', user.id);
 
@@ -602,12 +869,67 @@ export async function createGrowthNote(
 }
 
 /**
- * Delete a user plant.
+ * Helper to paginate through all files in a specific user plant folder: {userId}/{plantId}
+ */
+async function listAllPlantFolderFiles(
+  supabase: any,
+  bucketName: string,
+  folderPrefix: string
+): Promise<{ files: string[]; error?: string }> {
+  const filePaths: string[] = [];
+  const limit = 100;
+  let offset = 0;
+  let hasMore = true;
+
+  while (hasMore) {
+    const { data, error } = await supabase.storage
+      .from(bucketName)
+      .list(folderPrefix, {
+        limit,
+        offset,
+        sortBy: { column: 'name', order: 'asc' },
+      });
+
+    if (error) {
+      return { files: [], error: error.message };
+    }
+
+    if (!data || data.length === 0) {
+      break;
+    }
+
+    for (const item of data) {
+      if (item.name && !item.name.startsWith('.')) {
+        filePaths.push(`${folderPrefix}/${item.name}`);
+      }
+    }
+
+    if (data.length < limit) {
+      hasMore = false;
+    } else {
+      offset += limit;
+    }
+  }
+
+  return { files: filePaths };
+}
+
+/**
+ * Delete a user plant with fail-safe storage cleanup and explicit partial-failure reporting.
  */
 export async function deleteGardenPlant(
   plantId: string,
   customClient?: SupabaseClient<DatabaseSchema> | null
-): Promise<{ isCloud: boolean; error?: string }> {
+): Promise<{
+  isCloud: boolean;
+  error?: string;
+  partialFailure?: {
+    stage: 'database_delete_failed';
+    plantId: string;
+    removedStoragePaths: string[];
+    error: string;
+  };
+}> {
   const supabase = customClient !== undefined ? customClient : createClient();
 
   if (supabase) {
@@ -616,17 +938,120 @@ export async function deleteGardenPlant(
     } = await supabase.auth.getUser();
 
     if (user) {
-      const { error } = await supabase
+      const plantFolder = `${user.id}/${plantId}`;
+
+      // 1. List ALL storage objects under the exact folder: {user.id}/{plantId} with pagination
+      // (This catches photos with metadata AS WELL AS orphaned files without metadata in that plant folder)
+      const { files: storageFiles, error: listError } = await listAllPlantFolderFiles(
+        supabase,
+        'plant-photos',
+        plantFolder
+      );
+
+      if (listError) {
+        return {
+          isCloud: true,
+          error: `Failed to inspect storage folder '${plantFolder}': ${listError}. Plant deletion aborted to prevent orphaned files.`,
+        };
+      }
+
+      // 2. Also retrieve any metadata paths from public.plant_photos for cross-verification
+      const { data: dbPhotos, error: fetchDbError } = await supabase
+        .from('plant_photos')
+        .select('storage_path')
+        .eq('user_plant_id', plantId)
+        .eq('user_id', user.id);
+
+      if (fetchDbError) {
+        return {
+          isCloud: true,
+          error: `Failed to query photo metadata records: ${fetchDbError.message}. Plant deletion aborted.`,
+        };
+      }
+
+      // 3. Union storage file paths and database metadata paths (ensuring all are strictly within {user.id}/{plantId}/)
+      const combinedPathSet = new Set<string>();
+      for (const f of storageFiles) {
+        if (f.startsWith(`${plantFolder}/`)) {
+          combinedPathSet.add(f);
+        }
+      }
+      for (const p of dbPhotos || []) {
+        if (p.storage_path && p.storage_path.startsWith(`${plantFolder}/`)) {
+          combinedPathSet.add(p.storage_path);
+        }
+      }
+
+      const pathsToDelete = Array.from(combinedPathSet);
+      let removedStoragePaths: string[] = [];
+
+      // 4. If files exist, remove them from Supabase Storage while the plant record STILL EXISTS
+      if (pathsToDelete.length > 0) {
+        const { error: storageRemoveError } = await supabase.storage
+          .from('plant-photos')
+          .remove(pathsToDelete);
+
+        if (storageRemoveError) {
+          return {
+            isCloud: true,
+            error: `Failed to remove storage objects in '${plantFolder}': ${storageRemoveError.message}. Plant deletion aborted.`,
+          };
+        }
+
+        removedStoragePaths = pathsToDelete;
+
+        // 5. Verify cleanup before deleting the database record
+        // Re-check folder to confirm no objects remain
+        const { files: remainingFiles, error: verifyError } = await listAllPlantFolderFiles(
+          supabase,
+          'plant-photos',
+          plantFolder
+        );
+
+        if (verifyError || remainingFiles.length > 0) {
+          return {
+            isCloud: true,
+            error: `Storage cleanup verification failed for '${plantFolder}' (${remainingFiles.length} object(s) remain). Plant deletion aborted.`,
+          };
+        }
+      }
+
+      // 6. Only after storage cleanup is verified, delete the plant database record
+      const { error: plantDeleteError } = await supabase
         .from('user_plants')
         .delete()
         .eq('id', plantId)
         .eq('user_id', user.id);
 
-      if (error) {
-        return { isCloud: true, error: error.message };
+      // 7. Explicit recovery handling if database delete fails after successful Storage delete
+      if (plantDeleteError) {
+        console.error(
+          `PARTIAL FAILURE: Storage objects removed (${removedStoragePaths.length}), but database DELETE failed:`,
+          plantDeleteError.message
+        );
+        return {
+          isCloud: true,
+          error: `Database deletion failed (${plantDeleteError.message}) after ${removedStoragePaths.length} storage photo(s) were removed. Plant record remains in database. Retry plant deletion to complete cleanup.`,
+          partialFailure: {
+            stage: 'database_delete_failed',
+            plantId,
+            removedStoragePaths,
+            error: plantDeleteError.message,
+          },
+        };
       }
 
       return { isCloud: true };
+    }
+  }
+
+  // Demo Mode: Clean up IndexedDB photo blobs and remove local demo plant
+  if (typeof window !== 'undefined') {
+    try {
+      const { deleteDemoPhotosForPlant } = await import('@/lib/photo-storage');
+      await deleteDemoPhotosForPlant(plantId);
+    } catch {
+      // Non-blocking in non-browser contexts
     }
   }
 
@@ -753,6 +1178,10 @@ export async function importLocalDemoDataToCloud(
         location: plant.location || null,
         tier: plant.tier || null,
         pot_size: plant.potSize || null,
+        parent_plant_id: plant.parentPlantId || null,
+        propagation_method: plant.propagationMethod || null,
+        propagation_date: plant.propagationDate || null,
+        actual_harvest_date: plant.actualHarvestDate || null,
       })
       .select()
       .single();

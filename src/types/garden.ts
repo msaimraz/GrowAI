@@ -8,6 +8,14 @@ export type GrowthStage =
 
 export type TaskType = 'water' | 'fertilize' | 'prune' | 'harvest' | 'inspect' | 'repot';
 
+export type PropagationMethod =
+  | 'seed'
+  | 'cutting'
+  | 'division'
+  | 'runner'
+  | 'layering'
+  | 'nursery_transplant';
+
 export interface GrowthNote {
   id: string;
   date: string;
@@ -27,6 +35,18 @@ export interface CareTask {
   type: TaskType;
 }
 
+export interface PlantPhoto {
+  id: string;
+  userPlantId: string;
+  storagePath: string;
+  signedUrl?: string; // Dynamically created signed URL, never persisted in DB
+  caption?: string;
+  growthStage?: GrowthStage;
+  heightCm?: number;
+  takenAt: string;
+  createdAt?: string;
+}
+
 export interface UserPlant {
   id: string;
   plantSlug: string;
@@ -38,4 +58,31 @@ export interface UserPlant {
   potSize?: string;
   notes: GrowthNote[];
   customImage?: string;
+  // Phase 7A Lineage & Harvest
+  parentPlantId?: string | null;
+  propagationMethod?: PropagationMethod | null;
+  propagationDate?: string | null;
+  actualHarvestDate?: string | null;
+}
+
+export interface PlantAgeInfo {
+  daysSincePlanting: number;
+  formattedPlantedDate: string;
+}
+
+export type HarvestStatus =
+  | 'harvested'
+  | 'in_window'
+  | 'past_window'
+  | 'upcoming'
+  | 'no_timeline';
+
+export interface HarvestWindowResult {
+  status: HarvestStatus;
+  headline: string;
+  detail: string;
+  estimatedMinDate?: string;
+  estimatedMaxDate?: string;
+  daysRemainingMin?: number;
+  daysRemainingMax?: number;
 }

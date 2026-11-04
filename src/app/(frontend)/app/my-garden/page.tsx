@@ -18,8 +18,14 @@ import {
   resetToDemoData,
   hasLocalDemoData,
   importLocalDemoDataToCloud,
+  calculatePlantAge,
+  calculateHarvestWindow,
+  createPropagatedPlant,
 } from '@/lib/storage';
 import { UserPlant, GrowthStage, CareTask } from '@/types/garden';
+import { PlantPhotoGallery } from '@/components/garden/PlantPhotoGallery';
+import { PropagationModal } from '@/components/garden/PropagationModal';
+import { PlantLineageBadge } from '@/components/garden/PlantLineageBadge';
 import {
   Sprout,
   Plus,
@@ -43,6 +49,8 @@ import {
   Sun,
   HeartHandshake,
   BookOpen,
+  Camera,
+  Scissors,
 } from 'lucide-react';
 
 import { usePwa } from '@/context/PwaContext';
@@ -85,6 +93,8 @@ function MyGardenContent() {
   const [selectedPlantId, setSelectedPlantId] = useState<string>('');
   const [careTasks, setCareTasks] = useState<CareTask[]>([]);
   const [isCloud, setIsCloud] = useState<boolean>(false);
+  const [activeTab, setActiveTab] = useState<'journal' | 'photos'>('journal');
+  const [showPropagationModal, setShowPropagationModal] = useState<boolean>(false);
   const [noteText, setNoteText] = useState('');
   const [noteHeight, setNoteHeight] = useState<string>('');
   const [noteDate, setNoteDate] = useState<string>('');
@@ -137,6 +147,15 @@ function MyGardenContent() {
   const activePlant = userPlants.find((p) => p.id === selectedPlantId) || userPlants[0];
   const activeBotanical = activePlant
     ? PLANTS_DATA.find((p) => p.slug === activePlant.plantSlug)
+    : null;
+  const plantAge = activePlant ? calculatePlantAge(activePlant.plantedDate) : null;
+  const harvestWindow = activePlant
+    ? calculateHarvestWindow(
+        activePlant.plantedDate,
+        activePlant.plantSlug,
+        activePlant.currentStage,
+        activePlant.actualHarvestDate
+      )
     : null;
 
   const handleStageChange = async (plantId: string, newStage: GrowthStage) => {
@@ -502,19 +521,55 @@ function MyGardenContent() {
                 <div className="bg-white rounded-3xl border border-[#ded5c5] p-6 sm:p-8 shadow-xs space-y-6">
                   <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-5 border-b border-[#f0ebe0]">
                     <div>
-                      <div className="flex items-center gap-3">
+                      <div className="flex flex-wrap items-center gap-3">
                         <h2 className="text-2xl sm:text-3xl font-serif font-bold text-[#0c2417]">
                           {activePlant.nickname}
                         </h2>
                         <Badge variant="sage" size="md">{activePlant.currentStage}</Badge>
+                        {plantAge && (
+                          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-[#eef5ee] text-[#144229] border border-[#cfe0cf]">
+                            <Sprout size={13} className="text-[#257a4d]" />
+                            Day {plantAge.daysSincePlanting} ({plantAge.formattedPlantedDate})
+                          </span>
+                        )}
+                        {harvestWindow && (
+                          <span
+                            className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold border ${
+                              harvestWindow.status === 'in_window'
+                                ? 'bg-[#ecfdf5] text-[#065f46] border-[#a7f3d0] animate-pulse'
+                                : harvestWindow.status === 'harvested'
+                                ? 'bg-[#fef3c7] text-[#92400e] border-[#fde68a]'
+                                : harvestWindow.status === 'past_window'
+                                ? 'bg-[#fff7ed] text-[#c2410c] border-[#ffedd5]'
+                                : 'bg-[#f8fafc] text-[#475569] border-[#e2e8f0]'
+                            }`}
+                          >
+                            <Calendar size={13} />
+                            {harvestWindow.headline}
+                          </span>
+                        )}
                       </div>
-                      <p className="text-xs sm:text-sm text-[#526a57] mt-1">
+                      <p className="text-xs sm:text-sm text-[#526a57] mt-1.5">
                         {activeBotanical?.commonName} (<em>{activeBotanical?.scientificName}</em>) • Planted on{' '}
                         {activePlant.plantedDate}
+                        {activePlant.actualHarvestDate && (
+                          <span className="ml-2 font-medium text-[#92400e]">
+                            • Confirmed Harvest: {activePlant.actualHarvestDate}
+                          </span>
+                        )}
                       </p>
                     </div>
 
                     <div className="flex items-center gap-2">
+                      <button
+                        type="button"
+                        onClick={() => setShowPropagationModal(true)}
+                        className="text-xs sm:text-sm font-semibold text-[#144229] hover:bg-[#eef5ee] px-4 py-2.5 rounded-xl border border-[#cfdfcf] bg-white transition-colors flex items-center gap-1.5 min-h-[44px] cursor-pointer"
+                        title="Propagate this plant"
+                      >
+                        <Scissors size={15} />
+                        <span>Propagate</span>
+                      </button>
                       {activeBotanical && (
                         <Link
                           href={`/app/plants/${activeBotanical.slug}`}
@@ -536,6 +591,14 @@ function MyGardenContent() {
                     </div>
                   </div>
 
+                  {/* Plant Lineage & Offspring Badge */}
+                  <PlantLineageBadge
+                    currentPlant={activePlant}
+                    allPlants={userPlants}
+                    onSelectPlant={(plantId) => setSelectedPlantId(plantId)}
+                    onOpenPropagationModal={() => setShowPropagationModal(true)}
+                  />
+
                   {/* Supportive Botanical Message Box */}
                   <div className="bg-[#eef5ee] border border-[#cfe0cf] p-4 sm:p-5 rounded-2xl flex items-start gap-3.5 text-xs sm:text-sm text-[#1e613b]">
                     <Sparkles size={20} className="text-[#144229] shrink-0 mt-0.5" />
@@ -548,6 +611,38 @@ function MyGardenContent() {
                       </p>
                     </div>
                   </div>
+
+                  {/* Harvest Timeline & Phenology Intelligence */}
+                  {harvestWindow && (
+                    <div
+                      className={`p-4 sm:p-5 rounded-2xl border flex items-start gap-3.5 text-xs sm:text-sm ${
+                        harvestWindow.status === 'in_window'
+                          ? 'bg-[#ecfdf5] border-[#a7f3d0] text-[#065f46]'
+                          : harvestWindow.status === 'harvested'
+                          ? 'bg-[#fffbeb] border-[#fde68a] text-[#92400e]'
+                          : harvestWindow.status === 'past_window'
+                          ? 'bg-[#fff7ed] border-[#fed7aa] text-[#9a3412]'
+                          : 'bg-[#fbf9f4] border-[#ded5c5] text-[#3c5d46]'
+                      }`}
+                    >
+                      <div className="p-2 rounded-xl bg-white/80 shrink-0">
+                        <Sparkles size={18} className="text-[#144229]" />
+                      </div>
+                      <div className="flex-1">
+                        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1">
+                          <strong className="font-serif font-bold text-sm text-[#0c2417]">
+                            {harvestWindow.headline}
+                          </strong>
+                          {harvestWindow.estimatedMinDate && (
+                            <span className="text-xs font-mono font-medium opacity-80">
+                              Estimated Window: {harvestWindow.estimatedMinDate} – {harvestWindow.estimatedMaxDate}
+                            </span>
+                          )}
+                        </div>
+                        <p className="mt-1 leading-relaxed opacity-90">{harvestWindow.detail}</p>
+                      </div>
+                    </div>
+                  )}
 
                   {/* Growth Stage Stepper */}
                   <div className="space-y-3 pt-2">
@@ -598,149 +693,208 @@ function MyGardenContent() {
                   </div>
                 </div>
 
-                {/* Add New Dated Growth Note Form */}
-                <div className="bg-white rounded-3xl border border-[#ded5c5] p-6 sm:p-8 shadow-xs space-y-5">
-                  <div className="flex items-center gap-3 pb-3 border-b border-[#f0ebe0]">
-                    <div className="w-9 h-9 rounded-xl bg-[#eef5ee] text-[#144229] flex items-center justify-center">
-                      <Sprout size={20} />
-                    </div>
-                    <div>
-                      <h3 className="font-serif font-bold text-lg text-[#0c2417]">
-                        Record Growth Observation
-                      </h3>
-                      <p className="text-xs text-[#526a57]">
-                        Log height, stem branching, pests, or watering adjustments
-                      </p>
-                    </div>
-                  </div>
+                {/* Journal View Switcher: Care & Observations vs Photo Journal */}
+                <div className="flex items-center gap-3 border-b border-[#ded5c5] pb-3">
+                  <button
+                    type="button"
+                    onClick={() => setActiveTab('journal')}
+                    className={`inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold transition-all cursor-pointer min-h-[44px] ${
+                      activeTab === 'journal'
+                        ? 'bg-[#144229] text-white shadow-xs'
+                        : 'bg-white text-[#526a57] hover:bg-[#eef5ee] hover:text-[#144229] border border-[#ded5c5]'
+                    }`}
+                  >
+                    <Clock size={16} />
+                    <span>Care & Observations ({activePlant.notes?.length || 0})</span>
+                  </button>
 
-                  <form onSubmit={handleAddNote} className="space-y-4">
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                      <div>
-                        <label className="block text-xs font-semibold text-[#0c2417] mb-1.5">
-                          Observation Date
-                        </label>
-                        <input
-                          type="date"
-                          value={noteDate}
-                          onChange={(e) => setNoteDate(e.target.value)}
-                          required
-                          className="w-full px-4 py-2.5 text-xs sm:text-sm rounded-xl border border-[#ded5c5] bg-[#fbf9f4] text-[#0c2417] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#144229] min-h-[44px]"
-                        />
-                      </div>
-
-                      <div>
-                        <label className="block text-xs font-semibold text-[#0c2417] mb-1.5">
-                          Measured Height (cm, optional)
-                        </label>
-                        <input
-                          type="number"
-                          step="0.1"
-                          placeholder="e.g. 14.5"
-                          value={noteHeight}
-                          onChange={(e) => setNoteHeight(e.target.value)}
-                          className="w-full px-4 py-2.5 text-xs sm:text-sm rounded-xl border border-[#ded5c5] bg-[#fbf9f4] text-[#0c2417] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#144229] min-h-[44px]"
-                        />
-                      </div>
-                    </div>
-
-                    <div>
-                      <label className="block text-xs font-semibold text-[#0c2417] mb-1.5">
-                        Botanical Notes & Actions Taken
-                      </label>
-                      <textarea
-                        rows={3}
-                        value={noteText}
-                        onChange={(e) => setNoteText(e.target.value)}
-                        placeholder="e.g. Emergence of third set of serrated leaves, trimmed center tip to encourage side branching, topsoil moist..."
-                        required
-                        className="w-full px-4 py-3 text-xs sm:text-sm rounded-xl border border-[#ded5c5] bg-[#fbf9f4] text-[#0c2417] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#144229] leading-relaxed"
-                      />
-                    </div>
-
-                    <div className="flex justify-end pt-2">
-                      <button
-                        type="submit"
-                        disabled={submittingNote}
-                        className="inline-flex items-center gap-2 px-6 py-2.5 text-xs sm:text-sm font-semibold bg-[#144229] hover:bg-[#0c2417] disabled:opacity-50 text-white rounded-xl shadow-xs cursor-pointer min-h-[44px] transition-colors"
-                      >
-                        {submittingNote ? (
-                          <>
-                            <Loader2 size={16} className="animate-spin" />
-                            <span>Saving Observation...</span>
-                          </>
-                        ) : (
-                          <>
-                            <Plus size={16} />
-                            <span>Save to Plant Log</span>
-                          </>
-                        )}
-                      </button>
-                    </div>
-                  </form>
+                  <button
+                    type="button"
+                    onClick={() => setActiveTab('photos')}
+                    className={`inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold transition-all cursor-pointer min-h-[44px] ${
+                      activeTab === 'photos'
+                        ? 'bg-[#144229] text-white shadow-xs'
+                        : 'bg-white text-[#526a57] hover:bg-[#eef5ee] hover:text-[#144229] border border-[#ded5c5]'
+                    }`}
+                  >
+                    <Camera size={16} />
+                    <span>Photo Journal</span>
+                  </button>
                 </div>
 
-                {/* Growth History Timeline */}
-                <div className="bg-white rounded-3xl border border-[#ded5c5] p-6 sm:p-8 shadow-xs space-y-5">
-                  <div className="flex items-center justify-between pb-3 border-b border-[#f0ebe0]">
-                    <div className="flex items-center gap-3">
-                      <div className="w-9 h-9 rounded-xl bg-[#eef5ee] text-[#144229] flex items-center justify-center">
-                        <Clock size={20} />
+                {/* Tab 1: Care & Observations */}
+                {activeTab === 'journal' && (
+                  <>
+                    {/* Add New Dated Growth Note Form */}
+                    <div className="bg-white rounded-3xl border border-[#ded5c5] p-6 sm:p-8 shadow-xs space-y-5">
+                      <div className="flex items-center gap-3 pb-3 border-b border-[#f0ebe0]">
+                        <div className="w-9 h-9 rounded-xl bg-[#eef5ee] text-[#144229] flex items-center justify-center">
+                          <Sprout size={20} />
+                        </div>
+                        <div>
+                          <h3 className="font-serif font-bold text-lg text-[#0c2417]">
+                            Record Growth Observation
+                          </h3>
+                          <p className="text-xs text-[#526a57]">
+                            Log height, stem branching, pests, or watering adjustments
+                          </p>
+                        </div>
                       </div>
-                      <div>
-                        <h3 className="font-serif font-bold text-lg text-[#0c2417]">
-                          Observation Timeline
-                        </h3>
-                        <p className="text-xs text-[#526a57]">
-                          {activePlant.notes?.length || 0} chronological records logged
-                        </p>
-                      </div>
-                    </div>
-                  </div>
 
-                  {!activePlant.notes || activePlant.notes.length === 0 ? (
-                    <div className="text-center py-10 space-y-2 bg-[#fbf9f4] rounded-2xl border border-dashed border-[#ded5c5]">
-                      <Sprout size={28} className="text-[#8ba391] mx-auto" />
-                      <p className="text-sm font-serif font-bold text-[#0c2417]">No Observations Yet</p>
-                      <p className="text-xs text-[#526a57] max-w-sm mx-auto">
-                        Record your first dated entry above to start building this plant&apos;s botanical growth timeline.
-                      </p>
-                    </div>
-                  ) : (
-                    <div className="space-y-3.5">
-                      {activePlant.notes
-                        .slice()
-                        .reverse()
-                        .map((note) => (
-                          <div
-                            key={note.id}
-                            className="p-4 sm:p-5 rounded-2xl bg-[#fbf9f4] border border-[#ded5c5] flex flex-col sm:flex-row sm:items-start justify-between gap-4 text-xs sm:text-sm"
-                          >
-                            <div className="space-y-1.5 flex-1">
-                              <div className="flex items-center gap-2.5">
-                                <Badge variant="sage" size="sm">{note.stage}</Badge>
-                                <span className="text-[#647f6c] flex items-center gap-1.5 text-xs">
-                                  <Calendar size={13} /> {note.date}
-                                </span>
-                              </div>
-                              <p className="text-[#2c3d30] leading-relaxed pt-1 text-sm">
-                                {note.text}
-                              </p>
-                            </div>
-
-                            {note.heightCm !== undefined && (
-                              <span className="shrink-0 font-mono text-xs font-semibold text-[#144229] bg-white px-3 py-1.5 rounded-xl border border-[#cfe0cf] flex items-center gap-1.5 self-start sm:self-auto">
-                                <Ruler size={13} /> {note.heightCm} cm
-                              </span>
-                            )}
+                      <form onSubmit={handleAddNote} className="space-y-4">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                          <div>
+                            <label className="block text-xs font-semibold text-[#0c2417] mb-1.5">
+                              Observation Date
+                            </label>
+                            <input
+                              type="date"
+                              value={noteDate}
+                              onChange={(e) => setNoteDate(e.target.value)}
+                              required
+                              className="w-full px-4 py-2.5 text-xs sm:text-sm rounded-xl border border-[#ded5c5] bg-[#fbf9f4] text-[#0c2417] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#144229] min-h-[44px]"
+                            />
                           </div>
-                        ))}
+
+                          <div>
+                            <label className="block text-xs font-semibold text-[#0c2417] mb-1.5">
+                              Measured Height (cm, optional)
+                            </label>
+                            <input
+                              type="number"
+                              step="0.1"
+                              placeholder="e.g. 14.5"
+                              value={noteHeight}
+                              onChange={(e) => setNoteHeight(e.target.value)}
+                              className="w-full px-4 py-2.5 text-xs sm:text-sm rounded-xl border border-[#ded5c5] bg-[#fbf9f4] text-[#0c2417] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#144229] min-h-[44px]"
+                            />
+                          </div>
+                        </div>
+
+                        <div>
+                          <label className="block text-xs font-semibold text-[#0c2417] mb-1.5">
+                            Botanical Notes & Actions Taken
+                          </label>
+                          <textarea
+                            rows={3}
+                            value={noteText}
+                            onChange={(e) => setNoteText(e.target.value)}
+                            placeholder="e.g. Emergence of third set of serrated leaves, trimmed center tip to encourage side branching, topsoil moist..."
+                            required
+                            className="w-full px-4 py-3 text-xs sm:text-sm rounded-xl border border-[#ded5c5] bg-[#fbf9f4] text-[#0c2417] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#144229] leading-relaxed"
+                          />
+                        </div>
+
+                        <div className="flex justify-end pt-2">
+                          <button
+                            type="submit"
+                            disabled={submittingNote}
+                            className="inline-flex items-center gap-2 px-6 py-2.5 text-xs sm:text-sm font-semibold bg-[#144229] hover:bg-[#0c2417] disabled:opacity-50 text-white rounded-xl shadow-xs cursor-pointer min-h-[44px] transition-colors"
+                          >
+                            {submittingNote ? (
+                              <>
+                                <Loader2 size={16} className="animate-spin" />
+                                <span>Saving Observation...</span>
+                              </>
+                            ) : (
+                              <>
+                                <Plus size={16} />
+                                <span>Save to Plant Log</span>
+                              </>
+                            )}
+                          </button>
+                        </div>
+                      </form>
                     </div>
-                  )}
-                </div>
+
+                    {/* Growth History Timeline */}
+                    <div className="bg-white rounded-3xl border border-[#ded5c5] p-6 sm:p-8 shadow-xs space-y-5">
+                      <div className="flex items-center justify-between pb-3 border-b border-[#f0ebe0]">
+                        <div className="flex items-center gap-3">
+                          <div className="w-9 h-9 rounded-xl bg-[#eef5ee] text-[#144229] flex items-center justify-center">
+                            <Clock size={20} />
+                          </div>
+                          <div>
+                            <h3 className="font-serif font-bold text-lg text-[#0c2417]">
+                              Observation Timeline
+                            </h3>
+                            <p className="text-xs text-[#526a57]">
+                              {activePlant.notes?.length || 0} chronological records logged
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+
+                      {!activePlant.notes || activePlant.notes.length === 0 ? (
+                        <div className="text-center py-10 space-y-2 bg-[#fbf9f4] rounded-2xl border border-dashed border-[#ded5c5]">
+                          <Sprout size={28} className="text-[#8ba391] mx-auto" />
+                          <p className="text-sm font-serif font-bold text-[#0c2417]">No Observations Yet</p>
+                          <p className="text-xs text-[#526a57] max-w-sm mx-auto">
+                            Record your first dated entry above to start building this plant&apos;s botanical growth timeline.
+                          </p>
+                        </div>
+                      ) : (
+                        <div className="space-y-3.5">
+                          {activePlant.notes
+                            .slice()
+                            .reverse()
+                            .map((note) => (
+                              <div
+                                key={note.id}
+                                className="p-4 sm:p-5 rounded-2xl bg-[#fbf9f4] border border-[#ded5c5] flex flex-col sm:flex-row sm:items-start justify-between gap-4 text-xs sm:text-sm"
+                              >
+                                <div className="space-y-1.5 flex-1">
+                                  <div className="flex items-center gap-2.5">
+                                    <Badge variant="sage" size="sm">{note.stage}</Badge>
+                                    <span className="text-[#647f6c] flex items-center gap-1.5 text-xs">
+                                      <Calendar size={13} /> {note.date}
+                                    </span>
+                                  </div>
+                                  <p className="text-[#2c3d30] leading-relaxed pt-1 text-sm">
+                                    {note.text}
+                                  </p>
+                                </div>
+
+                                {note.heightCm !== undefined && (
+                                  <span className="shrink-0 font-mono text-xs font-semibold text-[#144229] bg-white px-3 py-1.5 rounded-xl border border-[#cfe0cf] flex items-center gap-1.5 self-start sm:self-auto">
+                                    <Ruler size={13} /> {note.heightCm} cm
+                                  </span>
+                                )}
+                              </div>
+                            ))}
+                        </div>
+                      )}
+                    </div>
+                  </>
+                )}
+
+                {/* Tab 2: Photo Journal */}
+                {activeTab === 'photos' && (
+                  <PlantPhotoGallery
+                    plantId={activePlant.id}
+                    plantNickname={activePlant.nickname}
+                    currentStage={activePlant.currentStage}
+                    isCloud={isCloud}
+                  />
+                )}
               </div>
             )}
           </div>
+        )}
+
+        {/* Propagation Workflow Modal */}
+        {showPropagationModal && activePlant && (
+          <PropagationModal
+            parentPlant={activePlant}
+            isOpen={showPropagationModal}
+            onClose={() => setShowPropagationModal(false)}
+            onPropagateSuccess={async (newPlant) => {
+              await loadGardenData();
+              setSelectedPlantId(newPlant.id);
+              setShowPropagationModal(false);
+            }}
+            createPropagatedPlantFn={createPropagatedPlant}
+          />
         )}
       </div>
     </div>
