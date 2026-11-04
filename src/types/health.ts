@@ -57,19 +57,30 @@ export type EvidenceLevel =
   | 'horticultural_standard'
   | 'observational';
 
+export type EvidenceScope =
+  | 'identification_symptoms'
+  | 'host_relationships'
+  | 'environmental_triggers'
+  | 'prevention_cultural'
+  | 'treatment_ipm'
+  | 'edible_crop_safety';
+
 export interface EvidenceSource {
   title: string;
   organization: string; // University extension, botanical institution, government agency
   url?: string;
   year?: number;
   evidenceLevel: EvidenceLevel;
+  scopes?: EvidenceScope[];
 }
 
 export type HostRelationshipType =
   | 'confirmed_host'
   | 'susceptible_family'
   | 'rarely_affected'
-  | 'resistant';
+  | 'resistant'
+  | 'not_known_host'
+  | 'unknown';
 
 export interface HostRelationship {
   plantSlug: string; // Must match slug in PLANTS_DATA

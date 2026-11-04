@@ -133,12 +133,14 @@ const PEST_CONDITIONS: PestCondition[] = [
         url: 'https://ipm.ucanr.edu/PMG/PESTNOTES/pn7404.html',
         year: 2022,
         evidenceLevel: 'extension_consensus',
+        scopes: ['identification_symptoms', 'environmental_triggers', 'prevention_cultural', 'treatment_ipm', 'edible_crop_safety'],
       },
       {
         title: 'Managing Aphids on Container Vegetables and Herbs',
         organization: 'Purdue University Extension Entomology',
         year: 2021,
         evidenceLevel: 'extension_consensus',
+        scopes: ['identification_symptoms', 'environmental_triggers', 'prevention_cultural', 'treatment_ipm', 'edible_crop_safety'],
       },
     ],
     verificationStatus: 'verified',
@@ -235,6 +237,7 @@ const PEST_CONDITIONS: PestCondition[] = [
       emergencyEscalationNote: 'No clinical escalation required under normal handling. In case of accidental pesticide ingestion or severe allergic reaction, immediately contact your local poison control centre or national emergency medical services.',
     },
     confirmedHostSlugs: [
+      { plantSlug: 'spearmint', relationshipType: 'confirmed_host', notes: 'Two-spotted spider mites colonize undersides of mint leaves in warm dry weather' },
       { plantSlug: 'french-marigold', relationshipType: 'confirmed_host', notes: 'Highly susceptible in dry balcony heat' },
       { plantSlug: 'cherry-tomato', relationshipType: 'confirmed_host', notes: 'Stippling starts on lower foliage' },
       { plantSlug: 'tomato-bush', relationshipType: 'confirmed_host', notes: 'Severe webbing can coat upper clusters' },
@@ -250,12 +253,14 @@ const PEST_CONDITIONS: PestCondition[] = [
         url: 'https://ipm.ucanr.edu/PMG/PESTNOTES/pn7405.html',
         year: 2023,
         evidenceLevel: 'extension_consensus',
+        scopes: ['identification_symptoms', 'environmental_triggers', 'prevention_cultural', 'treatment_ipm', 'edible_crop_safety'],
       },
       {
         title: 'Twospotted Spider Mite Management in Greenhouse & Interiorscapes',
         organization: 'University of Florida IFAS Extension',
         year: 2022,
         evidenceLevel: 'extension_consensus',
+        scopes: ['identification_symptoms', 'environmental_triggers', 'prevention_cultural', 'treatment_ipm', 'edible_crop_safety'],
       },
     ],
     verificationStatus: 'verified',
@@ -368,12 +373,14 @@ const PEST_CONDITIONS: PestCondition[] = [
         url: 'https://ipm.ucanr.edu/PMG/PESTNOTES/pn7448.html',
         year: 2021,
         evidenceLevel: 'extension_consensus',
+        scopes: ['identification_symptoms', 'environmental_triggers', 'prevention_cultural', 'treatment_ipm', 'edible_crop_safety'],
       },
       {
         title: 'Biology and Control of Fungus Gnats in Greenhouses',
         organization: 'Penn State Extension',
         year: 2022,
         evidenceLevel: 'extension_consensus',
+        scopes: ['identification_symptoms', 'environmental_triggers', 'prevention_cultural', 'treatment_ipm', 'edible_crop_safety'],
       },
     ],
     verificationStatus: 'verified',
@@ -486,12 +493,14 @@ const PEST_CONDITIONS: PestCondition[] = [
         url: 'https://ipm.ucanr.edu/PMG/PESTNOTES/pn7429.html',
         year: 2022,
         evidenceLevel: 'extension_consensus',
+        scopes: ['identification_symptoms', 'environmental_triggers', 'prevention_cultural', 'treatment_ipm', 'edible_crop_safety'],
       },
       {
         title: 'Western Flower Thrips in Greenhouses & Urban Agriculture',
         organization: 'Cornell University Cooperative Extension',
         year: 2021,
         evidenceLevel: 'extension_consensus',
+        scopes: ['identification_symptoms', 'environmental_triggers', 'prevention_cultural', 'treatment_ipm', 'edible_crop_safety'],
       },
     ],
     verificationStatus: 'verified',
@@ -593,7 +602,7 @@ const PEST_CONDITIONS: PestCondition[] = [
       { plantSlug: 'holy-basil-tulsi', relationshipType: 'confirmed_host', notes: 'Frequently attacked on balcony shelves' },
       { plantSlug: 'dwarf-zinnia', relationshipType: 'confirmed_host', notes: 'Under-leaf colonization' },
       { plantSlug: 'french-marigold', relationshipType: 'confirmed_host', notes: 'Favored host plant' },
-      { plantSlug: 'snake-plant', relationshipType: 'resistant', notes: 'Non-host for common whitefly species' },
+      { plantSlug: 'snake-plant', relationshipType: 'not_known_host', notes: 'Not a known host for common greenhouse or silverleaf whiteflies; thick fibrous cuticle is unsuited for whitefly stylet feeding' },
     ],
     references: [
       {
@@ -602,12 +611,14 @@ const PEST_CONDITIONS: PestCondition[] = [
         url: 'https://ipm.ucanr.edu/PMG/PESTNOTES/pn7401.html',
         year: 2022,
         evidenceLevel: 'extension_consensus',
+        scopes: ['identification_symptoms', 'environmental_triggers', 'prevention_cultural', 'treatment_ipm', 'edible_crop_safety'],
       },
       {
         title: 'Greenhouse Whitefly Biology & Control',
         organization: 'RHS (Royal Horticultural Society)',
         year: 2023,
         evidenceLevel: 'extension_consensus',
+        scopes: ['identification_symptoms', 'environmental_triggers', 'prevention_cultural', 'treatment_ipm', 'edible_crop_safety'],
       },
     ],
     verificationStatus: 'verified',
@@ -717,12 +728,14 @@ const PEST_CONDITIONS: PestCondition[] = [
         url: 'https://ipm.ucanr.edu/PMG/PESTNOTES/pn74174.html',
         year: 2022,
         evidenceLevel: 'extension_consensus',
+        scopes: ['identification_symptoms', 'environmental_triggers', 'prevention_cultural', 'treatment_ipm', 'edible_crop_safety'],
       },
       {
         title: 'Managing Mealybugs on Indoor Houseplants',
         organization: 'University of Minnesota Extension',
         year: 2023,
         evidenceLevel: 'extension_consensus',
+        scopes: ['identification_symptoms', 'environmental_triggers', 'prevention_cultural', 'treatment_ipm', 'edible_crop_safety'],
       },
     ],
     verificationStatus: 'verified',
@@ -823,7 +836,7 @@ const PEST_CONDITIONS: PestCondition[] = [
       { plantSlug: 'snake-plant', relationshipType: 'confirmed_host', notes: 'Encrustations along leaf margins' },
       { plantSlug: 'aloe-vera', relationshipType: 'confirmed_host', notes: 'Scale insects attach to lower leaf bases' },
       { plantSlug: 'cherry-tomato', relationshipType: 'susceptible_family', notes: 'Occasionally colonizes mature woody stems' },
-      { plantSlug: 'broccoli-microgreens', relationshipType: 'resistant', notes: 'Non-host due to short harvest cycle' },
+      { plantSlug: 'broccoli-microgreens', relationshipType: 'not_known_host', notes: 'Not a known host for scale insects; 10–14 day harvest cycle prevents sessile scale crawler settlement and adult maturation' },
     ],
     references: [
       {
@@ -832,12 +845,14 @@ const PEST_CONDITIONS: PestCondition[] = [
         url: 'https://ipm.ucanr.edu/PMG/PESTNOTES/pn7408.html',
         year: 2023,
         evidenceLevel: 'extension_consensus',
+        scopes: ['identification_symptoms', 'environmental_triggers', 'prevention_cultural', 'treatment_ipm', 'edible_crop_safety'],
       },
       {
         title: 'Soft Scale Insects in the Home and Greenhouse',
         organization: 'University of Florida IFAS Extension',
         year: 2022,
         evidenceLevel: 'extension_consensus',
+        scopes: ['identification_symptoms', 'environmental_triggers', 'prevention_cultural', 'treatment_ipm', 'edible_crop_safety'],
       },
     ],
     verificationStatus: 'verified',
@@ -938,7 +953,7 @@ const PEST_CONDITIONS: PestCondition[] = [
       { plantSlug: 'french-radish', relationshipType: 'confirmed_host', notes: 'Cabbage looper and imported cabbageworm host' },
       { plantSlug: 'spinach', relationshipType: 'confirmed_host', notes: 'Beet armyworm and cabbage looper target leaves' },
       { plantSlug: 'broccoli-microgreens', relationshipType: 'susceptible_family', notes: 'Indoor microgreens protected if screened' },
-      { plantSlug: 'snake-plant', relationshipType: 'resistant', notes: 'Tough fibrous foliage is not a host for garden loopers' },
+      { plantSlug: 'snake-plant', relationshipType: 'not_known_host', notes: 'Not a known host for common vegetable loopers or hornworms' },
     ],
     references: [
       {
@@ -947,12 +962,14 @@ const PEST_CONDITIONS: PestCondition[] = [
         url: 'https://ipm.ucanr.edu/PMG/GARDEN/VEGES/PESTS/caterpillars.html',
         year: 2023,
         evidenceLevel: 'extension_consensus',
+        scopes: ['identification_symptoms', 'environmental_triggers', 'prevention_cultural', 'treatment_ipm', 'edible_crop_safety'],
       },
       {
         title: 'Bacillus thuringiensis (Bt) for Garden Caterpillar Management',
         organization: 'Colorado State University Extension',
         year: 2022,
         evidenceLevel: 'extension_consensus',
+        scopes: ['identification_symptoms', 'environmental_triggers', 'prevention_cultural', 'treatment_ipm', 'edible_crop_safety'],
       },
     ],
     verificationStatus: 'verified',
@@ -1054,8 +1071,8 @@ const PEST_CONDITIONS: PestCondition[] = [
       { plantSlug: 'cherry-tomato', relationshipType: 'confirmed_host', notes: 'Common in lower tomato canopy' },
       { plantSlug: 'tomato-bush', relationshipType: 'confirmed_host', notes: 'Liriomyza trifolii host' },
       { plantSlug: 'french-radish', relationshipType: 'confirmed_host', notes: 'Radish foliage attacked' },
-      { plantSlug: 'snake-plant', relationshipType: 'resistant', notes: 'Fibrous succulence impervious to leafminers' },
-      { plantSlug: 'golden-pothos', relationshipType: 'resistant', notes: 'Non-host' },
+      { plantSlug: 'snake-plant', relationshipType: 'not_known_host', notes: 'Not a known host for agricultural Liriomyza leafminers' },
+      { plantSlug: 'golden-pothos', relationshipType: 'not_known_host', notes: 'Not a known host for dipteran vegetable leafminers' },
     ],
     references: [
       {
@@ -1064,12 +1081,14 @@ const PEST_CONDITIONS: PestCondition[] = [
         url: 'https://ipm.ucanr.edu/PMG/PESTNOTES/pn7494.html',
         year: 2022,
         evidenceLevel: 'extension_consensus',
+        scopes: ['identification_symptoms', 'environmental_triggers', 'prevention_cultural', 'treatment_ipm', 'edible_crop_safety'],
       },
       {
         title: 'Vegetable Leafminers: Biology and Biological Control',
         organization: 'University of Florida IFAS Extension',
         year: 2021,
         evidenceLevel: 'extension_consensus',
+        scopes: ['identification_symptoms', 'environmental_triggers', 'prevention_cultural', 'treatment_ipm', 'edible_crop_safety'],
       },
     ],
     verificationStatus: 'verified',
@@ -1168,13 +1187,14 @@ const DISEASE_CONDITIONS: DiseaseCondition[] = [
       emergencyEscalationNote: 'No clinical escalation required under normal handling. In case of accidental pesticide ingestion or severe allergic reaction, immediately contact your local poison control centre or national emergency medical services.',
     },
     confirmedHostSlugs: [
+      { plantSlug: 'spearmint', relationshipType: 'confirmed_host', notes: 'Mint powdery mildew (Golovinomyces biocellatus) attacks foliage under dry canopy conditions' },
       { plantSlug: 'dwarf-zinnia', relationshipType: 'confirmed_host', notes: 'Extremely susceptible host; leaves turn powdery white rapidly' },
       { plantSlug: 'cherry-tomato', relationshipType: 'confirmed_host', notes: 'Leveillula taurica and Oidium neolycopersici host' },
       { plantSlug: 'tomato-bush', relationshipType: 'confirmed_host', notes: 'Upper and middle canopy foliage affected' },
       { plantSlug: 'genovese-basil', relationshipType: 'susceptible_family', notes: 'Occasional host under low light' },
       { plantSlug: 'coriander', relationshipType: 'susceptible_family', notes: 'Attacks flowering stems and foliage' },
-      { plantSlug: 'snake-plant', relationshipType: 'resistant', notes: 'Non-host' },
-      { plantSlug: 'golden-pothos', relationshipType: 'resistant', notes: 'Non-host' },
+      { plantSlug: 'snake-plant', relationshipType: 'not_known_host', notes: 'Not a known host for Erysiphaceae powdery mildew species that attack vegetables' },
+      { plantSlug: 'golden-pothos', relationshipType: 'not_known_host', notes: 'Not a known host for dipteran vegetable leafminers' },
     ],
     references: [
       {
@@ -1183,12 +1203,14 @@ const DISEASE_CONDITIONS: DiseaseCondition[] = [
         url: 'https://ipm.ucanr.edu/PMG/PESTNOTES/pn7406.html',
         year: 2023,
         evidenceLevel: 'extension_consensus',
+        scopes: ['identification_symptoms', 'environmental_triggers', 'prevention_cultural', 'treatment_ipm', 'edible_crop_safety'],
       },
       {
         title: 'Powdery Mildew in the Urban Garden',
         organization: 'Purdue University Extension Plant Pathology',
         year: 2022,
         evidenceLevel: 'extension_consensus',
+        scopes: ['identification_symptoms', 'environmental_triggers', 'prevention_cultural', 'treatment_ipm', 'edible_crop_safety'],
       },
     ],
     verificationStatus: 'verified',
@@ -1289,8 +1311,8 @@ const DISEASE_CONDITIONS: DiseaseCondition[] = [
       { plantSlug: 'butterhead-lettuce', relationshipType: 'confirmed_host', notes: 'Bremia lactucae; angular vein-delimited lesions' },
       { plantSlug: 'french-radish', relationshipType: 'confirmed_host', notes: 'Hyaloperonospora brassicae host' },
       { plantSlug: 'holy-basil-tulsi', relationshipType: 'resistant', notes: 'Exhibits significantly higher genetic resistance than sweet basil' },
-      { plantSlug: 'snake-plant', relationshipType: 'resistant', notes: 'Non-host' },
-      { plantSlug: 'golden-pothos', relationshipType: 'resistant', notes: 'Non-host' },
+      { plantSlug: 'snake-plant', relationshipType: 'not_known_host', notes: 'Not a known host for Erysiphaceae powdery mildew species that attack vegetables' },
+      { plantSlug: 'golden-pothos', relationshipType: 'not_known_host', notes: 'Not a known host for dipteran vegetable leafminers' },
     ],
     references: [
       {
@@ -1299,12 +1321,14 @@ const DISEASE_CONDITIONS: DiseaseCondition[] = [
         url: 'https://www.vegetables.cornell.edu/pest-management-disease-factsheets/basil-downy-mildew/',
         year: 2023,
         evidenceLevel: 'extension_consensus',
+        scopes: ['identification_symptoms', 'environmental_triggers', 'prevention_cultural', 'treatment_ipm', 'edible_crop_safety'],
       },
       {
         title: 'Spinach Downy Mildew (Peronospora effusa)',
         organization: 'University of California Agriculture & Natural Resources',
         year: 2022,
         evidenceLevel: 'extension_consensus',
+        scopes: ['identification_symptoms', 'environmental_triggers', 'prevention_cultural', 'treatment_ipm', 'edible_crop_safety'],
       },
     ],
     verificationStatus: 'verified',
@@ -1402,8 +1426,8 @@ const DISEASE_CONDITIONS: DiseaseCondition[] = [
       { plantSlug: 'tomato-bush', relationshipType: 'confirmed_host', notes: 'Primary host; bottom-up defoliation' },
       { plantSlug: 'cherry-tomato', relationshipType: 'confirmed_host', notes: 'Target spots on foliage and stem collar rot' },
       { plantSlug: 'french-radish', relationshipType: 'rarely_affected', notes: 'Alternaria brassicae is a distinct brassica species' },
-      { plantSlug: 'snake-plant', relationshipType: 'resistant', notes: 'Non-host' },
-      { plantSlug: 'golden-pothos', relationshipType: 'resistant', notes: 'Non-host' },
+      { plantSlug: 'snake-plant', relationshipType: 'not_known_host', notes: 'Not a known host for Erysiphaceae powdery mildew species that attack vegetables' },
+      { plantSlug: 'golden-pothos', relationshipType: 'not_known_host', notes: 'Not a known host for dipteran vegetable leafminers' },
     ],
     references: [
       {
@@ -1412,12 +1436,14 @@ const DISEASE_CONDITIONS: DiseaseCondition[] = [
         url: 'https://extension.umn.edu/diseases/early-blight-tomato',
         year: 2023,
         evidenceLevel: 'extension_consensus',
+        scopes: ['identification_symptoms', 'environmental_triggers', 'prevention_cultural', 'treatment_ipm', 'edible_crop_safety'],
       },
       {
         title: 'Tomato Disease Management: Early Blight (Alternaria solani)',
         organization: 'Penn State Extension',
         year: 2022,
         evidenceLevel: 'extension_consensus',
+        scopes: ['identification_symptoms', 'environmental_triggers', 'prevention_cultural', 'treatment_ipm', 'edible_crop_safety'],
       },
     ],
     verificationStatus: 'verified',
@@ -1512,9 +1538,9 @@ const DISEASE_CONDITIONS: DiseaseCondition[] = [
     confirmedHostSlugs: [
       { plantSlug: 'tomato-bush', relationshipType: 'confirmed_host', notes: 'Severe lower canopy spotting' },
       { plantSlug: 'cherry-tomato', relationshipType: 'confirmed_host', notes: 'Rapid bottom-up defoliation' },
-      { plantSlug: 'genovese-basil', relationshipType: 'resistant', notes: 'Non-host (Septoria lycopersici is solanaceous-specific)' },
-      { plantSlug: 'snake-plant', relationshipType: 'resistant', notes: 'Non-host' },
-      { plantSlug: 'golden-pothos', relationshipType: 'resistant', notes: 'Non-host' },
+      { plantSlug: 'genovese-basil', relationshipType: 'not_known_host', notes: 'Not a known host (Septoria lycopersici is host-specific to Solanaceae, especially tomato)' },
+      { plantSlug: 'snake-plant', relationshipType: 'not_known_host', notes: 'Not a known host for Erysiphaceae powdery mildew species that attack vegetables' },
+      { plantSlug: 'golden-pothos', relationshipType: 'not_known_host', notes: 'Not a known host for dipteran vegetable leafminers' },
     ],
     references: [
       {
@@ -1523,12 +1549,14 @@ const DISEASE_CONDITIONS: DiseaseCondition[] = [
         url: 'https://extension.umn.edu/diseases/septoria-leaf-spot-tomato',
         year: 2023,
         evidenceLevel: 'extension_consensus',
+        scopes: ['identification_symptoms', 'environmental_triggers', 'prevention_cultural', 'treatment_ipm', 'edible_crop_safety'],
       },
       {
         title: 'Managing Septoria Leaf Spot in the Home Vegetable Garden',
         organization: 'Cornell University Cooperative Extension',
         year: 2022,
         evidenceLevel: 'extension_consensus',
+        scopes: ['identification_symptoms', 'environmental_triggers', 'prevention_cultural', 'treatment_ipm', 'edible_crop_safety'],
       },
     ],
     verificationStatus: 'verified',
@@ -1626,8 +1654,8 @@ const DISEASE_CONDITIONS: DiseaseCondition[] = [
       { plantSlug: 'cherry-tomato', relationshipType: 'confirmed_host', notes: 'Ripe fruit lesions in warm wet weather' },
       { plantSlug: 'tomato-bush', relationshipType: 'confirmed_host', notes: 'Circular sunken lesions on ripe fruit' },
       { plantSlug: 'spinach', relationshipType: 'confirmed_host', notes: 'Colletotrichum dematium causes leaf anthracnose' },
-      { plantSlug: 'snake-plant', relationshipType: 'resistant', notes: 'Non-host' },
-      { plantSlug: 'golden-pothos', relationshipType: 'resistant', notes: 'Non-host' },
+      { plantSlug: 'snake-plant', relationshipType: 'not_known_host', notes: 'Not a known host for Erysiphaceae powdery mildew species that attack vegetables' },
+      { plantSlug: 'golden-pothos', relationshipType: 'not_known_host', notes: 'Not a known host for dipteran vegetable leafminers' },
     ],
     references: [
       {
@@ -1636,12 +1664,14 @@ const DISEASE_CONDITIONS: DiseaseCondition[] = [
         url: 'https://www.extension.purdue.edu/extmedia/BP/BP-180-W.pdf',
         year: 2021,
         evidenceLevel: 'extension_consensus',
+        scopes: ['identification_symptoms', 'environmental_triggers', 'prevention_cultural', 'treatment_ipm', 'edible_crop_safety'],
       },
       {
         title: 'Tomato Anthracnose Management in Gardens',
         organization: 'University of Minnesota Extension',
         year: 2022,
         evidenceLevel: 'extension_consensus',
+        scopes: ['identification_symptoms', 'environmental_triggers', 'prevention_cultural', 'treatment_ipm', 'edible_crop_safety'],
       },
     ],
     verificationStatus: 'verified',
@@ -1704,7 +1734,7 @@ const DISEASE_CONDITIONS: DiseaseCondition[] = [
         'Cease watering immediately and allow the root zone to aerate',
         'Unpot the plant, gently rinse away saturated soil, and inspect the root ball',
         'Prune away all brown, black, mushy, or slimy roots using sterilized shears, leaving only firm white roots',
-        'Repot into a clean, sanitized container with fresh, sterile, well-draining potting mix',
+        'Repot into a clean, sanitized container with fresh, pasteurized, well-draining potting mix',
       ],
       physicalControls: [
         'Wash and sanitize pots thoroughly with hot soapy water or an approved horticultural greenhouse disinfectant before reuse',
@@ -1736,6 +1766,7 @@ const DISEASE_CONDITIONS: DiseaseCondition[] = [
       emergencyEscalationNote: 'No clinical escalation required under normal handling. In case of accidental pesticide ingestion or severe allergic reaction, immediately contact your local poison control centre or national emergency medical services.',
     },
     confirmedHostSlugs: [
+      { plantSlug: 'spearmint', relationshipType: 'confirmed_host', notes: 'Stolon and root decay occurs quickly if container potting mix remains waterlogged in saucers' },
       { plantSlug: 'golden-pothos', relationshipType: 'confirmed_host', notes: 'Common indoor casualty of overwatered saucers' },
       { plantSlug: 'snake-plant', relationshipType: 'confirmed_host', notes: 'Basal rhizome and root rot from winter overwatering' },
       { plantSlug: 'aloe-vera', relationshipType: 'confirmed_host', notes: 'Extremely vulnerable to root rot in heavy potting soil' },
@@ -1751,12 +1782,14 @@ const DISEASE_CONDITIONS: DiseaseCondition[] = [
         url: 'https://ipm.ucanr.edu/PMG/GARDEN/PLANTS/DISEASES/rootrot.html',
         year: 2023,
         evidenceLevel: 'extension_consensus',
+        scopes: ['identification_symptoms', 'environmental_triggers', 'prevention_cultural', 'treatment_ipm', 'edible_crop_safety'],
       },
       {
         title: 'Pythium Root Rot in Indoor & Greenhouse Crops',
         organization: 'Purdue University Extension',
         year: 2022,
         evidenceLevel: 'extension_consensus',
+        scopes: ['identification_symptoms', 'environmental_triggers', 'prevention_cultural', 'treatment_ipm', 'edible_crop_safety'],
       },
     ],
     verificationStatus: 'verified',
@@ -1782,7 +1815,7 @@ const DISEASE_CONDITIONS: DiseaseCondition[] = [
     possibleCauses: [
       'Cold, overly wet, waterlogged seedling starting media',
       'Overcrowded seedling density with inadequate air circulation and low light',
-      'Reusing unsterilized seedling trays or garden soil rather than sterile seed-starting mix',
+      'Reusing unwashed seedling flats or unpasteurized garden soil rather than pasteurized soilless seed-starting mix',
     ],
     environmentalRiskFactors: {
       favorableTemperatureC: { min: 12, max: 24, optimal: '15°C–20°C' },
@@ -1827,7 +1860,7 @@ const DISEASE_CONDITIONS: DiseaseCondition[] = [
         'Drench seed-starting media with biological Trichoderma or Streptomyces lydicus bio-fungicide',
       ],
       registeredChemicalNotes: [
-        'Chemical fungicides are rarely practical or registered for home seedling flats; prevention via sterile culture is standard',
+        'Chemical fungicides are not recommended for home seedling flats; prevention via clean, sanitized culture is standard',
       
         'Apply registered controls strictly according to the manufacturer product label instructions',],
       prohibitedPractices: [
@@ -1840,8 +1873,8 @@ const DISEASE_CONDITIONS: DiseaseCondition[] = [
     severity: 'critical',
     edibleCropRelevance: {
       isFoodSafetyConcern: true,
-      foodSafetyNotes: 'Do not consume microgreens from flats exhibiting moldy fungal damping-off.',
-      harvestPrecaution: 'Discard entire microgreen sections where damping-off mold has spread.',
+      foodSafetyNotes: 'Do not consume microgreens or sprouts exhibiting fungal mold, decay, or water-soaked collapse. Warm, moist sprouting conditions that foster fungal damping-off also represent a primary risk environment for human foodborne bacterial pathogens (Salmonella enterica, Escherichia coli O157:H7, Listeria monocytogenes). While garden pests are absent in jar sprouting, microbial food-safety risks are significant.',
+      harvestPrecaution: 'Discard entire microgreen sections or sprouting batches where mold or collapse occurs. Thoroughly wash sprouting vessels with hot soapy water. Vulnerable individuals (pregnant women, elderly, children, immunocompromised) should avoid consuming raw sprouts.',
     },
     humanPetSafety: {
       isToxicToHumans: false,
@@ -1850,6 +1883,9 @@ const DISEASE_CONDITIONS: DiseaseCondition[] = [
       emergencyEscalationNote: 'No clinical escalation required under normal handling. In case of accidental pesticide ingestion or severe allergic reaction, immediately contact your local poison control centre or national emergency medical services.',
     },
     confirmedHostSlugs: [
+      { plantSlug: 'broccoli-sprouts', relationshipType: 'susceptible_family', notes: 'Sprouting seeds can succumb to Pythium or fungal mold if drainage is poor; distinct from foodborne bacterial contamination' },
+      { plantSlug: 'mung-bean-sprouts', relationshipType: 'susceptible_family', notes: 'Stagnant water promotes seed rot and fungal decay; requires complete rinse drainage' },
+      { plantSlug: 'alfalfa-sprouts', relationshipType: 'susceptible_family', notes: 'Dense seed beds in sprouting jars are susceptible to seed decay and mold under poor drainage' },
       { plantSlug: 'broccoli-microgreens', relationshipType: 'confirmed_host', notes: 'High-density sowing increases damping-off vulnerability' },
       { plantSlug: 'spinach', relationshipType: 'confirmed_host', notes: 'Slow-germinating spinach seeds vulnerable in cold damp mix' },
       { plantSlug: 'butterhead-lettuce', relationshipType: 'confirmed_host', notes: 'Tender seedling stems collapse quickly' },
@@ -1866,12 +1902,14 @@ const DISEASE_CONDITIONS: DiseaseCondition[] = [
         url: 'https://extension.umn.edu/solve-problem/damping',
         year: 2023,
         evidenceLevel: 'extension_consensus',
+        scopes: ['identification_symptoms', 'environmental_triggers', 'prevention_cultural', 'treatment_ipm', 'edible_crop_safety'],
       },
       {
         title: 'Managing Damping-Off in Greenhouse and Microgreen Production',
         organization: 'Purdue University Extension Plant Pathology',
         year: 2022,
         evidenceLevel: 'extension_consensus',
+        scopes: ['identification_symptoms', 'environmental_triggers', 'prevention_cultural', 'treatment_ipm', 'edible_crop_safety'],
       },
     ],
     verificationStatus: 'verified',
@@ -1971,8 +2009,8 @@ const DISEASE_CONDITIONS: DiseaseCondition[] = [
       { plantSlug: 'cherry-tomato', relationshipType: 'confirmed_host', notes: 'Angular water-soaked leaf spots' },
       { plantSlug: 'coriander', relationshipType: 'confirmed_host', notes: 'Pseudomonas syringae pv. coriandricola causes bacterial blight' },
       { plantSlug: 'butterhead-lettuce', relationshipType: 'confirmed_host', notes: 'Xanthomonas campestris pv. vitians causes bacterial spot' },
-      { plantSlug: 'snake-plant', relationshipType: 'resistant', notes: 'Non-host' },
-      { plantSlug: 'golden-pothos', relationshipType: 'resistant', notes: 'Non-host' },
+      { plantSlug: 'snake-plant', relationshipType: 'not_known_host', notes: 'Not a known host for Erysiphaceae powdery mildew species that attack vegetables' },
+      { plantSlug: 'golden-pothos', relationshipType: 'not_known_host', notes: 'Not a known host for dipteran vegetable leafminers' },
     ],
     references: [
       {
@@ -1981,12 +2019,14 @@ const DISEASE_CONDITIONS: DiseaseCondition[] = [
         url: 'https://edis.ifas.ufl.edu/publication/VH027',
         year: 2022,
         evidenceLevel: 'extension_consensus',
+        scopes: ['identification_symptoms', 'environmental_triggers', 'prevention_cultural', 'treatment_ipm', 'edible_crop_safety'],
       },
       {
         title: 'Bacterial Diseases of Vegetables',
         organization: 'Purdue University Extension',
         year: 2021,
         evidenceLevel: 'extension_consensus',
+        scopes: ['identification_symptoms', 'environmental_triggers', 'prevention_cultural', 'treatment_ipm', 'edible_crop_safety'],
       },
     ],
     verificationStatus: 'verified',
@@ -2040,7 +2080,7 @@ const DISEASE_CONDITIONS: DiseaseCondition[] = [
     ],
     preventionGuidance: [
       'Plant certified resistant cultivars (indicated by "F" or "FF" on seed packets for tomatoes)',
-      'Always use fresh, sterile soilless potting mix in clean containers',
+      'Always use fresh, pasteurized soilless potting mix in clean containers',
       'Wash and disinfect used containers thoroughly with hot soapy water or an approved horticultural disinfectant before replanting',
     ],
     treatment: {
@@ -2081,8 +2121,8 @@ const DISEASE_CONDITIONS: DiseaseCondition[] = [
       { plantSlug: 'cherry-tomato', relationshipType: 'confirmed_host', notes: 'Vascular browning and one-sided wilt' },
       { plantSlug: 'genovese-basil', relationshipType: 'confirmed_host', notes: 'Fusarium oxysporum f. sp. basilicum causes dark stem streaks' },
       { plantSlug: 'spinach', relationshipType: 'confirmed_host', notes: 'Fusarium oxysporum f. sp. spinaciae causes seedling and mature wilt' },
-      { plantSlug: 'snake-plant', relationshipType: 'resistant', notes: 'Non-host for lycopersici/basilicum strains' },
-      { plantSlug: 'golden-pothos', relationshipType: 'resistant', notes: 'Non-host' },
+      { plantSlug: 'snake-plant', relationshipType: 'not_known_host', notes: 'Not a known host for specialized vegetable formae speciales of Fusarium oxysporum' },
+      { plantSlug: 'golden-pothos', relationshipType: 'not_known_host', notes: 'Not a known host for dipteran vegetable leafminers' },
     ],
     references: [
       {
@@ -2091,12 +2131,14 @@ const DISEASE_CONDITIONS: DiseaseCondition[] = [
         url: 'https://edis.ifas.ufl.edu/publication/PP115',
         year: 2022,
         evidenceLevel: 'extension_consensus',
+        scopes: ['identification_symptoms', 'environmental_triggers', 'prevention_cultural', 'treatment_ipm', 'edible_crop_safety'],
       },
       {
         title: 'Fusarium Wilt of Basil',
         organization: 'University of Massachusetts Amherst Extension',
         year: 2023,
         evidenceLevel: 'extension_consensus',
+        scopes: ['identification_symptoms', 'environmental_triggers', 'prevention_cultural', 'treatment_ipm', 'edible_crop_safety'],
       },
     ],
     verificationStatus: 'verified',
@@ -2198,7 +2240,7 @@ const DISEASE_CONDITIONS: DiseaseCondition[] = [
       { plantSlug: 'spinach', relationshipType: 'confirmed_host', notes: 'Leaf rot in cool humid conditions' },
       { plantSlug: 'dwarf-zinnia', relationshipType: 'confirmed_host', notes: 'Spent flower petal blighting' },
       { plantSlug: 'french-marigold', relationshipType: 'confirmed_host', notes: 'Decaying floral head mold' },
-      { plantSlug: 'snake-plant', relationshipType: 'resistant', notes: 'Thick cuticle resists Botrytis penetration' },
+      { plantSlug: 'snake-plant', relationshipType: 'rarely_affected', notes: 'Thick waxy cuticle and xerophytic foliage rarely affected unless injured or under extreme cold saturation' },
     ],
     references: [
       {
@@ -2207,12 +2249,14 @@ const DISEASE_CONDITIONS: DiseaseCondition[] = [
         url: 'https://ipm.ucanr.edu/PMG/GARDEN/PLANTS/DISEASES/botrytis.html',
         year: 2023,
         evidenceLevel: 'extension_consensus',
+        scopes: ['identification_symptoms', 'environmental_triggers', 'prevention_cultural', 'treatment_ipm', 'edible_crop_safety'],
       },
       {
         title: 'Botrytis Blight and Gray Mold in Greenhouse Crops',
         organization: 'Purdue University Extension',
         year: 2022,
         evidenceLevel: 'extension_consensus',
+        scopes: ['identification_symptoms', 'environmental_triggers', 'prevention_cultural', 'treatment_ipm', 'edible_crop_safety'],
       },
     ],
     verificationStatus: 'verified',
@@ -2306,8 +2350,8 @@ const DISEASE_CONDITIONS: DiseaseCondition[] = [
       { plantSlug: 'cherry-tomato', relationshipType: 'confirmed_host', notes: 'Mottled mosaic patterns on foliage' },
       { plantSlug: 'genovese-basil', relationshipType: 'confirmed_host', notes: 'Alfalfa mosaic virus and CMV host' },
       { plantSlug: 'spinach', relationshipType: 'confirmed_host', notes: 'Cucumber mosaic virus causes spinach blight' },
-      { plantSlug: 'snake-plant', relationshipType: 'resistant', notes: 'Non-host for TMV/CMV' },
-      { plantSlug: 'golden-pothos', relationshipType: 'resistant', notes: 'Non-host' },
+      { plantSlug: 'snake-plant', relationshipType: 'not_known_host', notes: 'Not a known host for Tobacco Mosaic Virus' },
+      { plantSlug: 'golden-pothos', relationshipType: 'not_known_host', notes: 'Not a known host for dipteran vegetable leafminers' },
     ],
     references: [
       {
@@ -2316,12 +2360,14 @@ const DISEASE_CONDITIONS: DiseaseCondition[] = [
         url: 'https://extension.umn.edu/diseases/tomato-mosaic-virus-and-tobacco-mosaic-virus',
         year: 2023,
         evidenceLevel: 'extension_consensus',
+        scopes: ['identification_symptoms', 'environmental_triggers', 'prevention_cultural', 'treatment_ipm', 'edible_crop_safety'],
       },
       {
         title: 'Cucumber Mosaic Virus in Home Gardens',
         organization: 'University of Maryland Extension',
         year: 2022,
         evidenceLevel: 'extension_consensus',
+        scopes: ['identification_symptoms', 'environmental_triggers', 'prevention_cultural', 'treatment_ipm', 'edible_crop_safety'],
       },
     ],
     verificationStatus: 'verified',
@@ -2422,12 +2468,14 @@ const ABIOTIC_CONDITIONS: AbioticCondition[] = [
         url: 'https://extension.umd.edu/resource/nitrogen-deficiency-vegetables',
         year: 2022,
         evidenceLevel: 'extension_consensus',
+        scopes: ['identification_symptoms', 'environmental_triggers', 'prevention_cultural', 'treatment_ipm', 'edible_crop_safety'],
       },
       {
         title: 'Nutrient Management for Home Gardens',
         organization: 'Colorado State University Extension',
         year: 2023,
         evidenceLevel: 'extension_consensus',
+        scopes: ['identification_symptoms', 'environmental_triggers', 'prevention_cultural', 'treatment_ipm', 'edible_crop_safety'],
       },
     ],
     correctiveMeasures: [
@@ -2526,12 +2574,14 @@ const ABIOTIC_CONDITIONS: AbioticCondition[] = [
         url: 'https://extension.usu.edu/yardandgarden/research/iron-chlorosis',
         year: 2022,
         evidenceLevel: 'extension_consensus',
+        scopes: ['identification_symptoms', 'environmental_triggers', 'prevention_cultural', 'treatment_ipm', 'edible_crop_safety'],
       },
       {
         title: 'Diagnosing Plant Micronutrient Deficiencies',
         organization: 'Penn State Extension',
         year: 2023,
         evidenceLevel: 'extension_consensus',
+        scopes: ['identification_symptoms', 'environmental_triggers', 'prevention_cultural', 'treatment_ipm', 'edible_crop_safety'],
       },
     ],
     correctiveMeasures: [
@@ -2623,7 +2673,7 @@ const ABIOTIC_CONDITIONS: AbioticCondition[] = [
       { plantSlug: 'cherry-tomato', relationshipType: 'confirmed_host', notes: 'Lower leaves show green veins with yellow blades' },
       { plantSlug: 'spinach', relationshipType: 'confirmed_host', notes: 'Outer leaves turn yellow between veins' },
       { plantSlug: 'genovese-basil', relationshipType: 'susceptible_family', notes: 'Occasional lower leaf yellowing in peat mixes' },
-      { plantSlug: 'snake-plant', relationshipType: 'resistant', notes: 'Low nutrient demand prevents visible deficiency' },
+      { plantSlug: 'snake-plant', relationshipType: 'rarely_affected', notes: 'Low metabolic micronutrient requirement rarely manifests iron chlorosis under normal indoor care' },
     ],
     references: [
       {
@@ -2632,12 +2682,14 @@ const ABIOTIC_CONDITIONS: AbioticCondition[] = [
         url: 'https://edis.ifas.ufl.edu/publication/SS669',
         year: 2022,
         evidenceLevel: 'extension_consensus',
+        scopes: ['identification_symptoms', 'environmental_triggers', 'prevention_cultural', 'treatment_ipm', 'edible_crop_safety'],
       },
       {
         title: 'Nutrient Deficiencies and Toxicities in Vegetables',
         organization: 'Purdue University Extension',
         year: 2021,
         evidenceLevel: 'extension_consensus',
+        scopes: ['identification_symptoms', 'environmental_triggers', 'prevention_cultural', 'treatment_ipm', 'edible_crop_safety'],
       },
     ],
     correctiveMeasures: [
@@ -2737,12 +2789,14 @@ const ABIOTIC_CONDITIONS: AbioticCondition[] = [
         url: 'https://vric.ucdavis.edu/pdf/fertilization_Potassium.pdf',
         year: 2022,
         evidenceLevel: 'extension_consensus',
+        scopes: ['identification_symptoms', 'environmental_triggers', 'prevention_cultural', 'treatment_ipm', 'edible_crop_safety'],
       },
       {
         title: 'Plant Nutrients and Deficiency Symptoms',
         organization: 'University of Georgia Extension',
         year: 2023,
         evidenceLevel: 'extension_consensus',
+        scopes: ['identification_symptoms', 'environmental_triggers', 'prevention_cultural', 'treatment_ipm', 'edible_crop_safety'],
       },
     ],
     correctiveMeasures: [
@@ -2833,8 +2887,8 @@ const ABIOTIC_CONDITIONS: AbioticCondition[] = [
     confirmedHostSlugs: [
       { plantSlug: 'tomato-bush', relationshipType: 'confirmed_host', notes: 'Very common in patio containers during hot dry spells' },
       { plantSlug: 'cherry-tomato', relationshipType: 'confirmed_host', notes: 'Blossom end rot occurs in small containers with erratic moisture' },
-      { plantSlug: 'spinach', relationshipType: 'resistant', notes: 'Non-fruiting crop' },
-      { plantSlug: 'snake-plant', relationshipType: 'resistant', notes: 'Non-fruiting crop' },
+      { plantSlug: 'spinach', relationshipType: 'not_known_host', notes: 'Blossom end rot is a fruit disorder that does not apply to non-fruiting leafy greens' },
+      { plantSlug: 'snake-plant', relationshipType: 'not_known_host', notes: 'Blossom end rot is a fruit disorder that does not apply to non-fruiting foliage ornamentals' },
     ],
     references: [
       {
@@ -2843,12 +2897,14 @@ const ABIOTIC_CONDITIONS: AbioticCondition[] = [
         url: 'https://extension.umn.edu/plant-diseases/blossom-end-rot',
         year: 2023,
         evidenceLevel: 'extension_consensus',
+        scopes: ['identification_symptoms', 'environmental_triggers', 'prevention_cultural', 'treatment_ipm', 'edible_crop_safety'],
       },
       {
         title: 'Blossom End Rot in Home Garden Tomatoes',
         organization: 'Purdue University Extension',
         year: 2022,
         evidenceLevel: 'extension_consensus',
+        scopes: ['identification_symptoms', 'environmental_triggers', 'prevention_cultural', 'treatment_ipm', 'edible_crop_safety'],
       },
     ],
     correctiveMeasures: [
@@ -2940,8 +2996,8 @@ const ABIOTIC_CONDITIONS: AbioticCondition[] = [
       { plantSlug: 'butterhead-lettuce', relationshipType: 'confirmed_host', notes: 'Inner leaf margin necrosis common during rapid warm growth' },
       { plantSlug: 'spinach', relationshipType: 'confirmed_host', notes: 'Tender expanding leaves show tip browning' },
       { plantSlug: 'french-radish', relationshipType: 'susceptible_family', notes: 'Occasional foliage margin browning' },
-      { plantSlug: 'snake-plant', relationshipType: 'resistant', notes: 'Non-host' },
-      { plantSlug: 'golden-pothos', relationshipType: 'resistant', notes: 'Non-host' },
+      { plantSlug: 'snake-plant', relationshipType: 'not_known_host', notes: 'Not a known host for Erysiphaceae powdery mildew species that attack vegetables' },
+      { plantSlug: 'golden-pothos', relationshipType: 'not_known_host', notes: 'Not a known host for dipteran vegetable leafminers' },
     ],
     references: [
       {
@@ -2950,12 +3006,14 @@ const ABIOTIC_CONDITIONS: AbioticCondition[] = [
         url: 'https://vric.ucdavis.edu/pdf/lettuce_tipburn.pdf',
         year: 2022,
         evidenceLevel: 'extension_consensus',
+        scopes: ['identification_symptoms', 'environmental_triggers', 'prevention_cultural', 'treatment_ipm', 'edible_crop_safety'],
       },
       {
         title: 'Managing Tipburn in Indoor and Vertical Greens',
         organization: 'Cornell University Controlled Environment Agriculture',
         year: 2023,
         evidenceLevel: 'extension_consensus',
+        scopes: ['identification_symptoms', 'environmental_triggers', 'prevention_cultural', 'treatment_ipm', 'edible_crop_safety'],
       },
     ],
     correctiveMeasures: [
@@ -3057,12 +3115,14 @@ const ABIOTIC_CONDITIONS: AbioticCondition[] = [
         url: 'https://hort.extension.wisc.edu/articles/oedema/',
         year: 2022,
         evidenceLevel: 'extension_consensus',
+        scopes: ['identification_symptoms', 'environmental_triggers', 'prevention_cultural', 'treatment_ipm', 'edible_crop_safety'],
       },
       {
         title: 'Oedema in Container Plants and Vegetables',
         organization: 'RHS (Royal Horticultural Society)',
         year: 2023,
         evidenceLevel: 'extension_consensus',
+        scopes: ['identification_symptoms', 'environmental_triggers', 'prevention_cultural', 'treatment_ipm', 'edible_crop_safety'],
       },
     ],
     correctiveMeasures: [
@@ -3165,12 +3225,14 @@ const ABIOTIC_CONDITIONS: AbioticCondition[] = [
         url: 'https://extension.umd.edu/resource/overwatering',
         year: 2023,
         evidenceLevel: 'extension_consensus',
+        scopes: ['identification_symptoms', 'environmental_triggers', 'prevention_cultural', 'treatment_ipm', 'edible_crop_safety'],
       },
       {
         title: 'Container Soil Physics: Drainage and Aeration',
         organization: 'University of Florida IFAS Extension',
         year: 2022,
         evidenceLevel: 'extension_consensus',
+        scopes: ['identification_symptoms', 'environmental_triggers', 'prevention_cultural', 'treatment_ipm', 'edible_crop_safety'],
       },
     ],
     correctiveMeasures: [
@@ -3258,13 +3320,14 @@ const ABIOTIC_CONDITIONS: AbioticCondition[] = [
       emergencyEscalationNote: 'No clinical escalation required under normal handling. In case of accidental pesticide ingestion or severe allergic reaction, immediately contact your local poison control centre or national emergency medical services.',
     },
     confirmedHostSlugs: [
+      { plantSlug: 'spearmint', relationshipType: 'confirmed_host', notes: 'High leaf surface area and shallow stolons wilt dramatically when container dries out' },
       { plantSlug: 'butterhead-lettuce', relationshipType: 'confirmed_host', notes: 'Rapid wilting and bitterness under dry conditions' },
       { plantSlug: 'spinach', relationshipType: 'confirmed_host', notes: 'Drought triggers emergency premature bolting' },
       { plantSlug: 'coriander', relationshipType: 'confirmed_host', notes: 'Rapid wilting and flower stem elongation' },
       { plantSlug: 'genovese-basil', relationshipType: 'confirmed_host', notes: 'Dramatic foliage drooping in dry pots' },
       { plantSlug: 'cherry-tomato', relationshipType: 'confirmed_host', notes: 'Vine drooping and blossom drop' },
-      { plantSlug: 'aloe-vera', relationshipType: 'resistant', notes: 'Succulent tissue survives prolonged drought by drawing down gel' },
-      { plantSlug: 'snake-plant', relationshipType: 'resistant', notes: 'Thrives on dry soil intervals' },
+      { plantSlug: 'aloe-vera', relationshipType: 'rarely_affected', notes: 'CAM photosynthesis and water-storing parenchymal gel buffer against typical short-term container drought' },
+      { plantSlug: 'snake-plant', relationshipType: 'rarely_affected', notes: 'Crassulacean acid metabolism and thick waxy cuticle enable survival through extended dry periods without wilting' },
     ],
     references: [
       {
@@ -3273,12 +3336,14 @@ const ABIOTIC_CONDITIONS: AbioticCondition[] = [
         url: 'https://vric.ucdavis.edu/pdf/container_irrigation.pdf',
         year: 2022,
         evidenceLevel: 'extension_consensus',
+        scopes: ['identification_symptoms', 'environmental_triggers', 'prevention_cultural', 'treatment_ipm', 'edible_crop_safety'],
       },
       {
         title: 'Drought Stress in Home Garden Crops',
         organization: 'Colorado State University Extension',
         year: 2023,
         evidenceLevel: 'extension_consensus',
+        scopes: ['identification_symptoms', 'environmental_triggers', 'prevention_cultural', 'treatment_ipm', 'edible_crop_safety'],
       },
     ],
     correctiveMeasures: [
@@ -3380,12 +3445,14 @@ const ABIOTIC_CONDITIONS: AbioticCondition[] = [
         url: 'https://ag.umass.edu/greenhouse-floriculture/fact-sheets/soluble-salts-in-soilless-media',
         year: 2022,
         evidenceLevel: 'extension_consensus',
+        scopes: ['identification_symptoms', 'environmental_triggers', 'prevention_cultural', 'treatment_ipm', 'edible_crop_safety'],
       },
       {
         title: 'Managing Salinity and Fertilizer Burn in Container Gardens',
         organization: 'Colorado State University Extension',
         year: 2023,
         evidenceLevel: 'extension_consensus',
+        scopes: ['identification_symptoms', 'environmental_triggers', 'prevention_cultural', 'treatment_ipm', 'edible_crop_safety'],
       },
     ],
     correctiveMeasures: [
@@ -3486,12 +3553,14 @@ const ABIOTIC_CONDITIONS: AbioticCondition[] = [
         url: 'https://extension.umd.edu/resource/sunscald-vegetables',
         year: 2023,
         evidenceLevel: 'extension_consensus',
+        scopes: ['identification_symptoms', 'environmental_triggers', 'prevention_cultural', 'treatment_ipm', 'edible_crop_safety'],
       },
       {
         title: 'Hardening Off Transplants and Preventing Sunburn',
         organization: 'Purdue University Extension',
         year: 2022,
         evidenceLevel: 'extension_consensus',
+        scopes: ['identification_symptoms', 'environmental_triggers', 'prevention_cultural', 'treatment_ipm', 'edible_crop_safety'],
       },
     ],
     correctiveMeasures: [
@@ -3594,12 +3663,14 @@ const ABIOTIC_CONDITIONS: AbioticCondition[] = [
         url: 'https://edis.ifas.ufl.edu/publication/MG022',
         year: 2022,
         evidenceLevel: 'extension_consensus',
+        scopes: ['identification_symptoms', 'environmental_triggers', 'prevention_cultural', 'treatment_ipm', 'edible_crop_safety'],
       },
       {
         title: 'Protecting Container Gardens from Frost and Chilling Injury',
         organization: 'Penn State Extension',
         year: 2023,
         evidenceLevel: 'extension_consensus',
+        scopes: ['identification_symptoms', 'environmental_triggers', 'prevention_cultural', 'treatment_ipm', 'edible_crop_safety'],
       },
     ],
     correctiveMeasures: [
@@ -3701,12 +3772,14 @@ const ABIOTIC_CONDITIONS: AbioticCondition[] = [
         url: 'https://edis.ifas.ufl.edu/publication/HS1195',
         year: 2022,
         evidenceLevel: 'extension_consensus',
+        scopes: ['identification_symptoms', 'environmental_triggers', 'prevention_cultural', 'treatment_ipm', 'edible_crop_safety'],
       },
       {
         title: 'Managing Heat Stress in Urban Container Gardens',
         organization: 'University of California Agriculture & Natural Resources',
         year: 2023,
         evidenceLevel: 'extension_consensus',
+        scopes: ['identification_symptoms', 'environmental_triggers', 'prevention_cultural', 'treatment_ipm', 'edible_crop_safety'],
       },
     ],
     correctiveMeasures: [
@@ -3807,12 +3880,14 @@ const ABIOTIC_CONDITIONS: AbioticCondition[] = [
         url: 'https://extension.umd.edu/resource/bolting-vegetables',
         year: 2022,
         evidenceLevel: 'extension_consensus',
+        scopes: ['identification_symptoms', 'environmental_triggers', 'prevention_cultural', 'treatment_ipm', 'edible_crop_safety'],
       },
       {
         title: 'Temperature and Photoperiod Effects on Vegetable Bolting',
         organization: 'Cornell University Cooperative Extension',
         year: 2023,
         evidenceLevel: 'extension_consensus',
+        scopes: ['identification_symptoms', 'environmental_triggers', 'prevention_cultural', 'treatment_ipm', 'edible_crop_safety'],
       },
     ],
     correctiveMeasures: [
@@ -3913,12 +3988,14 @@ const ABIOTIC_CONDITIONS: AbioticCondition[] = [
         url: 'https://vric.ucdavis.edu/pdf/salinity_management.pdf',
         year: 2022,
         evidenceLevel: 'extension_consensus',
+        scopes: ['identification_symptoms', 'environmental_triggers', 'prevention_cultural', 'treatment_ipm', 'edible_crop_safety'],
       },
       {
         title: 'Managing Soluble Salts and Osmotic Potential in Greenhouse Media',
         organization: 'Purdue University Extension',
         year: 2023,
         evidenceLevel: 'extension_consensus',
+        scopes: ['identification_symptoms', 'environmental_triggers', 'prevention_cultural', 'treatment_ipm', 'edible_crop_safety'],
       },
     ],
     correctiveMeasures: [
