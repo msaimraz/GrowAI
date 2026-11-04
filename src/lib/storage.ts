@@ -385,13 +385,21 @@ export function resetToDemoData(): void {
   localStorage.removeItem(STORAGE_KEYS.LOCAL_MIGRATED);
 }
 
+// Unique ID generator for local/demo storage that prevents collisions during rapid batch operations
+function generateStorageId(prefix: string): string {
+  if (typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function') {
+    return `${prefix}-${crypto.randomUUID()}`;
+  }
+  return `${prefix}-${Date.now()}-${Math.random().toString(36).substring(2, 9)}`;
+}
+
 // Synchronous wrappers for demo mode
 export function addUserPlant(
   newPlant: Omit<UserPlant, 'id' | 'notes'> & { initialNote?: string }
 ): UserPlant {
   const current = getSavedUserPlants();
   const created: UserPlant = {
-    id: `user-plant-${Date.now()}`,
+    id: generateStorageId('user-plant'),
     plantSlug: newPlant.plantSlug,
     nickname: newPlant.nickname || 'My Plant',
     plantedDate: newPlant.plantedDate,
@@ -406,7 +414,7 @@ export function addUserPlant(
     notes: newPlant.initialNote
       ? [
           {
-            id: `note-${Date.now()}`,
+            id: generateStorageId('note'),
             date: newPlant.plantedDate,
             stage: newPlant.currentStage,
             text: newPlant.initialNote,
@@ -432,7 +440,7 @@ export function updateUserPlantStage(plantId: string, stage: GrowthStage): void 
       notes: [
         ...p.notes,
         {
-          id: `note-${Date.now()}`,
+          id: generateStorageId('note'),
           date: today,
           stage,
           text: `Stage updated to ${stage}.`,
@@ -451,7 +459,7 @@ export function addPlantGrowthNote(
   const updated = current.map((p) => {
     if (p.id !== plantId) return p;
     const note: GrowthNote = {
-      id: `note-${Date.now()}`,
+      id: generateStorageId('note'),
       date: noteData.date || new Date().toISOString().split('T')[0],
       stage: noteData.stage,
       text: noteData.text,
@@ -1215,3 +1223,20 @@ export async function importLocalDemoDataToCloud(
 
   return { importedCount, skippedCount };
 }
+
+// ==============================================================================
+// PHASE 7B.2 SPACE CONFIGURATION STORAGE EXPORTS
+// ==============================================================================
+export {
+  SPACE_STORAGE_KEYS,
+  validateSpaceConfigProfile,
+  getSavedSpaceConfigs,
+  getSavedSpaceConfigById,
+  saveSpaceConfig,
+  deleteSpaceConfig,
+  getActiveSpaceConfigId,
+  setActiveSpaceConfigId,
+  createLocalSpaceStorageAdapter,
+  createPreparedSupabaseSpaceAdapter,
+} from './space-storage';
+

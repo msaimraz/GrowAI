@@ -683,8 +683,8 @@ function MyGardenContent() {
                       <strong className="text-[#0c2417] text-sm">{activePlant.location || 'Balcony Vertical Rack'}</strong>
                     </div>
                     <div className="p-4 rounded-2xl bg-[#fbf9f4] border border-[#ded5c5]">
-                      <span className="text-[#6d8573] block text-xs mb-1">Recommended Shelf</span>
-                      <strong className="text-[#0c2417] text-sm capitalize">{activePlant.tier || 'Middle'} Shelf</strong>
+                      <span className="text-[#6d8573] block text-xs mb-1">Vertical Tier Zone</span>
+                      <strong className="text-[#0c2417] text-sm capitalize">{activePlant.tier || 'Middle'} Tier</strong>
                     </div>
                     <div className="p-4 rounded-2xl bg-[#fbf9f4] border border-[#ded5c5]">
                       <span className="text-[#6d8573] block text-xs mb-1">Container Depth</span>
