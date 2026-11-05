@@ -26,9 +26,17 @@ import { getPlantHealthSummary } from '@/lib/plant-health-status';
 const EVENT_TYPE_SORT_PRIORITY: Record<PlantTimelineEventType, number> = {
   harvest: 100,
   health_follow_up: 90,
+  plan_completed: 85,
   treatment: 80,
+  plan_step_completed: 75,
+  plan_adjusted: 72,
+  plan_created: 71,
   health_assessment: 70,
+  plan_step_started: 68,
+  plan_review: 67,
+  plan_paused: 66,
   feeding: 65,
+  plan_resumed: 64,
   condition_observation: 62,
   photo: 60,
   intelligence_action: 58,
@@ -252,6 +260,7 @@ export function buildPlantTimeline(params: BuildPlantTimelineParams): {
     feedings = [],
     propagations = [],
     harvests = [],
+    growPlans = [],
   } = params;
 
   const rawEvents: PlantTimelineEvent[] = [];
@@ -798,6 +807,126 @@ export function buildPlantTimeline(params: BuildPlantTimelineParams): {
         harvestYield: `${h.quantity} ${h.unit}`,
       },
     });
+  }
+
+  // --------------------------------------------------------------------------
+  // 13. Grow Plan & Execution Events (Phase 13)
+  // --------------------------------------------------------------------------
+  for (const plan of growPlans) {
+    const isTargetPlant =
+      plan.plantId === plant.id ||
+      (Array.isArray(plan.plantIds) && plan.plantIds.includes(plant.id));
+    if (!isTargetPlant) continue;
+
+    // Plan Created
+    if (plan.createdAt) {
+      pushEvent({
+        id: `plan-created-${plan.id}`,
+        plantId: plant.id,
+        eventType: 'plan_created',
+        category: 'plan',
+        eventDate: plan.createdAt,
+        title: `Plan Created: ${plan.name}`,
+        description: plan.description || `Grow plan established for ${plan.objective.replace(/_/g, ' ')}.`,
+        sourceReferenceId: plan.id,
+        sourceProvenance: 'grow_plans',
+        badge: {
+          text: plan.status.replace(/_/g, ' '),
+          variant: plan.status === 'completed' ? 'success' : plan.status === 'paused' ? 'warning' : 'accent',
+        },
+        actionLink: {
+          label: 'View Plan',
+          href: `/app/grow-plans/${plan.id}`,
+        },
+      });
+    }
+
+    // Plan Steps
+    if (Array.isArray(plan.steps)) {
+      for (const step of plan.steps) {
+        if (step.plantId && step.plantId !== plant.id) continue;
+
+        if (step.status === 'completed' && step.completedAt) {
+          pushEvent({
+            id: `plan-step-done-${step.id}`,
+            plantId: plant.id,
+            eventType: 'plan_step_completed',
+            category: 'plan',
+            eventDate: step.completedAt,
+            title: `Step Completed: ${step.title}`,
+            description: step.notes || step.description || `Plan step '${step.title}' completed.`,
+            sourceReferenceId: step.id,
+            sourceProvenance: 'grow_plan_steps',
+            badge: { text: step.category.replace(/_/g, ' '), variant: 'success' },
+            actionLink: {
+              label: 'View Plan',
+              href: `/app/grow-plans/${plan.id}`,
+            },
+          });
+        } else if (step.status === 'in_progress' && step.startedAt) {
+          pushEvent({
+            id: `plan-step-started-${step.id}`,
+            plantId: plant.id,
+            eventType: 'plan_step_started',
+            category: 'plan',
+            eventDate: step.startedAt,
+            title: `Step Started: ${step.title}`,
+            description: step.description || `Action step started.`,
+            sourceReferenceId: step.id,
+            sourceProvenance: 'grow_plan_steps',
+            badge: { text: 'In Progress', variant: 'info' },
+            actionLink: {
+              label: 'View Plan',
+              href: `/app/grow-plans/${plan.id}`,
+            },
+          });
+        }
+      }
+    }
+
+    // Plan Adjustments
+    if (Array.isArray(plan.adjustmentHistory)) {
+      for (const adj of plan.adjustmentHistory) {
+        if (adj.adjustedAt) {
+          pushEvent({
+            id: `plan-adj-${adj.id}`,
+            plantId: plant.id,
+            eventType: 'plan_adjusted',
+            category: 'plan',
+            eventDate: adj.adjustedAt,
+            title: `Plan Adapted: ${plan.name}`,
+            description: adj.reason || `Plan dynamically adapted in response to ${adj.trigger.replace(/_/g, ' ')}.`,
+            sourceReferenceId: adj.id,
+            sourceProvenance: 'grow_plans',
+            badge: { text: adj.trigger.replace(/_/g, ' '), variant: 'accent' },
+            actionLink: {
+              label: 'View Plan',
+              href: `/app/grow-plans/${plan.id}`,
+            },
+          });
+        }
+      }
+    }
+
+    // Plan Completed
+    if (plan.status === 'completed' && plan.completedAt) {
+      pushEvent({
+        id: `plan-completed-${plan.id}`,
+        plantId: plant.id,
+        eventType: 'plan_completed',
+        category: 'plan',
+        eventDate: plan.completedAt,
+        title: `Plan Completed: ${plan.name}`,
+        description: `Grow plan '${plan.name}' successfully reached completion.`,
+        sourceReferenceId: plan.id,
+        sourceProvenance: 'grow_plans',
+        badge: { text: 'Completed', variant: 'success' },
+        actionLink: {
+          label: 'View Plan',
+          href: `/app/grow-plans/${plan.id}`,
+        },
+      });
+    }
   }
 
   // --------------------------------------------------------------------------

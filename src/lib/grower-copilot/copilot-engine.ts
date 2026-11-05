@@ -51,6 +51,7 @@ export interface ExecuteCopilotQueryParams {
   diagnoses?: SavedDiagnosisRecord[];
   reminders?: Reminder[];
   spaceMetrics?: ProductionSpaceMetrics | null;
+  growPlans?: any[];
   forceDeterministic?: boolean;
   conversationHistory?: CopilotMessage[];
   referenceDate?: string;
@@ -73,6 +74,7 @@ export async function executeCopilotQuery(
     diagnoses = [],
     reminders = [],
     spaceMetrics,
+    growPlans = [],
     forceDeterministic = false,
   } = params;
 
@@ -140,6 +142,7 @@ export async function executeCopilotQuery(
     diagnoses,
     reminders,
     spaceMetrics,
+    growPlans,
   });
 
   // 4. Try AI Synthesis if API Key configured and not forced deterministic
@@ -453,6 +456,150 @@ export function generateDeterministicCopilotResponse(params: {
       answer = 'Small-Space Utilization Advisory: Always verify balcony load capacity and shelf weight ratings before increasing planter sizes or adding water-heavy containers.';
       whatGrowAiFound.push('Structural safety check is mandatory for elevated containers');
       why = 'Saturated potting soil weighs up to 3x more than dry soil.';
+      break;
+    }
+
+    case 'view_grow_plan':
+    case 'plan_status_inquiry': {
+      const plans = (context.relevantGrowPlans || []).filter(
+        (pl: any) => pl.status === 'active' || pl.status === 'paused' || pl.status === 'needs_review'
+      );
+      if (plans.length === 0) {
+        answer = targetPlant
+          ? `No active Grow Plan is currently assigned to ${targetPlant.nickname}.`
+          : 'You do not have any active Grow Plans running across your garden right now.';
+        recommendedNextStep = 'You can create an adaptive Grow Plan based on plant establishment, health monitoring, or propagation.';
+        suggestedActions.push({
+          id: 'act-create-plan',
+          type: 'open_planner',
+          label: 'Create Grow Plan',
+          description: 'Start a new structured grow plan',
+          requiresConfirmation: false,
+          route: '/app/grow-plans',
+        });
+      } else {
+        const primaryPlan = plans[0];
+        const nextStep = (primaryPlan.steps || []).find(
+          (s: any) => s.status === 'ready' || s.status === 'in_progress'
+        );
+        answer = `Active Plan: "${primaryPlan.name}" (${primaryPlan.status.replace(/_/g, ' ')}). Objective: ${primaryPlan.objective.replace(/_/g, ' ')}. Progress: ${primaryPlan.progress?.taskCompletionPercentage || 0}% tasks complete.`;
+        if (nextStep) {
+          whatGrowAiFound.push(`Next actionable step: "${nextStep.title}" (${nextStep.category})`);
+          recommendedNextStep = `Next action: ${nextStep.title}`;
+          suggestedActions.push({
+            id: `act-complete-step-${nextStep.id}`,
+            type: 'complete_step',
+            label: `Complete Step: ${nextStep.title}`,
+            description: `Mark step "${nextStep.title}" as completed`,
+            requiresConfirmation: true,
+            payload: { planId: primaryPlan.id, stepId: nextStep.id },
+            route: `/app/grow-plans/${primaryPlan.id}`,
+          });
+        }
+        suggestedActions.push({
+          id: `act-view-plan-${primaryPlan.id}`,
+          type: 'open_grow_plan',
+          label: 'View Plan Details',
+          description: 'Open full plan timeline and steps',
+          requiresConfirmation: false,
+          route: `/app/grow-plans/${primaryPlan.id}`,
+        });
+      }
+      break;
+    }
+
+    case 'create_grow_plan': {
+      const p = targetPlant || (relevantPlants.length > 0 ? relevantPlants[0] : null);
+      if (p) {
+        answer = `Would you like me to create an Adaptive Establishment Plan for "${p.nickname}"?`;
+        recommendedNextStep = 'Confirm below to initialize the plan with evidence-grounded care steps.';
+        suggestedActions.push({
+          id: `act-create-plan-${p.id}`,
+          type: 'create_plan',
+          label: `Create Plan for ${p.nickname}`,
+          description: `Create structured establishment plan for ${p.nickname}`,
+          requiresConfirmation: true,
+          payload: {
+            plant: p,
+            plantId: p.id,
+            plantSlug: p.plantSlug,
+            name: `${p.nickname} Growth Plan`,
+            templateId: 'plant_establishment',
+          },
+          route: `/app/grow-plans`,
+        });
+      } else {
+        answer = 'To create a Grow Plan, select a plant or visit the Grow Plans dashboard.';
+        suggestedActions.push({
+          id: 'act-open-plans',
+          type: 'open_planner',
+          label: 'Open Grow Plans',
+          description: 'Go to Grow Plans dashboard',
+          requiresConfirmation: false,
+          route: '/app/grow-plans',
+        });
+      }
+      break;
+    }
+
+    case 'pause_grow_plan': {
+      const activePlans = (context.relevantGrowPlans || []).filter((pl: any) => pl.status === 'active');
+      if (activePlans.length === 0) {
+        answer = 'There are no active plans to pause.';
+      } else {
+        const plan = activePlans[0];
+        answer = `Would you like to pause the plan "${plan.name}"? Progress and dependencies will be preserved.`;
+        suggestedActions.push({
+          id: `act-pause-plan-${plan.id}`,
+          type: 'pause_plan',
+          label: `Pause "${plan.name}"`,
+          description: 'Temporarily pause this grow plan',
+          requiresConfirmation: true,
+          payload: { planId: plan.id },
+          route: `/app/grow-plans/${plan.id}`,
+        });
+      }
+      break;
+    }
+
+    case 'resume_grow_plan': {
+      const pausedPlans = (context.relevantGrowPlans || []).filter((pl: any) => pl.status === 'paused');
+      if (pausedPlans.length === 0) {
+        answer = 'There are no paused plans to resume.';
+      } else {
+        const plan = pausedPlans[0];
+        answer = `Would you like to resume the plan "${plan.name}"?`;
+        suggestedActions.push({
+          id: `act-resume-plan-${plan.id}`,
+          type: 'resume_plan',
+          label: `Resume "${plan.name}"`,
+          description: 'Reactivate this grow plan',
+          requiresConfirmation: true,
+          payload: { planId: plan.id },
+          route: `/app/grow-plans/${plan.id}`,
+        });
+      }
+      break;
+    }
+
+    case 'complete_plan_step': {
+      const activePlans = (context.relevantGrowPlans || []).filter((pl: any) => pl.status === 'active');
+      const activePlan = activePlans[0];
+      const readyStep = activePlan?.steps?.find((s: any) => s.status === 'ready' || s.status === 'in_progress');
+      if (readyStep) {
+        answer = `Ready to mark "${readyStep.title}" as completed in plan "${activePlan.name}"?`;
+        suggestedActions.push({
+          id: `act-complete-step-${readyStep.id}`,
+          type: 'complete_step',
+          label: `Complete: ${readyStep.title}`,
+          description: 'Mark this step as completed',
+          requiresConfirmation: true,
+          payload: { planId: activePlan.id, stepId: readyStep.id },
+          route: `/app/grow-plans/${activePlan.id}`,
+        });
+      } else {
+        answer = 'No pending actionable steps found to complete.';
+      }
       break;
     }
 

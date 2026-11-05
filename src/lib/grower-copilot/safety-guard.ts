@@ -63,13 +63,19 @@ export function checkQuerySafety(query: string): SafetyCheckResult {
   const lower = query.toLowerCase();
 
   // 1. Check for child ingestion emergency
-  if (lower.includes('child ate') || lower.includes('swallowed') || lower.includes('poison')) {
+  if (
+    lower.includes('child ate') ||
+    lower.includes('ingested') ||
+    lower.includes('ingest') ||
+    lower.includes('swallowed') ||
+    lower.includes('poison')
+  ) {
     return {
       isSafe: false,
       safetyLevel: 'prohibited_redirect',
       reason: 'human_medical',
       redirectResponse:
-        "SAFETY EMERGENCY WARNING: GrowAI is solely a botanical gardening assistant and cannot provide medical advice or ingestion safety evaluations. If a child, pet, or human ingested a plant and is showing symptoms or vomiting, please call emergency services immediately (911 in the US) or contact the Poison Help Center at 1-800-222-1222 right away.",
+        'SAFETY EMERGENCY WARNING: GrowAI is solely a botanical gardening assistant and cannot provide human medical diagnosis, prescriptions, or ingestion evaluations. If a child, pet, or human ingested a plant, fungal growth, or unknown substance and may be in distress, please contact your local emergency services or regional poison control center immediately.',
       sanitizedQuery: query,
     };
   }

@@ -1,8 +1,11 @@
 'use client';
 
-import React, { useMemo, useState } from 'react';
+import React, { useMemo, useState, useEffect } from 'react';
+import Link from 'next/link';
 import { UserPlant, PlantPhoto } from '@/types/garden';
 import { SavedDiagnosisRecord } from '@/types/diagnosis';
+import { GrowPlan } from '@/types/grow-plan';
+import { fetchGrowPlans } from '@/lib/grow-plans/storage';
 import {
   GrowingConditionObservation,
   FeedingRecord,
@@ -125,6 +128,16 @@ export function PlantIntelligenceTab({
   }, [plantActions, plant, conditions, feedings, propagations, harvests, diagnoses, reminders]);
 
   const [showCopilot, setShowCopilot] = useState(false);
+  const [activePlans, setActivePlans] = useState<GrowPlan[]>([]);
+
+  useEffect(() => {
+    fetchGrowPlans().then((res) => {
+      const relevant = res.plans.filter(
+        (p) => p.plantId === plant.id || (p.plantIds && p.plantIds.includes(plant.id))
+      );
+      setActivePlans(relevant);
+    });
+  }, [plant.id]);
 
   return (
     <div className="space-y-6">
@@ -214,6 +227,76 @@ export function PlantIntelligenceTab({
               reminders={reminders}
               compactMode={true}
             />
+          </div>
+        )}
+      </div>
+
+      {/* Phase 13: Active Grow Plan */}
+      <div className="bg-white rounded-3xl border border-[#ded5c5] p-5 sm:p-6 shadow-xs space-y-3">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-2.5">
+            <div className="p-2 rounded-xl bg-emerald-50 text-emerald-800">
+              <Clock size={18} />
+            </div>
+            <div>
+              <h4 className="font-serif font-bold text-sm sm:text-base text-[#0c2417]">
+                Active Grow Plan
+              </h4>
+              <p className="text-[11px] text-[#526a57]">Structured milestone execution for {plant.nickname}</p>
+            </div>
+          </div>
+          <Link
+            href="/app/grow-plans"
+            className="text-xs font-semibold text-emerald-700 hover:text-emerald-800 hover:underline"
+          >
+            {activePlans.length > 0 ? 'Manage Plans →' : '+ Create Plan'}
+          </Link>
+        </div>
+
+        {activePlans.length > 0 ? (
+          <div className="space-y-3 pt-2">
+            {activePlans.slice(0, 1).map((p) => {
+              const nextStep = p.steps.find((s) => s.status === 'ready' || s.status === 'in_progress');
+              const pct = Math.round(p.progress?.taskCompletionPercentage || 0);
+              return (
+                <div key={p.id} className="p-4 rounded-2xl bg-stone-50 border border-stone-200 text-xs space-y-2.5">
+                  <div className="flex justify-between items-center">
+                    <span className="font-bold text-stone-900">{p.name}</span>
+                    <span className="px-2.5 py-0.5 rounded-full capitalize font-medium text-[10px] bg-emerald-100 text-emerald-800">
+                      {p.status}
+                    </span>
+                  </div>
+                  <div className="w-full bg-stone-200 h-2 rounded-full overflow-hidden">
+                    <div className="bg-emerald-600 h-full" style={{ width: `${pct}%` }} />
+                  </div>
+                  <div className="flex justify-between items-center text-[11px] text-stone-500">
+                    <span>{pct}% tasks completed</span>
+                    <span>{p.steps.filter((s) => s.status === 'completed').length} of {p.steps.length} steps</span>
+                  </div>
+                  {nextStep && (
+                    <div className="p-2.5 bg-emerald-50/70 border border-emerald-200/70 rounded-xl text-stone-700">
+                      <span className="font-semibold text-emerald-800 mr-1.5">Next Action:</span>
+                      {nextStep.title} ({nextStep.category})
+                    </div>
+                  )}
+                  <div className="pt-1 flex justify-end">
+                    <Link href={`/app/grow-plans/${p.id}`} className="text-emerald-700 font-semibold hover:underline">
+                      Open Plan Details →
+                    </Link>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        ) : (
+          <div className="p-4 rounded-2xl bg-[#fbf9f4] border border-[#ded5c5] text-xs flex justify-between items-center">
+            <span className="text-[#526a57]">No active grow plan assigned to this plant yet.</span>
+            <Link
+              href="/app/grow-plans"
+              className="px-3 py-1.5 rounded-xl bg-emerald-600 text-white font-medium hover:bg-emerald-700 transition"
+            >
+              Create Plan
+            </Link>
           </div>
         )}
       </div>

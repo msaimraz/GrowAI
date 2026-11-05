@@ -13,10 +13,11 @@ export interface DailyGrowCheckParams {
   gardenState: GardenState;
   actions: GrowAction[];
   referenceDate?: Date | string;
+  growPlans?: any[];
 }
 
 export function generateDailyGrowCheck(params: DailyGrowCheckParams): DailyGrowCheck {
-  const { gardenState, actions, referenceDate } = params;
+  const { gardenState, actions, referenceDate, growPlans = [] } = params;
 
   const now = referenceDate
     ? new Date(referenceDate)
@@ -90,6 +91,36 @@ export function generateDailyGrowCheck(params: DailyGrowCheckParams): DailyGrowC
     );
   }
 
+  // Active plan actions
+  const todayPlanActions: Array<{
+    planId: string;
+    planName: string;
+    stepId: string;
+    stepTitle: string;
+    category: string;
+    priority: string;
+    dueAt?: string | null;
+  }> = [];
+
+  if (Array.isArray(growPlans)) {
+    for (const plan of growPlans) {
+      if (plan.status !== 'active') continue;
+      for (const step of plan.steps || []) {
+        if (step.status === 'in_progress' || step.status === 'ready') {
+          todayPlanActions.push({
+            planId: plan.id,
+            planName: plan.name,
+            stepId: step.id,
+            stepTitle: step.title,
+            category: step.category,
+            priority: step.priority,
+            dueAt: step.dueAt || null,
+          });
+        }
+      }
+    }
+  }
+
   return {
     date: dateStr,
     headline,
@@ -98,6 +129,7 @@ export function generateDailyGrowCheck(params: DailyGrowCheckParams): DailyGrowC
     missingData,
     positiveSignals,
     noActionNeeded,
+    todayPlanActions: todayPlanActions.length > 0 ? todayPlanActions : undefined,
   };
 }
 

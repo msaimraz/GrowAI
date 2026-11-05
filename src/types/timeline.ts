@@ -28,7 +28,15 @@ export type PlantTimelineEventType =
   | 'observation_gap'
   | 'recommendation'
   | 'production_signal'
-  | 'environment_signal';
+  | 'environment_signal'
+  | 'plan_created'
+  | 'plan_step_started'
+  | 'plan_step_completed'
+  | 'plan_adjusted'
+  | 'plan_paused'
+  | 'plan_resumed'
+  | 'plan_completed'
+  | 'plan_review';
 
 export type PlantTimelineCategory =
   | 'lifecycle'
@@ -38,7 +46,8 @@ export type PlantTimelineCategory =
   | 'care'
   | 'harvest'
   | 'propagation'
-  | 'intelligence';
+  | 'intelligence'
+  | 'plan';
 
 export type PlantTimelineFilter =
   | 'all'
@@ -48,7 +57,8 @@ export type PlantTimelineFilter =
   | 'care'
   | 'harvest'
   | 'propagation'
-  | 'intelligence';
+  | 'intelligence'
+  | 'plan';
 
 export interface PlantTimelineBadge {
   text: string;
@@ -110,7 +120,9 @@ export interface PlantTimelineEvent {
     | 'feeding_records'
     | 'propagation_events'
     | 'harvest_records'
-    | 'production_cycles';
+    | 'production_cycles'
+    | 'grow_plans'
+    | 'grow_plan_steps';
   badge?: PlantTimelineBadge;
   media?: PlantTimelineMedia;
   metadata?: PlantTimelineMetadata;
@@ -149,5 +161,6 @@ export interface BuildPlantTimelineParams {
   feedings?: FeedingRecord[];
   propagations?: PropagationEvent[];
   harvests?: HarvestRecord[];
+  growPlans?: any[];
 }
 

@@ -148,6 +148,15 @@ export interface DailyGrowCheck {
   missingData: string[];
   positiveSignals: string[];
   noActionNeeded: boolean;
+  todayPlanActions?: Array<{
+    planId: string;
+    planName: string;
+    stepId: string;
+    stepTitle: string;
+    category: string;
+    priority: string;
+    dueAt?: string | null;
+  }>;
 }
 
 export interface RecommendationEvidence {
@@ -200,6 +209,7 @@ export interface AdaptiveGardenInput {
   reminders?: Reminder[];
   spaceProfile?: SpaceConfigProfile | null;
   spaceMetrics?: ProductionSpaceMetrics | null;
+  growPlans?: any[];
   referenceDate?: Date | string;
 }
 

@@ -44,6 +44,8 @@ import {
   ProductionStage,
 } from '@/types/grow-intelligence';
 import { Reminder } from '@/types/reminder';
+import { GrowPlan } from '@/types/grow-plan';
+import { fetchGrowPlans } from '@/lib/grow-plans/storage';
 import {
   Sparkles,
   Sprout,
@@ -111,6 +113,7 @@ function GrowIntelligenceContent() {
   const [cycles, setCycles] = useState<ProductionCycle[]>([]);
   const [harvests, setHarvests] = useState<HarvestRecord[]>([]);
   const [reminders, setReminders] = useState<Reminder[]>([]);
+  const [growPlans, setGrowPlans] = useState<GrowPlan[]>([]);
 
   // Phase 11 UI state
   const [actionCategoryFilter, setActionCategoryFilter] = useState<string>('all');
@@ -139,6 +142,7 @@ function GrowIntelligenceContent() {
         cycleRes,
         harvRes,
         remRes,
+        plansRes,
       ] = await Promise.all([
         fetchUserGarden(),
         fetchAllGardenDiagnoses(),
@@ -148,6 +152,7 @@ function GrowIntelligenceContent() {
         fetchProductionCycles(),
         fetchHarvestRecords(),
         fetchUserReminders(),
+        fetchGrowPlans(),
       ]);
 
       setPlants(gardenRes.plants || []);
@@ -165,6 +170,7 @@ function GrowIntelligenceContent() {
       setCycles(cycleRes.cycles || []);
       setHarvests(harvRes.harvests || []);
       setReminders(remRes.reminders || []);
+      setGrowPlans(plansRes.plans || []);
     } catch (err: any) {
       setErrorMsg(err.message || 'Failed to load intelligence data.');
     } finally {
@@ -252,8 +258,9 @@ function GrowIntelligenceContent() {
       gardenState,
       actions: prioritizedActions,
       referenceDate: isMounted ? undefined : new Date('2026-11-05T00:00:00.000Z'),
+      growPlans,
     });
-  }, [gardenState, prioritizedActions, isMounted]);
+  }, [gardenState, prioritizedActions, isMounted, growPlans]);
 
   const dataQualityReport = useMemo(() => {
     return calculateDataQuality(adaptiveInput);
@@ -470,6 +477,85 @@ function GrowIntelligenceContent() {
               <p className="text-xs text-[#526a57]">
                 All care tasks, observations, health follow-ups, and schedules across your garden are completely up to date.
               </p>
+            </div>
+          )}
+        </div>
+
+        {/* Phase 13: Active Grow Plans Overview */}
+        <div className="bg-white rounded-3xl border border-[#ded5c5] p-6 sm:p-8 shadow-xs space-y-4">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-[#f0ebe0]">
+            <div>
+              <h3 className="font-serif font-bold text-base sm:text-lg text-[#0c2417] flex items-center gap-2">
+                <Calendar size={18} className="text-[#144229]" />
+                <span>Active Grow Plans</span>
+              </h3>
+              <p className="text-xs text-[#526a57] mt-0.5">
+                Structured execution milestone tracking adapting to actual observations.
+              </p>
+            </div>
+            <Link
+              href="/app/grow-plans"
+              className="text-xs font-semibold text-emerald-700 hover:text-emerald-800 hover:underline flex items-center gap-1"
+            >
+              <span>Manage All Plans ({growPlans.length})</span>
+              <ArrowRight size={14} />
+            </Link>
+          </div>
+
+          {growPlans.filter((p) => p.status === 'active').length === 0 ? (
+            <div className="p-5 text-center rounded-2xl bg-[#fbf9f4] border border-[#ded5c5] flex flex-col sm:flex-row justify-between items-center gap-3">
+              <span className="text-xs text-[#526a57]">No active grow plans running right now.</span>
+              <Link
+                href="/app/grow-plans"
+                className="px-3.5 py-1.5 rounded-xl bg-emerald-600 text-white text-xs font-semibold hover:bg-emerald-700 transition"
+              >
+                Create Grow Plan
+              </Link>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3.5">
+              {growPlans
+                .filter((p) => p.status === 'active')
+                .slice(0, 3)
+                .map((p) => {
+                  const nextStep = p.steps.find((s) => s.status === 'ready' || s.status === 'in_progress');
+                  const taskPct = Math.round(p.progress?.taskCompletionPercentage || 0);
+                  return (
+                    <div
+                      key={p.id}
+                      className="p-4 rounded-2xl border border-stone-200 dark:border-stone-800 bg-stone-50/50 dark:bg-stone-900/50 text-xs space-y-2 flex flex-col justify-between"
+                    >
+                      <div>
+                        <div className="flex justify-between items-start gap-2 mb-1">
+                          <h4 className="font-bold text-stone-900 dark:text-stone-100">{p.name}</h4>
+                          <span className="px-2 py-0.5 rounded-full capitalize text-[10px] font-semibold bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300 shrink-0">
+                            {p.healthStatus.replace(/_/g, ' ')}
+                          </span>
+                        </div>
+                        <div className="w-full bg-stone-200 dark:bg-stone-700 h-2 rounded-full overflow-hidden my-2">
+                          <div className="bg-emerald-600 h-full" style={{ width: `${taskPct}%` }} />
+                        </div>
+                        <div className="flex justify-between items-center text-[11px] text-stone-500 mb-2">
+                          <span>{taskPct}% tasks complete</span>
+                          <span>{p.steps.filter((s) => s.status === 'completed').length}/{p.steps.length} steps</span>
+                        </div>
+                        {nextStep && (
+                          <div className="p-2 rounded-lg bg-emerald-50 dark:bg-emerald-950/40 text-[11px] text-stone-700 dark:text-stone-300">
+                            <strong>Next:</strong> {nextStep.title}
+                          </div>
+                        )}
+                      </div>
+                      <div className="pt-2 text-right">
+                        <Link
+                          href={`/app/grow-plans/${p.id}`}
+                          className="font-semibold text-emerald-600 hover:underline"
+                        >
+                          View Plan →
+                        </Link>
+                      </div>
+                    </div>
+                  );
+                })}
             </div>
           )}
         </div>

@@ -313,7 +313,86 @@ export function classifyCopilotIntent(params: ClassifyParams): IntentClassificat
     };
   }
 
-  // 13. Space & Structural Safety
+  // 13. Grow Plan Intents (Phase 13)
+  if (
+    q.includes('create plan') ||
+    q.includes('create a plan') ||
+    q.includes('start a plan') ||
+    q.includes('new grow plan') ||
+    q.includes('generate plan')
+  ) {
+    return {
+      intent: 'create_grow_plan',
+      targetPlantId: resolvedPlantId,
+      targetPlantNickname: resolvedPlantNickname,
+      confidence: 'high',
+    };
+  }
+
+  if (
+    q.includes('resume plan') ||
+    q.includes('resume the plan') ||
+    q.includes('unpause plan') ||
+    q.includes('unpause the plan') ||
+    q.includes('unpause my plan')
+  ) {
+    return {
+      intent: 'resume_grow_plan',
+      targetPlantId: resolvedPlantId,
+      targetPlantNickname: resolvedPlantNickname,
+      confidence: 'high',
+    };
+  }
+
+  if (
+    !q.includes('unpause') &&
+    (q.includes('pause plan') ||
+      q.includes('pause the plan') ||
+      q.includes('pause my plan'))
+  ) {
+    return {
+      intent: 'pause_grow_plan',
+      targetPlantId: resolvedPlantId,
+      targetPlantNickname: resolvedPlantNickname,
+      confidence: 'high',
+    };
+  }
+
+  if (
+    q.includes('complete step') ||
+    q.includes('mark step complete') ||
+    q.includes('mark this step complete') ||
+    q.includes('step complete') ||
+    q.includes('finish step') ||
+    q.includes('done with step')
+  ) {
+    return {
+      intent: 'complete_plan_step',
+      targetPlantId: resolvedPlantId,
+      targetPlantNickname: resolvedPlantNickname,
+      confidence: 'high',
+    };
+  }
+
+  if (
+    q.includes('plan status') ||
+    q.includes('how is the plan') ||
+    q.includes('plan progress') ||
+    q.includes('grow plan') ||
+    q.includes('current plan') ||
+    q.includes('my plan') ||
+    q.includes('what is the plan') ||
+    q.includes('active plan')
+  ) {
+    return {
+      intent: 'view_grow_plan',
+      targetPlantId: resolvedPlantId,
+      targetPlantNickname: resolvedPlantNickname,
+      confidence: 'high',
+    };
+  }
+
+  // 14. Space & Structural Safety
   if (
     q.includes('can i plant') ||
     q.includes('space') ||

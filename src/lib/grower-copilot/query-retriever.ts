@@ -44,6 +44,7 @@ export interface RetrieveParams {
   diagnoses?: SavedDiagnosisRecord[];
   reminders?: Reminder[];
   spaceMetrics?: ProductionSpaceMetrics | null;
+  growPlans?: any[];
 }
 
 export function retrieveCopilotContext(params: RetrieveParams): CopilotQueryContext {
@@ -61,6 +62,7 @@ export function retrieveCopilotContext(params: RetrieveParams): CopilotQueryCont
     diagnoses = [],
     reminders = [],
     spaceMetrics,
+    growPlans = [],
   } = params;
 
   // Filter plants according to target scope
@@ -103,6 +105,15 @@ export function retrieveCopilotContext(params: RetrieveParams): CopilotQueryCont
   const relevantReminders = targetPlantId
     ? reminders.filter((r) => !r.plantId || r.plantId === targetPlantId)
     : reminders;
+
+  // Relevant grow plans (Phase 13)
+  const relevantGrowPlans = targetPlantId
+    ? growPlans.filter(
+        (plan) =>
+          plan.plantId === targetPlantId ||
+          (Array.isArray(plan.plantIds) && plan.plantIds.includes(targetPlantId))
+      )
+    : growPlans;
 
   // Adaptive Garden State & Actions
   const gardenState = synthesizeGardenState({
@@ -242,7 +253,24 @@ export function retrieveCopilotContext(params: RetrieveParams): CopilotQueryCont
     });
   }
 
-  // 7. Track explicit unknown gaps
+  // 7. Grow plan evidence (Phase 13)
+  for (const plan of relevantGrowPlans.slice(0, 3)) {
+    const p = plan.plantId ? plants.find((plant) => plant.id === plan.plantId) : undefined;
+    evidence.push({
+      sourceType: 'grow_plan',
+      sourceId: plan.id,
+      plantId: plan.plantId || undefined,
+      plantNickname: p?.nickname,
+      field: 'status',
+      value: plan.status,
+      recordedAt: plan.createdAt,
+      provenance: 'calculated',
+      description: `Plan: ${plan.name} (${plan.status}, ${plan.progress?.taskCompletionPercentage || 0}% complete)`,
+      route: `/app/grow-plans/${plan.id}`,
+    });
+  }
+
+  // 8. Track explicit unknown gaps
   const unknowns: string[] = [];
   if (relevantConditions.length === 0) {
     unknowns.push('Environmental conditions (temperature, humidity, light) have not been recorded.');
@@ -272,6 +300,7 @@ export function retrieveCopilotContext(params: RetrieveParams): CopilotQueryCont
     relevantReminders,
     relevantTimelineEvents: [],
     relevantGrowActions,
+    relevantGrowPlans,
     dataQuality,
     gardenState,
     evidence,
@@ -293,6 +322,7 @@ export interface RetrieveGardenContextParams {
   diagnoses?: SavedDiagnosisRecord[];
   reminders?: Reminder[];
   spaceMetrics?: ProductionSpaceMetrics | null;
+  growPlans?: any[];
   conversationHistory?: any[];
   referenceDate?: string;
 }
@@ -314,6 +344,7 @@ export function retrieveGardenContext(params: RetrieveGardenContextParams) {
     diagnoses: params.diagnoses || [],
     reminders: params.reminders || [],
     spaceMetrics: params.spaceMetrics,
+    growPlans: params.growPlans || [],
   });
 
   return {

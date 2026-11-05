@@ -77,6 +77,13 @@ export type CopilotIntent =
   | 'recent_changes'
   | 'historical_events'
   | 'plant_timeline'
+  // Grow Plans (Phase 13)
+  | 'view_grow_plan'
+  | 'create_grow_plan'
+  | 'pause_grow_plan'
+  | 'resume_grow_plan'
+  | 'complete_plan_step'
+  | 'plan_status_inquiry'
   // Navigation & Space
   | 'space_advisory'
   | 'navigation'
@@ -106,6 +113,8 @@ export type CopilotSource =
   | 'space_profile'
   | 'garden_state'
   | 'plant_timeline'
+  | 'grow_plan'
+  | 'grow_plan_step'
   | 'botanical_catalog';
 
 export interface CopilotEvidence {
@@ -137,7 +146,13 @@ export type CopilotActionType =
   | 'record_growing_condition'
   | 'record_feeding'
   | 'record_harvest'
-  | 'record_propagation_event';
+  | 'record_propagation_event'
+  | 'create_plan'
+  | 'pause_plan'
+  | 'resume_plan'
+  | 'complete_step'
+  | 'cancel_plan'
+  | 'open_grow_plan';
 
 export interface CopilotAction {
   id: string;
@@ -212,6 +227,7 @@ export interface CopilotQueryContext {
   relevantReminders: Reminder[];
   relevantTimelineEvents: PlantTimelineEvent[];
   relevantGrowActions: GrowAction[];
+  relevantGrowPlans?: any[];
   dataQuality?: DataQualityReport | null;
   gardenState?: GardenState | null;
   evidence: CopilotEvidence[];
