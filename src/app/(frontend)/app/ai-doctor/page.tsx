@@ -39,6 +39,7 @@ export default function AiDoctorPage() {
 
   // Grower Context State
   const [selectedPlantSlug, setSelectedPlantSlug] = useState<string>('');
+  const [urlPlantId, setUrlPlantId] = useState<string | null>(null);
   const [symptoms, setSymptoms] = useState('');
   const [wateringFrequency, setWateringFrequency] = useState('Every 2–3 days');
   const [sunlight, setSunlight] = useState('Partial Sun (3–6 hrs)');
@@ -46,6 +47,17 @@ export default function AiDoctorPage() {
   const [temperature, setTemperature] = useState('');
   const [soilInfo, setSoilInfo] = useState('');
   const [isHeuristicMode, setIsHeuristicMode] = useState(false);
+
+  // Initialize query parameters from URL if present
+  React.useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const sp = new URLSearchParams(window.location.search);
+      const slug = sp.get('plantSlug');
+      const pId = sp.get('plantId');
+      if (slug) setSelectedPlantSlug(slug);
+      if (pId) setUrlPlantId(pId);
+    }
+  }, []);
 
   // Photo Upload State
   const [photoFile, setPhotoFile] = useState<File | null>(null);
@@ -900,6 +912,7 @@ export default function AiDoctorPage() {
               isOpen={showSaveModal}
               onClose={() => setShowSaveModal(false)}
               diagnosis={result}
+              defaultPlantId={urlPlantId || undefined}
               onSaved={(id) => setSavedDiagnosisId(id)}
             />
 

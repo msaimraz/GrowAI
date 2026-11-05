@@ -25,6 +25,7 @@ interface SaveDiagnosisModalProps {
   isOpen: boolean;
   onClose: () => void;
   diagnosis: DiagnosisResponse;
+  defaultPlantId?: string;
   onSaved?: (diagnosisId: string) => void;
 }
 
@@ -32,13 +33,14 @@ export function SaveDiagnosisModal({
   isOpen,
   onClose,
   diagnosis,
+  defaultPlantId,
   onSaved,
 }: SaveDiagnosisModalProps) {
   const { user } = useAuth();
   const { isOffline } = usePwa();
 
   const [plants, setPlants] = useState<UserPlant[]>([]);
-  const [selectedPlantId, setSelectedPlantId] = useState<string>('');
+  const [selectedPlantId, setSelectedPlantId] = useState<string>(defaultPlantId || '');
   const [plantPhotos, setPlantPhotos] = useState<PlantPhoto[]>([]);
   const [selectedPhotoId, setSelectedPhotoId] = useState<string>('');
   const [isCloud, setIsCloud] = useState(false);
@@ -62,8 +64,9 @@ export function SaveDiagnosisModal({
         setPlants(userPlants);
         setIsCloud(cloudMode);
 
-        // Pre-select matching plant by slug if available
-        if (diagnosis.userContextProvided?.plantName) {
+        if (defaultPlantId && userPlants.some((p) => p.id === defaultPlantId)) {
+          setSelectedPlantId(defaultPlantId);
+        } else if (diagnosis.userContextProvided?.plantName) {
           const match = userPlants.find(
             (p) =>
               p.plantSlug === diagnosis.userContextProvided.plantName ||

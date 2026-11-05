@@ -20,6 +20,8 @@ import {
   FollowUpOutcome,
 } from '@/types/diagnosis';
 import { usePwa } from '@/context/PwaContext';
+import { useAuth } from '@/context/AuthContext';
+import { RecordFollowUpModal } from '@/components/diagnosis/RecordFollowUpModal';
 import {
   Sparkles,
   Calendar,
@@ -41,6 +43,7 @@ import {
   FileText,
   Activity,
   ClipboardList,
+  Camera,
 } from 'lucide-react';
 
 interface DiagnosisDetailClientProps {
@@ -50,6 +53,8 @@ interface DiagnosisDetailClientProps {
 export function DiagnosisDetailClient({ diagnosisId }: DiagnosisDetailClientProps) {
   const router = useRouter();
   const { isOffline } = usePwa();
+  const { user, isConfigured } = useAuth();
+  const isCloud = Boolean(isConfigured && user);
 
   const [record, setRecord] = useState<SavedDiagnosisRecord | null>(null);
   const [loading, setLoading] = useState(true);
@@ -67,6 +72,7 @@ export function DiagnosisDetailClient({ diagnosisId }: DiagnosisDetailClientProp
 
   // New Follow-Up Form State
   const [showAddFollowUp, setShowAddFollowUp] = useState(false);
+  const [showFollowUpModal, setShowFollowUpModal] = useState(false);
   const [followUpOutcome, setFollowUpOutcome] = useState<FollowUpOutcome>('improving');
   const [followUpNotes, setFollowUpNotes] = useState('');
   const [followUpDate, setFollowUpDate] = useState(() => new Date().toISOString().split('T')[0]);
@@ -394,6 +400,18 @@ export function DiagnosisDetailClient({ diagnosisId }: DiagnosisDetailClientProp
                   </div>
                 )}
               </div>
+
+              {record.userPlantId && (
+                <div className="pt-2 border-t border-white/10">
+                  <Link
+                    href={`/app/my-garden/${record.userPlantId}/health`}
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white/10 hover:bg-white/20 text-[#a4f0bf] text-xs font-semibold transition-colors"
+                  >
+                    <Activity size={14} />
+                    <span>View Specimen Health History in My Garden →</span>
+                  </Link>
+                </div>
+              )}
             </div>
 
             {/* Reported Symptoms & Summary */}
@@ -808,14 +826,24 @@ export function DiagnosisDetailClient({ diagnosisId }: DiagnosisDetailClientProp
                   </p>
                 </div>
 
-                <button
-                  type="button"
-                  onClick={() => setShowAddFollowUp(!showAddFollowUp)}
-                  className="inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-[#144229] hover:bg-[#0c2417] text-white text-xs font-semibold transition-colors cursor-pointer min-h-[44px] shrink-0"
-                >
-                  <PlusCircle size={16} />
-                  <span>{showAddFollowUp ? 'Cancel' : 'Record Observation'}</span>
-                </button>
+                <div className="flex flex-wrap items-center gap-2">
+                  <button
+                    type="button"
+                    onClick={() => setShowFollowUpModal(true)}
+                    className="inline-flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-xl bg-[#144229] hover:bg-[#0c2417] text-white text-xs font-semibold transition-colors cursor-pointer min-h-[44px] shrink-0"
+                  >
+                    <Camera size={15} />
+                    <span>Record with Photo</span>
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setShowAddFollowUp(!showAddFollowUp)}
+                    className="inline-flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-xl bg-white border border-[#cfdfcf] text-[#144229] hover:bg-[#f4efe6] text-xs font-semibold transition-colors cursor-pointer min-h-[44px] shrink-0"
+                  >
+                    <PlusCircle size={15} />
+                    <span>{showAddFollowUp ? 'Cancel' : 'Quick Note'}</span>
+                  </button>
+                </div>
               </div>
 
               {/* Add Follow-Up Form */}
@@ -936,6 +964,20 @@ export function DiagnosisDetailClient({ diagnosisId }: DiagnosisDetailClientProp
           </div>
         )}
       </div>
+
+      {/* Record Follow-Up Modal with Photo Support */}
+      {showFollowUpModal && record && (
+        <RecordFollowUpModal
+          isOpen={showFollowUpModal}
+          onClose={() => setShowFollowUpModal(false)}
+          diagnosis={record}
+          isCloud={isCloud}
+          onFollowUpSaved={async () => {
+            setShowFollowUpModal(false);
+            await loadRecord();
+          }}
+        />
+      )}
     </div>
   );
 }

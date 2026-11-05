@@ -394,3 +394,41 @@ export async function deletePlantPhoto(
     return { success: false, error: err.message };
   }
 }
+
+/**
+ * Saves a follow-up photograph for a user plant.
+ * Automatically delegates to cloud Supabase storage or IndexedDB demo storage.
+ */
+export async function saveFollowUpPhoto(params: {
+  plantId: string;
+  file: File;
+  caption?: string;
+  isCloud: boolean;
+}): Promise<{ photo?: PlantPhoto; error?: string }> {
+  if (params.isCloud) {
+    return uploadPlantPhotoCloud({
+      plantId: params.plantId,
+      file: params.file,
+      caption: params.caption || 'Health follow-up photo',
+    });
+  }
+
+  // Demo mode
+  try {
+    const { blob } = await compressImageToWebP(params.file);
+    const photoId = crypto.randomUUID();
+    const nowIso = new Date().toISOString();
+    const demoPhoto: PlantPhoto = {
+      id: photoId,
+      userPlantId: params.plantId,
+      storagePath: `demo/${params.plantId}/${photoId}.webp`,
+      caption: params.caption || 'Health follow-up photo',
+      takenAt: nowIso,
+      createdAt: nowIso,
+    };
+    const saved = await saveDemoPhoto(demoPhoto, blob);
+    return { photo: saved };
+  } catch (err: any) {
+    return { error: err.message || 'Failed to save demo follow-up photo.' };
+  }
+}

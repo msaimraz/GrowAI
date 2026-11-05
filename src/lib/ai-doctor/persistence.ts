@@ -333,6 +333,219 @@ export async function fetchDiagnosisHistory(params?: {
 }
 
 /**
+ * Fetches all diagnoses for a specific user plant with full candidate, treatment, and follow-up data.
+ */
+export async function fetchDiagnosesForPlant(
+  userPlantId: string
+): Promise<{ records: SavedDiagnosisRecord[]; error?: string }> {
+  const supabase = createClient();
+  const isCloud = isSupabaseConfigured() && supabase !== null;
+
+  if (isCloud) {
+    try {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+
+      if (!user) {
+        return { records: [], error: 'Authentication required.' };
+      }
+
+      const { data: recordsData, error: recordsError } = await supabase
+        .from('diagnosis_records')
+        .select('*')
+        .eq('user_id', user.id)
+        .eq('user_plant_id', userPlantId)
+        .order('diagnosed_at', { ascending: false });
+
+      if (recordsError) {
+        return { records: [], error: recordsError.message };
+      }
+
+      if (!recordsData || recordsData.length === 0) {
+        return { records: [] };
+      }
+
+      const diagnosisIds = recordsData.map((r) => r.id);
+
+      const [candidatesRes, treatmentsRes, followUpsRes] = await Promise.all([
+        supabase
+          .from('diagnosis_candidates')
+          .select('*')
+          .in('diagnosis_id', diagnosisIds)
+          .order('candidate_rank', { ascending: true }),
+        supabase
+          .from('diagnosis_treatments')
+          .select('*')
+          .in('diagnosis_id', diagnosisIds)
+          .order('action_date', { ascending: false }),
+        supabase
+          .from('diagnosis_follow_ups')
+          .select('*')
+          .in('diagnosis_id', diagnosisIds)
+          .order('follow_up_date', { ascending: false }),
+      ]);
+
+      const candidatesByDiag: Record<string, SavedDiagnosisCandidate[]> = {};
+      for (const c of candidatesRes.data || []) {
+        if (!candidatesByDiag[c.diagnosis_id]) candidatesByDiag[c.diagnosis_id] = [];
+        candidatesByDiag[c.diagnosis_id].push(mapDatabaseRowToCandidate(c));
+      }
+
+      const treatmentsByDiag: Record<string, SavedDiagnosisTreatment[]> = {};
+      for (const t of treatmentsRes.data || []) {
+        if (!treatmentsByDiag[t.diagnosis_id]) treatmentsByDiag[t.diagnosis_id] = [];
+        treatmentsByDiag[t.diagnosis_id].push(mapDatabaseRowToTreatment(t));
+      }
+
+      const followUpsByDiag: Record<string, SavedDiagnosisFollowUp[]> = {};
+      for (const f of followUpsRes.data || []) {
+        if (!followUpsByDiag[f.diagnosis_id]) followUpsByDiag[f.diagnosis_id] = [];
+        followUpsByDiag[f.diagnosis_id].push(mapDatabaseRowToFollowUp(f));
+      }
+
+      const records: SavedDiagnosisRecord[] = recordsData.map((row) => {
+        const r = mapDatabaseRowToDiagnosisRecord(row);
+        r.candidates = candidatesByDiag[r.id] || [];
+        r.treatments = treatmentsByDiag[r.id] || [];
+        r.followUps = followUpsByDiag[r.id] || [];
+        return r;
+      });
+
+      return { records };
+    } catch (err: any) {
+      return { records: [], error: err.message };
+    }
+  }
+
+  // Demo / Local Mode
+  try {
+    const local = getLocalRecords();
+    const matching = local
+      .filter((r) => r.userPlantId === userPlantId)
+      .sort((a, b) => new Date(b.diagnosedAt).getTime() - new Date(a.diagnosedAt).getTime());
+    return { records: matching };
+  } catch (err: any) {
+    return { records: [], error: err.message };
+  }
+}
+
+/**
+ * Fetches all diagnoses for all plants in the garden with full details.
+ * Returns both the complete list and a map keyed by userPlantId.
+ */
+export async function fetchAllGardenDiagnoses(): Promise<{
+  allDiagnoses: SavedDiagnosisRecord[];
+  diagnosesByPlantId: Record<string, SavedDiagnosisRecord[]>;
+  error?: string;
+}> {
+  const supabase = createClient();
+  const isCloud = isSupabaseConfigured() && supabase !== null;
+
+  if (isCloud) {
+    try {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+
+      if (!user) {
+        return { allDiagnoses: [], diagnosesByPlantId: {}, error: 'Authentication required.' };
+      }
+
+      const { data: recordsData, error: recordsError } = await supabase
+        .from('diagnosis_records')
+        .select('*')
+        .eq('user_id', user.id)
+        .order('diagnosed_at', { ascending: false });
+
+      if (recordsError) {
+        return { allDiagnoses: [], diagnosesByPlantId: {}, error: recordsError.message };
+      }
+
+      if (!recordsData || recordsData.length === 0) {
+        return { allDiagnoses: [], diagnosesByPlantId: {} };
+      }
+
+      const diagnosisIds = recordsData.map((r) => r.id);
+
+      const [candidatesRes, treatmentsRes, followUpsRes] = await Promise.all([
+        supabase
+          .from('diagnosis_candidates')
+          .select('*')
+          .in('diagnosis_id', diagnosisIds)
+          .order('candidate_rank', { ascending: true }),
+        supabase
+          .from('diagnosis_treatments')
+          .select('*')
+          .in('diagnosis_id', diagnosisIds)
+          .order('action_date', { ascending: false }),
+        supabase
+          .from('diagnosis_follow_ups')
+          .select('*')
+          .in('diagnosis_id', diagnosisIds)
+          .order('follow_up_date', { ascending: false }),
+      ]);
+
+      const candidatesByDiag: Record<string, SavedDiagnosisCandidate[]> = {};
+      for (const c of candidatesRes.data || []) {
+        if (!candidatesByDiag[c.diagnosis_id]) candidatesByDiag[c.diagnosis_id] = [];
+        candidatesByDiag[c.diagnosis_id].push(mapDatabaseRowToCandidate(c));
+      }
+
+      const treatmentsByDiag: Record<string, SavedDiagnosisTreatment[]> = {};
+      for (const t of treatmentsRes.data || []) {
+        if (!treatmentsByDiag[t.diagnosis_id]) treatmentsByDiag[t.diagnosis_id] = [];
+        treatmentsByDiag[t.diagnosis_id].push(mapDatabaseRowToTreatment(t));
+      }
+
+      const followUpsByDiag: Record<string, SavedDiagnosisFollowUp[]> = {};
+      for (const f of followUpsRes.data || []) {
+        if (!followUpsByDiag[f.diagnosis_id]) followUpsByDiag[f.diagnosis_id] = [];
+        followUpsByDiag[f.diagnosis_id].push(mapDatabaseRowToFollowUp(f));
+      }
+
+      const allDiagnoses: SavedDiagnosisRecord[] = recordsData.map((row) => {
+        const r = mapDatabaseRowToDiagnosisRecord(row);
+        r.candidates = candidatesByDiag[r.id] || [];
+        r.treatments = treatmentsByDiag[r.id] || [];
+        r.followUps = followUpsByDiag[r.id] || [];
+        return r;
+      });
+
+      const diagnosesByPlantId: Record<string, SavedDiagnosisRecord[]> = {};
+      for (const d of allDiagnoses) {
+        if (d.userPlantId) {
+          if (!diagnosesByPlantId[d.userPlantId]) diagnosesByPlantId[d.userPlantId] = [];
+          diagnosesByPlantId[d.userPlantId].push(d);
+        }
+      }
+
+      return { allDiagnoses, diagnosesByPlantId };
+    } catch (err: any) {
+      return { allDiagnoses: [], diagnosesByPlantId: {}, error: err.message };
+    }
+  }
+
+  // Demo / Local Mode
+  try {
+    const local = getLocalRecords();
+    const sorted = [...local].sort(
+      (a, b) => new Date(b.diagnosedAt).getTime() - new Date(a.diagnosedAt).getTime()
+    );
+    const diagnosesByPlantId: Record<string, SavedDiagnosisRecord[]> = {};
+    for (const d of sorted) {
+      if (d.userPlantId) {
+        if (!diagnosesByPlantId[d.userPlantId]) diagnosesByPlantId[d.userPlantId] = [];
+        diagnosesByPlantId[d.userPlantId].push(d);
+      }
+    }
+    return { allDiagnoses: sorted, diagnosesByPlantId };
+  } catch (err: any) {
+    return { allDiagnoses: [], diagnosesByPlantId: {}, error: err.message };
+  }
+}
+
+/**
  * Fetches a single diagnosis record by ID with its candidates, treatments, and follow-ups.
  */
 export async function fetchDiagnosisById(
@@ -667,6 +880,11 @@ export async function recordFollowUpOutcome(
   const nowIso = new Date().toISOString();
   const todayStr = input.followUpDate || nowIso.split('T')[0];
 
+  const rawNotes = input.observationNotes || '';
+  const notesToSave = input.plantPhotoId
+    ? (rawNotes ? `${rawNotes} [Photo: ${input.plantPhotoId}]` : `[Photo: ${input.plantPhotoId}]`)
+    : (rawNotes || null);
+
   if (isCloud) {
     try {
       const {
@@ -683,7 +901,7 @@ export async function recordFollowUpOutcome(
           diagnosis_id: input.diagnosisId,
           user_id: user.id,
           outcome_status: input.outcomeStatus,
-          observation_notes: input.observationNotes || null,
+          observation_notes: notesToSave,
           follow_up_date: todayStr,
         })
         .select()
@@ -708,6 +926,7 @@ export async function recordFollowUpOutcome(
       outcomeStatus: input.outcomeStatus,
       observationNotes: input.observationNotes || null,
       followUpDate: todayStr,
+      plantPhotoId: input.plantPhotoId || null,
       createdAt: nowIso,
       updatedAt: nowIso,
     };
@@ -806,13 +1025,20 @@ function mapDatabaseRowToTreatment(row: any): SavedDiagnosisTreatment {
 }
 
 function mapDatabaseRowToFollowUp(row: any): SavedDiagnosisFollowUp {
+  const photoMatch = row.observation_notes?.match(/\[Photo:\s*([a-f0-9\-]+)\]/i);
+  const plantPhotoId = photoMatch ? photoMatch[1] : (row.plant_photo_id || null);
+  const cleanNotes = row.observation_notes
+    ? row.observation_notes.replace(/\[Photo:\s*[a-f0-9\-]+\]/i, '').trim()
+    : null;
+
   return {
     id: row.id,
     diagnosisId: row.diagnosis_id,
     userId: row.user_id,
     outcomeStatus: row.outcome_status as FollowUpOutcome,
-    observationNotes: row.observation_notes,
+    observationNotes: cleanNotes || (row.observation_notes ? row.observation_notes : null),
     followUpDate: row.follow_up_date,
+    plantPhotoId: plantPhotoId || null,
     createdAt: row.created_at,
     updatedAt: row.updated_at,
   };

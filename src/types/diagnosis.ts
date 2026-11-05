@@ -250,6 +250,56 @@ export type FollowUpOutcome = 'improving' | 'unchanged' | 'worsening' | 'resolve
 
 export const FollowUpOutcomeSchema = z.enum(['improving', 'unchanged', 'worsening', 'resolved', 'uncertain']);
 
+/**
+ * ==============================================================================
+ * Phase 8.5: Plant Health Monitoring & Derived Health Status
+ * ==============================================================================
+ */
+
+export type PlantHealthStatus =
+  | 'healthy'
+  | 'monitoring'
+  | 'needs_attention'
+  | 'improving'
+  | 'resolved'
+  | 'unknown';
+
+export const PlantHealthStatusSchema = z.enum([
+  'healthy',
+  'monitoring',
+  'needs_attention',
+  'improving',
+  'resolved',
+  'unknown',
+]);
+
+export interface PlantHealthSummary {
+  status: PlantHealthStatus;
+  statusLabel: string;
+  lastCheckedDate: string | null;
+  activeIssue: string | null;
+  latestFollowUpOutcome: FollowUpOutcome | null;
+  pendingTreatmentsCount: number;
+  totalDiagnosesCount: number;
+  unresolvedCount: number;
+  isFollowUpDue: boolean;
+  nextActionGuidance: string;
+  latestDiagnosisId: string | null;
+}
+
+export interface GardenHealthOverview {
+  totalPlants: number;
+  assessedPlants: number;
+  needsAttentionCount: number;
+  monitoringCount: number;
+  improvingCount: number;
+  resolvedCount: number;
+  healthyCount: number;
+  unknownCount: number;
+  followUpsDueCount: number;
+  pendingTreatmentsCount: number;
+}
+
 export interface SavedDiagnosisCandidate {
   id: string;
   diagnosisId: string;
@@ -290,6 +340,8 @@ export interface SavedDiagnosisFollowUp {
   outcomeStatus: FollowUpOutcome;
   observationNotes?: string | null;
   followUpDate: string;
+  plantPhotoId?: string | null;
+  photoUrl?: string | null;
   createdAt: string;
   updatedAt: string;
 }
@@ -361,4 +413,5 @@ export interface CreateFollowUpInput {
   outcomeStatus: FollowUpOutcome;
   observationNotes?: string | null;
   followUpDate?: string;
+  plantPhotoId?: string | null;
 }
