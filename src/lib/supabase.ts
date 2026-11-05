@@ -10,6 +10,16 @@ import {
   TreatmentStatus,
   FollowUpOutcome,
 } from '@/types/diagnosis';
+import {
+  ReminderSourceType,
+  ReminderType,
+  ReminderStatus,
+  ReminderPriority,
+  ReminderRecurrence,
+  NotificationCategoriesPreference,
+  NotificationChannelsPreference,
+  NotificationQuietHoursPreference,
+} from '@/types/reminder';
 import { getSupabaseConfig, isSupabaseConfigured } from './supabase/config';
 
 export type Json =
@@ -529,6 +539,119 @@ export interface DatabaseSchema {
             referencedColumns: ["id"];
           }
         ];
+      };
+      reminders: {
+        Row: {
+          id: string;
+          user_id: string;
+          plant_id: string | null;
+          plant_nickname: string | null;
+          plant_slug: string | null;
+          source_type: ReminderSourceType;
+          source_id: string | null;
+          reminder_type: ReminderType;
+          title: string;
+          body: string;
+          scheduled_for: string;
+          due_at: string;
+          recurrence: ReminderRecurrence | null;
+          priority: ReminderPriority;
+          status: ReminderStatus;
+          completed_at: string | null;
+          dismissed_at: string | null;
+          is_read: boolean;
+          metadata: Record<string, any>;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          user_id: string;
+          plant_id?: string | null;
+          plant_nickname?: string | null;
+          plant_slug?: string | null;
+          source_type: ReminderSourceType;
+          source_id?: string | null;
+          reminder_type: ReminderType;
+          title: string;
+          body?: string;
+          scheduled_for?: string;
+          due_at: string;
+          recurrence?: ReminderRecurrence | null;
+          priority?: ReminderPriority;
+          status?: ReminderStatus;
+          completed_at?: string | null;
+          dismissed_at?: string | null;
+          is_read?: boolean;
+          metadata?: Record<string, any>;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          user_id?: string;
+          plant_id?: string | null;
+          plant_nickname?: string | null;
+          plant_slug?: string | null;
+          source_type?: ReminderSourceType;
+          source_id?: string | null;
+          reminder_type?: ReminderType;
+          title?: string;
+          body?: string;
+          scheduled_for?: string;
+          due_at?: string;
+          recurrence?: ReminderRecurrence | null;
+          priority?: ReminderPriority;
+          status?: ReminderStatus;
+          completed_at?: string | null;
+          dismissed_at?: string | null;
+          is_read?: boolean;
+          metadata?: Record<string, any>;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "reminders_plant_id_fkey";
+            columns: ["plant_id"];
+            isOneToOne: false;
+            referencedRelation: "user_plants";
+            referencedColumns: ["id"];
+          }
+        ];
+      };
+      notification_preferences: {
+        Row: {
+          id: string;
+          user_id: string;
+          categories: NotificationCategoriesPreference;
+          channels: NotificationChannelsPreference;
+          quiet_hours: NotificationQuietHoursPreference;
+          timezone: string;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          user_id: string;
+          categories?: NotificationCategoriesPreference;
+          channels?: NotificationChannelsPreference;
+          quiet_hours?: NotificationQuietHoursPreference;
+          timezone?: string;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          user_id?: string;
+          categories?: NotificationCategoriesPreference;
+          channels?: NotificationChannelsPreference;
+          quiet_hours?: NotificationQuietHoursPreference;
+          timezone?: string;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Relationships: [];
       };
     };
     Views: {

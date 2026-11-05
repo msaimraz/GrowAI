@@ -17,6 +17,7 @@ import {
 } from 'lucide-react';
 import { usePathname } from 'next/navigation';
 import { AuthStatus } from '@/components/auth/AuthStatus';
+import { NotificationBell } from '@/components/notifications/NotificationBell';
 import { usePwa } from '@/context/PwaContext';
 
 interface AppHeaderProps {
@@ -125,6 +126,9 @@ export function AppHeader({
                 <span>Install</span>
               </button>
             )}
+
+            {/* Notifications & Reminders Bell */}
+            <NotificationBell />
 
             {/* Header AuthStatus shown on tablet & desktop */}
             <div className="hidden sm:block">

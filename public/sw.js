@@ -221,9 +221,60 @@ self.addEventListener('fetch', (event) => {
   }
 });
 
+// Notification Click Listener: navigate safely to relevant garden, timeline, or diagnosis view
+self.addEventListener('notificationclick', (event) => {
+  event.notification.close();
+  const rawUrl = event.notification.data?.url || '/app/my-garden';
+
+  // Security hygiene: strictly validate that target URL is a safe relative /app/... route
+  // Never navigate to arbitrary external protocols, javascript:, or unauthorized origins
+  let safeTargetUrl = '/app/my-garden';
+  if (typeof rawUrl === 'string') {
+    if (rawUrl.startsWith('/app/')) {
+      safeTargetUrl = rawUrl;
+    } else {
+      try {
+        const parsed = new URL(rawUrl, self.location.origin);
+        if (parsed.origin === self.location.origin && parsed.pathname.startsWith('/app/')) {
+          safeTargetUrl = parsed.pathname + parsed.search + parsed.hash;
+        }
+      } catch {
+        safeTargetUrl = '/app/my-garden';
+      }
+    }
+  }
+
+  event.waitUntil(
+    clients.matchAll({ type: 'window', includeUncontrolled: true }).then((clientList) => {
+      // Focus existing open window if available and navigate to target
+      for (const client of clientList) {
+        if ('focus' in client) {
+          client.focus();
+          if ('navigate' in client && safeTargetUrl) {
+            return client.navigate(safeTargetUrl);
+          }
+          return;
+        }
+      }
+      // Open new window if none are focused
+      if (clients.openWindow) {
+        return clients.openWindow(safeTargetUrl);
+      }
+    })
+  );
+});
+
 // Message Listener: handle commands from client app
 self.addEventListener('message', (event) => {
   if (!event.data) return;
+
+  // Command to display a notification from client
+  if (event.data.type === 'SHOW_NOTIFICATION') {
+    const { title, options } = event.data;
+    if (self.registration && 'showNotification' in self.registration) {
+      self.registration.showNotification(title, options);
+    }
+  }
 
   // Command to activate waiting worker immediately
   if (event.data.type === 'SKIP_WAITING') {

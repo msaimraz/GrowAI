@@ -30,6 +30,7 @@ import { PlantHealthBadge } from '@/components/garden/PlantHealthBadge';
 import { GardenHealthOverviewCard } from '@/components/garden/GardenHealthOverviewCard';
 import { PlantHealthTab } from '@/components/garden/PlantHealthTab';
 import { PlantTimelineTab } from '@/components/garden/PlantTimelineTab';
+import { PlantRemindersCard } from '@/components/garden/PlantRemindersCard';
 import { fetchAllGardenDiagnoses } from '@/lib/ai-doctor/persistence';
 import {
   getGardenHealthOverview,
@@ -63,6 +64,7 @@ import {
   Scissors,
   Activity,
   GitBranch,
+  Bell,
 } from 'lucide-react';
 
 import { usePwa } from '@/context/PwaContext';
@@ -106,7 +108,7 @@ function MyGardenContent() {
   const [careTasks, setCareTasks] = useState<CareTask[]>([]);
   const [diagnosesByPlantId, setDiagnosesByPlantId] = useState<Record<string, SavedDiagnosisRecord[]>>({});
   const [isCloud, setIsCloud] = useState<boolean>(false);
-  const [activeTab, setActiveTab] = useState<'journal' | 'photos' | 'health' | 'timeline'>('journal');
+  const [activeTab, setActiveTab] = useState<'journal' | 'photos' | 'health' | 'timeline' | 'reminders'>('journal');
   const [showPropagationModal, setShowPropagationModal] = useState<boolean>(false);
   const [noteText, setNoteText] = useState('');
   const [noteHeight, setNoteHeight] = useState<string>('');
@@ -163,6 +165,8 @@ function MyGardenContent() {
       setActiveTab('health');
     } else if (tabParam === 'timeline') {
       setActiveTab('timeline');
+    } else if (tabParam === 'reminders') {
+      setActiveTab('reminders');
     }
     setNoteDate(new Date().toISOString().split('T')[0]);
     loadGardenData();
@@ -646,6 +650,15 @@ function MyGardenContent() {
                       </Link>
                       <button
                         type="button"
+                        onClick={() => setActiveTab('reminders')}
+                        className="text-xs sm:text-sm font-semibold text-[#144229] hover:bg-[#eef5ee] px-4 py-2.5 rounded-xl border border-[#cfdfcf] bg-white transition-colors flex items-center gap-1.5 min-h-[44px] cursor-pointer"
+                        title="View reminders for this plant"
+                      >
+                        <Bell size={15} />
+                        <span>Reminders</span>
+                      </button>
+                      <button
+                        type="button"
                         onClick={() => setShowPropagationModal(true)}
                         className="text-xs sm:text-sm font-semibold text-[#144229] hover:bg-[#eef5ee] px-4 py-2.5 rounded-xl border border-[#cfdfcf] bg-white transition-colors flex items-center gap-1.5 min-h-[44px] cursor-pointer"
                         title="Propagate this plant"
@@ -832,6 +845,19 @@ function MyGardenContent() {
                     <GitBranch size={16} />
                     <span>Growth Timeline</span>
                   </button>
+
+                  <button
+                    type="button"
+                    onClick={() => setActiveTab('reminders')}
+                    className={`inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold transition-all cursor-pointer min-h-[44px] ${
+                      activeTab === 'reminders'
+                        ? 'bg-[#144229] text-white shadow-xs'
+                        : 'bg-white text-[#526a57] hover:bg-[#eef5ee] hover:text-[#144229] border border-[#ded5c5]'
+                    }`}
+                  >
+                    <Bell size={16} />
+                    <span>Reminders</span>
+                  </button>
                 </div>
 
                 {/* Tab 1: Care & Observations */}
@@ -1011,6 +1037,14 @@ function MyGardenContent() {
                     isCloud={isCloud}
                     diagnoses={activePlantDiagnoses}
                     tasks={careTasks}
+                    onRefreshNeeded={loadGardenData}
+                  />
+                )}
+
+                {/* Tab 5: Plant Reminders */}
+                {activeTab === 'reminders' && (
+                  <PlantRemindersCard
+                    plant={activePlant}
                     onRefreshNeeded={loadGardenData}
                   />
                 )}
