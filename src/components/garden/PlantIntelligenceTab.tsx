@@ -15,7 +15,12 @@ import {
   IntelligenceGap,
   IntelligenceOpportunity,
 } from '@/types/grow-intelligence';
+import { Reminder } from '@/types/reminder';
 import { generateUnifiedIntelligence } from '@/lib/grow-intelligence/intelligence-engine';
+import { prioritizeGardenActions } from '@/lib/adaptive-grow/action-prioritizer';
+import { synthesizeGardenState } from '@/lib/adaptive-grow/garden-state-engine';
+import { getNextBestAction } from '@/lib/adaptive-grow/next-best-action';
+import { ActionEvidence } from '@/types/adaptive-grow';
 import {
   Sparkles,
   AlertTriangle,
@@ -28,6 +33,10 @@ import {
   Calendar,
   Layers,
   ArrowRight,
+  ShieldCheck,
+  CheckCircle2,
+  Clock,
+  Compass,
 } from 'lucide-react';
 
 interface PlantIntelligenceTabProps {
@@ -38,6 +47,7 @@ interface PlantIntelligenceTabProps {
   propagations?: PropagationEvent[];
   harvests?: HarvestRecord[];
   photos?: PlantPhoto[];
+  reminders?: Reminder[];
   onNavigateTab?: (tab: string) => void;
 }
 
@@ -58,19 +68,6 @@ function getProvenanceBadge(provenance: ProvenanceCategory) {
   }
 }
 
-function getConfidenceBadge(confidence: IntelligenceConfidence) {
-  switch (confidence) {
-    case 'high':
-      return { label: 'High Confidence', dot: 'bg-emerald-500' };
-    case 'moderate':
-      return { label: 'Moderate Confidence', dot: 'bg-amber-500' };
-    case 'low':
-      return { label: 'Low Confidence (Limited Data)', dot: 'bg-orange-500' };
-    default:
-      return { label: 'Unknown Confidence', dot: 'bg-gray-400' };
-  }
-}
-
 export function PlantIntelligenceTab({
   plant,
   diagnoses = [],
@@ -79,6 +76,7 @@ export function PlantIntelligenceTab({
   propagations = [],
   harvests = [],
   photos = [],
+  reminders = [],
   onNavigateTab,
 }: PlantIntelligenceTabProps) {
   const intel = useMemo(() => {
@@ -93,9 +91,38 @@ export function PlantIntelligenceTab({
     });
   }, [plant, diagnoses, conditions, feedings, propagations, harvests, photos]);
 
+  // Phase 11 Adaptive Prioritization for this plant
+  const plantActions = useMemo(() => {
+    return prioritizeGardenActions({
+      plants: [plant],
+      conditions: conditions.filter((c) => !c.plantId || c.plantId === plant.id),
+      feedings: feedings.filter((f) => !f.plantId || f.plantId === plant.id),
+      propagations: propagations.filter(
+        (p) => p.parentPlantId === plant.id || p.offspringPlantId === plant.id
+      ),
+      harvests: harvests.filter((h) => h.plantId === plant.id),
+      diagnoses,
+      reminders,
+    });
+  }, [plant, conditions, feedings, propagations, harvests, diagnoses, reminders]);
+
+  const primaryAction = useMemo(() => {
+    if (plantActions.length === 0) return null;
+    const gardenState = synthesizeGardenState({
+      plants: [plant],
+      conditions,
+      feedings,
+      propagations,
+      harvests,
+      diagnoses,
+      reminders,
+    });
+    return getNextBestAction(gardenState, plantActions);
+  }, [plantActions, plant, conditions, feedings, propagations, harvests, diagnoses, reminders]);
+
   return (
     <div className="space-y-6">
-      {/* 1. Provenance & Scientific Integrity Header */}
+      {/* 1. Scientific Integrity & Provenance Header */}
       <div className="bg-[#fbf9f4] border border-[#ded5c5] rounded-3xl p-5 sm:p-6 shadow-xs">
         <div className="flex items-start gap-3.5">
           <div className="p-2.5 rounded-2xl bg-[#eef5ee] text-[#144229] shrink-0 mt-0.5">
@@ -104,15 +131,16 @@ export function PlantIntelligenceTab({
           <div className="flex-1 min-w-0">
             <div className="flex flex-wrap items-center gap-2 mb-1">
               <h3 className="font-serif font-bold text-base sm:text-lg text-[#0c2417]">
-                Grow Intelligence Synthesis: {plant.nickname}
+                Adaptive Grow Intelligence: {plant.nickname}
               </h3>
               <span className="text-[11px] font-medium text-[#526a57] bg-white px-2.5 py-0.5 rounded-full border border-[#ded5c5]">
                 Strict Data Provenance
               </span>
             </div>
             <p className="text-xs sm:text-sm text-[#526a57] leading-relaxed">
-              GrowAI separates direct recorded facts from calculated values, observational hypotheses,
-              and recommendations. Unknown parameters remain strictly unknown without fabrication.
+              Synthesizes recorded garden facts into evidence-based recommendations. Unknown parameters
+              remain strictly unknown, fertilizer dosages follow product labels, and no diagnoses are
+              invented without recorded evidence.
             </p>
           </div>
         </div>
@@ -130,7 +158,7 @@ export function PlantIntelligenceTab({
             ◈ Observed
           </span>
           <span className="px-2 py-0.5 rounded-md border bg-[#fffbeb] text-[#92400e] border-[#fde68a]">
-            ◆ Agronomic Hypothesis
+            ◆ Agronomic Inference
           </span>
           <span className="px-2 py-0.5 rounded-md border bg-[#f3f4f6] text-[#4b5563] border-[#e5e7eb]">
             ○ Unknown (Unrecorded)
@@ -138,7 +166,116 @@ export function PlantIntelligenceTab({
         </div>
       </div>
 
-      {/* 2. Unified Botanical State Matrix */}
+      {/* 2. Phase 11 Primary Recommended Next Action (ONE Primary Action) */}
+      <div className="bg-white rounded-3xl border border-[#ded5c5] p-5 sm:p-6 shadow-xs space-y-4">
+        <div className="flex items-center justify-between pb-3 border-b border-[#f0ebe0]">
+          <h4 className="font-serif font-bold text-base sm:text-lg text-[#0c2417] flex items-center gap-2">
+            <Compass size={18} className="text-[#144229]" />
+            <span>Recommended Next Action</span>
+          </h4>
+          {primaryAction ? (
+            <span
+              className={`text-xs font-semibold px-2.5 py-0.5 rounded-full border uppercase tracking-wider ${
+                primaryAction.priority === 'critical'
+                  ? 'bg-[#fef2f2] text-[#991b1b] border-[#fecaca]'
+                  : primaryAction.priority === 'high'
+                  ? 'bg-[#fffbeb] text-[#92400e] border-[#fde68a]'
+                  : 'bg-[#eef5ee] text-[#144229] border-[#cfe0cf]'
+              }`}
+            >
+              {primaryAction.priority} priority
+            </span>
+          ) : (
+            <span className="text-xs font-semibold text-[#144229] bg-[#eef5ee] px-2.5 py-0.5 rounded-full border border-[#cfe0cf]">
+              Up to date
+            </span>
+          )}
+        </div>
+
+        {primaryAction ? (
+          <div className="space-y-4">
+            <div className="p-4 rounded-2xl bg-[#fbf9f4] border border-[#ded5c5] space-y-2">
+              <div className="flex items-start justify-between gap-3">
+                <div>
+                  <h5 className="font-bold text-sm sm:text-base text-[#0c2417]">
+                    {primaryAction.title}
+                  </h5>
+                  <p className="text-xs sm:text-sm text-[#526a57] mt-1 leading-relaxed">
+                    {primaryAction.explanation}
+                  </p>
+                </div>
+                {onNavigateTab && (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      if (primaryAction.category === 'feeding') onNavigateTab('feeding');
+                      else if (primaryAction.category === 'environment') onNavigateTab('conditions');
+                      else if (primaryAction.category === 'health') onNavigateTab('health');
+                      else if (
+                        primaryAction.category === 'production' ||
+                        primaryAction.category === 'propagation'
+                      )
+                        onNavigateTab('production');
+                      else if (primaryAction.category === 'care') onNavigateTab('reminders');
+                      else onNavigateTab('journal');
+                    }}
+                    className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-[#144229] text-white text-xs font-semibold hover:bg-[#1b5535] transition-colors shrink-0 cursor-pointer min-h-[40px]"
+                  >
+                    <span>Take Action</span>
+                    <ArrowRight size={14} />
+                  </button>
+                )}
+              </div>
+
+              <div className="mt-2 pt-2 border-t border-[#ded5c5]/60 text-xs text-[#144229] font-medium bg-[#eef5ee] p-2.5 rounded-xl">
+                <strong>Action Guidance:</strong> {primaryAction.recommendedAction}
+              </div>
+            </div>
+
+            {/* Supporting Evidence Breakdown (WHY -> ACTION) */}
+            <div className="space-y-2 pt-1">
+              <span className="text-xs font-bold text-[#0c2417] block">
+                Supporting Evidence (Why this action is recommended):
+              </span>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                {primaryAction.evidence.map((ev: ActionEvidence, i: number) => {
+                  const evBadge = getProvenanceBadge(ev.source);
+                  return (
+                    <div
+                      key={i}
+                      className="p-3 rounded-xl border border-[#ded5c5] bg-white text-xs space-y-1"
+                    >
+                      <div className="flex items-center justify-between">
+                        <span className={`text-[10px] font-semibold px-2 py-0.5 rounded-md border ${evBadge.bg}`}>
+                          {evBadge.label}
+                        </span>
+                        {ev.sourceId && (
+                          <span className="text-[10px] text-[#8aa390] font-mono">
+                            Ref: {ev.sourceId.slice(0, 8)}
+                          </span>
+                        )}
+                      </div>
+                      <p className="text-[#0c2417] font-medium pt-0.5">{ev.description}</p>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          </div>
+        ) : (
+          <div className="p-6 text-center rounded-2xl bg-[#fbf9f4] border border-[#ded5c5] space-y-1">
+            <CheckCircle2 size={24} className="text-[#144229] mx-auto mb-1" />
+            <p className="text-xs sm:text-sm font-semibold text-[#0c2417]">
+              Nothing requires your immediate attention right now.
+            </p>
+            <p className="text-xs text-[#526a57]">
+              Your health assessments, environmental observations, and care schedules for this plant are up to date.
+            </p>
+          </div>
+        )}
+      </div>
+
+      {/* 3. Unified Botanical State Matrix (All 6 Domains) */}
       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
         <div className="p-3.5 rounded-2xl bg-white border border-[#ded5c5]">
           <span className="text-[11px] font-medium text-[#6d8573] block">Stage</span>
@@ -202,61 +339,6 @@ export function PlantIntelligenceTab({
           </span>
         </div>
       </div>
-
-      {/* 3. Safe Next Actions */}
-      {intel.nextActions.length > 0 && (
-        <div className="bg-white rounded-3xl border border-[#ded5c5] p-5 sm:p-6 shadow-xs space-y-3.5">
-          <div className="flex items-center justify-between pb-2 border-b border-[#f0ebe0]">
-            <h4 className="font-serif font-bold text-sm sm:text-base text-[#0c2417] flex items-center gap-2">
-              <CheckCircle size={18} className="text-[#144229]" />
-              <span>Prioritized Botanical Next Actions</span>
-            </h4>
-            <span className="text-xs font-semibold text-[#144229] bg-[#eef5ee] px-2.5 py-0.5 rounded-full">
-              {intel.nextActions.length} recommendations
-            </span>
-          </div>
-
-          <div className="space-y-2.5">
-            {intel.nextActions.map((act: IntelligenceAction) => {
-              const badge = getProvenanceBadge(act.provenance);
-              return (
-                <div
-                  key={act.id}
-                  className="p-3.5 rounded-2xl border border-[#ded5c5] bg-[#fbf9f4] flex flex-col sm:flex-row sm:items-center justify-between gap-3"
-                >
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-2">
-                      <span className="font-semibold text-xs sm:text-sm text-[#0c2417]">
-                        {act.actionTitle}
-                      </span>
-                      <span className={`text-[10px] font-semibold px-2 py-0.5 rounded-md border ${badge.bg}`}>
-                        {badge.label}
-                      </span>
-                    </div>
-                    <p className="text-xs text-[#526a57] mt-1">{act.reason}</p>
-                  </div>
-                  {onNavigateTab && (
-                    <button
-                      type="button"
-                      onClick={() => {
-                        if (act.category === 'feed') onNavigateTab('feeding');
-                        else if (act.category === 'observe') onNavigateTab('conditions');
-                        else if (act.category === 'check_health') onNavigateTab('health');
-                        else if (act.category === 'harvest' || act.category === 'propagate') onNavigateTab('production');
-                        else onNavigateTab('journal');
-                      }}
-                      className="text-xs font-semibold text-[#144229] hover:bg-[#eef5ee] px-3.5 py-2 rounded-xl border border-[#cfdfcf] bg-white transition-colors shrink-0 flex items-center gap-1.5 self-start sm:self-center cursor-pointer min-h-[36px]"
-                    >
-                      <span>Take Action</span>
-                      <ArrowRight size={13} />
-                    </button>
-                  )}
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      )}
 
       {/* 4. Evidence-Backed Concerns */}
       {intel.concerns.length > 0 && (

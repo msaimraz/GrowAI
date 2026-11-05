@@ -117,6 +117,7 @@ export function PlantTimelineTab({
     care: filterTimelineEvents(events, 'care').length,
     harvest: filterTimelineEvents(events, 'harvest').length,
     propagation: filterTimelineEvents(events, 'propagation').length,
+    intelligence: filterTimelineEvents(events, 'intelligence').length,
   };
 
   const getEventIcon = (event: PlantTimelineEvent) => {

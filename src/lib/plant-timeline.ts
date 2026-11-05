@@ -31,6 +31,11 @@ const EVENT_TYPE_SORT_PRIORITY: Record<PlantTimelineEventType, number> = {
   feeding: 65,
   condition_observation: 62,
   photo: 60,
+  intelligence_action: 58,
+  recommendation: 57,
+  observation_gap: 56,
+  production_signal: 55,
+  environment_signal: 54,
   growth_observation: 50,
   care: 40,
   stage_change: 35,
@@ -912,6 +917,15 @@ export function filterTimelineEvents(
         return e.category === 'harvest' || e.eventType === 'harvest';
       case 'propagation':
         return e.category === 'propagation' || e.eventType === 'propagation';
+      case 'intelligence':
+        return (
+          e.category === 'intelligence' ||
+          e.eventType === 'intelligence_action' ||
+          e.eventType === 'observation_gap' ||
+          e.eventType === 'recommendation' ||
+          e.eventType === 'production_signal' ||
+          e.eventType === 'environment_signal'
+        );
       default:
         return true;
     }

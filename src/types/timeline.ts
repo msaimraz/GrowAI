@@ -23,7 +23,12 @@ export type PlantTimelineEventType =
   | 'condition_observation'
   | 'propagation'
   | 'harvest'
-  | 'stage_change';
+  | 'stage_change'
+  | 'intelligence_action'
+  | 'observation_gap'
+  | 'recommendation'
+  | 'production_signal'
+  | 'environment_signal';
 
 export type PlantTimelineCategory =
   | 'lifecycle'
@@ -32,7 +37,8 @@ export type PlantTimelineCategory =
   | 'health'
   | 'care'
   | 'harvest'
-  | 'propagation';
+  | 'propagation'
+  | 'intelligence';
 
 export type PlantTimelineFilter =
   | 'all'
@@ -41,7 +47,8 @@ export type PlantTimelineFilter =
   | 'health'
   | 'care'
   | 'harvest'
-  | 'propagation';
+  | 'propagation'
+  | 'intelligence';
 
 export interface PlantTimelineBadge {
   text: string;
