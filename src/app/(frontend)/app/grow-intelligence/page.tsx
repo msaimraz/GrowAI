@@ -73,7 +73,9 @@ import {
   Check,
   ShieldCheck,
   Filter,
+  Bot,
 } from 'lucide-react';
+import { GrowerCopilot } from '@/components/copilot/GrowerCopilot';
 
 export default function GrowIntelligencePage() {
   return (
@@ -567,6 +569,43 @@ function GrowIntelligenceContent() {
               No actions pending for category: {actionCategoryFilter}.
             </div>
           )}
+        </div>
+
+        {/* ==================================================================== */}
+        {/* PHASE 12: GROWER COPILOT — CONVERSATIONAL INTELLIGENCE               */}
+        {/* ==================================================================== */}
+        <div className="space-y-4">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2.5">
+              <div className="p-2.5 rounded-2xl bg-[#144229] text-white">
+                <Bot size={22} />
+              </div>
+              <div>
+                <h3 className="font-serif font-bold text-lg sm:text-xl text-[#0c2417] flex items-center gap-2">
+                  <span>Grower Copilot</span>
+                  <span className="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-[#eef5ee] text-[#144229] border border-[#cfe0cf]">
+                    Conversational Intelligence
+                  </span>
+                </h3>
+                <p className="text-xs text-[#526a57]">
+                  Natural-language reasoning over your garden facts, health history, conditions, and schedules.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <GrowerCopilot
+            plants={plants}
+            diagnoses={diagnoses}
+            conditions={conditions}
+            feedings={feedings}
+            propagations={propagations}
+            cycles={cycles}
+            harvests={harvests}
+            reminders={reminders}
+            spaceMetrics={spaceMetrics}
+            onRefreshNeeded={loadData}
+          />
         </div>
 
         {/* 4. Natural-Language Query Widget: "Ask Your Garden Records" */}

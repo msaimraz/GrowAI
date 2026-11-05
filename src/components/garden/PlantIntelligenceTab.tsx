@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import { UserPlant, PlantPhoto } from '@/types/garden';
 import { SavedDiagnosisRecord } from '@/types/diagnosis';
 import {
@@ -21,6 +21,7 @@ import { prioritizeGardenActions } from '@/lib/adaptive-grow/action-prioritizer'
 import { synthesizeGardenState } from '@/lib/adaptive-grow/garden-state-engine';
 import { getNextBestAction } from '@/lib/adaptive-grow/next-best-action';
 import { ActionEvidence } from '@/types/adaptive-grow';
+import { GrowerCopilot } from '@/components/copilot/GrowerCopilot';
 import {
   Sparkles,
   AlertTriangle,
@@ -37,6 +38,9 @@ import {
   CheckCircle2,
   Clock,
   Compass,
+  Bot,
+  ChevronDown,
+  ChevronUp,
 } from 'lucide-react';
 
 interface PlantIntelligenceTabProps {
@@ -120,6 +124,8 @@ export function PlantIntelligenceTab({
     return getNextBestAction(gardenState, plantActions);
   }, [plantActions, plant, conditions, feedings, propagations, harvests, diagnoses, reminders]);
 
+  const [showCopilot, setShowCopilot] = useState(false);
+
   return (
     <div className="space-y-6">
       {/* 1. Scientific Integrity & Provenance Header */}
@@ -164,6 +170,52 @@ export function PlantIntelligenceTab({
             ○ Unknown (Unrecorded)
           </span>
         </div>
+      </div>
+
+      {/* Phase 12: Grower Copilot Conversational Assistant */}
+      <div className="bg-white rounded-3xl border border-[#ded5c5] p-5 sm:p-6 shadow-xs space-y-4">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-2.5">
+            <div className="p-2 rounded-xl bg-[#eef5ee] text-[#144229]">
+              <Bot size={18} />
+            </div>
+            <div>
+              <h4 className="font-serif font-bold text-base text-[#0c2417] flex items-center gap-2">
+                <span>Ask Grower Copilot</span>
+                <span className="text-[10px] font-semibold uppercase tracking-wider px-2 py-0.5 rounded-full bg-[#144229] text-white">
+                  Conversational AI
+                </span>
+              </h4>
+              <p className="text-xs text-[#526a57]">
+                Natural-language intelligence grounded in {plant.nickname}&apos;s recorded history and evidence.
+              </p>
+            </div>
+          </div>
+          <button
+            type="button"
+            onClick={() => setShowCopilot(!showCopilot)}
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-[#ded5c5] bg-[#fbf9f4] hover:bg-[#eef5ee] text-xs font-semibold text-[#144229] transition-colors cursor-pointer"
+          >
+            <span>{showCopilot ? 'Hide Copilot' : 'Open Copilot'}</span>
+            {showCopilot ? <ChevronUp size={15} /> : <ChevronDown size={15} />}
+          </button>
+        </div>
+
+        {showCopilot && (
+          <div className="pt-3 border-t border-[#ded5c5]/60">
+            <GrowerCopilot
+              activePlant={plant}
+              plants={[plant]}
+              diagnoses={diagnoses}
+              conditions={conditions}
+              feedings={feedings}
+              propagations={propagations}
+              harvests={harvests}
+              reminders={reminders}
+              compactMode={true}
+            />
+          </div>
+        )}
       </div>
 
       {/* 2. Phase 11 Primary Recommended Next Action (ONE Primary Action) */}

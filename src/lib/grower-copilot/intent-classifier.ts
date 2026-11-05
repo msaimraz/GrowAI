@@ -1,0 +1,396 @@
+/**
+ * GrowAI Phase 12: Grower Copilot Intent Classifier
+ * Deterministically classifies user inquiries into strongly typed CopilotIntents
+ * and resolves targeted plant entities (including conversational pronouns).
+ */
+
+import { CopilotIntent } from '@/types/grower-copilot';
+import { UserPlant } from '@/types/garden';
+
+export interface IntentClassificationResult {
+  intent: CopilotIntent;
+  targetPlantId?: string | null;
+  targetPlantNickname?: string | null;
+  confidence: 'high' | 'moderate' | 'low';
+}
+
+interface ClassifyParams {
+  query: string;
+  activePlantId?: string | null;
+  activePlantNickname?: string | null;
+  plants?: UserPlant[];
+}
+
+export function classifyCopilotIntent(params: ClassifyParams): IntentClassificationResult {
+  const { query, activePlantId, activePlantNickname, plants = [] } = params;
+  const q = query.trim().toLowerCase();
+
+  // 1. Plant Target & Pronoun Resolution
+  let resolvedPlantId: string | null = activePlantId || null;
+  let resolvedPlantNickname: string | null = activePlantNickname || null;
+
+  // Search if a specific plant nickname or slug is explicitly mentioned in the query
+  for (const plant of plants) {
+    const nick = (plant.nickname || '').toLowerCase();
+    const slug = (plant.plantSlug || '').toLowerCase().replace(/-/g, ' ');
+    const nickWords: string[] = nick.split(/\s+/).filter((w: string) => w.length >= 3);
+    const slugWords: string[] = slug.split(/\s+/).filter((w: string) => w.length >= 3);
+
+    if ((nick && q.includes(nick)) || (slug && q.includes(slug))) {
+      resolvedPlantId = plant.id;
+      resolvedPlantNickname = plant.nickname;
+      break;
+    }
+
+    // Keyword match on distinctive nickname or slug words (e.g. "basil", "mint", "tomato")
+    const matchesWord = [...nickWords, ...slugWords].some((word: string) => {
+      const regex = new RegExp(`\\b${word}\\b`, 'i');
+      return regex.test(q);
+    });
+
+    const queryWords = q.split(/\s+/).filter((w: string) => w.length >= 4);
+    const queryMatchesSlug = queryWords.some((qw: string) => slug.includes(qw) || nick.includes(qw));
+
+    if (matchesWord || queryMatchesSlug) {
+      resolvedPlantId = plant.id;
+      resolvedPlantNickname = plant.nickname;
+      break;
+    }
+  }
+
+  // Check for pronoun context ("its", "it", "this plant", "the plant")
+  const isPlantScopedByPronoun =
+    /\b(it|its|this plant|that plant|the plant|this crop)\b/i.test(q) && Boolean(resolvedPlantId);
+
+  const hasTargetPlant = Boolean(resolvedPlantId);
+
+  // 2. Next Best Action & Urgent Priority
+  if (
+    q.includes('what should i do now') ||
+    q.includes('what should i do next') ||
+    q.includes('next best action') ||
+    q.includes('what to do now')
+  ) {
+    return {
+      intent: 'next_best_action',
+      targetPlantId: resolvedPlantId,
+      targetPlantNickname: resolvedPlantNickname,
+      confidence: 'high',
+    };
+  }
+
+  // 3. Why Recommendation
+  if (
+    q.includes('why is this recommendation') ||
+    q.includes('why was this recommended') ||
+    q.includes('why is this action') ||
+    q.includes('reason for recommendation')
+  ) {
+    return {
+      intent: 'why_recommendation',
+      targetPlantId: resolvedPlantId,
+      targetPlantNickname: resolvedPlantNickname,
+      confidence: 'high',
+    };
+  }
+
+  // 4. Daily Grow Check & Today Priorities
+  if (
+    q.includes('what needs my attention today') ||
+    q.includes('what needs attention today') ||
+    q.includes('attention today') ||
+    q.includes('today priorities') ||
+    q.includes('what should i focus on today') ||
+    q.includes('what should i check') ||
+    q.includes('check on my plants') ||
+    q.includes('focus on today') ||
+    q.includes('daily grow check')
+  ) {
+    return {
+      intent: q.includes('check') ? 'daily_grow_check' : 'today_priorities',
+      targetPlantId: resolvedPlantId,
+      targetPlantNickname: resolvedPlantNickname,
+      confidence: 'high',
+    };
+  }
+
+  // 5. Data Quality & Missing Data
+  if (
+    q.includes('what information is missing') ||
+    q.includes('what am i missing') ||
+    q.includes('missing data') ||
+    q.includes('data quality') ||
+    q.includes('record completeness')
+  ) {
+    return {
+      intent: 'missing_data',
+      targetPlantId: resolvedPlantId,
+      targetPlantNickname: resolvedPlantNickname,
+      confidence: 'high',
+    };
+  }
+
+  // 6. Recent Changes & Timeline
+  if (
+    q.includes('what changed since my last observation') ||
+    q.includes('what changed recently') ||
+    q.includes('recent changes') ||
+    q.includes('what changed')
+  ) {
+    return {
+      intent: 'recent_changes',
+      targetPlantId: resolvedPlantId,
+      targetPlantNickname: resolvedPlantNickname,
+      confidence: 'high',
+    };
+  }
+
+  if (q.includes('timeline') || q.includes('journal history') || q.includes('chronological')) {
+    return {
+      intent: hasTargetPlant ? 'plant_timeline' : 'historical_events',
+      targetPlantId: resolvedPlantId,
+      targetPlantNickname: resolvedPlantNickname,
+      confidence: 'high',
+    };
+  }
+
+  // 7. Feeding & Nutrition
+  if (
+    q.includes('feed') ||
+    q.includes('fertiliz') ||
+    q.includes('nutrient') ||
+    q.includes('npk') ||
+    q.includes('last fed') ||
+    q.includes('when did i last feed') ||
+    q.includes('feeding history')
+  ) {
+    return {
+      intent: hasTargetPlant ? 'plant_feeding' : 'feeding_history',
+      targetPlantId: resolvedPlantId,
+      targetPlantNickname: resolvedPlantNickname,
+      confidence: 'high',
+    };
+  }
+
+  // 8. Growing Conditions & Environment
+  if (
+    q.includes('incomplete growing-condition') ||
+    q.includes('missing condition') ||
+    q.includes('unrecorded condition')
+  ) {
+    return {
+      intent: 'missing_conditions',
+      targetPlantId: resolvedPlantId,
+      targetPlantNickname: resolvedPlantNickname,
+      confidence: 'high',
+    };
+  }
+
+  if (
+    q.includes('what conditions have i actually recorded') ||
+    q.includes('what conditions have i recorded') ||
+    q.includes('recorded conditions') ||
+    q.includes('temperature') ||
+    q.includes('humidity') ||
+    q.includes('airflow') ||
+    q.includes('soil moisture') ||
+    q.includes('environment')
+  ) {
+    return {
+      intent: hasTargetPlant ? 'plant_conditions' : 'condition_history',
+      targetPlantId: resolvedPlantId,
+      targetPlantNickname: resolvedPlantNickname,
+      confidence: 'high',
+    };
+  }
+
+  // 9. Health & Diagnostics
+  if (
+    q.includes('what health follow-ups are overdue') ||
+    q.includes('overdue follow-up') ||
+    q.includes('follow-up overdue')
+  ) {
+    return {
+      intent: 'follow_up_status',
+      targetPlantId: resolvedPlantId,
+      targetPlantNickname: resolvedPlantNickname,
+      confidence: 'high',
+    };
+  }
+
+  if (
+    q.includes('why is my basil marked as needing attention') ||
+    q.includes('why is it marked as needing attention') ||
+    q.includes('why is it being monitored') ||
+    q.includes('why is this being monitored') ||
+    q.includes('why is this plant monitored') ||
+    (hasTargetPlant && (q.includes('health') || q.includes('monitored') || q.includes('needing attention') || q.includes('sick')))
+  ) {
+    return {
+      intent: 'plant_health',
+      targetPlantId: resolvedPlantId,
+      targetPlantNickname: resolvedPlantNickname,
+      confidence: 'high',
+    };
+  }
+
+  if (
+    q.includes('which plants are currently being monitored') ||
+    q.includes('which plants are monitored') ||
+    q.includes('plants being monitored') ||
+    q.includes('which plants need attention')
+  ) {
+    return {
+      intent: 'current_health',
+      targetPlantId: resolvedPlantId,
+      targetPlantNickname: resolvedPlantNickname,
+      confidence: 'high',
+    };
+  }
+
+  // 10. Production, Cycles & Harvest
+  if (
+    q.includes('which crop cycle performed better') ||
+    q.includes('compare cycle') ||
+    q.includes('cycle comparison')
+  ) {
+    return {
+      intent: 'cycle_comparison',
+      targetPlantId: resolvedPlantId,
+      targetPlantNickname: resolvedPlantNickname,
+      confidence: 'high',
+    };
+  }
+
+  if (
+    q.includes('show me my recent harvests') ||
+    q.includes('recent harvests') ||
+    q.includes('harvest history') ||
+    q.includes('harvest') ||
+    q.includes('yield') ||
+    q.includes('how much harvested')
+  ) {
+    return {
+      intent: hasTargetPlant ? 'plant_production' : 'harvest_history',
+      targetPlantId: resolvedPlantId,
+      targetPlantNickname: resolvedPlantNickname,
+      confidence: 'high',
+    };
+  }
+
+  // 11. Propagation & Lineage
+  if (
+    q.includes('which plants have propagation history') ||
+    q.includes('propagation history') ||
+    q.includes('propagate') ||
+    q.includes('cuttings') ||
+    q.includes('lineage') ||
+    q.includes('offspring') ||
+    q.includes('mother plant')
+  ) {
+    return {
+      intent: hasTargetPlant ? 'plant_propagation' : 'propagation_history',
+      targetPlantId: resolvedPlantId,
+      targetPlantNickname: resolvedPlantNickname,
+      confidence: 'high',
+    };
+  }
+
+  // 12. Plant Status & History
+  if (
+    hasTargetPlant &&
+    (q.includes('how is this plant doing') ||
+      q.includes('how is it doing') ||
+      q.includes('status') ||
+      q.includes('how has this plant been doing') ||
+      q.includes('plant summary'))
+  ) {
+    return {
+      intent: 'plant_status',
+      targetPlantId: resolvedPlantId,
+      targetPlantNickname: resolvedPlantNickname,
+      confidence: 'high',
+    };
+  }
+
+  // 13. Space & Structural Safety
+  if (
+    q.includes('can i plant') ||
+    q.includes('space') ||
+    q.includes('capacity') ||
+    q.includes('rack capacity') ||
+    q.includes('space utilization') ||
+    q.includes('structural load') ||
+    q.includes('is the rack safe') ||
+    q.includes('shelf capacity')
+  ) {
+    return {
+      intent: 'space_advisory',
+      targetPlantId: resolvedPlantId,
+      targetPlantNickname: resolvedPlantNickname,
+      confidence: 'high',
+    };
+  }
+
+  // 14. Garden Overview / Summary
+  if (
+    q.includes('tell me about my garden') ||
+    q.includes('garden summary') ||
+    q.includes('how is my garden') ||
+    q.includes('garden overview') ||
+    q.includes('overview')
+  ) {
+    return {
+      intent: 'garden_summary',
+      targetPlantId: null,
+      targetPlantNickname: null,
+      confidence: 'high',
+    };
+  }
+
+  // 15. Unsupported Fallback
+  return {
+    intent: 'unsupported',
+    targetPlantId: resolvedPlantId,
+    targetPlantNickname: resolvedPlantNickname,
+    confidence: 'low',
+  };
+}
+
+/**
+ * Universal classifier supporting conversation history and returning plant targets.
+ */
+export function classifyIntent(
+  query: string,
+  plants: UserPlant[] = [],
+  conversationHistory: { role: string; content: string }[] = [],
+  activePlant?: UserPlant | null
+): IntentClassificationResult & { targetPlant?: UserPlant } {
+  let inferredPlant = activePlant;
+  if (!inferredPlant && conversationHistory.length > 0) {
+    const recentAssistant = conversationHistory.filter((m) => m.role === 'assistant').slice(-2);
+    const recentUser = conversationHistory.filter((m) => m.role === 'user').slice(-2);
+    const recentText = [...recentUser, ...recentAssistant].map((m) => m.content).join(' ').toLowerCase();
+    for (const p of plants) {
+      const nick = (p.nickname || '').toLowerCase();
+      const slug = (p.plantSlug || '').toLowerCase();
+      if ((nick && recentText.includes(nick)) || (slug && recentText.includes(slug))) {
+        inferredPlant = p;
+        break;
+      }
+    }
+  }
+
+  const result = classifyCopilotIntent({
+    query,
+    plants,
+    activePlantId: inferredPlant?.id,
+    activePlantNickname: inferredPlant?.nickname,
+  });
+
+  const matchedPlant = plants.find((p) => p.id === result.targetPlantId) || inferredPlant || undefined;
+  return {
+    ...result,
+    targetPlant: matchedPlant,
+  };
+}
