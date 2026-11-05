@@ -63,7 +63,11 @@ export interface UserPlant {
   propagationMethod?: PropagationMethod | null;
   propagationDate?: string | null;
   actualHarvestDate?: string | null;
+  createdAt?: string;
 }
+
+// Re-export Phase 9 Timeline types
+export * from './timeline';
 
 export interface PlantAgeInfo {
   daysSincePlanting: number;

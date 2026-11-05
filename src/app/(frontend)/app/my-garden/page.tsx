@@ -26,6 +26,16 @@ import { UserPlant, GrowthStage, CareTask } from '@/types/garden';
 import { PlantPhotoGallery } from '@/components/garden/PlantPhotoGallery';
 import { PropagationModal } from '@/components/garden/PropagationModal';
 import { PlantLineageBadge } from '@/components/garden/PlantLineageBadge';
+import { PlantHealthBadge } from '@/components/garden/PlantHealthBadge';
+import { GardenHealthOverviewCard } from '@/components/garden/GardenHealthOverviewCard';
+import { PlantHealthTab } from '@/components/garden/PlantHealthTab';
+import { PlantTimelineTab } from '@/components/garden/PlantTimelineTab';
+import { fetchAllGardenDiagnoses } from '@/lib/ai-doctor/persistence';
+import {
+  getGardenHealthOverview,
+  getPlantHealthSummary,
+} from '@/lib/plant-health-status';
+import { SavedDiagnosisRecord } from '@/types/diagnosis';
 import {
   Sprout,
   Plus,
@@ -51,6 +61,8 @@ import {
   BookOpen,
   Camera,
   Scissors,
+  Activity,
+  GitBranch,
 } from 'lucide-react';
 
 import { usePwa } from '@/context/PwaContext';
@@ -92,8 +104,9 @@ function MyGardenContent() {
   const [userPlants, setUserPlants] = useState<UserPlant[]>([]);
   const [selectedPlantId, setSelectedPlantId] = useState<string>('');
   const [careTasks, setCareTasks] = useState<CareTask[]>([]);
+  const [diagnosesByPlantId, setDiagnosesByPlantId] = useState<Record<string, SavedDiagnosisRecord[]>>({});
   const [isCloud, setIsCloud] = useState<boolean>(false);
-  const [activeTab, setActiveTab] = useState<'journal' | 'photos'>('journal');
+  const [activeTab, setActiveTab] = useState<'journal' | 'photos' | 'health' | 'timeline'>('journal');
   const [showPropagationModal, setShowPropagationModal] = useState<boolean>(false);
   const [noteText, setNoteText] = useState('');
   const [noteHeight, setNoteHeight] = useState<string>('');
@@ -108,9 +121,10 @@ function MyGardenContent() {
     setLoading(true);
     setErrorBanner(null);
     try {
-      const [gardenRes, tasksRes] = await Promise.all([
+      const [gardenRes, tasksRes, healthRes] = await Promise.all([
         fetchUserGarden(),
         fetchCareTasks(),
+        fetchAllGardenDiagnoses(),
       ]);
 
       setIsCloud(gardenRes.isCloud);
@@ -132,6 +146,10 @@ function MyGardenContent() {
       } else {
         setCareTasks(tasksRes.tasks);
       }
+
+      if (healthRes.diagnosesByPlantId) {
+        setDiagnosesByPlantId(healthRes.diagnosesByPlantId);
+      }
     } catch (err: any) {
       setErrorBanner(err.message || 'Error loading garden.');
     } finally {
@@ -140,9 +158,15 @@ function MyGardenContent() {
   };
 
   useEffect(() => {
+    const tabParam = searchParams.get('tab');
+    if (tabParam === 'health') {
+      setActiveTab('health');
+    } else if (tabParam === 'timeline') {
+      setActiveTab('timeline');
+    }
     setNoteDate(new Date().toISOString().split('T')[0]);
     loadGardenData();
-  }, [user, highlightPlantId]);
+  }, [user, highlightPlantId, searchParams]);
 
   const activePlant = userPlants.find((p) => p.id === selectedPlantId) || userPlants[0];
   const activeBotanical = activePlant
@@ -157,6 +181,22 @@ function MyGardenContent() {
         activePlant.actualHarvestDate
       )
     : null;
+
+  // Health calculations
+  const plantHealthMap: Record<string, { status: string; activeIssue?: string | null; isDue: boolean }> = {};
+  for (const p of userPlants) {
+    const list = diagnosesByPlantId[p.id] || [];
+    const sum = getPlantHealthSummary(list);
+    plantHealthMap[p.id] = {
+      status: sum.status,
+      activeIssue: sum.activeIssue,
+      isDue: sum.isFollowUpDue,
+    };
+  }
+
+  const gardenOverview = getGardenHealthOverview(userPlants, diagnosesByPlantId);
+  const activePlantDiagnoses = activePlant ? (diagnosesByPlantId[activePlant.id] || []) : [];
+  const activePlantHealthSummary = getPlantHealthSummary(activePlantDiagnoses);
 
   const handleStageChange = async (plantId: string, newStage: GrowthStage) => {
     if (isOffline && isCloud) {
@@ -445,13 +485,22 @@ function MyGardenContent() {
                             {plant.currentStage}
                           </span>
                         </div>
-                        <p
-                          className={`text-xs truncate mt-1 ${
-                            isSelected ? 'text-[#bed4c5]' : 'text-[#526a57]'
-                          }`}
-                        >
-                          {botanical?.commonName} • {plant.notes?.length || 0} observation(s)
-                        </p>
+                        <div className="flex flex-wrap items-center gap-2 mt-1">
+                          <p
+                            className={`text-xs truncate ${
+                              isSelected ? 'text-[#bed4c5]' : 'text-[#526a57]'
+                            }`}
+                          >
+                            {botanical?.commonName} • {plant.notes?.length || 0} observation(s)
+                          </p>
+                          {plantHealthMap[plant.id]?.status !== 'unknown' && (
+                            <PlantHealthBadge
+                              status={plantHealthMap[plant.id].status as any}
+                              size="xs"
+                              className={isSelected ? '!bg-white/20 !text-white !border-white/30' : ''}
+                            />
+                          )}
+                        </div>
                       </div>
                       <ChevronRight
                         size={18}
@@ -461,6 +510,17 @@ function MyGardenContent() {
                   );
                 })}
               </div>
+
+              {/* Garden-Wide Health Overview Card */}
+              <GardenHealthOverviewCard
+                overview={gardenOverview}
+                plants={userPlants}
+                onSelectPlant={(id) => {
+                  setSelectedPlantId(id);
+                  setActiveTab('health');
+                }}
+                plantHealthMap={plantHealthMap}
+              />
 
               {/* Plant Care Tasks Card */}
               <div className="bg-white p-5 sm:p-6 rounded-2xl border border-[#ded5c5] space-y-4 shadow-xs">
@@ -526,6 +586,13 @@ function MyGardenContent() {
                           {activePlant.nickname}
                         </h2>
                         <Badge variant="sage" size="md">{activePlant.currentStage}</Badge>
+                        <PlantHealthBadge status={activePlantHealthSummary.status} size="sm" />
+                        {activePlantHealthSummary.activeIssue && (
+                          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-[#fffbeb] text-[#92400e] border border-[#fde68a]">
+                            <AlertCircle size={13} />
+                            Issue: {activePlantHealthSummary.activeIssue}
+                          </span>
+                        )}
                         {plantAge && (
                           <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-[#eef5ee] text-[#144229] border border-[#cfe0cf]">
                             <Sprout size={13} className="text-[#257a4d]" />
@@ -561,6 +628,22 @@ function MyGardenContent() {
                     </div>
 
                     <div className="flex items-center gap-2">
+                      <Link
+                        href={`/app/my-garden/${activePlant.id}/timeline`}
+                        className="text-xs sm:text-sm font-semibold text-[#144229] hover:bg-[#eef5ee] px-4 py-2.5 rounded-xl border border-[#cfdfcf] bg-white transition-colors flex items-center gap-1.5 min-h-[44px]"
+                        title="View complete longitudinal growth timeline"
+                      >
+                        <GitBranch size={15} />
+                        <span>Timeline</span>
+                      </Link>
+                      <Link
+                        href={`/app/my-garden/${activePlant.id}/health`}
+                        className="text-xs sm:text-sm font-semibold text-[#144229] hover:bg-[#eef5ee] px-4 py-2.5 rounded-xl border border-[#cfdfcf] bg-white transition-colors flex items-center gap-1.5 min-h-[44px]"
+                        title="View complete health history and follow-ups"
+                      >
+                        <Activity size={15} />
+                        <span>Health</span>
+                      </Link>
                       <button
                         type="button"
                         onClick={() => setShowPropagationModal(true)}
@@ -693,8 +776,8 @@ function MyGardenContent() {
                   </div>
                 </div>
 
-                {/* Journal View Switcher: Care & Observations vs Photo Journal */}
-                <div className="flex items-center gap-3 border-b border-[#ded5c5] pb-3">
+                {/* Journal View Switcher: Care & Observations vs Photo Journal vs Health */}
+                <div className="flex flex-wrap items-center gap-2.5 border-b border-[#ded5c5] pb-3">
                   <button
                     type="button"
                     onClick={() => setActiveTab('journal')}
@@ -719,6 +802,35 @@ function MyGardenContent() {
                   >
                     <Camera size={16} />
                     <span>Photo Journal</span>
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={() => setActiveTab('health')}
+                    className={`inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold transition-all cursor-pointer min-h-[44px] ${
+                      activeTab === 'health'
+                        ? 'bg-[#144229] text-white shadow-xs'
+                        : 'bg-white text-[#526a57] hover:bg-[#eef5ee] hover:text-[#144229] border border-[#ded5c5]'
+                    }`}
+                  >
+                    <Activity size={16} />
+                    <span>Health & Follow-ups ({activePlantDiagnoses.length})</span>
+                    {activePlantHealthSummary.status !== 'unknown' && (
+                      <span className="w-2 h-2 rounded-full bg-emerald-400" />
+                    )}
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={() => setActiveTab('timeline')}
+                    className={`inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold transition-all cursor-pointer min-h-[44px] ${
+                      activeTab === 'timeline'
+                        ? 'bg-[#144229] text-white shadow-xs'
+                        : 'bg-white text-[#526a57] hover:bg-[#eef5ee] hover:text-[#144229] border border-[#ded5c5]'
+                    }`}
+                  >
+                    <GitBranch size={16} />
+                    <span>Growth Timeline</span>
                   </button>
                 </div>
 
@@ -875,6 +987,31 @@ function MyGardenContent() {
                     plantNickname={activePlant.nickname}
                     currentStage={activePlant.currentStage}
                     isCloud={isCloud}
+                  />
+                )}
+
+                {/* Tab 3: Health & Follow-ups */}
+                {activeTab === 'health' && (
+                  <PlantHealthTab
+                    plant={activePlant}
+                    isCloud={isCloud}
+                    onRefreshNeeded={loadGardenData}
+                  />
+                )}
+
+                {/* Tab 4: Growth Timeline */}
+                {activeTab === 'timeline' && (
+                  <PlantTimelineTab
+                    plant={activePlant}
+                    parentPlant={
+                      activePlant.parentPlantId
+                        ? userPlants.find((p) => p.id === activePlant.parentPlantId) || null
+                        : null
+                    }
+                    isCloud={isCloud}
+                    diagnoses={activePlantDiagnoses}
+                    tasks={careTasks}
+                    onRefreshNeeded={loadGardenData}
                   />
                 )}
               </div>
