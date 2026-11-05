@@ -20,6 +20,23 @@ import {
   NotificationChannelsPreference,
   NotificationQuietHoursPreference,
 } from '@/types/reminder';
+import {
+  LightLevel,
+  LightSource,
+  AirflowQuality,
+  SoilMoistureObservation,
+  DrainageQuality,
+  FertilizerType,
+  FertilizerFormulation,
+  FeedingApplicationMethod,
+  NutrientObservationType,
+  PropagationStatus,
+  ProductionStage,
+  ProductionCycleStatus,
+  HarvestUnit,
+  HarvestType,
+  HarvestQualityObservation,
+} from '@/types/grow-intelligence';
 import { getSupabaseConfig, isSupabaseConfigured } from './supabase/config';
 
 export type Json =
@@ -648,6 +665,318 @@ export interface DatabaseSchema {
           channels?: NotificationChannelsPreference;
           quiet_hours?: NotificationQuietHoursPreference;
           timezone?: string;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Relationships: [];
+      };
+      growing_conditions: {
+        Row: {
+          id: string;
+          user_id: string;
+          plant_id: string | null;
+          environment_zone: string | null;
+          light_level: LightLevel | null;
+          light_duration_hours: number | null;
+          light_source: LightSource | null;
+          is_grow_light: boolean;
+          temperature_celsius: number | null;
+          temp_min_celsius: number | null;
+          temp_max_celsius: number | null;
+          relative_humidity_percent: number | null;
+          airflow_quality: AirflowQuality | null;
+          soil_moisture: SoilMoistureObservation | null;
+          drainage_quality: DrainageQuality | null;
+          ph: number | null;
+          medium_type: string | null;
+          notes: string | null;
+          observation_time: string;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          user_id: string;
+          plant_id?: string | null;
+          environment_zone?: string | null;
+          light_level?: LightLevel | null;
+          light_duration_hours?: number | null;
+          light_source?: LightSource | null;
+          is_grow_light?: boolean;
+          temperature_celsius?: number | null;
+          temp_min_celsius?: number | null;
+          temp_max_celsius?: number | null;
+          relative_humidity_percent?: number | null;
+          airflow_quality?: AirflowQuality | null;
+          soil_moisture?: SoilMoistureObservation | null;
+          drainage_quality?: DrainageQuality | null;
+          ph?: number | null;
+          medium_type?: string | null;
+          notes?: string | null;
+          observation_time?: string;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          user_id?: string;
+          plant_id?: string | null;
+          environment_zone?: string | null;
+          light_level?: LightLevel | null;
+          light_duration_hours?: number | null;
+          light_source?: LightSource | null;
+          is_grow_light?: boolean;
+          temperature_celsius?: number | null;
+          temp_min_celsius?: number | null;
+          temp_max_celsius?: number | null;
+          relative_humidity_percent?: number | null;
+          airflow_quality?: AirflowQuality | null;
+          soil_moisture?: SoilMoistureObservation | null;
+          drainage_quality?: DrainageQuality | null;
+          ph?: number | null;
+          medium_type?: string | null;
+          notes?: string | null;
+          observation_time?: string;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Relationships: [];
+      };
+      feeding_records: {
+        Row: {
+          id: string;
+          user_id: string;
+          plant_id: string | null;
+          feeding_date: string;
+          product_name: string;
+          fertilizer_type: FertilizerType;
+          npk_ratio: string | null;
+          formulation: FertilizerFormulation | null;
+          application_method: FeedingApplicationMethod;
+          dosage_amount: number | null;
+          dosage_unit: string | null;
+          dosage_unknown: boolean;
+          source_reference: string | null;
+          next_planned_date: string | null;
+          grower_observation: string | null;
+          nutrient_observation: NutrientObservationType | null;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          user_id: string;
+          plant_id?: string | null;
+          feeding_date?: string;
+          product_name: string;
+          fertilizer_type?: FertilizerType;
+          npk_ratio?: string | null;
+          formulation?: FertilizerFormulation | null;
+          application_method?: FeedingApplicationMethod;
+          dosage_amount?: number | null;
+          dosage_unit?: string | null;
+          dosage_unknown?: boolean;
+          source_reference?: string | null;
+          next_planned_date?: string | null;
+          grower_observation?: string | null;
+          nutrient_observation?: NutrientObservationType | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          user_id?: string;
+          plant_id?: string | null;
+          feeding_date?: string;
+          product_name?: string;
+          fertilizer_type?: FertilizerType;
+          npk_ratio?: string | null;
+          formulation?: FertilizerFormulation | null;
+          application_method?: FeedingApplicationMethod;
+          dosage_amount?: number | null;
+          dosage_unit?: string | null;
+          dosage_unknown?: boolean;
+          source_reference?: string | null;
+          next_planned_date?: string | null;
+          grower_observation?: string | null;
+          nutrient_observation?: NutrientObservationType | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Relationships: [];
+      };
+      propagation_events: {
+        Row: {
+          id: string;
+          user_id: string;
+          parent_plant_id: string;
+          propagation_method: string;
+          started_date: string;
+          medium: string | null;
+          environment: string | null;
+          notes: string | null;
+          expected_followup_date: string | null;
+          status: PropagationStatus;
+          outcome_date: string | null;
+          offspring_plant_id: string | null;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          user_id: string;
+          parent_plant_id: string;
+          propagation_method: string;
+          started_date?: string;
+          medium?: string | null;
+          environment?: string | null;
+          notes?: string | null;
+          expected_followup_date?: string | null;
+          status?: PropagationStatus;
+          outcome_date?: string | null;
+          offspring_plant_id?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          user_id?: string;
+          parent_plant_id?: string;
+          propagation_method?: string;
+          started_date?: string;
+          medium?: string | null;
+          environment?: string | null;
+          notes?: string | null;
+          expected_followup_date?: string | null;
+          status?: PropagationStatus;
+          outcome_date?: string | null;
+          offspring_plant_id?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Relationships: [];
+      };
+      production_cycles: {
+        Row: {
+          id: string;
+          user_id: string;
+          cycle_name: string;
+          plant_slug: string;
+          growing_area: string | null;
+          start_date: string;
+          expected_end_date: string | null;
+          actual_end_date: string | null;
+          stage: ProductionStage;
+          quantity_planted: number;
+          quantity_active: number;
+          quantity_lost: number;
+          quantity_harvested: number;
+          status: ProductionCycleStatus;
+          notes: string | null;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          user_id: string;
+          cycle_name: string;
+          plant_slug: string;
+          growing_area?: string | null;
+          start_date?: string;
+          expected_end_date?: string | null;
+          actual_end_date?: string | null;
+          stage?: ProductionStage;
+          quantity_planted?: number;
+          quantity_active?: number;
+          quantity_lost?: number;
+          quantity_harvested?: number;
+          status?: ProductionCycleStatus;
+          notes?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          user_id?: string;
+          cycle_name?: string;
+          plant_slug?: string;
+          growing_area?: string | null;
+          start_date?: string;
+          expected_end_date?: string | null;
+          actual_end_date?: string | null;
+          stage?: ProductionStage;
+          quantity_planted?: number;
+          quantity_active?: number;
+          quantity_lost?: number;
+          quantity_harvested?: number;
+          status?: ProductionCycleStatus;
+          notes?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Relationships: [];
+      };
+      production_cycle_plants: {
+        Row: {
+          cycle_id: string;
+          plant_id: string;
+          user_id: string;
+          created_at: string;
+        };
+        Insert: {
+          cycle_id: string;
+          plant_id: string;
+          user_id: string;
+          created_at?: string;
+        };
+        Update: {
+          cycle_id?: string;
+          plant_id?: string;
+          user_id?: string;
+          created_at?: string;
+        };
+        Relationships: [];
+      };
+      harvest_records: {
+        Row: {
+          id: string;
+          user_id: string;
+          plant_id: string | null;
+          production_cycle_id: string | null;
+          harvest_date: string;
+          quantity: number;
+          unit: HarvestUnit;
+          harvest_type: HarvestType;
+          quality_observation: HarvestQualityObservation | null;
+          notes: string | null;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          user_id: string;
+          plant_id?: string | null;
+          production_cycle_id?: string | null;
+          harvest_date?: string;
+          quantity: number;
+          unit: HarvestUnit;
+          harvest_type?: HarvestType;
+          quality_observation?: HarvestQualityObservation | null;
+          notes?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          user_id?: string;
+          plant_id?: string | null;
+          production_cycle_id?: string | null;
+          harvest_date?: string;
+          quantity?: number;
+          unit?: HarvestUnit;
+          harvest_type?: HarvestType;
+          quality_observation?: HarvestQualityObservation | null;
+          notes?: string | null;
           created_at?: string;
           updated_at?: string;
         };

@@ -28,6 +28,8 @@ const EVENT_TYPE_SORT_PRIORITY: Record<PlantTimelineEventType, number> = {
   health_follow_up: 90,
   treatment: 80,
   health_assessment: 70,
+  feeding: 65,
+  condition_observation: 62,
   photo: 60,
   growth_observation: 50,
   care: 40,
@@ -234,7 +236,18 @@ export function buildPlantTimeline(params: BuildPlantTimelineParams): {
   events: PlantTimelineEvent[];
   summary: PlantGrowthSummary;
 } {
-  const { plant, parentPlant, photos = [], tasks = [], diagnoses = [], now = new Date() } = params;
+  const {
+    plant,
+    parentPlant,
+    photos = [],
+    tasks = [],
+    diagnoses = [],
+    now = new Date(),
+    conditions = [],
+    feedings = [],
+    propagations = [],
+    harvests = [],
+  } = params;
 
   const rawEvents: PlantTimelineEvent[] = [];
   const seenEventIds = new Set<string>();
@@ -639,6 +652,150 @@ export function buildPlantTimeline(params: BuildPlantTimelineParams): {
   }
 
   // --------------------------------------------------------------------------
+  // 9. Feeding & Fertilization Events (Phase 10)
+  // --------------------------------------------------------------------------
+  for (const feeding of feedings) {
+    if (feeding.plantId && feeding.plantId !== plant.id) continue;
+    const feedDate = feeding.feedingDate;
+    if (!feedDate) continue;
+
+    const descParts: string[] = [];
+    if (feeding.dosageAmount) {
+      descParts.push(`Applied ${feeding.dosageAmount} ${feeding.dosageUnit || ''}`);
+    } else if (feeding.dosageUnknown) {
+      descParts.push('Dosage unrecorded');
+    }
+    descParts.push(`via ${feeding.applicationMethod.replace(/_/g, ' ')}`);
+    if (feeding.npkRatio) {
+      descParts.push(`(NPK ${feeding.npkRatio})`);
+    }
+
+    pushEvent({
+      id: `feeding-${feeding.id}`,
+      plantId: plant.id,
+      eventType: 'feeding',
+      category: 'care',
+      eventDate: feedDate,
+      title: `Fed: ${feeding.productName}`,
+      description: descParts.join(' '),
+      sourceReferenceId: feeding.id,
+      sourceProvenance: 'feeding_records',
+      badge: { text: feeding.fertilizerType.replace(/_/g, ' '), variant: 'accent' },
+      metadata: {
+        taskType: 'fertilize',
+      },
+    });
+  }
+
+  // --------------------------------------------------------------------------
+  // 10. Environmental Condition Observations (Phase 10)
+  // --------------------------------------------------------------------------
+  for (const cond of conditions) {
+    if (cond.plantId && cond.plantId !== plant.id) continue;
+    const condDate = cond.observationTime;
+    if (!condDate) continue;
+
+    const details: string[] = [];
+    if (cond.temperatureCelsius !== undefined && cond.temperatureCelsius !== null) {
+      details.push(`${cond.temperatureCelsius}°C`);
+    }
+    if (cond.relativeHumidityPercent !== undefined && cond.relativeHumidityPercent !== null) {
+      details.push(`${cond.relativeHumidityPercent}% RH`);
+    }
+    if (cond.soilMoisture) {
+      details.push(`Soil: ${cond.soilMoisture.replace(/_/g, ' ')}`);
+    }
+    if (cond.lightLevel) {
+      details.push(`Light: ${cond.lightLevel.replace(/_/g, ' ')}`);
+    }
+
+    pushEvent({
+      id: `condition-${cond.id}`,
+      plantId: plant.id,
+      eventType: 'condition_observation',
+      category: 'growth',
+      eventDate: condDate,
+      title: 'Environment Observation',
+      description: details.length > 0 ? details.join(' • ') : (cond.notes || 'Growing conditions observed.'),
+      sourceReferenceId: cond.id,
+      sourceProvenance: 'growing_conditions',
+      badge: { text: 'Environment', variant: 'neutral' },
+    });
+  }
+
+  // --------------------------------------------------------------------------
+  // 11. Propagation Events (Phase 10)
+  // --------------------------------------------------------------------------
+  for (const prop of propagations) {
+    if (prop.parentPlantId === plant.id || prop.offspringPlantId === plant.id) {
+      const isParent = prop.parentPlantId === plant.id;
+      const propDate = prop.startedDate;
+      if (propDate) {
+        pushEvent({
+          id: `prop-start-${prop.id}`,
+          plantId: plant.id,
+          eventType: 'propagation',
+          category: 'propagation',
+          eventDate: propDate,
+          title: isParent ? `Propagated (${prop.propagationMethod})` : `Propagated From Parent`,
+          description: isParent
+            ? `Propagation initiated via ${prop.propagationMethod}${prop.medium ? ` in ${prop.medium}` : ''}.`
+            : `Originated from parent plant via ${prop.propagationMethod}.`,
+          sourceReferenceId: prop.id,
+          sourceProvenance: 'propagation_events',
+          badge: { text: prop.propagationMethod, variant: 'accent' },
+        });
+      }
+      if (prop.outcomeDate && (prop.status === 'success' || prop.status === 'failure')) {
+        pushEvent({
+          id: `prop-outcome-${prop.id}`,
+          plantId: plant.id,
+          eventType: 'propagation',
+          category: 'propagation',
+          eventDate: prop.outcomeDate,
+          title: `Propagation: ${prop.status === 'success' ? 'Successful' : 'Failed'}`,
+          description: prop.notes || `Propagation attempt marked as ${prop.status}.`,
+          sourceReferenceId: prop.id,
+          sourceProvenance: 'propagation_events',
+          badge: {
+            text: prop.status === 'success' ? 'Rooted / Success' : 'Failed',
+            variant: prop.status === 'success' ? 'success' : 'critical',
+          },
+        });
+      }
+    }
+  }
+
+  // --------------------------------------------------------------------------
+  // 12. Harvest Records (Phase 10)
+  // --------------------------------------------------------------------------
+  for (const h of harvests) {
+    if (h.plantId && h.plantId !== plant.id) continue;
+    const hDate = h.harvestDate;
+    if (!hDate) continue;
+
+    pushEvent({
+      id: `harvest-rec-${h.id}`,
+      plantId: plant.id,
+      eventType: 'harvest',
+      category: 'harvest',
+      eventDate: hDate,
+      title: `Harvest: ${h.quantity} ${h.unit}`,
+      description: `${h.harvestType === 'cut_and_come_again' ? 'Cut-and-come-again' : 'Harvest'} logged (${h.quantity} ${h.unit})${h.qualityObservation ? ` — Quality: ${h.qualityObservation}` : ''}.${h.notes ? ` ${h.notes}` : ''}`,
+      sourceReferenceId: h.id,
+      sourceProvenance: 'harvest_records',
+      badge: {
+        text: `${h.quantity} ${h.unit}`,
+        variant: 'success',
+      },
+      metadata: {
+        actualHarvestDate: h.harvestDate,
+        harvestYield: `${h.quantity} ${h.unit}`,
+      },
+    });
+  }
+
+  // --------------------------------------------------------------------------
   // Chronological Sorting (Newest First) with Deterministic Tie-Breaking
   // --------------------------------------------------------------------------
   rawEvents.sort((a, b) => {
@@ -733,6 +890,7 @@ export function filterTimelineEvents(
         return (
           e.category === 'growth' ||
           e.eventType === 'growth_observation' ||
+          e.eventType === 'condition_observation' ||
           e.eventType === 'stage_change' ||
           e.eventType === 'germination' ||
           e.eventType === 'transplant' ||
@@ -749,7 +907,7 @@ export function filterTimelineEvents(
           e.eventType === 'health_follow_up'
         );
       case 'care':
-        return e.category === 'care' || e.eventType === 'care';
+        return e.category === 'care' || e.eventType === 'care' || e.eventType === 'feeding';
       case 'harvest':
         return e.category === 'harvest' || e.eventType === 'harvest';
       case 'propagation':

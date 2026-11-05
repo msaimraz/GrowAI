@@ -29,7 +29,16 @@ import {
   Ruler,
   AlertCircle,
   HelpCircle,
+  Thermometer,
+  Droplets,
+  ShoppingBag,
 } from 'lucide-react';
+import {
+  GrowingConditionObservation,
+  FeedingRecord,
+  PropagationEvent,
+  HarvestRecord,
+} from '@/types/grow-intelligence';
 
 interface PlantTimelineTabProps {
   plant: UserPlant;
@@ -39,6 +48,10 @@ interface PlantTimelineTabProps {
   tasks?: CareTask[];
   onRefreshNeeded?: () => void;
   showFullTimelineLink?: boolean;
+  conditions?: GrowingConditionObservation[];
+  feedings?: FeedingRecord[];
+  propagations?: PropagationEvent[];
+  harvests?: HarvestRecord[];
 }
 
 export function PlantTimelineTab({
@@ -49,6 +62,10 @@ export function PlantTimelineTab({
   tasks = [],
   onRefreshNeeded,
   showFullTimelineLink = true,
+  conditions = [],
+  feedings = [],
+  propagations = [],
+  harvests = [],
 }: PlantTimelineTabProps) {
   const [photos, setPhotos] = useState<PlantPhoto[]>([]);
   const [loadingPhotos, setLoadingPhotos] = useState<boolean>(true);
@@ -83,6 +100,10 @@ export function PlantTimelineTab({
     photos,
     tasks: plantTasks,
     diagnoses,
+    conditions,
+    feedings,
+    propagations,
+    harvests,
   });
 
   const filteredEvents = filterTimelineEvents(events, filter);
@@ -122,6 +143,10 @@ export function PlantTimelineTab({
         return <CheckCircle2 size={16} className="text-emerald-600" />;
       case 'care':
         return <CheckCircle2 size={16} className="text-blue-600" />;
+      case 'feeding':
+        return <Droplets size={16} className="text-emerald-600" />;
+      case 'condition_observation':
+        return <Thermometer size={16} className="text-amber-600" />;
       case 'propagation':
         return <GitBranch size={16} className="text-purple-600" />;
       case 'harvest':

@@ -21,9 +21,19 @@ import {
   generateHealthFollowUpReminders,
   generateTreatmentReminders,
   generateMilestoneReminders,
+  generateFeedingReminders,
+  generatePropagationReminders,
+  generateHarvestMilestoneReminders,
+  generateDailyGrowCheckReminders,
 } from './reminder-generator';
 import { CareTask, UserPlant } from '@/types/garden';
 import { SavedDiagnosisRecord } from '@/types/diagnosis';
+import {
+  FeedingRecord,
+  PropagationEvent,
+  ProductionCycle,
+  GrowingConditionObservation,
+} from '@/types/grow-intelligence';
 import type { DatabaseSchema } from '@/lib/supabase';
 
 const DEMO_REMINDERS_KEY = 'growai_demo_reminders_v1';
@@ -1034,7 +1044,13 @@ export async function updateNotificationPreferences(
 export async function syncRemindersWithGarden(
   plants: UserPlant[],
   tasks: CareTask[],
-  diagnoses: SavedDiagnosisRecord[]
+  diagnoses: SavedDiagnosisRecord[],
+  options?: {
+    feedings?: FeedingRecord[];
+    propagations?: PropagationEvent[];
+    productionCycles?: ProductionCycle[];
+    conditions?: GrowingConditionObservation[];
+  }
 ): Promise<{ syncedCount: number }> {
   const currentRes = await fetchUserReminders();
   const existingReminders = currentRes.reminders;
@@ -1054,6 +1070,10 @@ export async function syncRemindersWithGarden(
     ...generateHealthFollowUpReminders(diagnoses, plants),
     ...generateTreatmentReminders(diagnoses, plants),
     ...generateMilestoneReminders(plants),
+    ...(options?.feedings ? generateFeedingReminders(options.feedings, plants) : []),
+    ...(options?.propagations ? generatePropagationReminders(options.propagations, plants) : []),
+    ...(options?.productionCycles || plants ? generateHarvestMilestoneReminders(plants, options?.productionCycles || []) : []),
+    ...(options?.conditions ? generateDailyGrowCheckReminders(plants, options.conditions) : []),
   ];
 
   let syncedCount = 0;

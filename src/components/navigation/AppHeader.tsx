@@ -12,6 +12,7 @@ import {
   Layers,
   BookOpen,
   LayoutDashboard,
+  LineChart,
   WifiOff,
   DownloadCloud,
 } from 'lucide-react';
@@ -53,6 +54,7 @@ export function AppHeader({
 
   const navItems = [
     { label: 'Dashboard', href: '/app', icon: LayoutDashboard },
+    { label: 'Grow Intelligence', href: '/app/grow-intelligence', icon: LineChart },
     { label: 'My Garden & Tracker', href: '/app/my-garden', icon: Sprout },
     { label: 'Plant Library', href: '/app/plants', icon: Library },
     { label: 'Vertical Planner', href: '/app/planner', icon: Layers },

@@ -11,6 +11,10 @@ export type ReminderSourceType =
   | 'growth_milestone'
   | 'planting_milestone'
   | 'health_monitoring'
+  | 'feeding'
+  | 'propagation'
+  | 'harvest'
+  | 'production'
   | 'manual';
 
 export type ReminderType =
@@ -19,6 +23,10 @@ export type ReminderType =
   | 'treatment'
   | 'growth'
   | 'milestone'
+  | 'feeding'
+  | 'propagation'
+  | 'harvest'
+  | 'production'
   | 'custom';
 
 export type ReminderStatus =

@@ -31,6 +31,22 @@ import { GardenHealthOverviewCard } from '@/components/garden/GardenHealthOvervi
 import { PlantHealthTab } from '@/components/garden/PlantHealthTab';
 import { PlantTimelineTab } from '@/components/garden/PlantTimelineTab';
 import { PlantRemindersCard } from '@/components/garden/PlantRemindersCard';
+import { PlantIntelligenceTab } from '@/components/garden/PlantIntelligenceTab';
+import { PlantConditionsTab } from '@/components/garden/PlantConditionsTab';
+import { PlantFeedingTab } from '@/components/garden/PlantFeedingTab';
+import { PlantProductionTab } from '@/components/garden/PlantProductionTab';
+import {
+  fetchGrowingConditions,
+  fetchFeedingRecords,
+  fetchPropagationEvents,
+  fetchHarvestRecords,
+} from '@/lib/grow-intelligence/storage';
+import {
+  GrowingConditionObservation,
+  FeedingRecord,
+  PropagationEvent,
+  HarvestRecord,
+} from '@/types/grow-intelligence';
 import { fetchAllGardenDiagnoses } from '@/lib/ai-doctor/persistence';
 import {
   getGardenHealthOverview,
@@ -65,6 +81,8 @@ import {
   Activity,
   GitBranch,
   Bell,
+  Thermometer,
+  ShoppingBag,
 } from 'lucide-react';
 
 import { usePwa } from '@/context/PwaContext';
@@ -108,7 +126,13 @@ function MyGardenContent() {
   const [careTasks, setCareTasks] = useState<CareTask[]>([]);
   const [diagnosesByPlantId, setDiagnosesByPlantId] = useState<Record<string, SavedDiagnosisRecord[]>>({});
   const [isCloud, setIsCloud] = useState<boolean>(false);
-  const [activeTab, setActiveTab] = useState<'journal' | 'photos' | 'health' | 'timeline' | 'reminders'>('journal');
+  const [activeTab, setActiveTab] = useState<
+    'journal' | 'photos' | 'health' | 'timeline' | 'reminders' | 'intelligence' | 'conditions' | 'feeding' | 'production'
+  >('journal');
+  const [conditions, setConditions] = useState<GrowingConditionObservation[]>([]);
+  const [feedings, setFeedings] = useState<FeedingRecord[]>([]);
+  const [propagations, setPropagations] = useState<PropagationEvent[]>([]);
+  const [harvests, setHarvests] = useState<HarvestRecord[]>([]);
   const [showPropagationModal, setShowPropagationModal] = useState<boolean>(false);
   const [noteText, setNoteText] = useState('');
   const [noteHeight, setNoteHeight] = useState<string>('');
@@ -123,10 +147,14 @@ function MyGardenContent() {
     setLoading(true);
     setErrorBanner(null);
     try {
-      const [gardenRes, tasksRes, healthRes] = await Promise.all([
+      const [gardenRes, tasksRes, healthRes, condRes, feedRes, propRes, harvRes] = await Promise.all([
         fetchUserGarden(),
         fetchCareTasks(),
         fetchAllGardenDiagnoses(),
+        fetchGrowingConditions(),
+        fetchFeedingRecords(),
+        fetchPropagationEvents(),
+        fetchHarvestRecords(),
       ]);
 
       setIsCloud(gardenRes.isCloud);
@@ -152,6 +180,11 @@ function MyGardenContent() {
       if (healthRes.diagnosesByPlantId) {
         setDiagnosesByPlantId(healthRes.diagnosesByPlantId);
       }
+
+      setConditions(condRes.observations || []);
+      setFeedings(feedRes.records || []);
+      setPropagations(propRes.events || []);
+      setHarvests(harvRes.records || []);
     } catch (err: any) {
       setErrorBanner(err.message || 'Error loading garden.');
     } finally {
@@ -167,6 +200,14 @@ function MyGardenContent() {
       setActiveTab('timeline');
     } else if (tabParam === 'reminders') {
       setActiveTab('reminders');
+    } else if (tabParam === 'intelligence') {
+      setActiveTab('intelligence');
+    } else if (tabParam === 'conditions') {
+      setActiveTab('conditions');
+    } else if (tabParam === 'feeding') {
+      setActiveTab('feeding');
+    } else if (tabParam === 'production') {
+      setActiveTab('production');
     }
     setNoteDate(new Date().toISOString().split('T')[0]);
     loadGardenData();
@@ -632,6 +673,19 @@ function MyGardenContent() {
                     </div>
 
                     <div className="flex items-center gap-2">
+                      <button
+                        type="button"
+                        onClick={() => setActiveTab('intelligence')}
+                        className={`text-xs sm:text-sm font-semibold px-4 py-2.5 rounded-xl border transition-colors flex items-center gap-1.5 min-h-[44px] cursor-pointer ${
+                          activeTab === 'intelligence'
+                            ? 'bg-[#144229] text-white border-[#144229]'
+                            : 'bg-white text-[#144229] border-[#cfdfcf] hover:bg-[#eef5ee]'
+                        }`}
+                        title="View Grow Intelligence synthesis"
+                      >
+                        <Sparkles size={15} />
+                        <span>Intelligence</span>
+                      </button>
                       <Link
                         href={`/app/my-garden/${activePlant.id}/timeline`}
                         className="text-xs sm:text-sm font-semibold text-[#144229] hover:bg-[#eef5ee] px-4 py-2.5 rounded-xl border border-[#cfdfcf] bg-white transition-colors flex items-center gap-1.5 min-h-[44px]"
@@ -789,73 +843,125 @@ function MyGardenContent() {
                   </div>
                 </div>
 
-                {/* Journal View Switcher: Care & Observations vs Photo Journal vs Health */}
-                <div className="flex flex-wrap items-center gap-2.5 border-b border-[#ded5c5] pb-3">
+                {/* Journal View Switcher: Intelligence vs Conditions vs Feeding vs Production vs Care vs Photos vs Health vs Timeline vs Reminders */}
+                <div className="flex flex-wrap items-center gap-2 border-b border-[#ded5c5] pb-3">
+                  <button
+                    type="button"
+                    onClick={() => setActiveTab('intelligence')}
+                    className={`inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all cursor-pointer min-h-[40px] ${
+                      activeTab === 'intelligence'
+                        ? 'bg-[#144229] text-white shadow-xs'
+                        : 'bg-white text-[#526a57] hover:bg-[#eef5ee] hover:text-[#144229] border border-[#ded5c5]'
+                    }`}
+                  >
+                    <Sparkles size={15} />
+                    <span>Intelligence</span>
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={() => setActiveTab('conditions')}
+                    className={`inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all cursor-pointer min-h-[40px] ${
+                      activeTab === 'conditions'
+                        ? 'bg-[#144229] text-white shadow-xs'
+                        : 'bg-white text-[#526a57] hover:bg-[#eef5ee] hover:text-[#144229] border border-[#ded5c5]'
+                    }`}
+                  >
+                    <Thermometer size={15} />
+                    <span>Conditions</span>
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={() => setActiveTab('feeding')}
+                    className={`inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all cursor-pointer min-h-[40px] ${
+                      activeTab === 'feeding'
+                        ? 'bg-[#144229] text-white shadow-xs'
+                        : 'bg-white text-[#526a57] hover:bg-[#eef5ee] hover:text-[#144229] border border-[#ded5c5]'
+                    }`}
+                  >
+                    <Droplets size={15} />
+                    <span>Feeding</span>
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={() => setActiveTab('production')}
+                    className={`inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all cursor-pointer min-h-[40px] ${
+                      activeTab === 'production'
+                        ? 'bg-[#144229] text-white shadow-xs'
+                        : 'bg-white text-[#526a57] hover:bg-[#eef5ee] hover:text-[#144229] border border-[#ded5c5]'
+                    }`}
+                  >
+                    <ShoppingBag size={15} />
+                    <span>Production & Yield</span>
+                  </button>
+
                   <button
                     type="button"
                     onClick={() => setActiveTab('journal')}
-                    className={`inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold transition-all cursor-pointer min-h-[44px] ${
+                    className={`inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all cursor-pointer min-h-[40px] ${
                       activeTab === 'journal'
                         ? 'bg-[#144229] text-white shadow-xs'
                         : 'bg-white text-[#526a57] hover:bg-[#eef5ee] hover:text-[#144229] border border-[#ded5c5]'
                     }`}
                   >
-                    <Clock size={16} />
-                    <span>Care & Observations ({activePlant.notes?.length || 0})</span>
+                    <Clock size={15} />
+                    <span>Care ({activePlant.notes?.length || 0})</span>
                   </button>
 
                   <button
                     type="button"
                     onClick={() => setActiveTab('photos')}
-                    className={`inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold transition-all cursor-pointer min-h-[44px] ${
+                    className={`inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all cursor-pointer min-h-[40px] ${
                       activeTab === 'photos'
                         ? 'bg-[#144229] text-white shadow-xs'
                         : 'bg-white text-[#526a57] hover:bg-[#eef5ee] hover:text-[#144229] border border-[#ded5c5]'
                     }`}
                   >
-                    <Camera size={16} />
-                    <span>Photo Journal</span>
+                    <Camera size={15} />
+                    <span>Photos</span>
                   </button>
 
                   <button
                     type="button"
                     onClick={() => setActiveTab('health')}
-                    className={`inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold transition-all cursor-pointer min-h-[44px] ${
+                    className={`inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all cursor-pointer min-h-[40px] ${
                       activeTab === 'health'
                         ? 'bg-[#144229] text-white shadow-xs'
                         : 'bg-white text-[#526a57] hover:bg-[#eef5ee] hover:text-[#144229] border border-[#ded5c5]'
                     }`}
                   >
-                    <Activity size={16} />
-                    <span>Health & Follow-ups ({activePlantDiagnoses.length})</span>
+                    <Activity size={15} />
+                    <span>Health ({activePlantDiagnoses.length})</span>
                     {activePlantHealthSummary.status !== 'unknown' && (
-                      <span className="w-2 h-2 rounded-full bg-emerald-400" />
+                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
                     )}
                   </button>
 
                   <button
                     type="button"
                     onClick={() => setActiveTab('timeline')}
-                    className={`inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold transition-all cursor-pointer min-h-[44px] ${
+                    className={`inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all cursor-pointer min-h-[40px] ${
                       activeTab === 'timeline'
                         ? 'bg-[#144229] text-white shadow-xs'
                         : 'bg-white text-[#526a57] hover:bg-[#eef5ee] hover:text-[#144229] border border-[#ded5c5]'
                     }`}
                   >
-                    <GitBranch size={16} />
-                    <span>Growth Timeline</span>
+                    <GitBranch size={15} />
+                    <span>Timeline</span>
                   </button>
 
                   <button
                     type="button"
                     onClick={() => setActiveTab('reminders')}
-                    className={`inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold transition-all cursor-pointer min-h-[44px] ${
+                    className={`inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all cursor-pointer min-h-[40px] ${
                       activeTab === 'reminders'
                         ? 'bg-[#144229] text-white shadow-xs'
                         : 'bg-white text-[#526a57] hover:bg-[#eef5ee] hover:text-[#144229] border border-[#ded5c5]'
                     }`}
                   >
-                    <Bell size={16} />
+                    <Bell size={15} />
                     <span>Reminders</span>
                   </button>
                 </div>
@@ -1006,7 +1112,50 @@ function MyGardenContent() {
                   </>
                 )}
 
-                {/* Tab 2: Photo Journal */}
+                {/* Tab: Grow Intelligence Synthesis */}
+                {activeTab === 'intelligence' && (
+                  <PlantIntelligenceTab
+                    plant={activePlant}
+                    diagnoses={activePlantDiagnoses}
+                    conditions={conditions}
+                    feedings={feedings}
+                    propagations={propagations}
+                    harvests={harvests}
+                    onNavigateTab={(tab) => setActiveTab(tab as any)}
+                  />
+                )}
+
+                {/* Tab: Growing Conditions */}
+                {activeTab === 'conditions' && (
+                  <PlantConditionsTab
+                    plant={activePlant}
+                    conditions={conditions}
+                    onConditionAdded={loadGardenData}
+                  />
+                )}
+
+                {/* Tab: Feeding & Fertilization */}
+                {activeTab === 'feeding' && (
+                  <PlantFeedingTab
+                    plant={activePlant}
+                    feedings={feedings}
+                    onFeedingAdded={loadGardenData}
+                  />
+                )}
+
+                {/* Tab: Production, Propagation & Yield */}
+                {activeTab === 'production' && (
+                  <PlantProductionTab
+                    plant={activePlant}
+                    allPlants={userPlants}
+                    propagations={propagations}
+                    harvests={harvests}
+                    onDataChanged={loadGardenData}
+                    onSelectPlant={(plantId) => setSelectedPlantId(plantId)}
+                  />
+                )}
+
+                {/* Tab: Photo Journal */}
                 {activeTab === 'photos' && (
                   <PlantPhotoGallery
                     plantId={activePlant.id}
@@ -1016,7 +1165,7 @@ function MyGardenContent() {
                   />
                 )}
 
-                {/* Tab 3: Health & Follow-ups */}
+                {/* Tab: Health & Follow-ups */}
                 {activeTab === 'health' && (
                   <PlantHealthTab
                     plant={activePlant}
@@ -1025,7 +1174,7 @@ function MyGardenContent() {
                   />
                 )}
 
-                {/* Tab 4: Growth Timeline */}
+                {/* Tab: Growth Timeline */}
                 {activeTab === 'timeline' && (
                   <PlantTimelineTab
                     plant={activePlant}
@@ -1037,11 +1186,15 @@ function MyGardenContent() {
                     isCloud={isCloud}
                     diagnoses={activePlantDiagnoses}
                     tasks={careTasks}
+                    conditions={conditions}
+                    feedings={feedings}
+                    propagations={propagations}
+                    harvests={harvests}
                     onRefreshNeeded={loadGardenData}
                   />
                 )}
 
-                {/* Tab 5: Plant Reminders */}
+                {/* Tab: Plant Reminders */}
                 {activeTab === 'reminders' && (
                   <PlantRemindersCard
                     plant={activePlant}

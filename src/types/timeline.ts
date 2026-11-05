@@ -6,6 +6,7 @@
 
 import { GrowthStage, TaskType, PropagationMethod, PlantPhoto, CareTask, UserPlant } from './garden';
 import { SavedDiagnosisRecord, TreatmentActionType, TreatmentStatus, FollowUpOutcome, PlantHealthStatus } from './diagnosis';
+import { GrowingConditionObservation, FeedingRecord, PropagationEvent, HarvestRecord } from './grow-intelligence';
 
 export type PlantTimelineEventType =
   | 'plant_added'
@@ -18,6 +19,8 @@ export type PlantTimelineEventType =
   | 'treatment'
   | 'health_follow_up'
   | 'care'
+  | 'feeding'
+  | 'condition_observation'
   | 'propagation'
   | 'harvest'
   | 'stage_change';
@@ -95,7 +98,12 @@ export interface PlantTimelineEvent {
     | 'care_tasks'
     | 'diagnosis_records'
     | 'diagnosis_treatments'
-    | 'diagnosis_follow_ups';
+    | 'diagnosis_follow_ups'
+    | 'growing_conditions'
+    | 'feeding_records'
+    | 'propagation_events'
+    | 'harvest_records'
+    | 'production_cycles';
   badge?: PlantTimelineBadge;
   media?: PlantTimelineMedia;
   metadata?: PlantTimelineMetadata;
@@ -130,5 +138,9 @@ export interface BuildPlantTimelineParams {
   tasks?: CareTask[];
   diagnoses?: SavedDiagnosisRecord[];
   now?: Date;
+  conditions?: GrowingConditionObservation[];
+  feedings?: FeedingRecord[];
+  propagations?: PropagationEvent[];
+  harvests?: HarvestRecord[];
 }
 
