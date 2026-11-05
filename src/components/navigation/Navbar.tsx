@@ -3,7 +3,18 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { Logo } from '@/components/ui/Logo';
-import { Menu, X, ArrowRight, Sparkles, BookOpen, Layers, Library, DownloadCloud } from 'lucide-react';
+import {
+  Menu,
+  X,
+  ArrowRight,
+  Sparkles,
+  BookOpen,
+  Layers,
+  Library,
+  DownloadCloud,
+  Compass,
+  ClipboardList,
+} from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
 import { usePwa } from '@/context/PwaContext';
 
@@ -14,24 +25,26 @@ export function Navbar() {
 
   const navLinks = [
     { label: 'Plant Library', href: '/app/plants', icon: Library },
+    { label: 'Grow Intelligence', href: '/app/grow-intelligence', icon: Compass },
+    { label: 'Grow Plans', href: '/app/grow-plans', icon: ClipboardList },
     { label: 'AI Doctor', href: '/app/ai-doctor', icon: Sparkles },
-    { label: 'Vertical Planner', href: '/app/planner', icon: Layers },
-    { label: 'Sustainability & Learn', href: '/app/learn', icon: BookOpen },
+    { label: 'Planner', href: '/app/planner', icon: Layers },
+    { label: 'Learn', href: '/app/learn', icon: BookOpen },
   ];
 
   return (
-    <header className="sticky top-0 z-40 w-full border-b border-[#e6ded2] bg-[#fbf9f4]/95 backdrop-blur-md">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+    <header className="sticky top-0 z-40 w-full border-b border-[#163A2A]/10 bg-[#F6F1E8]/95 backdrop-blur-sm">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-18 flex items-center justify-between">
         {/* Logo */}
         <Logo size="md" />
 
-        {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center gap-8" aria-label="Main navigation">
+        {/* Desktop Navigation — Magazine Header Style */}
+        <nav className="hidden lg:flex items-center gap-6 xl:gap-8" aria-label="Main navigation">
           {navLinks.map((link) => (
             <Link
               key={link.href}
               href={link.href}
-              className="text-sm font-medium text-[#2d4032] hover:text-[#144229] transition-colors py-2"
+              className="text-xs font-mono uppercase tracking-wider text-[#263028]/80 hover:text-[#163A2A] transition-colors py-2 whitespace-nowrap"
             >
               {link.label}
             </Link>
@@ -39,25 +52,14 @@ export function Navbar() {
         </nav>
 
         {/* Right CTA */}
-        <div className="hidden md:flex items-center gap-3">
-          {canInstall && (
+        <div className="hidden lg:flex items-center gap-3">
+          {(canInstall || isIos) && (
             <button
               type="button"
-              onClick={promptInstall}
-              className="inline-flex items-center gap-1.5 px-3.5 py-2 text-sm font-semibold bg-[#eef5ee] text-[#144229] hover:bg-[#dfeadf] border border-[#cfe0cf] rounded-xl transition-all cursor-pointer min-h-[40px]"
+              onClick={canInstall ? promptInstall : () => setShowIosInstructions(true)}
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-mono tracking-wide text-[#163A2A] border border-[#163A2A]/20 hover:border-[#163A2A] rounded-[4px] transition-colors cursor-pointer"
             >
-              <DownloadCloud size={16} />
-              <span>Install App</span>
-            </button>
-          )}
-
-          {isIos && (
-            <button
-              type="button"
-              onClick={() => setShowIosInstructions(true)}
-              className="inline-flex items-center gap-1.5 px-3.5 py-2 text-sm font-semibold bg-[#eef5ee] text-[#144229] hover:bg-[#dfeadf] border border-[#cfe0cf] rounded-xl transition-all cursor-pointer min-h-[40px]"
-            >
-              <DownloadCloud size={16} />
+              <DownloadCloud size={13} />
               <span>Install App</span>
             </button>
           )}
@@ -65,25 +67,26 @@ export function Navbar() {
           {user ? (
             <Link
               href="/app"
-              className="text-sm font-medium text-[#1b5837] hover:text-[#0f2e1d] px-3.5 py-2 rounded-lg transition-colors flex items-center gap-1.5 min-h-[40px]"
+              className="text-xs font-mono text-[#263028] hover:text-[#163A2A] px-2.5 py-1.5 transition-colors flex items-center gap-1.5"
             >
-              <span className="w-2 h-2 rounded-full bg-[#1b5837]" />
-              <span>{user.email?.split('@')[0]}</span>
+              <span className="w-1.5 h-1.5 rounded-full bg-[#C86B4A]" />
+              <span className="truncate max-w-[120px]">{user.email?.split('@')[0]}</span>
             </Link>
           ) : (
             <Link
               href="/auth/login"
-              className="text-sm font-semibold text-[#1b5837] hover:text-[#0f2e1d] px-3.5 py-2 rounded-lg transition-colors min-h-[40px] flex items-center"
+              className="text-xs font-mono uppercase tracking-wider text-[#263028]/80 hover:text-[#163A2A] px-2.5 py-1.5 transition-colors"
             >
               Sign In
             </Link>
           )}
+
           <Link
             href="/app"
-            className="inline-flex items-center gap-2 text-sm font-semibold bg-[#144229] text-[#f4f8f4] hover:bg-[#0f2e1d] px-5 py-2.5 rounded-xl shadow-xs transition-all hover:shadow hover:-translate-y-0.5 active:translate-y-0 min-h-[44px]"
+            className="inline-flex items-center gap-1.5 text-xs font-medium bg-[#163A2A] text-[#F6F1E8] hover:bg-[#1f4e39] px-4 py-2 rounded-[4px] transition-colors"
           >
-            Launch App
-            <ArrowRight size={16} />
+            <span>Launch App</span>
+            <ArrowRight size={13} />
           </Link>
         </div>
 
@@ -91,17 +94,17 @@ export function Navbar() {
         <button
           type="button"
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          className="md:hidden p-2.5 rounded-xl text-[#1c261e] hover:bg-[#eee8dc] focus:outline-none focus:ring-2 focus:ring-[#1b5837] min-h-[44px] min-w-[44px] flex items-center justify-center cursor-pointer"
+          className="lg:hidden p-2 rounded-[4px] text-[#263028] hover:bg-[#163A2A]/5 focus:outline-none min-h-[44px] min-w-[44px] flex items-center justify-center cursor-pointer"
           aria-expanded={mobileMenuOpen}
           aria-label="Toggle navigation menu"
         >
-          {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+          {mobileMenuOpen ? <X size={22} /> : <Menu size={22} />}
         </button>
       </div>
 
       {/* Mobile Drawer */}
       {mobileMenuOpen && (
-        <div className="md:hidden border-b border-[#e6ded2] bg-[#fbf9f4] px-4 pt-3 pb-6 space-y-4">
+        <div className="lg:hidden border-b border-[#163A2A]/10 bg-[#F6F1E8] px-4 pt-4 pb-6 space-y-4">
           {(canInstall || isIos) && (
             <button
               type="button"
@@ -110,14 +113,14 @@ export function Navbar() {
                 if (canInstall) promptInstall();
                 else if (isIos) setShowIosInstructions(true);
               }}
-              className="w-full flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-[#257a4d] text-white font-semibold text-sm shadow-xs cursor-pointer min-h-[44px]"
+              className="w-full flex items-center justify-center gap-2 py-2.5 px-4 rounded-[4px] border border-[#163A2A]/20 text-[#163A2A] font-mono text-xs cursor-pointer min-h-[44px]"
             >
-              <DownloadCloud size={18} />
+              <DownloadCloud size={15} />
               <span>Install GrowAI Web App</span>
             </button>
           )}
 
-          <div className="space-y-1">
+          <div className="space-y-0.5 divide-y divide-[#163A2A]/5">
             {navLinks.map((link) => {
               const Icon = link.icon;
               return (
@@ -125,27 +128,31 @@ export function Navbar() {
                   key={link.href}
                   href={link.href}
                   onClick={() => setMobileMenuOpen(false)}
-                  className="flex items-center gap-3 px-3.5 py-3 rounded-xl text-base font-medium text-[#1c261e] hover:bg-[#eee8dc] min-h-[44px]"
+                  className="flex items-center justify-between py-3 text-sm font-medium text-[#263028] hover:text-[#163A2A] min-h-[44px]"
                 >
-                  <Icon size={19} className="text-[#1b5837]" />
-                  {link.label}
+                  <span className="flex items-center gap-2.5">
+                    <Icon size={16} className="text-[#687268]" />
+                    {link.label}
+                  </span>
+                  <span className="text-[#687268]/40 text-xs">→</span>
                 </Link>
               );
             })}
           </div>
-          <div className="pt-3 border-t border-[#e6ded2] flex flex-col gap-2.5">
+
+          <div className="pt-3 border-t border-[#163A2A]/10 flex flex-col gap-2">
             <Link
               href="/app"
               onClick={() => setMobileMenuOpen(false)}
-              className="flex items-center justify-center gap-2 w-full text-center font-semibold bg-[#144229] text-[#f4f8f4] py-3 rounded-xl shadow-xs min-h-[44px]"
+              className="flex items-center justify-center gap-2 w-full text-center font-medium bg-[#163A2A] text-[#F6F1E8] py-2.5 rounded-[4px] text-xs min-h-[44px]"
             >
-              Launch Dashboard
-              <ArrowRight size={16} />
+              <span>Launch Dashboard</span>
+              <ArrowRight size={14} />
             </Link>
             <Link
               href="/app/plants"
               onClick={() => setMobileMenuOpen(false)}
-              className="flex items-center justify-center w-full text-center font-medium text-[#1b5837] py-3 rounded-xl border border-[#cfdfcf] bg-white min-h-[44px]"
+              className="flex items-center justify-center w-full text-center font-mono text-xs text-[#263028] py-2.5 rounded-[4px] border border-[#163A2A]/15 bg-transparent min-h-[44px]"
             >
               Browse 16 Curated Plants
             </Link>

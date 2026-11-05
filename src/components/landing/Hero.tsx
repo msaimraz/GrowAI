@@ -1,177 +1,148 @@
 import React from 'react';
 import Link from 'next/link';
-import { ArrowRight, Sparkles, Sprout, Layers, ShieldCheck, Sun, Droplets, CheckCircle2 } from 'lucide-react';
-import { Badge } from '@/components/ui/Badge';
+import { ArrowRight, Lock, CheckCircle2 } from 'lucide-react';
 
 export function Hero() {
   return (
-    <section className="relative overflow-hidden bg-[#fbf9f4] pt-12 pb-20 lg:pt-20 lg:pb-28 border-b border-[#e5dfd3]">
-      {/* Subtle Botanical Pattern */}
-      <div className="absolute inset-0 bg-botanical-pattern opacity-60 pointer-events-none" />
-
+    <section className="relative overflow-hidden bg-[#F6F1E8] pt-16 pb-20 lg:pt-28 lg:pb-32 border-b border-[#163A2A]/10">
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
-          {/* Left Column: Headlines & Actions */}
-          <div className="lg:col-span-7 space-y-6">
-            <div className="inline-flex items-center gap-2">
-              <Badge variant="sage" size="md">
-                <Sparkles size={13} className="text-[#1b5837]" />
-                Next-Gen Home Horticulture
-              </Badge>
-              <span className="text-xs font-medium text-[#4a6b52]">
-                16 Curated Balcony & Vertical Species
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+          {/* Left Column: Large Editorial Statement */}
+          <div className="lg:col-span-6 space-y-8">
+            <div className="space-y-6">
+              <span className="text-[11px] font-mono tracking-widest text-[#687268] uppercase block">
+                INTELLIGENT GROWING
               </span>
+
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-serif text-[#163A2A] tracking-tight leading-[1.08]">
+                Grow Smarter.
+                <br />
+                Grow With
+                <br />
+                <span className="italic font-normal">Intelligence.</span>
+              </h1>
+
+              <p className="text-base sm:text-lg text-[#263028]/85 leading-relaxed max-w-xl font-normal">
+                GrowAI brings plant knowledge, health intelligence, space planning, growth tracking, and adaptive growing plans into one system.
+              </p>
             </div>
-
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-serif font-bold text-[#0c2417] tracking-tight leading-[1.12]">
-              Grow Smarter.{' '}
-              <span className="italic font-normal text-[#1e613b] underline decoration-[#9ac4a6] decoration-wavy decoration-1 underline-offset-8">
-                Grow Greener.
-              </span>
-            </h1>
-
-            <p className="text-lg sm:text-xl text-[#394f3f] leading-relaxed max-w-2xl font-normal">
-              Empowering home growers, balcony farmers, and indoor enthusiasts with precision botanical guidance, tiered vertical rack planning, and sustainable 3R practices.
-            </p>
 
             {/* CTAs */}
-            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 pt-2">
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 pt-2">
               <Link
                 href="/app"
-                className="inline-flex items-center justify-center gap-2 text-base font-semibold bg-[#144229] text-[#f4f8f4] hover:bg-[#0c2417] px-7 py-3.5 rounded-xl shadow-md hover:shadow-lg transition-all hover:-translate-y-0.5 active:translate-y-0"
+                className="inline-flex items-center justify-center gap-2 text-sm font-medium bg-[#163A2A] text-[#F6F1E8] hover:bg-[#1f4e39] px-6 py-3 rounded-[4px] transition-colors"
               >
                 <span>Explore GrowAI</span>
-                <ArrowRight size={18} />
+                <ArrowRight size={15} />
               </Link>
-              <Link
-                href="/app/plants"
-                className="inline-flex items-center justify-center gap-2 text-base font-medium text-[#1b5837] hover:text-[#0c2417] bg-white hover:bg-[#f3eee4] px-6 py-3.5 rounded-xl border border-[#cfdfcf] shadow-xs transition-colors"
+              <a
+                href="#system"
+                className="inline-flex items-center justify-center gap-2 text-sm font-medium text-[#163A2A] bg-transparent hover:bg-[#163A2A]/5 border border-[#163A2A]/25 px-6 py-3 rounded-[4px] transition-colors"
               >
-                <Sprout size={18} />
-                <span>Discover Your First Plant</span>
-              </Link>
+                <span>See How It Works</span>
+              </a>
             </div>
 
-            {/* Trust Points */}
-            <div className="pt-6 border-t border-[#e5dfd3]/80 grid grid-cols-3 gap-4 text-xs text-[#4b6652]">
-              <div className="flex items-center gap-2">
-                <CheckCircle2 size={16} className="text-[#1e613b] shrink-0" />
-                <span className="font-medium">Evidence-Based Botany</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <CheckCircle2 size={16} className="text-[#1e613b] shrink-0" />
-                <span className="font-medium">Space-Efficient Racks</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <CheckCircle2 size={16} className="text-[#1e613b] shrink-0" />
-                <span className="font-medium">Zero Waste 3Rs</span>
-              </div>
+            {/* Understated Metadata Line with Terracotta Accents */}
+            <div className="pt-2 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-[#687268] font-mono">
+              <span>plant health</span>
+              <span className="text-[#C86B4A]">·</span>
+              <span>small-space growing</span>
+              <span className="text-[#C86B4A]">·</span>
+              <span>adaptive plans</span>
             </div>
           </div>
 
-          {/* Right Column: Visual Vertical Garden Card */}
-          <div className="lg:col-span-5 relative">
-            <div className="relative mx-auto max-w-md lg:max-w-none rounded-2xl bg-white p-6 shadow-xl border border-[#ded5c5]">
-              {/* Card Header */}
-              <div className="flex items-center justify-between pb-4 border-b border-[#f0ebe0]">
-                <div className="flex items-center gap-2.5">
-                  <span className="w-3 h-3 rounded-full bg-[#1b5837]" />
-                  <span className="font-serif font-bold text-sm text-[#0f2e1d]">
-                    Balcony Vertical Tier 01
+          {/* Right Column: ONE Real Product Interface — Framed Like An Object on a Desk */}
+          <div className="lg:col-span-6">
+            <div className="mx-auto max-w-lg lg:max-w-none rounded-[6px] bg-[#FBF8F2] border border-[#163A2A]/12 shadow-[0_8px_30px_rgba(22,58,42,0.06)] p-6 sm:p-7 space-y-5">
+              {/* Header Bar */}
+              <div className="flex items-start justify-between pb-4 border-b border-[#163A2A]/10">
+                <div className="space-y-1">
+                  <div className="flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#C86B4A]" />
+                    <span className="text-[10px] font-mono uppercase tracking-widest text-[#687268]">
+                      ADAPTIVE GROW PLAN
+                    </span>
+                  </div>
+                  <h3 className="font-serif text-lg text-[#163A2A] leading-snug">
+                    Sweet Genovese Basil — Seed to Canopy
+                  </h3>
+                  <p className="text-xs text-[#687268] font-mono">
+                    Ocimum basilicum · 3-Tier Balcony Rack · Day 18
+                  </p>
+                </div>
+                <span className="text-[11px] font-mono text-[#163A2A] px-2 py-0.5 rounded-[2px] border border-[#163A2A]/15 bg-white">
+                  Step 4 of 6
+                </span>
+              </div>
+
+              {/* Step Sequence Meter */}
+              <div className="space-y-2">
+                <div className="flex items-center justify-between text-xs font-mono text-[#687268]">
+                  <span>Execution Progress</span>
+                  <span className="text-[#163A2A] font-medium">66% Completed</span>
+                </div>
+                <div className="grid grid-cols-6 gap-1 h-1.5">
+                  <div className="bg-[#163A2A] rounded-[1px]" />
+                  <div className="bg-[#163A2A] rounded-[1px]" />
+                  <div className="bg-[#163A2A] rounded-[1px]" />
+                  <div className="bg-[#C86B4A] rounded-[1px]" />
+                  <div className="bg-[#163A2A]/15 rounded-[1px]" />
+                  <div className="bg-[#163A2A]/15 rounded-[1px]" />
+                </div>
+              </div>
+
+              {/* Active Step Panel */}
+              <div className="p-4 rounded-[4px] bg-white border border-[#163A2A]/10 space-y-2">
+                <div className="flex items-center justify-between">
+                  <span className="text-[10px] font-mono uppercase tracking-wider text-[#C86B4A] font-semibold flex items-center gap-1.5">
+                    <span className="w-1 h-1 rounded-full bg-[#C86B4A]" />
+                    Actionable Today
+                  </span>
+                  <span className="text-[10px] font-mono text-[#687268]">
+                    Requires Observation
                   </span>
                 </div>
-                <Badge variant="sage" size="sm">Optimal Exposure</Badge>
-              </div>
 
-              {/* Tier Visual Representation */}
-              <div className="py-4 space-y-3">
-                {/* Top Tier */}
-                <div className="bg-[#f7f5ed] p-3.5 rounded-xl border border-[#e2dbce] space-y-1.5">
-                  <div className="flex items-center justify-between text-xs">
-                    <span className="font-semibold text-[#0f2e1d] flex items-center gap-1.5">
-                      <Sun size={13} className="text-[#c77712]" />
-                      Top Tier: High Light (6+ hrs)
-                    </span>
-                    <span className="text-[11px] font-medium text-[#1b5837]">Warmest</span>
-                  </div>
-                  <div className="grid grid-cols-2 gap-2 text-xs text-[#324536]">
-                    <div className="bg-white p-2 rounded-lg border border-[#e2dcce]">
-                      <p className="font-medium text-[#0f2e1d]">Bush Roma Tomato</p>
-                      <p className="text-[11px] text-[#698570]">Day 42 • Flowering</p>
-                    </div>
-                    <div className="bg-white p-2 rounded-lg border border-[#e2dcce]">
-                      <p className="font-medium text-[#0f2e1d]">Genovese Basil</p>
-                      <p className="text-[11px] text-[#698570]">Day 24 • Bushy</p>
-                    </div>
-                  </div>
-                </div>
+                <h4 className="text-sm font-medium text-[#163A2A]">
+                  Inspect Drainage Emergence & Root Health
+                </h4>
 
-                {/* Middle Tier */}
-                <div className="bg-[#eef5ee] p-3.5 rounded-xl border border-[#cfe0cf] space-y-1.5">
-                  <div className="flex items-center justify-between text-xs">
-                    <span className="font-semibold text-[#0f2e1d] flex items-center gap-1.5">
-                      <Layers size={13} className="text-[#1b5837]" />
-                      Middle Tier: Filtered Sunlight (4 hrs)
-                    </span>
-                    <span className="text-[11px] font-medium text-[#1b5837]">Ideal Greens</span>
-                  </div>
-                  <div className="grid grid-cols-2 gap-2 text-xs text-[#324536]">
-                    <div className="bg-white p-2 rounded-lg border border-[#cfe0cf]">
-                      <p className="font-medium text-[#0f2e1d]">Butterhead Lettuce</p>
-                      <p className="text-[11px] text-[#257a4d]">Ready for harvest</p>
-                    </div>
-                    <div className="bg-white p-2 rounded-lg border border-[#cfe0cf]">
-                      <p className="font-medium text-[#0f2e1d]">Spearmint</p>
-                      <p className="text-[11px] text-[#257a4d]">Vigorous growth</p>
-                    </div>
-                  </div>
-                </div>
+                <p className="text-xs text-[#263028]/80 leading-relaxed">
+                  Examine container base perforations for white root tip emergence before your scheduled afternoon bottom-watering cycle.
+                </p>
 
-                {/* Bottom Tier */}
-                <div className="bg-[#f3efe6] p-3.5 rounded-xl border border-[#ded4c3] space-y-1.5">
-                  <div className="flex items-center justify-between text-xs">
-                    <span className="font-semibold text-[#0f2e1d] flex items-center gap-1.5">
-                      <Droplets size={13} className="text-[#3b82f6]" />
-                      Bottom Tier: Runoff Capture & Shade
-                    </span>
-                    <span className="text-[11px] font-medium text-[#6c5940]">Root Stability</span>
-                  </div>
-                  <div className="grid grid-cols-2 gap-2 text-xs text-[#324536]">
-                    <div className="bg-white p-2 rounded-lg border border-[#ded4c3]">
-                      <p className="font-medium text-[#0f2e1d]">French Radish</p>
-                      <p className="text-[11px] text-[#715c44]">Day 18 of 25</p>
-                    </div>
-                    <div className="bg-white p-2 rounded-lg border border-[#ded4c3]">
-                      <p className="font-medium text-[#0f2e1d]">Snake Plant</p>
-                      <p className="text-[11px] text-[#715c44]">Low maintenance</p>
-                    </div>
-                  </div>
+                <div className="pt-2 border-t border-[#163A2A]/5 flex items-center justify-between text-[11px] font-mono text-[#687268]">
+                  <span className="flex items-center gap-1 text-[#163A2A]/80">
+                    <CheckCircle2 size={12} className="text-[#879B78]" />
+                    Prerequisite verified
+                  </span>
+                  <span>Observation: Pending</span>
                 </div>
               </div>
 
-              {/* Card Footer Badge */}
-              <div className="pt-3 border-t border-[#f0ebe0] flex items-center justify-between text-xs text-[#526a57]">
-                <span className="flex items-center gap-1.5 font-medium">
-                  <ShieldCheck size={14} className="text-[#1e613b]" />
-                  Calculated Rack Balance: 100% Stable
+              {/* Blocked Downstream Step */}
+              <div className="p-3 rounded-[4px] border border-[#163A2A]/8 bg-[#F6F1E8]/60 flex items-center justify-between text-xs text-[#687268]">
+                <div className="flex items-center gap-2">
+                  <Lock size={12} className="text-[#687268]/70" />
+                  <span>Step 5: Secondary Foliar Branching Audit</span>
+                </div>
+                <span className="text-[10px] font-mono">Blocked</span>
+              </div>
+
+              {/* Card Footer Provenance */}
+              <div className="pt-2 border-t border-[#163A2A]/10 flex items-center justify-between text-xs">
+                <span className="text-[#687268] font-mono text-[11px]">
+                  Cross-referenced with microclimate sensor #2
                 </span>
                 <Link
-                  href="/app/planner"
-                  className="font-semibold text-[#144229] hover:underline"
+                  href="/app/grow-plans"
+                  className="text-xs font-mono uppercase tracking-wider text-[#163A2A] hover:text-[#C86B4A] transition-colors"
                 >
-                  Configure Rack →
+                  View Plan →
                 </Link>
-              </div>
-            </div>
-
-            {/* Floating Decorative Pill */}
-            <div className="absolute -bottom-4 -left-4 bg-[#0e2a1b] text-white p-3 rounded-xl shadow-lg border border-[#1e5235] hidden sm:flex items-center gap-2.5">
-              <span className="w-8 h-8 rounded-lg bg-[#257a4d] flex items-center justify-center text-white">
-                <Sprout size={18} />
-              </span>
-              <div>
-                <p className="text-xs font-semibold">Track Real Growth</p>
-                <p className="text-[11px] text-[#9fc2aa]">Seed to harvest timelines</p>
               </div>
             </div>
           </div>

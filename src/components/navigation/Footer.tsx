@@ -1,126 +1,107 @@
 import React from 'react';
 import Link from 'next/link';
 import { Logo } from '@/components/ui/Logo';
-import { Sprout, ShieldCheck, HeartHandshake, BookOpen, Layers, Sparkles } from 'lucide-react';
 
 export function Footer() {
   return (
-    <footer className="border-t border-[#e2dcce] bg-[#f4f1e6] text-[#2c3d30] mt-auto">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-10">
+    <footer className="border-t border-[#163A2A]/10 bg-[#F6F1E8] text-[#263028] mt-auto">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-20">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 lg:gap-12 pb-12 border-b border-[#163A2A]/10">
           {/* Brand Column */}
-          <div className="md:col-span-1 space-y-4">
+          <div className="lg:col-span-2 space-y-4">
             <Logo size="md" />
-            <p className="text-sm text-[#4b6151] leading-relaxed">
-              Empowering home gardeners and urban vertical farming enthusiasts with accurate agronomic guidance, growth tracking, and sustainable 3R practices.
+            <p className="text-sm text-[#687268] leading-relaxed max-w-sm font-sans">
+              An intelligent cultivation platform combining botanical rigor, small-space vertical planning, longitudinal growth tracking, and adaptive execution.
             </p>
-            <div className="flex items-center gap-2 text-xs text-[#526a57] pt-2">
-              <span className="w-2 h-2 rounded-full bg-[#1b5837] animate-pulse" />
-              <span>Independent botanical knowledge engine</span>
+            <div className="flex items-center gap-2 text-xs font-mono text-[#687268] pt-1">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#C86B4A]" />
+              <span>Evidence-grounded agronomic parameters</span>
             </div>
           </div>
 
-          {/* Navigation Links */}
-          <div>
-            <h4 className="text-xs font-bold uppercase tracking-wider text-[#144229] mb-4">
-              Gardening Platform
+          {/* Growing Platform */}
+          <div className="space-y-3">
+            <h4 className="text-[11px] font-mono uppercase tracking-widest text-[#163A2A] font-semibold">
+              Growing Platform
             </h4>
-            <ul className="space-y-2.5 text-sm">
+            <ul className="space-y-2 text-xs font-mono text-[#687268]">
               <li>
-                <Link href="/app" className="hover:text-[#144229] transition-colors flex items-center gap-2">
-                  <Sprout size={14} className="text-[#1b5837]" />
+                <Link href="/app" className="hover:text-[#163A2A] transition-colors block">
                   Grower Dashboard
                 </Link>
               </li>
               <li>
-                <Link href="/app/plants" className="hover:text-[#144229] transition-colors flex items-center gap-2">
-                  <BookOpen size={14} className="text-[#1b5837]" />
-                  Curated Plant Library
+                <Link href="/app/plants" className="hover:text-[#163A2A] transition-colors block">
+                  Botanical Catalog
                 </Link>
               </li>
               <li>
-                <Link href="/app/my-garden" className="hover:text-[#144229] transition-colors flex items-center gap-2">
-                  <HeartHandshake size={14} className="text-[#1b5837]" />
-                  Growth Tracker & Log
+                <Link href="/app/planner" className="hover:text-[#163A2A] transition-colors block">
+                  Space & Rack Planner
                 </Link>
               </li>
               <li>
-                <Link href="/app/planner" className="hover:text-[#144229] transition-colors flex items-center gap-2">
-                  <Layers size={14} className="text-[#1b5837]" />
-                  Vertical Rack Planner
-                </Link>
-              </li>
-              <li>
-                <Link href="/app/ai-doctor" className="hover:text-[#144229] transition-colors flex items-center gap-2">
-                  <Sparkles size={14} className="text-[#1b5837]" />
-                  AI Plant Doctor (Demo)
+                <Link href="/app/grow-plans" className="hover:text-[#163A2A] transition-colors block">
+                  Adaptive Grow Plans
                 </Link>
               </li>
             </ul>
           </div>
 
-          {/* Education & Sustainability */}
-          <div>
-            <h4 className="text-xs font-bold uppercase tracking-wider text-[#144229] mb-4">
-              Sustainability & 3Rs
+          {/* Intelligence Systems */}
+          <div className="space-y-3">
+            <h4 className="text-[11px] font-mono uppercase tracking-widest text-[#163A2A] font-semibold">
+              Intelligence
             </h4>
-            <ul className="space-y-2.5 text-sm text-[#3d5242]">
+            <ul className="space-y-2 text-xs font-mono text-[#687268]">
               <li>
-                <Link href="/app/learn#lifecycle" className="hover:text-[#144229] transition-colors">
-                  Plant Life Cycle Essentials
+                <Link href="/app/grow-intelligence" className="hover:text-[#163A2A] transition-colors block">
+                  Grower Copilot
                 </Link>
               </li>
               <li>
-                <Link href="/app/learn#reduce" className="hover:text-[#144229] transition-colors">
-                  Reduce: Precision Water Use
+                <Link href="/app/ai-doctor" className="hover:text-[#163A2A] transition-colors block">
+                  AI Plant Doctor
                 </Link>
               </li>
               <li>
-                <Link href="/app/learn#reuse" className="hover:text-[#144229] transition-colors">
-                  Reuse: Upcycled Container Planters
+                <Link href="/app/my-garden" className="hover:text-[#163A2A] transition-colors block">
+                  Plant Timelines & Health
                 </Link>
               </li>
               <li>
-                <Link href="/app/learn#recycle" className="hover:text-[#144229] transition-colors">
-                  Recycle: Home Balcony Composting
+                <Link href="/app/grow-intelligence" className="hover:text-[#163A2A] transition-colors block">
+                  Harvests & Lineage
                 </Link>
               </li>
             </ul>
           </div>
 
-          {/* Trust & Scientific Integrity */}
-          <div>
-            <h4 className="text-xs font-bold uppercase tracking-wider text-[#144229] mb-4">
-              Editorial Standards
+          {/* Philosophy & Botanical Science */}
+          <div className="space-y-3">
+            <h4 className="text-[11px] font-mono uppercase tracking-widest text-[#163A2A] font-semibold">
+              Botanical Standard
             </h4>
-            <div className="bg-[#e8e2d4] p-4 rounded-xl border border-[#ded5c4] space-y-2.5 text-xs text-[#3a4d3e]">
-              <div className="flex items-center gap-1.5 font-semibold text-[#144229]">
-                <ShieldCheck size={16} />
-                <span>Evidence-Based Botany</span>
-              </div>
-              <p className="leading-relaxed">
-                Timelines, temperature zones, and care requirements are cross-referenced with university agricultural extension research and peer-reviewed horticulture.
-              </p>
-              <div className="pt-1 text-[11px] text-[#556d5b]">
-                PWA installation and offline caching will become available in Phase 2.
-              </div>
+            <p className="text-xs text-[#687268] leading-relaxed">
+              Every parameter is calibrated for containers, balconies, and vertical systems. We believe in observation-first growing without synthetic shortcuts.
+            </p>
+            <div className="pt-1 text-[11px] font-mono text-[#879B78]">
+              Closed-Loop 3Rs · Zero Fabricated Yields
             </div>
           </div>
         </div>
 
-        {/* Bottom Bar */}
-        <div className="border-t border-[#ded5c4] mt-12 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-[#526a57]">
-          <p>© 2026 GrowAI. All rights reserved. Built for home and vertical farming growers.</p>
+        {/* Legal & Copyright */}
+        <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-mono text-[#687268]/70">
+          <p>© 2026 GrowAI Botanical Systems. Built for small-space growers.</p>
           <div className="flex items-center gap-6">
-            <span className="cursor-pointer hover:text-[#144229] transition-colors">
-              Privacy Policy (Placeholder)
-            </span>
-            <span className="cursor-pointer hover:text-[#144229] transition-colors">
-              Terms of Service (Placeholder)
-            </span>
-            <span className="cursor-pointer hover:text-[#144229] transition-colors">
-              Botany Data Sources
-            </span>
+            <Link href="/app/learn" className="hover:text-[#163A2A] transition-colors">
+              Agronomic Index
+            </Link>
+            <Link href="/app/plants" className="hover:text-[#163A2A] transition-colors">
+              Species Index
+            </Link>
+            <span>v2.4 Editorial</span>
           </div>
         </div>
       </div>

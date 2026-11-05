@@ -1,66 +1,79 @@
 import React from 'react';
-import Link from 'next/link';
+import type { Metadata } from 'next';
 import { Navbar } from '@/components/navigation/Navbar';
 import { Footer } from '@/components/navigation/Footer';
 import { Hero } from '@/components/landing/Hero';
-import { Features } from '@/components/landing/Features';
-import { GrowthTrackerDemo } from '@/components/landing/GrowthTrackerDemo';
-import { FeaturedPlantsSection } from '@/components/landing/FeaturedPlantsSection';
-import { SustainabilitySection } from '@/components/landing/SustainabilitySection';
-import { ArrowRight, Sprout, Sparkles, Layers } from 'lucide-react';
+import { CoreIdeaSection } from '@/components/landing/CoreIdeaSection';
+import { PlanGrowAdaptSection } from '@/components/landing/PlanGrowAdaptSection';
+import { ProductContextStory } from '@/components/landing/ProductContextStory';
+import { SmallSpacePlannerSection } from '@/components/landing/SmallSpacePlannerSection';
+import { BotanicalTrustSection } from '@/components/landing/BotanicalTrustSection';
+import { FinalCtaSection } from '@/components/landing/FinalCtaSection';
+import { BotanicalRule } from '@/components/landing/BotanicalRule';
+
+export const metadata: Metadata = {
+  title: 'GrowAI — Intelligent Cultivation & Botanical Systems',
+  description:
+    'A minimal botanical editorial platform combining plant knowledge, small-space vertical planning, longitudinal growth tracking, and adaptive grow plans.',
+  keywords: [
+    'vertical gardening',
+    'small space gardening',
+    'plant growth tracker',
+    'plant health monitoring',
+    'grow plans',
+    'balcony garden planner',
+    'botanical intelligence',
+  ],
+  openGraph: {
+    title: 'GrowAI — Intelligent Cultivation & Botanical Systems',
+    description:
+      'Grounded botanical intelligence, vertical space planning, longitudinal plant timelines, and adaptive growing plans.',
+    type: 'website',
+    url: 'https://growai.local',
+    siteName: 'GrowAI',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'GrowAI — Intelligent Cultivation & Botanical Systems',
+    description:
+      'Grounded botanical intelligence, vertical space planning, longitudinal plant timelines, and adaptive growing plans.',
+  },
+};
 
 export default function LandingPage() {
   return (
-    <div className="min-h-screen flex flex-col bg-[#fbf9f4]">
-      {/* Navigation */}
+    <div className="min-h-screen flex flex-col bg-[#F6F1E8] text-[#263028]">
+      {/* Global Navigation — Editorial Header */}
       <Navbar />
 
-      {/* Main Sections */}
       <main className="flex-1">
+        {/* 1. HERO — Editorial Headline & Desk-Framed Product UI */}
         <Hero />
-        <Features />
-        <GrowthTrackerDemo />
-        <FeaturedPlantsSection />
-        <SustainabilitySection />
 
-        {/* Bottom CTA Banner */}
-        <section className="py-20 bg-[#0e2a1b] text-white relative overflow-hidden">
-          <div className="absolute inset-0 bg-botanical-pattern opacity-10 pointer-events-none" />
-          <div className="relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-6">
-            <span className="inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-1 rounded-full bg-[#1a472d] text-[#64b584] border border-[#2a6844]">
-              <Sprout size={13} />
-              Cultivate Smarter at Home
-            </span>
+        {/* 2. THE GROWING INTELLIGENCE SYSTEM — Open Design Diagram */}
+        <CoreIdeaSection />
 
-            <h2 className="text-3xl sm:text-5xl font-serif font-bold text-white tracking-tight">
-              Ready to Build Your Home Vertical Garden?
-            </h2>
+        <BotanicalRule className="opacity-40" />
 
-            <p className="text-base sm:text-lg text-[#bed4c5] max-w-2xl mx-auto leading-relaxed">
-              Explore 16 curated plant profiles, plan your space-efficient tiers, and begin logging your plant growth today.
-            </p>
+        {/* 3. PLAN + GROW + ADAPT — 3 Editorial Columns & Live Engine View */}
+        <PlanGrowAdaptSection />
 
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
-              <Link
-                href="/app"
-                className="inline-flex items-center justify-center gap-2 text-base font-semibold bg-[#257a4d] hover:bg-[#1e613b] text-white px-8 py-3.5 rounded-xl shadow-lg hover:shadow-xl transition-all hover:-translate-y-0.5 active:translate-y-0 w-full sm:w-auto"
-              >
-                <span>Launch Grower Dashboard</span>
-                <ArrowRight size={18} />
-              </Link>
-              <Link
-                href="/app/planner"
-                className="inline-flex items-center justify-center gap-2 text-base font-medium bg-[#143a25] hover:bg-[#1a472d] text-[#e3ece5] px-7 py-3.5 rounded-xl border border-[#265e3c] transition-colors w-full sm:w-auto"
-              >
-                <Layers size={18} />
-                <span>Configure Vertical Rack</span>
-              </Link>
-            </div>
-          </div>
-        </section>
+        {/* 4. REAL PRODUCT / INTELLIGENCE — Copilot Story & Context Grounding */}
+        <ProductContextStory />
+
+        <BotanicalRule className="opacity-40" />
+
+        {/* 5. SMALL-SPACE REALITY — Architectural Vertical Rack Elevation */}
+        <SmallSpacePlannerSection />
+
+        {/* 6. BOTANICAL KNOWLEDGE + TRUST — Large Botanical Specimen Plate & Lifecycle Strip */}
+        <BotanicalTrustSection />
+
+        {/* 7. FINAL CTA — Deep Botanical Ink (#163A2A) with Terracotta Detail */}
+        <FinalCtaSection />
       </main>
 
-      {/* Footer */}
+      {/* Global Footer — Clean Publication Footer */}
       <Footer />
     </div>
   );
