@@ -31,6 +31,8 @@ import {
   HeartHandshake,
 } from 'lucide-react';
 import { usePwa } from '@/context/PwaContext';
+import { SaveDiagnosisModal } from '@/components/diagnosis/SaveDiagnosisModal';
+import { History, BookmarkCheck } from 'lucide-react';
 
 export default function AiDoctorPage() {
   const { isOffline } = usePwa();
@@ -56,6 +58,8 @@ export default function AiDoctorPage() {
   const [loadingStep, setLoadingStep] = useState<string>('');
   const [result, setResult] = useState<DiagnosisResponse | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [showSaveModal, setShowSaveModal] = useState(false);
+  const [savedDiagnosisId, setSavedDiagnosisId] = useState<string | null>(null);
 
   // Quick symptom presets
   const presets = [
@@ -209,6 +213,8 @@ export default function AiDoctorPage() {
   };
 
   const handleReset = () => {
+    setShowSaveModal(false);
+    setSavedDiagnosisId(null);
     setResult(null);
     setError(null);
     handleRemovePhoto();
@@ -220,6 +226,9 @@ export default function AiDoctorPage() {
       <AppHeader
         title="AI Plant Doctor Consultation"
         subtitle="Multimodal vision diagnostics powered by Gemini 3.8 Flash with verified agronomic heuristics."
+        actionHref="/app/ai-doctor/history"
+        actionLabel="Diagnosis History"
+        actionIcon="none"
       />
 
       <div className="flex-1 p-4 sm:p-6 lg:p-8 max-w-5xl mx-auto w-full space-y-8">
@@ -886,6 +895,14 @@ export default function AiDoctorPage() {
               </div>
             )}
 
+            {/* Save Diagnosis to History Modal */}
+            <SaveDiagnosisModal
+              isOpen={showSaveModal}
+              onClose={() => setShowSaveModal(false)}
+              diagnosis={result}
+              onSaved={(id) => setSavedDiagnosisId(id)}
+            />
+
             {/* Follow-up / New Assessment Actions */}
             <div className="pt-5 border-t border-[#f0ebe0] flex flex-col sm:flex-row items-center justify-between gap-4">
               <div className="text-xs text-[#526a57] space-y-1">
@@ -895,7 +912,25 @@ export default function AiDoctorPage() {
                 <p className="italic text-[11px]">{result.disclaimer}</p>
               </div>
 
-              <div className="flex items-center gap-3 w-full sm:w-auto">
+              <div className="flex flex-wrap items-center gap-3 w-full sm:w-auto">
+                {savedDiagnosisId ? (
+                  <Link
+                    href={`/app/ai-doctor/history/${savedDiagnosisId}`}
+                    className="w-full sm:w-auto px-5 py-3 rounded-xl bg-[#eef5ee] border border-[#cfe0cf] text-[#144229] hover:bg-[#dcecdc] text-xs sm:text-sm font-semibold transition-colors flex items-center justify-center gap-2 shadow-xs min-h-[44px]"
+                  >
+                    <BookmarkCheck size={16} />
+                    <span>View in History →</span>
+                  </Link>
+                ) : (
+                  <button
+                    type="button"
+                    onClick={() => setShowSaveModal(true)}
+                    className="w-full sm:w-auto px-5 py-3 rounded-xl bg-[#1e4d34] hover:bg-[#144229] text-white text-xs sm:text-sm font-semibold transition-colors flex items-center justify-center gap-2 cursor-pointer shadow-xs min-h-[44px]"
+                  >
+                    <BookmarkCheck size={16} />
+                    <span>Save Diagnosis</span>
+                  </button>
+                )}
                 <button
                   type="button"
                   onClick={handleReset}

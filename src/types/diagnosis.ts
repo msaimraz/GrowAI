@@ -213,3 +213,152 @@ export interface DiagnosisRequest extends DiagnosisInput {
   hasPhoto: boolean;
   photoUrl?: string;
 }
+
+
+/**
+ * ==============================================================================
+ * Phase 8.4: Diagnosis History & Treatment Tracking Domain Types
+ * ==============================================================================
+ */
+
+export type TreatmentActionType =
+  | 'inspect_plant'
+  | 'isolate_plant'
+  | 'adjust_watering'
+  | 'improve_ventilation'
+  | 'remove_affected_leaves'
+  | 'monitor_pests'
+  | 'apply_kb_treatment'
+  | 'custom_action';
+
+export const TreatmentActionTypeSchema = z.enum([
+  'inspect_plant',
+  'isolate_plant',
+  'adjust_watering',
+  'improve_ventilation',
+  'remove_affected_leaves',
+  'monitor_pests',
+  'apply_kb_treatment',
+  'custom_action',
+]);
+
+export type TreatmentStatus = 'planned' | 'started' | 'completed' | 'skipped';
+
+export const TreatmentStatusSchema = z.enum(['planned', 'started', 'completed', 'skipped']);
+
+export type FollowUpOutcome = 'improving' | 'unchanged' | 'worsening' | 'resolved' | 'uncertain';
+
+export const FollowUpOutcomeSchema = z.enum(['improving', 'unchanged', 'worsening', 'resolved', 'uncertain']);
+
+export interface SavedDiagnosisCandidate {
+  id: string;
+  diagnosisId: string;
+  userId: string;
+  candidateRank: number;
+  kbConditionId?: string | null;
+  conditionName: string;
+  category?: 'pest' | 'disease' | 'abiotic' | null;
+  explanation: string;
+  confidenceCategory: DiagnosticConfidence;
+  supportingEvidence: string[];
+  contradictingEvidence?: string[];
+  alternativeCauses: string[];
+  recommendedNextObservation?: string | null;
+  groundedTreatment?: GroundedTreatmentSummary | null;
+  createdAt: string;
+}
+
+export interface SavedDiagnosisTreatment {
+  id: string;
+  diagnosisId: string;
+  userId: string;
+  userPlantId?: string | null;
+  actionType: TreatmentActionType;
+  actionTitle: string;
+  status: TreatmentStatus;
+  notes?: string | null;
+  actionDate: string;
+  completedAt?: string | null;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface SavedDiagnosisFollowUp {
+  id: string;
+  diagnosisId: string;
+  userId: string;
+  outcomeStatus: FollowUpOutcome;
+  observationNotes?: string | null;
+  followUpDate: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface SavedDiagnosisRecord {
+  id: string;
+  userId: string;
+  userPlantId?: string | null;
+  plantPhotoId?: string | null;
+  schemaVersion: string;
+  diagnosticSource: 'gemini-vision' | 'agronomic-heuristic' | 'fallback';
+  modelUsed?: string | null;
+  status: 'completed' | 'inconclusive' | 'not_a_plant' | 'service_unavailable';
+  primaryClassification?: PrimaryClassification;
+  isPlantRecognized: boolean;
+  plantIdentification: string;
+  plantIdentificationConfidence: 'high' | 'medium' | 'low' | 'uncertain';
+  plantSlug?: string | null;
+  overallHealth: 'healthy' | 'mild_stress' | 'moderate_issue' | 'severe_issue' | 'unknown';
+  imageQuality?: ImageQualityAssessment | null;
+  evidenceSeparation?: DiagnosticEvidenceSeparation | null;
+  symptoms: string;
+  userContext: {
+    watering?: string;
+    sunlight?: string;
+    environment?: string;
+    temperature?: string;
+    soil?: string;
+    plantName?: string;
+  };
+  visibleSymptoms: string[];
+  likelyCauses: string[];
+  recommendedChecks: string[];
+  immediateActions: string[];
+  longTermCare: string[];
+  prevention: string[];
+  uncertainties: string[];
+  followUpQuestions?: FollowUpQuestion[];
+  requiresExpertReview: boolean;
+  summary: string;
+  disclaimer: string;
+  suggestedFollowUp?: string | null;
+  diagnosedAt: string;
+  createdAt: string;
+  updatedAt: string;
+  candidates?: SavedDiagnosisCandidate[];
+  treatments?: SavedDiagnosisTreatment[];
+  followUps?: SavedDiagnosisFollowUp[];
+}
+
+export interface CreateDiagnosisPayload {
+  userPlantId?: string | null;
+  plantPhotoId?: string | null;
+  diagnosis: DiagnosisResponse;
+}
+
+export interface CreateTreatmentInput {
+  diagnosisId: string;
+  userPlantId?: string | null;
+  actionType: TreatmentActionType;
+  actionTitle: string;
+  status?: TreatmentStatus;
+  notes?: string | null;
+  actionDate?: string;
+}
+
+export interface CreateFollowUpInput {
+  diagnosisId: string;
+  outcomeStatus: FollowUpOutcome;
+  observationNotes?: string | null;
+  followUpDate?: string;
+}
