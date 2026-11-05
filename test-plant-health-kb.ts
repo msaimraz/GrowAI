@@ -1,7 +1,7 @@
 /**
- * GrowAI Phase 8.2 — Disease, Pest & Abiotic Disorder Knowledge Base Test Suite
+ * GrowAI Phase 8.2 & Phase 8.2.1 — Disease, Pest & Abiotic Disorder Knowledge Base Test Suite
  *
- * Verifies all 13 required test categories:
+ * Verifies all 21 test categories:
  *  1. Type correctness & structural integrity
  *  2. Unique condition IDs (35 conditions total)
  *  3. Unique pest IDs & pest classification (9 urban pests)
@@ -16,6 +16,14 @@
  * 12. No universal or unsupported host-susceptibility claims
  * 13. All 19 existing botanical records remain unchanged and unmutated
  * 14. Query & search utilities functionality
+ * ------------------- Phase 8.2.1 Targeted Verification Suites -------------------
+ * 15. Resistant versus not-known-host distinction (active resistance vs non-host)
+ * 16. Unsupported resistance claims (zero conflation of non-host status with resistance)
+ * 17. Unknown/insufficiently documented host relationships properly recorded
+ * 18. Sprout and seedling sterility wording audit (no false sterility claims)
+ * 19. Sprout microbial contamination warnings (Salmonella/E. coli/Listeria distinction)
+ * 20. Evidence scope traceability (granular scopes on supporting references)
+ * 21. Emergency contact localization and non-universality verification
  */
 
 import {
@@ -54,7 +62,7 @@ function assert(condition: boolean, suite: string, name: string, failureDetails?
   }
 }
 
-console.log('🌱 Starting GrowAI Phase 8.2 Plant Health KB Automated Test Battery...\n');
+console.log('🌱 Starting GrowAI Phase 8.2 & 8.2.1 Plant Health KB Automated Test Battery...\n');
 
 // ============================================================================
 // TEST 1: Type Correctness & Dataset Integrity
@@ -273,11 +281,16 @@ for (const condition of PLANT_HEALTH_KB) {
     if (!existingSlugs.has(hostRel.plantSlug)) {
       invalidSlugReferences.push({ conditionId: condition.id, slug: hostRel.plantSlug });
     }
-    // Verify relationship type
+    // Verify relationship type allows full Phase 8.2.1 range
     assert(
-      ['confirmed_host', 'susceptible_family', 'rarely_affected', 'resistant'].includes(
-        hostRel.relationshipType
-      ),
+      [
+        'confirmed_host',
+        'susceptible_family',
+        'rarely_affected',
+        'resistant',
+        'not_known_host',
+        'unknown',
+      ].includes(hostRel.relationshipType),
       '5. Plant Slug References',
       `Condition ${condition.id} has valid relationshipType for ${hostRel.plantSlug}`
     );
@@ -782,6 +795,219 @@ assert(
 );
 
 // ============================================================================
+// TEST 15: Resistant versus Not-Known-Host Distinction (Phase 8.2.1 Audit)
+// ============================================================================
+// Active resistance ('resistant') must strictly represent documented genetic/biological
+// resistance, NOT merely the absence of a host relationship.
+const allResistantRelationships: { conditionId: string; slug: string; notes?: string }[] = [];
+for (const condition of PLANT_HEALTH_KB) {
+  for (const hostRel of condition.confirmedHostSlugs) {
+    if (hostRel.relationshipType === 'resistant') {
+      allResistantRelationships.push({
+        conditionId: condition.id,
+        slug: hostRel.plantSlug,
+        notes: hostRel.notes,
+      });
+    }
+  }
+}
+
+// Every 'resistant' entry must possess clear documentation of active resistance
+for (const rel of allResistantRelationships) {
+  assert(
+    typeof rel.notes === 'string' &&
+      (rel.notes.toLowerCase().includes('genetic') ||
+        rel.notes.toLowerCase().includes('resistance') ||
+        rel.notes.toLowerCase().includes('breeding')),
+    '15. Resistant vs Non-Host Distinction',
+    `Resistant claim for ${rel.slug} under ${rel.conditionId} must cite specific genetic/breeding resistance: "${rel.notes}"`
+  );
+}
+
+// Non-hosts (unrelated families outside host range) must use 'not_known_host', NOT 'resistant'
+const downyMildew = getConditionById('disease-downy-mildew');
+const tulsiRel = downyMildew?.confirmedHostSlugs.find((h) => h.plantSlug === 'holy-basil-tulsi');
+assert(
+  tulsiRel?.relationshipType === 'resistant',
+  '15. Resistant vs Non-Host Distinction',
+  'Holy Basil retains verified resistant relationship for basil downy mildew (Peronospora belbahrii) backed by Rutgers breeding research'
+);
+
+const snakePlantDowny = downyMildew?.confirmedHostSlugs.find((h) => h.plantSlug === 'snake-plant');
+assert(
+  snakePlantDowny?.relationshipType === 'not_known_host',
+  '15. Resistant vs Non-Host Distinction',
+  'Snake Plant is correctly marked not_known_host for downy mildew, not falsely claimed to be actively resistant'
+);
+
+// ============================================================================
+// TEST 16: No Unsupported Resistance Claims (Phase 8.2.1 Audit)
+// ============================================================================
+// Check that unrelated monocots or non-hosts are NEVER labeled resistant to solanaceous/dicot diseases
+const earlyBlightRelSnake = earlyBlight?.confirmedHostSlugs.find((h) => h.plantSlug === 'snake-plant');
+assert(
+  earlyBlightRelSnake?.relationshipType === 'not_known_host',
+  '16. Unsupported Resistance Audit',
+  'Snake plant is classified as not_known_host for early blight (Alternaria solani)'
+);
+
+const earlyBlightRelPothos = earlyBlight?.confirmedHostSlugs.find((h) => h.plantSlug === 'golden-pothos');
+assert(
+  earlyBlightRelPothos?.relationshipType === 'not_known_host',
+  '16. Unsupported Resistance Audit',
+  'Golden pothos is classified as not_known_host for early blight (Alternaria solani)'
+);
+
+const septoriaRelBasil = septoria?.confirmedHostSlugs.find((h) => h.plantSlug === 'genovese-basil');
+assert(
+  septoriaRelBasil?.relationshipType === 'not_known_host',
+  '16. Unsupported Resistance Audit',
+  'Genovese basil is classified as not_known_host for Septoria lycopersici (solanaceous host-specific)'
+);
+
+// ============================================================================
+// TEST 17: Unknown & Non-Host Coverage Verification (Phase 8.2.1 Audit)
+// ============================================================================
+const notKnownHostCount = PLANT_HEALTH_KB.flatMap((c) => c.confirmedHostSlugs).filter(
+  (h) => h.relationshipType === 'not_known_host'
+).length;
+
+assert(
+  notKnownHostCount >= 15,
+  '17. Unknown & Non-Host Distinction',
+  `Expected at least 15 explicitly evidenced not_known_host botanical relationships, found ${notKnownHostCount}`
+);
+
+// ============================================================================
+// TEST 18: Sprout & Seedling Sterility Wording Audit (Phase 8.2.1 Audit)
+// ============================================================================
+// Search entire KB content to verify that sprouting / seedling environments are NEVER falsely described as "sterile"
+let falseSterilityViolations: { conditionId: string; context: string }[] = [];
+
+for (const condition of PLANT_HEALTH_KB) {
+  const fullText = JSON.stringify(condition).toLowerCase();
+  // Check for phrases like "sterile sprouting", "sterile seed-starting", "sterile culture", "sterile environment"
+  if (
+    fullText.includes('sterile sprouting') ||
+    fullText.includes('sterile seed-starting') ||
+    fullText.includes('sterile culture') ||
+    fullText.includes('sterile potting mix') ||
+    fullText.includes('sterile environment')
+  ) {
+    falseSterilityViolations.push({ conditionId: condition.id, context: 'Falsely claimed sterile environment' });
+  }
+}
+
+assert(
+  falseSterilityViolations.length === 0,
+  '18. Sprout Sterility Wording Audit',
+  'Zero conditions falsely describe sprouting or potting media as sterile (pasteurized/sanitized used)',
+  `Violations: ${JSON.stringify(falseSterilityViolations)}`
+);
+
+// ============================================================================
+// TEST 19: Sprout Microbial Contamination Warnings (Phase 8.2.1 Audit)
+// ============================================================================
+const dampingOff = getConditionById('disease-damping-off');
+const dampingOffFoodNotes = dampingOff?.edibleCropRelevance.foodSafetyNotes?.toLowerCase() || '';
+
+assert(
+  dampingOffFoodNotes.includes('salmonella') &&
+    dampingOffFoodNotes.includes('escherichia coli') &&
+    dampingOffFoodNotes.includes('listeria'),
+  '19. Sprout Microbial Food Safety',
+  'Damping-off edible food safety notes explicitly warn against human bacterial pathogens (Salmonella, E. coli, Listeria)'
+);
+
+assert(
+  dampingOffFoodNotes.includes('pest') &&
+    dampingOffFoodNotes.includes('microbial'),
+  '19. Sprout Microbial Food Safety',
+  'Damping-off food safety notes explicitly distinguish absence of garden pests from human microbial contamination risks'
+);
+
+// Check that sprout host relationships are present under damping off
+const dampingOffSprouts = dampingOff?.confirmedHostSlugs.filter((h) =>
+  ['broccoli-sprouts', 'mung-bean-sprouts', 'alfalfa-sprouts'].includes(h.plantSlug)
+);
+assert(
+  dampingOffSprouts?.length === 3,
+  '19. Sprout Microbial Food Safety',
+  'All 3 sprout species (broccoli, mung bean, alfalfa) are cross-referenced with damping-off seed rot risks'
+);
+
+// ============================================================================
+// TEST 20: Evidence Scope Traceability (Phase 8.2.1 Audit)
+// ============================================================================
+let totalScopedReferences = 0;
+const unscopedReferences: { conditionId: string; title: string }[] = [];
+
+for (const condition of PLANT_HEALTH_KB) {
+  for (const ref of condition.references) {
+    if (Array.isArray(ref.scopes) && ref.scopes.length > 0) {
+      totalScopedReferences++;
+      // Validate scope values
+      const validScopes = [
+        'identification_symptoms',
+        'host_relationships',
+        'environmental_triggers',
+        'prevention_cultural',
+        'treatment_ipm',
+        'edible_crop_safety',
+      ];
+      for (const scope of ref.scopes) {
+        assert(
+          validScopes.includes(scope),
+          '20. Evidence Scope Traceability',
+          `Reference "${ref.title}" in ${condition.id} has valid scope "${scope}"`
+        );
+      }
+    } else {
+      unscopedReferences.push({ conditionId: condition.id, title: ref.title });
+    }
+  }
+}
+
+assert(
+  totalScopedReferences >= 35,
+  '20. Evidence Scope Traceability',
+  `Expected at least 35 scoped supporting references, found ${totalScopedReferences}`
+);
+
+// ============================================================================
+// TEST 21: Emergency Contact Safety & Localization (Phase 8.2.1 Audit)
+// ============================================================================
+const countrySpecificUniversalViolations: string[] = [];
+
+for (const condition of PLANT_HEALTH_KB) {
+  const escalation = condition.humanPetSafety?.emergencyEscalationNote || '';
+  // Verify that US numbers (1-800, 911) are NOT presented as universal international hotlines
+  if (
+    escalation.includes('1-800') ||
+    escalation.includes('911 anywhere') ||
+    escalation.includes('universal number is 911')
+  ) {
+    countrySpecificUniversalViolations.push(condition.id);
+  }
+
+  // Verify generic local emergency service guidance is used
+  const lower = escalation.toLowerCase();
+  assert(
+    lower.includes('local') &&
+      (lower.includes('poison') || lower.includes('emergency')),
+    '21. Emergency Contact Localization',
+    `Condition ${condition.id} directs to generic local poison control or emergency services`
+  );
+}
+
+assert(
+  countrySpecificUniversalViolations.length === 0,
+  '21. Emergency Contact Localization',
+  'No country-specific emergency phone number is falsely presented as universal international contact',
+  `Violations: ${countrySpecificUniversalViolations.join(', ')}`
+);
+
+// ============================================================================
 // TEST SUMMARY & EXECUTION REPORT
 // ============================================================================
 const totalTests = results.length;
@@ -789,7 +1015,7 @@ const passedTests = results.filter((r) => r.passed).length;
 const failedTests = results.filter((r) => !r.passed).length;
 
 console.log('\n======================================================================');
-console.log(`📊 Phase 8.2 Test Suite Execution Summary`);
+console.log(`📊 Phase 8.2 & 8.2.1 Test Suite Execution Summary`);
 console.log('======================================================================');
 console.log(`Total Assertions Checked: ${totalTests}`);
 console.log(`✅ Passed:                ${passedTests}`);

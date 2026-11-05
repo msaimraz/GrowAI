@@ -1,8 +1,22 @@
-import { DiagnosisInput, DiagnosisResponse, PossibleCondition } from '@/types/diagnosis';
+import {
+  DiagnosisInput,
+  DiagnosisResponse,
+  PossibleCondition,
+  PrimaryClassification,
+  FollowUpQuestion,
+} from '@/types/diagnosis';
+import {
+  PLANT_HEALTH_KB,
+  getConditionById,
+  getConditionsForPlantSlug,
+  searchConditionsBySymptom,
+} from '@/data/plant-health-kb';
+import type { PlantHealthCondition } from '@/types/health';
 
 /**
  * Educational Agronomic Heuristic Diagnostic Engine
  *
+ * Grounded in the GrowAI Plant Health Knowledge Base.
  * Serves as an offline/fallback botanical reasoning engine when
  * external AI vision services are unconfigured, unreachable, or
  * when the grower explicitly opts for heuristic symptom matching.
@@ -11,204 +25,418 @@ export async function diagnoseWithHeuristics(
   input: DiagnosisInput,
   hasPhoto: boolean = false
 ): Promise<DiagnosisResponse> {
-  const query = (input.symptoms || '').toLowerCase();
+  const query = (input.symptoms || '').toLowerCase().trim();
   const plantName =
     input.plantName || (input.plantSlug ? input.plantSlug.replace('-', ' ') : 'Botanical specimen');
 
-  let conditionName = 'Nutritional or Watering Stress';
-  let explanation =
-    'Erratic moisture cycles or mild macronutrient imbalance impacting healthy cellular turgor and chlorophyll synthesis.';
-  let confidence: 'high' | 'moderate' | 'low' | 'uncertain' = 'moderate';
-  let supportingEvidence = [
-    'General foliage loss of vigor or mild discoloration reported by grower',
-    input.wateringFrequency ? `Watering routine reported: ${input.wateringFrequency}` : 'Irregular moisture depth',
-  ];
-  let alternativeCauses = [
-    'Low nitrogen or micronutrient deficiency (magnesium or iron lockout)',
-    'Substrate compaction preventing root oxygen exchange',
-    'Insufficient light exposure causing pale foliage',
-  ];
-  let likelyCauses = [
-    'Root drying followed by heavy saturating water',
-    'Nutrient depletion in shallow container volume',
-    'Suboptimal light photoperiod',
-  ];
-  let recommendedChecks = [
-    'Insert a clean wooden chopstick 5 cm into the soil to check moisture depth',
-    'Examine underside of leaves with 10x smartphone magnification for minute mites or thrips',
-    'Inspect container drainage holes to ensure roots are not waterlogged or circling',
-  ];
-  let immediateActions = [
-    'Allow top 3 cm of soil to dry before the next watering session',
-    'Relocate container to receive 4–6 hours of gentle morning sunshine',
-    'Gently prune heavily withered lower leaves with sterilized shears',
-  ];
-  let longTermCare = [
-    'Establish consistent bottom-watering or moisture-monitoring routine',
-    'Ensure vertical shelf airflow prevents air stagnation around lower tiers',
-  ];
-  let prevention = [
-    'Use well-aerated potting mix containing 20% perlite or coarse pumice',
-    'Avoid letting pots sit in stagnant saucer drainage water',
-  ];
-  let health: 'healthy' | 'mild_stress' | 'moderate_issue' | 'severe_issue' | 'unknown' = 'mild_stress';
+  const envText = [
+    input.wateringFrequency,
+    input.sunlight,
+    input.temperature,
+    input.soilInfo,
+    input.environment,
+  ]
+    .filter(Boolean)
+    .join(' ')
+    .toLowerCase();
 
-  // Pattern matching on user symptoms
-  if (query.includes('yellow') || query.includes('yellowing') || query.includes('pale')) {
-    conditionName = 'Foliage Chlorosis (Moisture Imbalance / Nitrogen)';
-    explanation =
-      'Loss of green chlorophyll pigment causing yellowing leaves. In container and vertical gardens, this is most frequently caused by over-saturation suffocating root hairs, or nitrogen mobility.';
-    confidence = 'high';
-    supportingEvidence = [
-      'Reported yellowing or pale foliage',
-      'Lower leaf chlorosis characteristic of mobile nutrient or root oxygen deficiency',
-    ];
-    alternativeCauses = [
-      'Overwatering causing root hair asphyxiation',
-      'Nitrogen deficiency if oldest lower leaves yellow first',
-      'Iron or magnesium lockout caused by hard municipal tap water (pH > 7.2)',
-    ];
-    likelyCauses = ['Overwatering / oxygen starvation', 'Nitrogen or micronutrient lockout'];
-    immediateActions = [
-      'Pause watering until top 50% of the pot depth dries out',
-      'Empty any runoff water collected in bottom catchment trays',
-    ];
-    longTermCare = [
-      'Water thoroughly only when top 3 cm is dry to the touch',
-      'Top-dress with 1 tablespoon of aged organic worm castings',
-    ];
-    health = 'moderate_issue';
-  } else if (
-    query.includes('white') ||
-    query.includes('powder') ||
-    query.includes('mold') ||
-    query.includes('mildew')
-  ) {
-    conditionName = 'Fungal Powdery Mildew';
-    explanation =
-      'Superficial fungal infection producing white powdery spore colonies across leaf surfaces, accelerated by warm stagnant air and humid microclimates.';
-    confidence = 'high';
-    supportingEvidence = [
-      'Powdery white or flour-like coating reported on foliage',
-      'Common in sheltered balconies or dense vertical rack tiers with low air circulation',
-    ];
-    alternativeCauses = [
-      'Mineral residue from hard tap water misting',
-      'Diatomaceous earth or foliar spray residue',
-    ];
-    likelyCauses = ['Poor air circulation combined with warm humid microclimates', 'Overhead evening watering'];
-    recommendedChecks = [
-      'Gently wipe leaf with a damp finger: active powdery mildew easily wipes off',
-      'Check spacing between vertical rack tiers to ensure horizontal breeze',
-    ];
-    immediateActions = [
-      'Isolate the infected plant from neighboring vertical planters immediately',
-      'Prune severely coated leaves and dispose of in household trash (not compost)',
-    ];
-    longTermCare = [
-      'Apply gentle morning foliar spray of 1/2 tsp baking soda + 2 drops castile soap in 1L water',
-      'Never water foliage from overhead in the evening',
-    ];
-    health = 'moderate_issue';
-  } else if (
-    query.includes('brown') ||
-    query.includes('spot') ||
-    query.includes('crispy') ||
-    query.includes('dry')
-  ) {
-    conditionName = 'Leaf Tip Burn or Osmotic Stress';
-    explanation =
-      'Desiccation of leaf margins caused by low ambient humidity, tap water mineral salts (chlorine/fluoride), or root dehydration.';
-    confidence = 'high';
-    supportingEvidence = [
-      'Brown, dry, or crispy margins reported by grower',
-      'Characteristic pattern of osmotic moisture tension in container botany',
-    ];
-    alternativeCauses = [
-      'Low indoor humidity (< 40% RH)',
-      'Chlorine/chloramine salts in tap water',
-      'Fertilizer salt accumulation in potting medium',
-    ];
-    likelyCauses = ['Low relative humidity or tap water mineral accumulation', 'Temporary severe underwatering'];
-    immediateActions = [
-      'Let municipal tap water sit open in a pitcher for 24 hours before use',
-      'Flush container thoroughly with fresh water if salt crust is visible on soil surface',
-    ];
-    longTermCare = [
-      'Increase local humidity using a pebble tray with water beneath the pot',
-      'Prune dead brown tips with clean shears, leaving a thin margin of dry tissue',
-    ];
-    health = 'mild_stress';
-  } else if (
-    query.includes('bug') ||
-    query.includes('pest') ||
-    query.includes('web') ||
-    query.includes('mite') ||
-    query.includes('aphid')
-  ) {
-    conditionName = 'Foliage Pest Infestation (Aphids / Spider Mites)';
-    explanation =
-      'Sap-sucking arthropods infesting tender new growth, causing stippling, leaf distortion, and sticky honeydew secretions.';
-    confidence = 'high';
-    supportingEvidence = [
-      'Visible insect activity, webbing, or crawling specks reported',
-      'Common in warm balcony microclimates with low natural predator presence',
-    ];
-    alternativeCauses = [
-      'Dust or environmental debris settling in leaf axils',
-      'Harmless soil fungus gnats',
-    ];
-    likelyCauses = ['Dry indoor microclimate favoring rapid mite reproduction', 'Succulent soft new growth attracting aphids'];
-    recommendedChecks = [
-      'Tap an affected leaf over a white sheet of paper: crawling dots indicate spider mites',
-      'Inspect stem joints and growing tips for clusters of green or black aphids',
-    ];
-    immediateActions = [
-      'Rinse foliage thoroughly with a gentle stream of room-temperature water at the sink',
-      'Isolate the container from other vertical shelf plants',
-    ];
-    longTermCare = [
-      'Apply organic cold-pressed neem oil spray (0.5% concentration) or mild insecticidal soap in evening',
-      'Repeat application every 5–7 days for 3 cycles to interrupt pest lifecycle',
-    ];
-    health = 'moderate_issue';
+  // 1. Gather potential matches from Knowledge Base with relevance scoring
+  const scores = new Map<string, number>();
+
+  function addScore(id: string, points: number) {
+    const cur = scores.get(id) || 0;
+    scores.set(id, cur + points);
   }
 
-  const possibleCondition: PossibleCondition = {
-    name: conditionName,
-    explanation,
-    confidenceCategory: confidence,
-    supportingEvidence,
-    alternativeCauses,
-  };
+  // A. Hallmark symptom patterns (high diagnostic specificity)
+  if (
+    query.includes('web') ||
+    query.includes('mite') ||
+    query.includes('stipple') ||
+    query.includes('silk') ||
+    query.includes('speck')
+  ) {
+    addScore('pest-spider-mites', 40);
+    addScore('pest-thrips', 18);
+    addScore('pest-aphids', 10);
+  }
+
+  if (
+    query.includes('powder') ||
+    query.includes('flour') ||
+    query.includes('white coating') ||
+    query.includes('mildew') ||
+    (query.includes('white') && query.includes('dust'))
+  ) {
+    addScore('disease-powdery-mildew', 40);
+    addScore('disease-downy-mildew', 16);
+    addScore('pest-mealybugs', 10);
+  }
+
+  if (
+    query.includes('mushy') ||
+    query.includes('black stem') ||
+    query.includes('decay') ||
+    (query.includes('root') && query.includes('rot'))
+  ) {
+    addScore('disease-root-rot', 40);
+    addScore('abiotic-overwatering-stress', 25);
+    addScore('disease-fusarium-wilt', 15);
+  }
+
+  if (
+    query.includes('interveinal') ||
+    (query.includes('vein') && query.includes('green') && query.includes('yellow'))
+  ) {
+    addScore('abiotic-iron-deficiency', 35);
+    addScore('abiotic-magnesium-deficiency', 30);
+    addScore('abiotic-nitrogen-deficiency', 10);
+  }
+
+  if (
+    query.includes('crispy') ||
+    query.includes('tip burn') ||
+    query.includes('brown edge') ||
+    query.includes('scorched tip')
+  ) {
+    addScore('abiotic-tipburn', 35);
+    addScore('abiotic-potassium-deficiency', 20);
+    addScore('abiotic-sun-scorch', 18);
+  }
+
+  if (
+    query.includes('aphid') ||
+    query.includes('honeydew') ||
+    query.includes('sticky') ||
+    query.includes('cluster')
+  ) {
+    addScore('pest-aphids', 40);
+    addScore('pest-whiteflies', 20);
+    addScore('pest-mealybugs', 15);
+  }
+
+  if (
+    query.includes('concentric') ||
+    query.includes('bullseye') ||
+    query.includes('target') ||
+    query.includes('early blight')
+  ) {
+    addScore('disease-early-blight', 40);
+    addScore('disease-septoria-leaf-spot', 25);
+    addScore('disease-bacterial-leaf-spot', 20);
+  }
+
+  // B. Secondary / non-specific symptoms (moderate diagnostic weight)
+  if (query.includes('yellow') || query.includes('chlorosis') || query.includes('pale')) {
+    if (
+      envText.includes('frequent') ||
+      envText.includes('daily') ||
+      envText.includes('wet') ||
+      envText.includes('soggy') ||
+      envText.includes('waterlog')
+    ) {
+      addScore('abiotic-overwatering-stress', 18);
+      addScore('disease-root-rot', 14);
+      addScore('abiotic-nitrogen-deficiency', 10);
+    } else {
+      addScore('abiotic-nitrogen-deficiency', 12);
+      addScore('abiotic-iron-deficiency', 10);
+      addScore('abiotic-overwatering-stress', 8);
+    }
+  }
+
+  if (query.includes('wilt') || query.includes('droop') || query.includes('collapse')) {
+    if (envText.includes('dry') || envText.includes('rare') || envText.includes('drought')) {
+      addScore('abiotic-underwatering-stress', 25);
+      addScore('pest-spider-mites', 12);
+    } else {
+      addScore('disease-fusarium-wilt', 20);
+      addScore('disease-root-rot', 18);
+      addScore('abiotic-overwatering-stress', 15);
+    }
+  }
+
+  if (query.includes('spot') || query.includes('lesion') || query.includes('speckle')) {
+    if (input.plantSlug?.includes('tomato')) {
+      addScore('disease-early-blight', 18);
+      addScore('disease-septoria-leaf-spot', 15);
+      addScore('disease-bacterial-leaf-spot', 12);
+    } else {
+      addScore('disease-bacterial-leaf-spot', 15);
+      addScore('disease-anthracnose', 15);
+      addScore('disease-botrytis-gray-mold', 12);
+    }
+  }
+
+  // C. Environmental triggers (high priority grower context)
+  if (
+    envText.includes('soggy') ||
+    envText.includes('daily') ||
+    envText.includes('wet') ||
+    envText.includes('frequent') ||
+    envText.includes('saucer') ||
+    envText.includes('standing water')
+  ) {
+    addScore('abiotic-overwatering-stress', 15);
+    addScore('disease-root-rot', 12);
+    addScore('pest-fungus-gnats', 8);
+    addScore('abiotic-edema', 8);
+  }
+
+  if (
+    envText.includes('dry') ||
+    envText.includes('rare') ||
+    envText.includes('drought') ||
+    envText.includes('windowsill')
+  ) {
+    addScore('abiotic-underwatering-stress', 15);
+    addScore('pest-spider-mites', 12);
+  }
+
+  if (
+    envText.includes('sun') ||
+    envText.includes('scorch') ||
+    envText.includes('balcony') ||
+    envText.includes('hot') ||
+    envText.includes('heat')
+  ) {
+    addScore('abiotic-sun-scorch', 15);
+    addScore('abiotic-heat-stress', 12);
+  }
+
+  // D. Query symptom search if few matches
+  if (scores.size < 3 && query.length > 2) {
+    const searchMatches = searchConditionsBySymptom(query);
+    for (let i = 0; i < searchMatches.length; i++) {
+      addScore(searchMatches[i].id, Math.max(3, 10 - i));
+    }
+  }
+
+  // E. Fallback baseline if still empty or vague
+  if (scores.size === 0) {
+    addScore('abiotic-overwatering-stress', 5);
+    addScore('abiotic-nitrogen-deficiency', 4);
+    addScore('pest-aphids', 3);
+  }
+
+  // F. Host species relationship weighting
+  if (input.plantSlug) {
+    for (const [id] of scores) {
+      const kb = getConditionById(id);
+      if (!kb) continue;
+      const isHost = kb.confirmedHostSlugs.some(
+        (h) =>
+          h.plantSlug === input.plantSlug &&
+          (h.relationshipType === 'confirmed_host' || h.relationshipType === 'susceptible_family')
+      );
+      if (isHost) {
+        addScore(id, 4);
+      } else {
+        addScore(id, -3);
+      }
+    }
+  }
+
+  // Sort candidate conditions by calculated score descending
+  const rankedKbIds = Array.from(scores.entries())
+    .sort((a, b) => b[1] - a[1])
+    .map(([id]) => id);
+
+  // Filter to verified conditions from KB, taking top 3
+  const candidateConditions: PossibleCondition[] = [];
+  const candidateKbList: PlantHealthCondition[] = [];
+
+  for (const id of rankedKbIds) {
+    if (candidateConditions.length >= 3) break;
+    const kb = getConditionById(id);
+    if (!kb) continue;
+    candidateKbList.push(kb);
+
+    // Determine confidence
+    let confidenceCategory: 'high' | 'moderate' | 'low' | 'inconclusive' = 'moderate';
+    if (query.length < 5) {
+      confidenceCategory = 'inconclusive';
+    } else if (
+      query.includes(kb.commonName.toLowerCase().split(' ')[0]) ||
+      query.includes('web') && id === 'pest-spider-mites' ||
+      query.includes('powder') && id === 'disease-powdery-mildew' ||
+      query.includes('aphid') && id === 'pest-aphids'
+    ) {
+      confidenceCategory = 'high';
+    }
+
+    // Check host suitability
+    let contradictingEvidence: string[] = [];
+    if (input.plantSlug) {
+      const isHost = kb.confirmedHostSlugs.some(
+        (h) =>
+          h.plantSlug === input.plantSlug &&
+          (h.relationshipType === 'confirmed_host' || h.relationshipType === 'susceptible_family')
+      );
+      if (!isHost) {
+        contradictingEvidence.push(
+          `Species "${plantName}" is not currently documented as a primary host in verified extension records.`
+        );
+        if (confidenceCategory === 'high') {
+          confidenceCategory = 'moderate';
+        }
+      }
+    }
+
+    candidateConditions.push({
+      name: kb.commonName,
+      kbConditionId: kb.id,
+      category: kb.category,
+      explanation: kb.shortDescription,
+      confidenceCategory,
+      supportingEvidence: [
+        `Grower reported symptoms: "${input.symptoms}"`,
+        `Typical symptoms match: ${kb.observableSymptoms.slice(0, 2).join('; ')}`,
+      ],
+      contradictingEvidence,
+      alternativeCauses: kb.similarConditions.map(
+        (s) => `${s.conditionId}: ${s.distinguishingFeature}`
+      ),
+      recommendedNextObservation:
+        kb.category === 'pest'
+          ? 'Check leaf undersides with 10x magnification or tap foliage over white paper'
+          : kb.category === 'abiotic'
+          ? 'Probe substrate moisture 5 cm deep with a clean wooden dowel'
+          : 'Inspect for active spore structures, water-soaked halos, or stem girdling',
+      groundedTreatment: {
+        culturalCorrections: kb.treatment.culturalControls,
+        mechanicalPhysicalControls: kb.treatment.physicalControls,
+        biologicalOrLowRiskControls: kb.treatment.biologicalControls,
+        prohibitedPractices: kb.treatment.prohibitedPractices,
+        cureDisclaimer: kb.treatment.cureGuaranteeDisclaimer,
+      },
+    });
+  }
+
+  // Determine primary classification
+  const categories = candidateConditions.map((c) => c.category);
+  const leadingCandidate = candidateConditions[0];
+  const hasBiotic = categories.includes('pest') || categories.includes('disease');
+  const hasAbiotic = categories.includes('abiotic');
+
+  let primaryClassification: PrimaryClassification = 'undetermined';
+
+  if (!leadingCandidate || candidateConditions.length === 0) {
+    primaryClassification = 'undetermined';
+  } else if (
+    leadingCandidate.confidenceCategory === 'high' ||
+    (leadingCandidate.category === 'pest' &&
+      (query.includes('web') || query.includes('mite') || query.includes('aphid') || query.includes('stipple'))) ||
+    (leadingCandidate.category === 'disease' &&
+      (query.includes('powder') || query.includes('mildew') || query.includes('mushy')))
+  ) {
+    // When the leading candidate has strong diagnostic hallmark confidence, primary classification follows the leading diagnosis
+    primaryClassification =
+      leadingCandidate.category === 'pest' || leadingCandidate.category === 'disease'
+        ? 'biotic'
+        : 'abiotic';
+  } else if (hasBiotic && hasAbiotic) {
+    primaryClassification = 'mixed';
+  } else if (hasBiotic) {
+    primaryClassification = 'biotic';
+  } else if (hasAbiotic) {
+    primaryClassification = 'abiotic';
+  }
+
+  // Generate context-aware follow up questions
+  const followUpQuestions: FollowUpQuestion[] = [];
+  if (hasBiotic && !query.includes('underside') && !query.includes('web')) {
+    followUpQuestions.push({
+      question: 'Do you see minute silk webbing, crawling specks, or cottony residue on the undersides of leaves or stem joints?',
+      targetConditionId: candidateConditions.find((c) => c.category === 'pest')?.kbConditionId,
+      rationale: 'Distinguishes arthropod pest infestation from physiological chlorosis or fungal leaf spot.',
+    });
+  }
+
+  if (hasAbiotic && !input.wateringFrequency) {
+    followUpQuestions.push({
+      question: 'How frequently is the container watered, and does water drain freely out the bottom holes within 30 seconds?',
+      targetConditionId: 'abiotic-overwatering-stress',
+      rationale: 'Differentiates root asphyxiation from dry-cycle underwatering or mobile nutrient deficiency.',
+    });
+  }
+
+  if (followUpQuestions.length < 3) {
+    followUpQuestions.push({
+      question: 'Are the newest top leaves affected first, or are the oldest lower leaves yellowing and dropping?',
+      rationale: 'Mobile nutrient deficiencies (nitrogen, magnesium) affect lower leaves first; immobile elements (iron, calcium) affect apical growth.',
+    });
+  }
+
+  // Synthesize treatment actions from the primary candidate
+  const primaryKb = candidateKbList[0] || getConditionById('abiotic-overwatering-stress');
+  const immediateActions = primaryKb ? primaryKb.treatment.physicalControls.slice(0, 3) : [
+    'Inspect soil moisture depth before re-watering',
+    'Ensure container drainage holes are clear',
+  ];
+  const longTermCare = primaryKb ? primaryKb.treatment.culturalControls.slice(0, 3) : [
+    'Maintain appropriate light and airflow',
+    'Avoid letting container sit in saucer runoff',
+  ];
+  const prevention = primaryKb ? primaryKb.preventionGuidance.slice(0, 3) : [
+    'Use well-aerated potting mix with 20% perlite',
+    'Sanitize pruning tools between plants',
+  ];
+
+  const overallHealth = candidateConditions.some((c) => c.confidenceCategory === 'high')
+    ? 'moderate_issue'
+    : 'mild_stress';
 
   const id = `diag_heur_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`;
   const analyzedAt = new Date().toISOString();
+
+  const primaryName = candidateConditions[0]?.name || 'Horticultural Stress';
+  const summary = `Offline agronomic evaluation of ${plantName}: identified differential possibilities including ${primaryName} (${primaryClassification}).`;
 
   return {
     id,
     analyzedAt,
     status: 'completed',
     engine: 'agronomic-heuristic',
+    primaryClassification,
     isPlantRecognized: true,
     plantIdentification: plantName,
     plantIdentificationConfidence: 'medium',
-    overallHealth: health,
+    overallHealth,
+    evidenceSeparation: {
+      observedEvidence: [
+        input.symptoms ? `Grower stated symptoms: "${input.symptoms}"` : 'Grower-reported symptoms',
+        input.wateringFrequency ? `Watering routine: ${input.wateringFrequency}` : 'Watering routine unstated',
+        input.sunlight ? `Sunlight: ${input.sunlight}` : 'Sunlight unstated',
+      ],
+      diagnosticInterpretation: candidateConditions.map(
+        (c) => `${c.name}: ${c.explanation}`
+      ),
+      unknownInformation: [
+        'Visual leaf pathology not verified by multimodal computer vision in offline heuristic mode',
+        'Subsurface root zone health and microscopic pathogens cannot be confirmed without physical inspection',
+      ],
+    },
     visibleSymptoms: [input.symptoms || 'Grower-reported symptoms'],
-    possibleConditions: [possibleCondition],
-    likelyCauses,
-    recommendedChecks,
+    possibleConditions: candidateConditions,
+    followUpQuestions: followUpQuestions.slice(0, 3),
+    likelyCauses: primaryKb ? primaryKb.possibleCauses.slice(0, 3) : ['Cultural or environmental stress'],
+    recommendedChecks: [
+      'Insert a clean wooden probe 5 cm into the soil to verify moisture depth',
+      'Examine leaf undersides with 10x magnification for minute insects or webbing',
+      'Verify container drainage holes are unobstructed and empty standing saucer water',
+    ],
     immediateActions,
     longTermCare,
     prevention,
     uncertainties: [
-      'Visual pathology not verified by multimodal computer vision in heuristic mode',
-      'Root zone pathology cannot be confirmed without physical soil probe',
+      'Heuristic mode performs rule-based matching and lacks computer vision verification',
+      'Root zone pathology and micronutrient balance cannot be confirmed without physical probe or soil assay',
     ],
     requiresExpertReview: false,
-    summary: `Agronomic heuristic analysis evaluated ${plantName}: likely ${conditionName} based on described symptoms.`,
+    summary,
     disclaimer:
-      'GrowAI Heuristic Diagnostic Engine provides educational horticultural guidance based on rule-based symptom matching. It does not replace a certified agricultural extension diagnosis.',
+      'GrowAI Heuristic Diagnostic Engine provides educational horticultural guidance based on rule-based symptom matching grounded in verified agricultural extension data. It does not replace visual pathology or laboratory testing.',
     userContextProvided: {
       plantName: input.plantName,
       reportedSymptoms: input.symptoms,
@@ -219,6 +447,6 @@ export async function diagnoseWithHeuristics(
       soil: input.soilInfo,
     },
     hasPhoto,
-    suggestedFollowUp: 'Apply recommended low-risk cultural adjustments and monitor new growth for 48–72 hours.',
+    suggestedFollowUp: 'Apply low-risk cultural adjustments, check follow-up observations, and monitor plant response for 48–72 hours.',
   };
 }

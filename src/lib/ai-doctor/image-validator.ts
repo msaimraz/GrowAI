@@ -1,4 +1,5 @@
 import sharp from 'sharp';
+import { ImageQualityAssessment } from '@/types/diagnosis';
 
 export interface ValidatedImage {
   buffer: Buffer;
@@ -7,6 +8,7 @@ export interface ValidatedImage {
   width: number;
   height: number;
   sizeBytes: number;
+  qualityAssessment?: ImageQualityAssessment;
 }
 
 export const MAX_IMAGE_SIZE_BYTES = 5 * 1024 * 1024; // 5 MB
@@ -61,11 +63,75 @@ export function detectMagicMimeType(buffer: Buffer): 'image/jpeg' | 'image/png' 
 }
 
 /**
+ * Objective technical assessment of photographic clarity, exposure, and framing.
+ * Identifies photographic defects without rejecting legitimate imperfect home photos.
+ */
+export async function assessImageQuality(
+  buffer: Buffer,
+  metadata?: sharp.Metadata
+): Promise<ImageQualityAssessment> {
+  const meta = metadata || (await sharp(buffer).metadata());
+  const issues: ImageQualityAssessment['qualityIssues'] = [];
+  let guidanceForBetterPhoto: string | undefined;
+
+  try {
+    const stats = await sharp(buffer).stats();
+    const channelMeans = stats.channels.map((c) => c.mean);
+    const avgBrightness = channelMeans.reduce((a, b) => a + b, 0) / channelMeans.length;
+    const avgStdev = stats.channels.map((c) => c.stdev).reduce((a, b) => a + b, 0) / stats.channels.length;
+
+    // Severe underexposure (too dark to resolve leaf lesions or veins)
+    if (avgBrightness < 30) {
+      issues.push('underexposure');
+    }
+    // Severe overexposure (washed-out highlights)
+    else if (avgBrightness > 235 && avgStdev < 20) {
+      issues.push('overexposure');
+    }
+
+    // Extremely low variance indicates flat featureless or severely out-of-focus capture
+    if (avgStdev < 2 && avgBrightness >= 30 && avgBrightness <= 235) {
+      issues.push('severe_blur');
+    }
+  } catch {
+    // Non-fatal if statistical analysis fails on non-standard formats
+  }
+
+  const width = meta.width || 0;
+  const height = meta.height || 0;
+
+  if (width < 250 || height < 250) {
+    issues.push('subject_too_small');
+    issues.push('missing_close_up_detail');
+  }
+
+  const isQualitySufficient = !issues.includes('severe_blur') && !issues.includes('underexposure');
+
+  if (issues.length > 0) {
+    const advice: string[] = [];
+    if (issues.includes('underexposure')) advice.push('photograph in brighter natural or diffused light');
+    if (issues.includes('overexposure')) advice.push('avoid harsh flash or direct specular glare');
+    if (issues.includes('severe_blur')) advice.push('hold the camera steady and tap to focus on the leaf lesion or stem');
+    if (issues.includes('subject_too_small') || issues.includes('missing_close_up_detail')) {
+      advice.push('move closer to capture a macro close-up of leaf surfaces and stem joints');
+    }
+    guidanceForBetterPhoto = `For a more precise botanical diagnosis, ${advice.join('; ')}.`;
+  }
+
+  return {
+    isQualitySufficient,
+    qualityIssues: issues,
+    guidanceForBetterPhoto,
+  };
+}
+
+/**
  * Deeply validates an uploaded image buffer:
- * 1. File size within acceptable limits
+ * 1. File size within acceptable limits (<= 5MB)
  * 2. Magic byte signature matches JPEG, PNG, or WebP
  * 3. Sharp decodes image metadata without corruption
  * 4. Image dimensions are suitable for botanical vision analysis
+ * 5. Runs objective image-quality assessment
  */
 export async function validateImageBuffer(buffer: Buffer): Promise<ValidatedImage> {
   if (!buffer || buffer.length === 0) {
@@ -117,6 +183,9 @@ export async function validateImageBuffer(buffer: Buffer): Promise<ValidatedImag
     );
   }
 
+  // 3. Technical Image Quality Assessment
+  const qualityAssessment = await assessImageQuality(buffer, metadata);
+
   return {
     buffer,
     mimeType: magicMime,
@@ -124,6 +193,7 @@ export async function validateImageBuffer(buffer: Buffer): Promise<ValidatedImag
     width,
     height,
     sizeBytes: buffer.length,
+    qualityAssessment,
   };
 }
 
