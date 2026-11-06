@@ -20,6 +20,7 @@ import {
   deleteSpaceConfig,
   setActiveSpaceConfigId,
 } from '@/lib/space-storage';
+import { useGrowToast } from '@/components/ui/GrowSuccessToast';
 import {
   Layers,
   Sun,
@@ -136,6 +137,7 @@ export function SpaceConfigForm({
   savedProfiles,
   onProfilesListChange,
 }: SpaceConfigFormProps) {
+  const { showSuccess } = useGrowToast();
   const [isExpanded, setIsExpanded] = useState(true);
   const [saveStatus, setSaveStatus] = useState<string | null>(null);
   const [validationErrors, setValidationErrors] = useState<string[]>([]);
@@ -316,6 +318,7 @@ export function SpaceConfigForm({
       setActiveSpaceConfigId(res.space.id);
       setSaveStatus('Space profile saved successfully.');
       setTimeout(() => setSaveStatus(null), 3000);
+      showSuccess('🪴 Space saved!', 'Your growing space is ready to use.', '🪴');
     }
   };
 

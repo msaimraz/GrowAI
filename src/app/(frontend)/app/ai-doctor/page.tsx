@@ -32,10 +32,12 @@ import {
 } from 'lucide-react';
 import { usePwa } from '@/context/PwaContext';
 import { SaveDiagnosisModal } from '@/components/diagnosis/SaveDiagnosisModal';
+import { useGrowToast } from '@/components/ui/GrowSuccessToast';
 import { History, BookmarkCheck } from 'lucide-react';
 
 export default function AiDoctorPage() {
   const { isOffline } = usePwa();
+  const { showSuccess } = useGrowToast();
 
   // Grower Context State
   const [selectedPlantSlug, setSelectedPlantSlug] = useState<string>('');
@@ -214,6 +216,12 @@ export default function AiDoctorPage() {
       }
 
       setResult(data as DiagnosisResponse);
+      const isFallback = (data as DiagnosisResponse).modelUsed?.toLowerCase().includes('heuristic') || (data as DiagnosisResponse).modelUsed?.toLowerCase().includes('rule');
+      if (isFallback) {
+        showSuccess('🌿 Plant check complete', 'Botanical guidance prepared from plant care records.', '🌿');
+      } else {
+        showSuccess('🌿 Plant check complete', 'Visual inspection analysis ready to review.', '🌿');
+      }
     } catch (err: any) {
       console.error('Plant check consultation error:', err);
       setError(err.message || 'We couldn’t inspect this plant photo right now. Please check your connection and try again.');

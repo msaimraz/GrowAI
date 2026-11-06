@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import { Plant } from '@/types/plant';
+import { useGrowToast } from '@/components/ui/GrowSuccessToast';
 import { Trophy, Check, X, RotateCcw, ArrowRight } from 'lucide-react';
 
 interface VisualQuizQuestion {
@@ -20,6 +21,7 @@ interface VisualPlantQuizProps {
 }
 
 export function VisualPlantQuiz({ plant, className = '' }: VisualPlantQuizProps) {
+  const { showSuccess, showInfo } = useGrowToast();
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [selectedOptionIndex, setSelectedOptionIndex] = useState<number | null>(null);
   const [score, setScore] = useState(0);
@@ -101,6 +103,9 @@ export function VisualPlantQuiz({ plant, className = '' }: VisualPlantQuizProps)
     const isCorrect = currentQ.options[idx].isCorrect;
     if (isCorrect) {
       setScore((prev) => prev + 1);
+      showSuccess('🌿 You got it!', 'That’s correct.', '🌿');
+    } else {
+      showInfo('🌱 Almost!', currentQ.explanation, '🌱');
     }
   };
 
@@ -110,6 +115,7 @@ export function VisualPlantQuiz({ plant, className = '' }: VisualPlantQuizProps)
       setCurrentQuestionIndex((prev) => prev + 1);
     } else {
       setQuizFinished(true);
+      showSuccess('🏆 Great job!', `You completed the ${plant.commonName} quiz.`, '🏆');
     }
   };
 

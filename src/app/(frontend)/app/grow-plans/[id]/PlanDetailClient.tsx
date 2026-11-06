@@ -13,6 +13,7 @@ import { completePlanStep, skipPlanStep, evaluateAllPlanSteps } from '@/lib/grow
 import { calculatePlanProgress } from '@/lib/grow-plans/plan-progress';
 import { PlanStatusBadge } from '@/components/grow-plans/PlanStatusBadge';
 import { PlanStepItem } from '@/components/grow-plans/PlanStepItem';
+import { useGrowToast } from '@/components/ui/GrowSuccessToast';
 import {
   ArrowLeft,
   Play,
@@ -31,6 +32,7 @@ interface PlanDetailClientProps {
 
 export function PlanDetailClient({ planId }: PlanDetailClientProps) {
   const router = useRouter();
+  const { showSuccess, showInfo } = useGrowToast();
 
   const [plan, setPlan] = useState<GrowPlan | null>(null);
   const [plants, setPlants] = useState<UserPlant[]>([]);
@@ -94,6 +96,11 @@ export function PlanDetailClient({ planId }: PlanDetailClientProps) {
       const res = await updateGrowPlan(plan.id, updatedPlan);
       if (res.plan) {
         setPlan(res.plan);
+        if (isComplete) {
+          showSuccess('🎉 Amazing work, Grower!', 'You’ve completed your grow plan.', '🎉');
+        } else {
+          showSuccess('🌱 Step complete!', 'Nice work keeping your grow plan moving.', '🌱');
+        }
       }
     } catch (err) {
       console.error('Failed to complete step:', err);
@@ -135,6 +142,11 @@ export function PlanDetailClient({ planId }: PlanDetailClientProps) {
       const res = await updateGrowPlan(plan.id, updates);
       if (res.plan) {
         setPlan(res.plan);
+        if (newStatus === 'active') {
+          showSuccess('🌱 Plan active!', 'Your grow plan is in progress.', '🌱');
+        } else if (newStatus === 'paused') {
+          showInfo('⏸️ Plan paused', 'Your progress is saved and waiting for you.', '⏸️');
+        }
       }
     } catch (err) {
       console.error('Failed to update plan status:', err);

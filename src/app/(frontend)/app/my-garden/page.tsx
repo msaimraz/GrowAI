@@ -32,6 +32,7 @@ import { PlantHealthTab } from '@/components/garden/PlantHealthTab';
 import { PlantTimelineTab } from '@/components/garden/PlantTimelineTab';
 import { PlantRemindersCard } from '@/components/garden/PlantRemindersCard';
 import { FriendlyEmptyState } from '@/components/ui/FriendlyEmptyState';
+import { useGrowToast } from '@/components/ui/GrowSuccessToast';
 import { PlantIntelligenceTab } from '@/components/garden/PlantIntelligenceTab';
 import { PlantConditionsTab } from '@/components/garden/PlantConditionsTab';
 import { PlantFeedingTab } from '@/components/garden/PlantFeedingTab';
@@ -121,6 +122,7 @@ function MyGardenContent() {
   const highlightPlantId = searchParams.get('plantId');
   const { user, isConfigured } = useAuth();
   const { isOffline } = usePwa();
+  const { showSuccess } = useGrowToast();
 
   const [userPlants, setUserPlants] = useState<UserPlant[]>([]);
   const [selectedPlantId, setSelectedPlantId] = useState<string>('');
@@ -256,6 +258,7 @@ function MyGardenContent() {
       return;
     }
     await loadGardenData();
+    showSuccess('🌱 Milestone updated!', `${activePlant?.nickname || 'Your plant'} moved to the ${newStage} stage.`, '🌱');
   };
 
   const handleAddNote = async (e: React.FormEvent) => {
@@ -287,6 +290,7 @@ function MyGardenContent() {
     setNoteHeight('');
     setSubmittingNote(false);
     await loadGardenData();
+    showSuccess('🌱 Note saved!', 'Your observation has been recorded in the journal.', '🌱');
   };
 
   const handleDeletePlant = async (plantId: string) => {
@@ -309,6 +313,19 @@ function MyGardenContent() {
       return;
     }
     await loadGardenData();
+    if (!task.completed) {
+      if (task.type === 'water') {
+        showSuccess('💧 Nice work!', 'Watering task completed.', '💧');
+      } else if (task.type === 'fertilize') {
+        showSuccess('🌱 Good job!', 'Feeding task completed.', '🌱');
+      } else if (task.type === 'prune') {
+        showSuccess('✂️ Nicely done!', 'Pruning task completed.', '✂️');
+      } else if (task.type === 'harvest') {
+        showSuccess('✂️ Nicely done!', 'Harvest recorded successfully.', '✂️');
+      } else {
+        showSuccess('🌱 Good job!', 'Your plant care is up to date.', '🌱');
+      }
+    }
   };
 
   const handleResetDemo = () => {

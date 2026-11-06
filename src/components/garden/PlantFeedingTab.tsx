@@ -10,6 +10,7 @@ import {
   NutrientObservationType,
 } from '@/types/grow-intelligence';
 import { saveFeedingRecord } from '@/lib/grow-intelligence/storage';
+import { useGrowToast } from '@/components/ui/GrowSuccessToast';
 import {
   Sprout,
   Plus,
@@ -34,6 +35,7 @@ export function PlantFeedingTab({
   feedings,
   onFeedingAdded,
 }: PlantFeedingTabProps) {
+  const { showSuccess } = useGrowToast();
   const [showLogModal, setShowLogModal] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
@@ -87,6 +89,7 @@ export function PlantFeedingTab({
         return;
       }
 
+      showSuccess('🌱 Feeding recorded!', 'Your plant care history is up to date.', '🌱');
       setShowLogModal(false);
       // Reset form
       setProductName('');

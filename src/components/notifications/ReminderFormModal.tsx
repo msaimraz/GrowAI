@@ -8,6 +8,7 @@ import {
   ReminderRecurrence,
 } from '@/types/reminder';
 import { UserPlant } from '@/types/garden';
+import { useGrowToast } from '@/components/ui/GrowSuccessToast';
 import { X, Calendar, Clock, Repeat, Sprout, AlertCircle, Plus, Loader2 } from 'lucide-react';
 
 interface ReminderFormModalProps {
@@ -25,6 +26,7 @@ export function ReminderFormModal({
   plants = [],
   defaultPlantId = null,
 }: ReminderFormModalProps) {
+  const { showSuccess } = useGrowToast();
   const [title, setTitle] = useState('');
   const [body, setBody] = useState('');
   const [selectedPlantId, setSelectedPlantId] = useState<string>(defaultPlantId || '');
@@ -109,6 +111,7 @@ export function ReminderFormModal({
       });
 
       if (res.success) {
+        showSuccess('🔔 Reminder set!', 'We’ll remind you when it’s time.', '🔔');
         onClose();
         setTitle('');
         setBody('');

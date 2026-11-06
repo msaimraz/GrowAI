@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { CheckCircle2, Camera, ArrowRight, RotateCcw } from 'lucide-react';
+import { useGrowToast } from '@/components/ui/GrowSuccessToast';
 
 interface DailyCheckCardProps {
   userPlantNames?: string[];
@@ -118,6 +119,7 @@ export function DailyCheckCard({ userPlantNames = [], className = '' }: DailyChe
   }, [userPlantNames]);
 
   const { category, icon, text, plantName, todayKey } = questionData;
+  const { showSuccess } = useGrowToast();
 
   const handleSelectOption = (option: string) => {
     setAnsweredOption(option);
@@ -125,6 +127,14 @@ export function DailyCheckCard({ userPlantNames = [], className = '' }: DailyChe
     try {
       localStorage.setItem(todayKey, option);
     } catch {}
+
+    if (option === 'good') {
+      showSuccess('🌿 Looking good!', 'Your plant check is complete for today.', '🌿');
+    } else if (option === 'different') {
+      showSuccess('👀 Good catch!', 'Let’s take a closer look at your plant.', '👀');
+    } else if (option === 'unsure') {
+      showSuccess('🌱 No worries!', 'We’ll help you figure it out.', '🌱');
+    }
   };
 
   const handleSelectDetail = (detail: string) => {

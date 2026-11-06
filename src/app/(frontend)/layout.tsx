@@ -2,6 +2,8 @@ import type { Metadata, Viewport } from 'next';
 import './globals.css';
 import { AuthProvider } from '@/context/AuthContext';
 import { PwaProvider } from '@/context/PwaContext';
+import { GrowToastProvider } from '@/context/GrowToastContext';
+import { GrowSuccessToastContainer } from '@/components/ui/GrowSuccessToast';
 
 export const metadata: Metadata = {
   title: 'GrowAI — AI-Assisted Home Gardening & Vertical Farming',
@@ -51,7 +53,12 @@ export default function RootLayout({
     <html lang="en" className="h-full antialiased scroll-smooth">
       <body className="min-h-full flex flex-col bg-[#F6F1E8] text-[#263028]">
         <PwaProvider>
-          <AuthProvider>{children}</AuthProvider>
+          <AuthProvider>
+            <GrowToastProvider>
+              {children}
+              <GrowSuccessToastContainer />
+            </GrowToastProvider>
+          </AuthProvider>
         </PwaProvider>
       </body>
     </html>

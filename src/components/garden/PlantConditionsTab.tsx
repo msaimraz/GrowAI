@@ -13,6 +13,7 @@ import {
 } from '@/types/grow-intelligence';
 import { assessConditions } from '@/lib/grow-intelligence/conditions-engine';
 import { saveGrowingCondition } from '@/lib/grow-intelligence/storage';
+import { useGrowToast } from '@/components/ui/GrowSuccessToast';
 import {
   Thermometer,
   Droplets,
@@ -38,6 +39,7 @@ export function PlantConditionsTab({
   conditions,
   onConditionAdded,
 }: PlantConditionsTabProps) {
+  const { showSuccess } = useGrowToast();
   const [showLogModal, setShowLogModal] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
@@ -89,6 +91,7 @@ export function PlantConditionsTab({
         return;
       }
 
+      showSuccess('🌿 Conditions recorded!', 'Environment check updated for your plant.', '🌿');
       setShowLogModal(false);
       // Reset form
       setTemperature('');

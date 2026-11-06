@@ -16,6 +16,7 @@ import { PlantCard } from '@/components/ui/PlantCard';
 import { DailyCheckCard } from '@/components/ui/DailyCheckCard';
 import { ActionCard } from '@/components/ui/ActionCard';
 import { FriendlyEmptyState } from '@/components/ui/FriendlyEmptyState';
+import { useGrowToast } from '@/components/ui/GrowSuccessToast';
 import {
   Plus,
   ArrowRight,
@@ -84,13 +85,30 @@ function AppDashboardContent() {
     loadDashboardData();
   }, []);
 
+  const { showSuccess } = useGrowToast();
+
   const handleTaskToggle = async (task: CareTask) => {
     try {
-      await toggleTaskStatus(task.id, !task.completed);
+      const willBeCompleted = !task.completed;
+      await toggleTaskStatus(task.id, willBeCompleted);
       const updated = careTasks.map((t) =>
-        t.id === task.id ? { ...t, completed: !task.completed } : t
+        t.id === task.id ? { ...t, completed: willBeCompleted } : t
       );
       setCareTasks(updated);
+
+      if (willBeCompleted) {
+        if (task.type === 'water') {
+          showSuccess('💧 Nice work!', 'Watering task completed.', '💧');
+        } else if (task.type === 'fertilize') {
+          showSuccess('🌱 Good job!', 'Feeding task completed.', '🌱');
+        } else if (task.type === 'prune') {
+          showSuccess('✂️ Nicely done!', 'Pruning task completed.', '✂️');
+        } else if (task.type === 'harvest') {
+          showSuccess('✂️ Nicely done!', 'Harvest recorded successfully.', '✂️');
+        } else {
+          showSuccess('🌱 Good job!', 'Your plant care is up to date.', '🌱');
+        }
+      }
     } catch (err) {
       console.error('Failed to toggle task status:', err);
     }

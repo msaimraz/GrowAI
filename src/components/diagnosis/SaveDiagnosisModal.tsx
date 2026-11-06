@@ -9,6 +9,7 @@ import { fetchPlantPhotos } from '@/lib/photo-storage';
 import { saveDiagnosisToHistory } from '@/lib/ai-doctor/persistence';
 import { useAuth } from '@/context/AuthContext';
 import { usePwa } from '@/context/PwaContext';
+import { useGrowToast } from '@/components/ui/GrowSuccessToast';
 import {
   X,
   BookmarkCheck,
@@ -38,6 +39,7 @@ export function SaveDiagnosisModal({
 }: SaveDiagnosisModalProps) {
   const { user } = useAuth();
   const { isOffline } = usePwa();
+  const { showSuccess } = useGrowToast();
 
   const [plants, setPlants] = useState<UserPlant[]>([]);
   const [selectedPlantId, setSelectedPlantId] = useState<string>(defaultPlantId || '');
@@ -133,6 +135,7 @@ export function SaveDiagnosisModal({
       }
 
       setSavedDiagnosisId(res.diagnosisId);
+      showSuccess('📖 Saved!', 'Your plant check is now in your history.', '📖');
       if (onSaved) {
         onSaved(res.diagnosisId);
       }

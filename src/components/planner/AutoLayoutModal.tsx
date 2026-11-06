@@ -15,6 +15,7 @@ import {
 import { PLANTS_DATA } from '@/data/plants';
 import { Plant } from '@/types/plant';
 import { Badge } from '@/components/ui/Badge';
+import { useGrowToast } from '@/components/ui/GrowSuccessToast';
 import {
   X,
   Sparkles,
@@ -130,6 +131,7 @@ export function AutoLayoutModal({
   profile,
   onApplyLayout,
 }: AutoLayoutModalProps) {
+  const { showSuccess } = useGrowToast();
   const modalTitleId = useId();
   const [selectedGoal, setSelectedGoal] = useState<GardenGoalId>('culinary-herbs');
   const [densityPreference, setDensityPreference] = useState<'standard' | 'compact'>('standard');
@@ -325,6 +327,7 @@ export function AutoLayoutModal({
     if (!layoutResult || layoutResult.placements.length === 0) return;
     const newSlots = layoutResult.placements.map((p) => p.slot);
     onApplyLayout(newSlots);
+    showSuccess('🌿 Layout ready!', 'We’ve arranged your space for you.', '🌿');
     onClose();
   };
 

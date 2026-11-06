@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import { UserPlant, PropagationMethod } from '@/types/garden';
 import { PLANTS_DATA } from '@/data/plants';
+import { useGrowToast } from '@/components/ui/GrowSuccessToast';
 import {
   X,
   Scissors,
@@ -82,6 +83,7 @@ export function PropagationModal({
   onPropagateSuccess,
   createPropagatedPlantFn,
 }: PropagationModalProps) {
+  const { showSuccess } = useGrowToast();
   const [selectedMethod, setSelectedMethod] = useState<PropagationMethod>('cutting');
   const [nickname, setNickname] = useState(
     `${parentPlant.nickname} (Cutting ${new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric' })})`
@@ -114,6 +116,7 @@ export function PropagationModal({
       if (res.error) {
         setErrorMsg(res.error);
       } else {
+        showSuccess('🌱 Propagation recorded!', 'Your new growing journey has been added.', '🌱');
         onPropagateSuccess(res.plant);
         onClose();
       }

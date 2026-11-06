@@ -17,6 +17,7 @@ import {
   updatePropagationOutcome,
   saveHarvestRecord,
 } from '@/lib/grow-intelligence/storage';
+import { useGrowToast } from '@/components/ui/GrowSuccessToast';
 import {
   Scissors,
   ShoppingBag,
@@ -49,6 +50,7 @@ export function PlantProductionTab({
   onDataChanged,
   onSelectPlant,
 }: PlantProductionTabProps) {
+  const { showSuccess } = useGrowToast();
   const [showPropModal, setShowPropModal] = useState(false);
   const [showHarvestModal, setShowHarvestModal] = useState(false);
   const [submitting, setSubmitting] = useState(false);
@@ -114,6 +116,7 @@ export function PlantProductionTab({
         return;
       }
 
+      showSuccess('🌱 Propagation recorded!', 'Your new growing journey has been added.', '🌱');
       setShowPropModal(false);
       setPropNotes('');
       if (onDataChanged) onDataChanged();
@@ -134,6 +137,9 @@ export function PlantProductionTab({
         status,
         outcomeDate: new Date().toISOString().split('T')[0],
       });
+      if (status === 'success') {
+        showSuccess('🌱 Propagation rooted!', 'Rooting confirmed! Ready for potting.', '🌱');
+      }
       if (onDataChanged) onDataChanged();
     } catch (err: any) {
       setErrorMsg(err.message || 'Failed to update propagation.');
@@ -169,6 +175,7 @@ export function PlantProductionTab({
         return;
       }
 
+      showSuccess('🌿 Harvest recorded!', 'Nice work growing your food.', '🌿');
       setShowHarvestModal(false);
       setHarvestQty('');
       setHarvestNotes('');

@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { Plant } from '@/types/plant';
 import { createGardenPlant } from '@/lib/storage';
 import { GrowthStage } from '@/types/garden';
+import { useGrowToast } from '@/components/ui/GrowSuccessToast';
 import { Sprout, X, Check, Calendar, MapPin, Layers, Loader2, AlertCircle } from 'lucide-react';
 
 interface AddToGardenModalProps {
@@ -15,6 +16,7 @@ interface AddToGardenModalProps {
 
 export function AddToGardenModal({ plant, isOpen, onClose }: AddToGardenModalProps) {
   const router = useRouter();
+  const { showSuccess } = useGrowToast();
   const [nickname, setNickname] = useState(plant.commonName);
   const [plantedDate, setPlantedDate] = useState('2026-10-29');
 
@@ -58,6 +60,11 @@ export function AddToGardenModal({ plant, isOpen, onClose }: AddToGardenModalPro
         return;
       }
 
+      showSuccess(
+        '🪴 Welcome home!',
+        `${nickname || plant.commonName} has been added to your garden.`,
+        '🪴'
+      );
       onClose();
       router.push('/app/my-garden');
       router.refresh();

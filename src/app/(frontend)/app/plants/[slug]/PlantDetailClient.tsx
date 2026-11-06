@@ -22,6 +22,7 @@ import {
 import { VisualPlantQuiz } from '@/components/plants/VisualPlantQuiz';
 import { CareBadge } from '@/components/ui/CareBadge';
 import { VisualProgress } from '@/components/ui/VisualProgress';
+import { useGrowToast } from '@/components/ui/GrowSuccessToast';
 import {
   Thermometer,
   Sun,
@@ -56,6 +57,7 @@ interface PlantDetailClientProps {
 }
 
 export function PlantDetailClient({ plant }: PlantDetailClientProps) {
+  const { showSuccess } = useGrowToast();
   const [modalOpen, setModalOpen] = useState(false);
   const [exploredSections, setExploredSections] = useState<Record<string, boolean>>({});
 
@@ -71,10 +73,32 @@ export function PlantDetailClient({ plant }: PlantDetailClientProps) {
 
   const handleSectionExplored = (sectionId: string, isExplored: boolean) => {
     setExploredSections((prev) => {
+      const wasAllExplored = Object.values(prev).filter(Boolean).length === 7;
+      const wasOverviewExplored = !!prev['overview'];
       const updated = { ...prev, [sectionId]: isExplored };
       try {
         localStorage.setItem(`growai_explored_${plant.slug}`, JSON.stringify(updated));
       } catch {}
+
+      const newExploredCount = Object.values(updated).filter(Boolean).length;
+
+      // Section 10: 7 of 7 Explored completion toast
+      if (!wasAllExplored && newExploredCount === 7) {
+        showSuccess(
+          '🌱 Great job, Grower!',
+          `You’ve explored all the ${plant.commonName} essentials.`,
+          '🌱'
+        );
+      }
+      // Section 11: Overview section explored for the first time
+      else if (!wasOverviewExplored && sectionId === 'overview' && isExplored) {
+        showSuccess(
+          '🌿 Nice work!',
+          'You’re getting to know your plant better.',
+          '🌿'
+        );
+      }
+
       return updated;
     });
   };
