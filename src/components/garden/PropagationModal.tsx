@@ -126,7 +126,7 @@ export function PropagationModal({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-[#071c11]/70 backdrop-blur-sm animate-fade-in">
-      <div className="relative w-full max-w-lg bg-[#fbf9f4] rounded-2xl border border-[#ded5c5] shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
+      <div className="relative w-full max-w-[calc(100vw-24px)] sm:max-w-lg bg-[#fbf9f4] rounded-2xl border border-[#ded5c5] shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
         {/* Header */}
         <div className="px-5 py-4 border-b border-[#ded5c5] bg-[#ffffff] flex items-center justify-between">
           <div className="flex items-center gap-2.5">

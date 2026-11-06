@@ -294,7 +294,7 @@ export function SyncToGardenModal({
       aria-labelledby={modalTitleId}
       className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/60 backdrop-blur-sm overflow-y-auto animate-in fade-in duration-200"
     >
-      <div className="relative w-full max-w-2xl bg-[#fbf9f4] border border-[#e2dcce] rounded-2xl shadow-xl overflow-hidden my-auto max-h-[92vh] flex flex-col">
+      <div className="relative w-full max-w-[calc(100vw-24px)] sm:max-w-2xl bg-[#fbf9f4] border border-[#e2dcce] rounded-2xl shadow-xl overflow-hidden my-auto max-h-[90vh] flex flex-col">
         {/* Header */}
         <div className="flex items-center justify-between px-5 sm:px-6 py-4 border-b border-[#e2dcce] bg-white sticky top-0 z-10">
           <div className="flex items-center gap-2.5">

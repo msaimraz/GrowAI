@@ -318,13 +318,13 @@ export default function PlannerPage() {
             </div>
           </div>
 
-          {/* Action Buttons Toolbar — Wrapped & Overflow Safe */}
-          <div className="flex flex-wrap items-center gap-2 sm:gap-2.5 w-full xl:w-auto">
+          {/* Action Buttons Toolbar — Stacks on Mobile, Horizontal on Desktop */}
+          <div className="flex flex-col sm:flex-row flex-wrap items-stretch sm:items-center gap-2 sm:gap-2.5 w-full xl:w-auto">
             {/* Suggested Layout Button */}
             <button
               type="button"
               onClick={() => setIsAutoLayoutOpen(true)}
-              className="inline-flex items-center justify-center gap-1.5 px-3.5 py-2 rounded-xl bg-[#eef5ee] hover:bg-[#dfeadf] text-[#144229] text-xs sm:text-sm font-semibold transition-colors cursor-pointer min-h-[44px] flex-1 sm:flex-initial"
+              className="inline-flex items-center justify-center gap-1.5 px-3.5 py-2 rounded-xl bg-[#eef5ee] hover:bg-[#dfeadf] text-[#144229] text-xs sm:text-sm font-semibold transition-colors cursor-pointer min-h-[44px] w-full sm:w-auto"
               title="Generate a suggested arrangement for herbs, salads, or microgreens"
             >
               <Sparkles size={16} />
@@ -335,7 +335,7 @@ export default function PlannerPage() {
             <button
               type="button"
               onClick={() => setIsSyncModalOpen(true)}
-              className="inline-flex items-center justify-center gap-1.5 px-4 py-2 rounded-xl bg-[#144229] hover:bg-[#0c2417] text-white text-xs sm:text-sm font-semibold shadow-xs transition-colors cursor-pointer min-h-[44px] flex-1 sm:flex-initial"
+              className="inline-flex items-center justify-center gap-1.5 px-4 py-2 rounded-xl bg-[#144229] hover:bg-[#0c2417] text-white text-xs sm:text-sm font-semibold shadow-xs transition-colors cursor-pointer min-h-[44px] w-full sm:w-auto"
               title="Create active tracking records in My Garden from this layout"
             >
               <Sprout size={16} />
@@ -346,7 +346,7 @@ export default function PlannerPage() {
             <button
               type="button"
               onClick={() => setIsConfigDrawerOpen((prev) => !prev)}
-              className={`inline-flex items-center justify-center gap-1.5 px-3.5 py-2 rounded-xl border text-xs sm:text-sm font-semibold transition-colors cursor-pointer min-h-[44px] flex-1 sm:flex-initial ${
+              className={`inline-flex items-center justify-center gap-1.5 px-3.5 py-2 rounded-xl border text-xs sm:text-sm font-semibold transition-colors cursor-pointer min-h-[44px] w-full sm:w-auto ${
                 isConfigDrawerOpen
                   ? 'border-[#144229] bg-[#144229] text-white'
                   : 'border-[#ded5c5] bg-white text-[#2e4435] hover:bg-[#f4f8f4]'

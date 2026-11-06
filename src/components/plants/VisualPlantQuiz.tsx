@@ -191,11 +191,11 @@ export function VisualPlantQuiz({ plant, className = '' }: VisualPlantQuizProps)
                 <span className="font-bold flex items-center gap-1 text-[#174C35]">
                   {currentQ.options[selectedOptionIndex].isCorrect ? (
                     <>
-                      <Check size={14} strokeWidth={3} /> Nice job!
+                      <Check size={14} strokeWidth={3} /> Correct
                     </>
                   ) : (
                     <>
-                      <X size={14} strokeWidth={3} /> Good try!
+                      <X size={14} strokeWidth={3} /> Not quite
                     </>
                   )}
                 </span>

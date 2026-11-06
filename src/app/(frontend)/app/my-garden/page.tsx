@@ -376,9 +376,9 @@ function MyGardenContent() {
                   <Cloud size={20} />
                 </div>
                 <div>
-                  <span className="font-bold text-[#0c2417] block">Supabase Cloud Synchronized</span>
+                  <span className="font-bold text-[#0c2417] block">Synced to Your Account</span>
                   <span className="text-xs text-[#526a57]">
-                    Logged in as <strong>{user?.email}</strong>. Data isolated with PostgreSQL Row Level Security.
+                    Logged in as <strong>{user?.email}</strong>. Your garden data is securely backed up.
                   </span>
                 </div>
               </>
@@ -388,15 +388,15 @@ function MyGardenContent() {
                   <Database size={20} />
                 </div>
                 <div>
-                  <span className="font-bold text-[#0c2417] block">Local Browser Storage Mode</span>
+                  <span className="font-bold text-[#0c2417] block">Guest Mode</span>
                   <span className="text-xs text-[#526a57]">
-                    Plants are safely cached on this device.{' '}
+                    Plants are safely saved on this device.{' '}
                     {isConfigured && (
                       <Link href="/auth/login" className="font-semibold text-[#144229] underline hover:no-underline">
                         Sign In
                       </Link>
                     )}{' '}
-                    to enable multi-device Supabase cloud sync.
+                    to sync across your devices.
                   </span>
                 </div>
               </>

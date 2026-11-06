@@ -79,8 +79,8 @@ export function CreatePlanModal({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm animate-fade-in">
-      <div className="bg-white dark:bg-stone-900 border border-stone-200 dark:border-stone-800 rounded-2xl w-full max-w-2xl max-h-[90vh] flex flex-col shadow-xl overflow-hidden">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/50 backdrop-blur-sm animate-fade-in">
+      <div className="bg-white dark:bg-stone-900 border border-stone-200 dark:border-stone-800 rounded-2xl w-full max-w-[calc(100vw-24px)] sm:max-w-2xl max-h-[90vh] flex flex-col shadow-xl overflow-hidden">
         {/* Modal Header */}
         <div className="p-5 border-b border-stone-200 dark:border-stone-800 flex justify-between items-center">
           <div>

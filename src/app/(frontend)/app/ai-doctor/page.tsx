@@ -215,7 +215,8 @@ export default function AiDoctorPage() {
 
       setResult(data as DiagnosisResponse);
     } catch (err: any) {
-      setError(err.message || 'Diagnosis consultation failed. Please check your network and try again.');
+      console.error('Plant check consultation error:', err);
+      setError(err.message || 'We couldn’t inspect this plant photo right now. Please check your connection and try again.');
     } finally {
       clearTimeout(stepTimer1);
       clearTimeout(stepTimer2);

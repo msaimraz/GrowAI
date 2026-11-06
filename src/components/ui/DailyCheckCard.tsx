@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { Sparkles, CheckCircle2, ArrowRight, Camera, HelpCircle } from 'lucide-react';
+import { CheckCircle2, Camera, ArrowRight, RotateCcw } from 'lucide-react';
 
 interface DailyCheckCardProps {
   userPlantNames?: string[];
@@ -20,59 +20,61 @@ const QUESTION_TEMPLATES: QuestionTemplate[] = [
     category: 'Leaves & Health',
     icon: '🍃',
     getQuestion: (name) =>
-      name ? `Did you notice any new spots or curling on ${name}'s leaves?` : 'Did you notice any spots or curling on your plant leaves?',
+      name
+        ? `Have you noticed any new spots on ${name}'s leaves?`
+        : 'Have you noticed any new spots on the leaves?',
   },
   {
     category: 'Watering',
     icon: '💧',
     getQuestion: (name) =>
-      name ? `Does the soil in ${name}'s container feel dry to touch today?` : 'Does the top soil layer feel dry to touch today?',
+      name ? `Does the soil feel dry in ${name}'s pot today?` : 'Does the soil feel dry today?',
   },
   {
     category: 'Sunlight',
     icon: '☀️',
     getQuestion: (name) =>
-      name ? `Is ${name} getting enough bright light where it is sitting?` : 'Are your plants receiving enough bright light today?',
+      name ? `Is ${name} getting enough light today?` : 'Is your plant getting enough light today?',
   },
   {
     category: 'Growth',
     icon: '🌱',
     getQuestion: (name) =>
-      name ? `Has ${name} unfurled any new baby leaves this week?` : 'Have your plants grown any new leaves or shoots this week?',
+      name ? `Has ${name} grown any new leaves?` : 'Has your plant grown any new leaves?',
   },
   {
     category: 'Environment',
     icon: '🌡️',
     getQuestion: (name) =>
-      name ? `Is the temperature and air draft feeling comfortable around ${name}?` : 'Is the air around your growing space feeling fresh and moderate?',
-  },
-  {
-    category: 'Roots & Moisture',
-    icon: '🪴',
-    getQuestion: (name) =>
-      name ? `Is excess drainage water clearing smoothly under ${name}'s pot?` : 'Is drainage clearing cleanly from your planters?',
+      name
+        ? `Does the temperature feel comfortable around ${name}?`
+        : 'Does the temperature feel comfortable around your plants?',
   },
   {
     category: 'Pests & Wildlife',
     icon: '🐛',
     getQuestion: (name) =>
-      name ? `Checked the undersides of ${name}'s foliage for tiny bugs?` : 'Did a quick inspection under the leaves turn up anything unexpected?',
+      name ? `Have you noticed any tiny insects on ${name}?` : 'Have you noticed any tiny insects?',
   },
   {
     category: 'Harvest & Care',
     icon: '✂️',
     getQuestion: (name) =>
-      name ? `Ready to pinch the top growing tips of ${name} for bushy growth?` : 'Any tender herbs ready for a fresh kitchen pinch today?',
+      name
+        ? `Does ${name} look ready for a gentle pinch or harvest?`
+        : 'Do any of your plants look ready for a harvest or trim?',
   },
 ];
 
 export function DailyCheckCard({ userPlantNames = [], className = '' }: DailyCheckCardProps) {
   const [answeredOption, setAnsweredOption] = useState<string | null>(null);
+  const [noticedDetail, setNoticedDetail] = useState<string | null>(null);
   const [mounted, setMounted] = useState(false);
   const [questionData, setQuestionData] = useState(() => ({
     category: QUESTION_TEMPLATES[0].category,
     icon: QUESTION_TEMPLATES[0].icon,
     text: QUESTION_TEMPLATES[0].getQuestion(userPlantNames[0]),
+    plantName: userPlantNames[0] || 'your plant',
     todayKey: 'growai_daily_check_today',
   }));
 
@@ -98,28 +100,43 @@ export function DailyCheckCard({ userPlantNames = [], className = '' }: DailyChe
       category: template.category,
       icon: template.icon,
       text: template.getQuestion(chosenPlant),
+      plantName: chosenPlant || 'your plant',
       todayKey,
     });
 
     try {
       const saved = localStorage.getItem(todayKey);
       if (saved) {
-        setAnsweredOption(saved);
+        if (saved.startsWith('different:')) {
+          setAnsweredOption('different');
+          setNoticedDetail(saved.replace('different:', ''));
+        } else {
+          setAnsweredOption(saved);
+        }
       }
     } catch {}
   }, [userPlantNames]);
 
-  const { category, icon, text, todayKey } = questionData;
+  const { category, icon, text, plantName, todayKey } = questionData;
 
   const handleSelectOption = (option: string) => {
     setAnsweredOption(option);
+    setNoticedDetail(null);
     try {
       localStorage.setItem(todayKey, option);
     } catch {}
   };
 
+  const handleSelectDetail = (detail: string) => {
+    setNoticedDetail(detail);
+    try {
+      localStorage.setItem(todayKey, `different:${detail}`);
+    } catch {}
+  };
+
   const handleResetCheck = () => {
     setAnsweredOption(null);
+    setNoticedDetail(null);
     try {
       localStorage.removeItem(todayKey);
     } catch {}
@@ -127,26 +144,26 @@ export function DailyCheckCard({ userPlantNames = [], className = '' }: DailyChe
 
   return (
     <div
-      className={`rounded-2xl border border-[#E8E4DA] bg-gradient-to-br from-[#FFF0D8]/60 via-[#FBF9F4] to-[#E6F0E3]/40 p-5 sm:p-6 shadow-xs space-y-4 ${className}`}
+      className={`rounded-3xl border border-[#E8E4DA] bg-gradient-to-br from-[#FFF0D8]/60 via-[#FBF9F4] to-[#E6F0E3]/40 p-5 sm:p-6 shadow-xs space-y-4 ${className}`}
     >
       {/* Header */}
       <div className="flex items-center justify-between">
-        <div className="flex items-center gap-2">
-          <span className="w-8 h-8 rounded-xl bg-white border border-[#E8E4DA] flex items-center justify-center text-base shadow-2xs select-none">
+        <div className="flex items-center gap-2.5">
+          <span className="w-9 h-9 rounded-2xl bg-white border border-[#E8E4DA] flex items-center justify-center text-lg shadow-2xs select-none">
             {icon}
           </span>
           <div>
             <span className="text-[11px] font-mono uppercase tracking-wider text-[#68736B] block">
               Daily Plant Check · {category}
             </span>
-            <h3 className="font-serif text-lg font-bold text-[#1F2A23] leading-tight">
+            <h3 className="font-serif text-lg sm:text-xl font-bold text-[#1F2A23] leading-snug">
               {text}
             </h3>
           </div>
         </div>
 
         {answeredOption && (
-          <span className="inline-flex items-center gap-1 text-xs font-semibold px-2.5 py-1 rounded-full bg-[#E6F0E3] text-[#174C35] border border-[#CEE4C9]">
+          <span className="inline-flex items-center gap-1 text-xs font-semibold px-3 py-1 rounded-full bg-[#E6F0E3] text-[#174C35] border border-[#CEE4C9]">
             <CheckCircle2 size={13} />
             Checked
           </span>
@@ -159,7 +176,7 @@ export function DailyCheckCard({ userPlantNames = [], className = '' }: DailyChe
           <button
             type="button"
             onClick={() => handleSelectOption('good')}
-            className="flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-white hover:bg-[#F3F6EC] border border-[#E8E4DA] hover:border-[#174C35]/30 text-sm font-medium text-[#1F2A23] transition-all cursor-pointer shadow-2xs active:scale-[0.99] min-h-[44px]"
+            className="flex items-center justify-center gap-2 py-3 px-4 rounded-2xl bg-white hover:bg-[#F3F6EC] border border-[#E8E4DA] hover:border-[#174C35]/30 text-sm font-semibold text-[#1F2A23] transition-all cursor-pointer shadow-2xs active:scale-[0.99] min-h-[44px]"
           >
             <span>Everything looks good</span>
             <span className="text-base">🌿</span>
@@ -168,7 +185,7 @@ export function DailyCheckCard({ userPlantNames = [], className = '' }: DailyChe
           <button
             type="button"
             onClick={() => handleSelectOption('different')}
-            className="flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-white hover:bg-[#FFF0D8] border border-[#E8E4DA] hover:border-[#C86B4A]/40 text-sm font-medium text-[#1F2A23] transition-all cursor-pointer shadow-2xs active:scale-[0.99] min-h-[44px]"
+            className="flex items-center justify-center gap-2 py-3 px-4 rounded-2xl bg-white hover:bg-[#FFF0D8] border border-[#E8E4DA] hover:border-[#C86B4A]/40 text-sm font-semibold text-[#1F2A23] transition-all cursor-pointer shadow-2xs active:scale-[0.99] min-h-[44px]"
           >
             <span>Something looks different</span>
             <span className="text-base">👀</span>
@@ -177,57 +194,91 @@ export function DailyCheckCard({ userPlantNames = [], className = '' }: DailyChe
           <button
             type="button"
             onClick={() => handleSelectOption('unsure')}
-            className="flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-white hover:bg-[#EEE8F6] border border-[#E8E4DA] hover:border-[#68736B]/30 text-sm font-medium text-[#1F2A23] transition-all cursor-pointer shadow-2xs active:scale-[0.99] min-h-[44px]"
+            className="flex items-center justify-center gap-2 py-3 px-4 rounded-2xl bg-white hover:bg-[#EEE8F6] border border-[#E8E4DA] hover:border-[#68736B]/30 text-sm font-semibold text-[#1F2A23] transition-all cursor-pointer shadow-2xs active:scale-[0.99] min-h-[44px]"
           >
             <span>I’m not sure</span>
             <span className="text-base">🤔</span>
           </button>
         </div>
       ) : (
-        /* Response Feedback */
-        <div className="p-4 rounded-xl bg-white border border-[#E8E4DA] space-y-3 animate-in fade-in duration-200">
-          <div className="flex items-start justify-between gap-2">
-            <div className="space-y-1">
+        /* Immediate Response Feedback */
+        <div className="p-4 sm:p-5 rounded-2xl bg-white border border-[#E8E4DA] space-y-3 animate-in fade-in duration-200">
+          <div className="flex items-start justify-between gap-3">
+            <div className="space-y-2 flex-1">
+              {/* Option: GOOD */}
               {answeredOption === 'good' && (
-                <>
-                  <p className="text-sm font-medium text-[#174C35] flex items-center gap-1.5">
-                    <span>🎉</span> Wonderful! Everything is on track.
+                <div className="space-y-1">
+                  <p className="text-sm font-bold text-[#174C35] flex items-center gap-1.5">
+                    <span>✓</span> Got it
                   </p>
-                  <p className="text-xs text-[#68736B] leading-relaxed">
-                    Consistent daily check-ins help you notice small growth changes before any stress develops.
+                  <p className="text-xs sm:text-sm text-[#68736B] leading-relaxed">
+                    We’ll keep an eye on {plantName}. Everything looks happy and healthy today.
                   </p>
-                </>
+                </div>
               )}
 
+              {/* Option: SOMETHING LOOKS DIFFERENT */}
               {answeredOption === 'different' && (
-                <>
-                  <p className="text-sm font-medium text-[#A84A2A] flex items-center gap-1.5">
-                    <span>👀</span> Good eye! Notice anything specific?
-                  </p>
-                  <p className="text-xs text-[#68736B] leading-relaxed">
-                    If leaves are drooping, discolored, or showing spots, snapping a quick photo will help investigate.
-                  </p>
-                  <div className="pt-2">
+                <div className="space-y-3">
+                  <div className="space-y-1">
+                    <p className="text-sm font-bold text-[#9A3412] flex items-center gap-1.5">
+                      <span>✓</span> Got it
+                    </p>
+                    <p className="text-xs sm:text-sm text-[#1F2A23] font-medium">
+                      What did you notice?
+                    </p>
+                  </div>
+
+                  {/* 1-Tap Notice Chips */}
+                  <div className="flex flex-wrap items-center gap-2 pt-0.5">
+                    {[
+                      { id: 'Leaves', label: '🍃 Leaves' },
+                      { id: 'Soil', label: '💧 Soil' },
+                      { id: 'Bugs', label: '🐛 Bugs' },
+                      { id: 'Light', label: '☀️ Light' },
+                      { id: 'Growth', label: '🌱 Growth' },
+                    ].map((item) => (
+                      <button
+                        key={item.id}
+                        type="button"
+                        onClick={() => handleSelectDetail(item.id)}
+                        className={`px-3 py-1.5 rounded-xl text-xs font-semibold border transition-all cursor-pointer ${
+                          noticedDetail === item.id
+                            ? 'bg-[#174C35] text-white border-[#174C35]'
+                            : 'bg-[#FBF9F4] text-[#1F2A23] border-[#E8E4DA] hover:bg-[#F3F6EC]'
+                        }`}
+                      >
+                        {item.label}
+                      </button>
+                    ))}
+
                     <Link
                       href="/app/ai-doctor"
-                      className="inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-lg bg-[#174C35] text-white hover:bg-[#0f3424] transition-colors"
+                      className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-semibold bg-[#174C35] text-white hover:bg-[#0f3424] transition-colors shadow-2xs"
                     >
                       <Camera size={13} />
-                      <span>Check with Plant Doctor</span>
+                      <span>Take a photo</span>
                     </Link>
                   </div>
-                </>
+
+                  {noticedDetail && (
+                    <p className="text-xs text-[#68736B] pt-1">
+                      Noted: {noticedDetail} issue for {plantName}. We’ll monitor this in your garden journal.
+                    </p>
+                  )}
+                </div>
               )}
 
+              {/* Option: NOT SURE */}
               {answeredOption === 'unsure' && (
-                <>
-                  <p className="text-sm font-medium text-[#1F2A23] flex items-center gap-1.5">
-                    <span>🤔</span> No worries at all!
+                <div className="space-y-1">
+                  <p className="text-sm font-bold text-[#1F2A23] flex items-center gap-1.5">
+                    <span>✓</span> Got it
                   </p>
-                  <p className="text-xs text-[#68736B] leading-relaxed">
-                    Gently press your fingertip 2cm into the soil. If it feels cool and damp, you have plenty of moisture.
+                  <p className="text-xs sm:text-sm text-[#68736B] leading-relaxed">
+                    No worries! A quick look under the leaves or touching the topsoil can tell you a lot.
                   </p>
-                </>
+                </div>
               )}
             </div>
 
@@ -235,6 +286,7 @@ export function DailyCheckCard({ userPlantNames = [], className = '' }: DailyChe
               type="button"
               onClick={handleResetCheck}
               className="text-[11px] font-mono text-[#68736B] hover:text-[#174C35] underline cursor-pointer shrink-0"
+              title="Reset question"
             >
               Change
             </button>
@@ -244,4 +296,3 @@ export function DailyCheckCard({ userPlantNames = [], className = '' }: DailyChe
     </div>
   );
 }
-

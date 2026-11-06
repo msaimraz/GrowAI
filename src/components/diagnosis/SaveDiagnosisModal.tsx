@@ -128,7 +128,8 @@ export function SaveDiagnosisModal({
       });
 
       if (!res.success || !res.diagnosisId) {
-        throw new Error(res.error || 'Failed to save diagnosis.');
+        console.error('Failed to save diagnosis:', res.error);
+        throw new Error("We couldn't save this plant check. Please try again.");
       }
 
       setSavedDiagnosisId(res.diagnosisId);
@@ -136,15 +137,16 @@ export function SaveDiagnosisModal({
         onSaved(res.diagnosisId);
       }
     } catch (err: any) {
-      setError(err.message || 'An unexpected error occurred while saving.');
+      console.error('Save error details:', err);
+      setError("We couldn't save this plant check. Please try again.");
     } finally {
       setSaving(false);
     }
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-xs animate-in fade-in duration-200">
-      <div className="bg-white rounded-3xl border border-[#ded5c5] max-w-lg w-full p-6 sm:p-8 shadow-xl space-y-6 relative max-h-[90vh] overflow-y-auto">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/50 backdrop-blur-xs animate-in fade-in duration-200">
+      <div className="bg-white rounded-3xl border border-[#ded5c5] max-w-[calc(100vw-24px)] sm:max-w-lg w-full p-5 sm:p-8 shadow-xl space-y-6 relative max-h-[90vh] overflow-y-auto">
         {/* Close Button */}
         <button
           type="button"
@@ -216,11 +218,26 @@ export function SaveDiagnosisModal({
               </div>
             )}
 
-            {/* Error Message */}
+            {/* Friendly Error Message with Try Again */}
             {error && (
-              <div className="p-3.5 rounded-xl bg-[#fee2e2] border border-[#fca5a5] text-xs text-[#991b1b] flex items-center gap-2.5">
-                <AlertCircle size={18} className="shrink-0" />
-                <span>{error}</span>
+              <div className="p-4 rounded-2xl bg-[#fee2e2] border border-[#fca5a5] space-y-2 text-xs text-[#991b1b]">
+                <div className="flex items-center gap-2 font-bold">
+                  <AlertCircle size={18} className="shrink-0" />
+                  <span>We couldn’t save this plant check.</span>
+                </div>
+                <p className="text-[11px] leading-relaxed text-[#7f1d1d]">
+                  Please try again.
+                </p>
+                <div className="pt-1">
+                  <button
+                    type="button"
+                    onClick={handleSave}
+                    disabled={saving}
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#991b1b] hover:bg-[#7f1d1d] text-white text-xs font-semibold cursor-pointer transition-colors shadow-2xs"
+                  >
+                    <span>Try Again</span>
+                  </button>
+                </div>
               </div>
             )}
 

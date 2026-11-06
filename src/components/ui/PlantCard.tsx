@@ -1,17 +1,31 @@
+'use client';
+
 import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { CareBadge } from './CareBadge';
 import { Plant } from '@/types/plant';
-import { ArrowRight, Plus, Sparkles } from 'lucide-react';
+import { ArrowRight, Plus } from 'lucide-react';
 
 interface PlantCardProps {
   plant: Plant;
+  nickname?: string;
+  stage?: string;
+  nextAction?: string;
+  hideScientific?: boolean;
   onAddClick?: (plant: Plant) => void;
   priority?: boolean;
 }
 
-export function PlantCard({ plant, onAddClick, priority = false }: PlantCardProps) {
+export function PlantCard({
+  plant,
+  nickname,
+  stage,
+  nextAction,
+  hideScientific = false,
+  onAddClick,
+  priority = false,
+}: PlantCardProps) {
   // Determine friendly sunlight label
   const getSunlightLabel = (sun: string) => {
     if (sun.includes('full') || sun.includes('direct')) return 'Bright Sun';
@@ -29,7 +43,7 @@ export function PlantCard({ plant, onAddClick, priority = false }: PlantCardProp
     if (lower.includes('low') || lower.includes('dry')) {
       return 'Low Water';
     }
-    return 'Moderate';
+    return 'Moderate Water';
   };
 
   // Determine plant emoji based on category
@@ -50,14 +64,16 @@ export function PlantCard({ plant, onAddClick, priority = false }: PlantCardProp
     }
   };
 
+  const displayName = nickname || plant.commonName;
+
   return (
-    <div className="group bg-white rounded-2xl border border-[#E8E4DA] hover:border-[#174C35]/30 shadow-xs hover:shadow-md transition-all duration-200 overflow-hidden flex flex-col justify-between">
+    <div className="group bg-white rounded-3xl border border-[#E8E4DA] hover:border-[#174C35]/30 shadow-xs hover:shadow-md transition-all duration-200 overflow-hidden flex flex-col justify-between">
       {/* 1. Large Plant Photo / Visual Header */}
       <Link href={`/app/plants/${plant.slug}`} className="block relative aspect-4/3 w-full bg-[#F3F6EC] overflow-hidden">
         {plant.imageUrl ? (
           <Image
             src={plant.imageUrl}
-            alt={plant.commonName}
+            alt={displayName}
             fill
             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
             className="object-cover group-hover:scale-105 transition-transform duration-300"
@@ -74,14 +90,20 @@ export function PlantCard({ plant, onAddClick, priority = false }: PlantCardProp
           </div>
         )}
 
-        {/* Difficulty Pill on Image */}
-        <div className="absolute top-2.5 left-2.5">
-          <CareBadge
-            type="difficulty"
-            label={plant.difficulty.level.charAt(0).toUpperCase() + plant.difficulty.level.slice(1)}
-            size="sm"
-            className="shadow-xs bg-white/95 backdrop-blur-xs border-white"
-          />
+        {/* Floating Badges */}
+        <div className="absolute top-2.5 left-2.5 flex items-center gap-1.5 flex-wrap">
+          {stage ? (
+            <span className="text-xs font-semibold px-2.5 py-1 rounded-full bg-white/95 text-[#174C35] shadow-xs backdrop-blur-xs">
+              {stage}
+            </span>
+          ) : (
+            <CareBadge
+              type="difficulty"
+              label={plant.difficulty.level.charAt(0).toUpperCase() + plant.difficulty.level.slice(1)}
+              size="sm"
+              className="shadow-xs bg-white/95 backdrop-blur-xs border-white"
+            />
+          )}
         </div>
 
         {/* Quick Add Button if provided */}
@@ -94,8 +116,8 @@ export function PlantCard({ plant, onAddClick, priority = false }: PlantCardProp
               onAddClick(plant);
             }}
             className="absolute top-2.5 right-2.5 w-8 h-8 rounded-full bg-white/95 hover:bg-[#174C35] text-[#174C35] hover:text-white border border-[#E8E4DA] flex items-center justify-center shadow-xs transition-colors cursor-pointer"
-            title={`Add ${plant.commonName} to garden`}
-            aria-label={`Add ${plant.commonName} to garden`}
+            title={`Add ${displayName} to garden`}
+            aria-label={`Add ${displayName} to garden`}
           >
             <Plus size={16} />
           </button>
@@ -106,12 +128,14 @@ export function PlantCard({ plant, onAddClick, priority = false }: PlantCardProp
       <div className="p-4 sm:p-5 flex-1 flex flex-col justify-between space-y-3.5">
         <div>
           <Link href={`/app/plants/${plant.slug}`} className="block group-hover:text-[#174C35] transition-colors">
-            <h3 className="font-serif text-lg sm:text-xl font-bold text-[#1F2A23] leading-snug line-clamp-1">
-              {getCategoryEmoji(plant.category)} {plant.commonName}
+            <h3 className="font-serif text-lg sm:text-xl font-bold text-[#1F2A23] leading-snug line-clamp-2">
+              {getCategoryEmoji(plant.category)} {displayName}
             </h3>
-            <p className="text-xs text-[#68736B] italic font-serif mt-0.5 line-clamp-1">
-              {plant.scientificName}
-            </p>
+            {!hideScientific && plant.scientificName && (
+              <p className="text-xs text-[#68736B] italic font-serif mt-0.5 line-clamp-1">
+                {plant.scientificName}
+              </p>
+            )}
           </Link>
         </div>
 
@@ -130,13 +154,11 @@ export function PlantCard({ plant, onAddClick, priority = false }: PlantCardProp
         </div>
 
         {/* 3. Action Footer */}
-        <div className="pt-2 border-t border-[#F3F6EC] flex items-center justify-between">
-          <span className="text-xs text-[#68736B] font-mono">
-            {plant.timelines?.maturityDays?.max
+        <div className="pt-2.5 border-t border-[#F3F6EC] flex items-center justify-between">
+          <span className="text-xs text-[#68736B] font-medium">
+            {nextAction || (plant.timelines?.maturityDays?.max
               ? `${plant.timelines.maturityDays.max}d cycle`
-              : plant.daysToMaturity
-              ? `${plant.daysToMaturity}d cycle`
-              : 'Container ready'}
+              : 'Container ready')}
           </span>
           <Link
             href={`/app/plants/${plant.slug}`}
@@ -150,4 +172,3 @@ export function PlantCard({ plant, onAddClick, priority = false }: PlantCardProp
     </div>
   );
 }
-

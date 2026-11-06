@@ -155,39 +155,9 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: errorMessage }, { status: 400 });
     }
 
-    if (errorMessage.includes('timed out')) {
-      return NextResponse.json(
-        {
-          error:
-            'AI Vision analysis timed out. The model took too long to process. Please try again or switch to Heuristic Mode.',
-        },
-        { status: 504 }
-      );
-    }
-
-    if (errorMessage.includes('quota') || errorMessage.includes('429')) {
-      return NextResponse.json(
-        {
-          error:
-            'AI Vision model quota is temporarily saturated. Please try again in 1 minute or switch to Heuristic Mode.',
-        },
-        { status: 429 }
-      );
-    }
-
-    if (errorMessage.includes('AI_VISION_API_KEY is not configured')) {
-      return NextResponse.json(
-        {
-          error:
-            'AI Vision API is not configured on this server. Please switch to Heuristic Mode for rule-based analysis.',
-        },
-        { status: 503 }
-      );
-    }
-
     return NextResponse.json(
       {
-        error: 'An internal error occurred during plant diagnosis. Please try again or use Heuristic Mode.',
+        error: 'We couldn’t inspect this plant photo right now. Please check your image and try again.',
       },
       { status: 500 }
     );
