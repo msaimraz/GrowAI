@@ -70,16 +70,42 @@ export function NotificationCenter({
     setMounted(true);
   }, []);
 
-  // Lock background scroll when drawer is open
+  // Lock background scroll when drawer is open without layout jump
   useEffect(() => {
     if (isOpen) {
       const originalOverflow = document.body.style.overflow;
+      const originalPaddingRight = document.body.style.paddingRight;
+      const scrollBarWidth = window.innerWidth - document.documentElement.clientWidth;
       document.body.style.overflow = 'hidden';
+      if (scrollBarWidth > 0) {
+        document.body.style.paddingRight = `${scrollBarWidth}px`;
+      }
       return () => {
         document.body.style.overflow = originalOverflow;
+        document.body.style.paddingRight = originalPaddingRight;
       };
     }
   }, [isOpen]);
+
+  // Keyboard accessibility: Escape key closes modal/drawer
+  useEffect(() => {
+    if (!isOpen) return;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        if (isDetailOpen) {
+          setIsDetailOpen(false);
+        } else if (isCreateOpen) {
+          setIsCreateOpen(false);
+        } else if (isPreferencesOpen) {
+          setIsPreferencesOpen(false);
+        } else {
+          onClose();
+        }
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [isOpen, isDetailOpen, isCreateOpen, isPreferencesOpen, onClose]);
 
   const loadData = async () => {
     setLoading(true);
@@ -229,7 +255,7 @@ export function NotificationCenter({
           /* Mobile styles: bottom sheet */
           bottom-0 left-0 right-0 w-full max-h-[85dvh] rounded-t-3xl border-t border-[#ded5c5]
           /* Desktop styles: right-side drawer */
-          md:top-0 md:bottom-0 md:right-0 md:left-auto md:w-[420px] md:max-w-[100vw] md:h-[100dvh] md:max-h-[100dvh] md:rounded-none md:border-t-0 md:border-l md:border-[#ded5c5]
+          md:top-0 md:bottom-0 md:right-0 md:left-auto md:w-[400px] md:max-w-[100vw] md:h-[100dvh] md:max-h-[100dvh] md:rounded-l-3xl md:rounded-r-none md:border-t-0 md:border-l md:border-[#ded5c5]
           shrink-0 overflow-hidden"
       >
         {/* Mobile Sheet Drag / Close Handle */}

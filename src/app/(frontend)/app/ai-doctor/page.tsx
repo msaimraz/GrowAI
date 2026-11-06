@@ -252,7 +252,7 @@ export default function AiDoctorPage() {
         actionIcon="none"
       />
 
-      <div className="flex-1 p-4 sm:p-6 lg:p-8 max-w-5xl mx-auto w-full space-y-6 sm:space-y-8">
+      <div className="flex-1 p-4 sm:p-6 lg:p-8 max-w-5xl mx-auto w-full min-w-0 max-w-full space-y-6 sm:space-y-8">
         {/* Friendly Consultation Intro */}
         <div className="bg-[#174C35] text-white p-6 sm:p-8 rounded-3xl relative overflow-hidden shadow-xs space-y-3">
           <div className="max-w-2xl space-y-2">

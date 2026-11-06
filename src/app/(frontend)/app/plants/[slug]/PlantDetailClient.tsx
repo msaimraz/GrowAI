@@ -124,18 +124,18 @@ export function PlantDetailClient({ plant }: PlantDetailClientProps) {
   return (
     <div className="min-h-screen flex flex-col pb-32 sm:pb-20 bg-[#fbf9f4]">
       {/* 1. Top Breadcrumb & Primary Actions Bar */}
-      <header className="bg-white border-b border-[#ded5c5] px-4 sm:px-8 py-3.5 sticky top-0 z-20 shadow-2xs">
-        <div className="max-w-6xl mx-auto flex items-center justify-between gap-4">
-          <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-sm">
+      <header className="bg-white border-b border-[#ded5c5] px-4 sm:px-8 py-3 sticky top-0 z-20 shadow-2xs">
+        <div className="max-w-6xl mx-auto flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4 min-w-0">
+          <nav aria-label="Breadcrumb" className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2 text-sm min-w-0">
             <Link
               href="/app/plants"
-              className="inline-flex items-center gap-2 text-sm font-semibold text-[#144229] hover:text-[#071c11] min-h-[44px] transition-colors"
+              className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-semibold text-[#144229] hover:text-[#071c11] min-h-[36px] sm:min-h-[44px] transition-colors w-fit shrink-0"
             >
-              <ArrowLeft size={18} />
+              <ArrowLeft size={16} />
               <span>Plant Library</span>
             </Link>
-            <span className="text-[#a8a090]">/</span>
-            <span className="font-serif italic text-[#2e4435] truncate max-w-[180px] sm:max-w-xs">
+            <span className="hidden sm:inline text-[#a8a090]">/</span>
+            <span className="font-serif font-bold text-base sm:text-base text-[#2e4435] truncate max-w-full">
               {plant.commonName}
             </span>
           </nav>
@@ -143,9 +143,9 @@ export function PlantDetailClient({ plant }: PlantDetailClientProps) {
           <button
             type="button"
             onClick={() => setModalOpen(true)}
-            className="inline-flex items-center gap-2 text-sm font-semibold bg-[#144229] hover:bg-[#071c11] text-white px-4 sm:px-6 py-2.5 rounded-xl shadow-xs transition-all hover:shadow cursor-pointer min-h-[44px]"
+            className="inline-flex items-center justify-center gap-2 text-xs sm:text-sm font-semibold bg-[#144229] hover:bg-[#071c11] text-white px-4 sm:px-6 py-2.5 rounded-xl shadow-xs transition-all hover:shadow cursor-pointer min-h-[44px] w-full sm:w-auto shrink-0"
           >
-            <Plus size={18} />
+            <Plus size={16} />
             <span>Add to My Garden</span>
           </button>
         </div>
@@ -155,11 +155,11 @@ export function PlantDetailClient({ plant }: PlantDetailClientProps) {
       <PlantSectionNav exploredCount={exploredCount} />
 
       {/* 3. Main Botanical Editorial Container */}
-      <main className="flex-1 p-4 sm:p-6 lg:p-8 max-w-6xl mx-auto w-full space-y-10 sm:space-y-12">
+      <main className="flex-1 p-4 sm:p-6 lg:p-8 max-w-6xl mx-auto w-full min-w-0 max-w-full space-y-10 sm:space-y-12">
         {/* =========================================================
             SECTION 1: HERO & BOTANICAL OVERVIEW (#overview)
         ========================================================= */}
-        <section id="overview" className="scroll-mt-32 space-y-6">
+        <section id="overview" className="scroll-mt-32 space-y-6 min-w-0 max-w-full">
           <div className="space-y-1">
             <span className="text-xs font-mono uppercase tracking-widest font-bold text-[#144229]">
               Botanical Profile
@@ -172,10 +172,10 @@ export function PlantDetailClient({ plant }: PlantDetailClientProps) {
             </p>
           </div>
 
-          <div className="bg-white rounded-3xl border border-[#ded5c5] p-6 sm:p-8 lg:p-10 shadow-xs relative overflow-hidden">
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+          <div className="bg-white rounded-3xl border border-[#ded5c5] p-6 sm:p-8 lg:p-10 shadow-xs relative overflow-hidden min-w-0 max-w-full">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start min-w-0 max-w-full">
               {/* Left Column: Taxonomic Nameplate & Editorial Summary */}
-              <div className="lg:col-span-7 space-y-5">
+              <div className="lg:col-span-7 space-y-5 min-w-0 max-w-full">
                 {/* Meta Badges */}
                 <div className="flex flex-wrap items-center gap-2">
                   <CareBadge
@@ -360,7 +360,7 @@ export function PlantDetailClient({ plant }: PlantDetailClientProps) {
               </div>
 
               {/* Right Column: Prominent Botanical Plate Artwork & Herbarium Card */}
-              <div className="lg:col-span-5">
+              <div className="lg:col-span-5 min-w-0 max-w-full">
                 <BotanicalPlate plant={plant} />
               </div>
             </div>

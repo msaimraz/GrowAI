@@ -118,6 +118,15 @@ body {
   }
 }
 
+/* Hide scrollbar utility while preserving scrollability */
+.scrollbar-none {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
+
 /* Botanical subtle grid pattern */
 .bg-botanical-pattern {
   background-image: radial-gradient(rgba(20, 66, 41, 0.05) 1px, transparent 1px);

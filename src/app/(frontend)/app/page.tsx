@@ -149,7 +149,7 @@ function AppDashboardContent() {
 
   return (
     <div className="min-h-screen flex flex-col bg-[#FBF9F4] text-[#1F2A23]">
-      <div className="flex-1 p-4 sm:p-6 lg:p-8 max-w-7xl mx-auto w-full space-y-8 sm:space-y-10">
+      <div className="flex-1 p-4 sm:p-6 lg:p-8 max-w-7xl mx-auto w-full min-w-0 max-w-full space-y-8 sm:space-y-10">
         {/* =========================================================
             1. PERSONAL FRIENDLY GREETING & TODAY'S STATUS
         ========================================================= */}

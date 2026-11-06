@@ -485,9 +485,80 @@ function MyGardenContent() {
             actionLabel="Explore Plant Catalog"
           />
         ) : (
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-            {/* Left Column: Plant Selection Sidebar */}
-            <div className="lg:col-span-4 space-y-5">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 min-w-0 max-w-full">
+            {/* Mobile / Tablet Compact Plant Selector Rail (< lg) */}
+            <div className="lg:hidden col-span-1 space-y-3 min-w-0 max-w-full">
+              <div className="flex items-center justify-between pb-1">
+                <div>
+                  <h3 className="text-base font-serif font-bold text-[#0c2417]">
+                    My Garden ({userPlants.length})
+                  </h3>
+                  <p className="text-xs text-[#526a57]">Tap a specimen to view its journal</p>
+                </div>
+                <Link
+                  href="/app/plants"
+                  className="text-xs font-semibold text-[#144229] hover:text-[#0c2417] flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-[#cfdfcf] bg-white hover:bg-[#f4f8f4] transition-colors min-h-[40px]"
+                >
+                  <Plus size={14} />
+                  <span>Add Plant</span>
+                </Link>
+              </div>
+
+              {/* Horizontally scrollable plant rail */}
+              <div
+                className="flex items-center gap-2.5 overflow-x-auto pb-2 scrollbar-none -mx-1 px-1"
+                style={{ WebkitOverflowScrolling: 'touch', scrollbarWidth: 'none' }}
+              >
+                {userPlants.map((plant) => {
+                  const isSelected = plant.id === activePlant?.id;
+                  const botanical = PLANTS_DATA.find((p) => p.slug === plant.plantSlug);
+
+                  return (
+                    <button
+                      key={plant.id}
+                      type="button"
+                      onClick={() => setSelectedPlantId(plant.id)}
+                      className={`flex items-center gap-2.5 p-2 rounded-2xl border transition-all cursor-pointer shrink-0 min-h-[52px] text-left select-none ${
+                        isSelected
+                          ? 'bg-[#174C35] text-white border-[#174C35] shadow-sm ring-2 ring-[#174C35]/20'
+                          : 'bg-white text-[#1F2A23] border-[#E8E4DA] hover:bg-[#F3F6EC]'
+                      }`}
+                    >
+                      {botanical?.imageUrl ? (
+                        <img
+                          src={botanical.imageUrl}
+                          alt={plant.nickname}
+                          className="w-9 h-9 rounded-xl object-cover shrink-0 border border-black/5"
+                        />
+                      ) : (
+                        <div
+                          className={`w-9 h-9 rounded-xl flex items-center justify-center shrink-0 text-base ${
+                            isSelected ? 'bg-white/20' : 'bg-[#E6F0E3]'
+                          }`}
+                        >
+                          🌱
+                        </div>
+                      )}
+                      <div className="pr-1.5 max-w-[140px]">
+                        <p className="font-serif font-bold text-xs truncate">
+                          {plant.nickname}
+                        </p>
+                        <p
+                          className={`text-[10px] truncate ${
+                            isSelected ? 'text-[#C5D8C9]' : 'text-[#68736B]'
+                          }`}
+                        >
+                          {plant.currentStage}
+                        </p>
+                      </div>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* Left Column: Plant Selection Sidebar (Desktop only ≥ lg) */}
+            <div className="hidden lg:block lg:col-span-4 space-y-5 min-w-0 max-w-full">
               <div className="flex items-center justify-between pb-1">
                 <div>
                   <h3 className="text-base font-serif font-bold text-[#0c2417]">
@@ -643,13 +714,13 @@ function MyGardenContent() {
 
             {/* Right Column: Active Plant Detail & Growth Log */}
             {activePlant && (
-              <div className="lg:col-span-8 space-y-6">
+              <div className="lg:col-span-8 space-y-6 min-w-0 max-w-full">
                 {/* Active Plant Banner Card */}
-                <div className="bg-white rounded-3xl border border-[#ded5c5] p-6 sm:p-8 shadow-xs space-y-6">
-                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-5 border-b border-[#f0ebe0]">
-                    <div>
-                      <div className="flex flex-wrap items-center gap-3">
-                        <h2 className="text-2xl sm:text-3xl font-serif font-bold text-[#0c2417]">
+                <div className="bg-white rounded-3xl border border-[#ded5c5] p-5 sm:p-6 lg:p-8 shadow-xs space-y-6 min-w-0 max-w-full overflow-hidden">
+                  <div className="flex flex-col gap-4 pb-5 border-b border-[#f0ebe0]">
+                    <div className="min-w-0">
+                      <div className="flex flex-wrap items-center gap-2 sm:gap-3">
+                        <h2 className="text-xl sm:text-2xl lg:text-3xl font-serif font-bold text-[#0c2417] truncate max-w-full">
                           {activePlant.nickname}
                         </h2>
                         <Badge variant="sage" size="md">{activePlant.currentStage}</Badge>
@@ -694,72 +765,85 @@ function MyGardenContent() {
                       </p>
                     </div>
 
-                    <div className="flex items-center gap-2">
-                      <button
-                        type="button"
-                        onClick={() => setActiveTab('intelligence')}
-                        className={`text-xs sm:text-sm font-semibold px-4 py-2.5 rounded-xl border transition-colors flex items-center gap-1.5 min-h-[44px] cursor-pointer ${
-                          activeTab === 'intelligence'
-                            ? 'bg-[#144229] text-white border-[#144229]'
-                            : 'bg-white text-[#144229] border-[#cfdfcf] hover:bg-[#eef5ee]'
-                        }`}
-                        title="View Grow Intelligence synthesis"
+                    <div className="w-full min-w-0 pt-2 sm:pt-0">
+                      {/* Responsive Action Tabs Rail */}
+                      <div
+                        className="flex items-center gap-2 overflow-x-auto pb-1.5 scrollbar-none w-full min-w-0 -mx-1 px-1 sm:mx-0 sm:px-0 sm:flex-wrap"
+                        style={{
+                          WebkitOverflowScrolling: 'touch',
+                          scrollbarWidth: 'none',
+                        }}
                       >
-                        <Sparkles size={15} />
-                        <span>Intelligence</span>
-                      </button>
-                      <Link
-                        href={`/app/my-garden/${activePlant.id}/timeline`}
-                        className="text-xs sm:text-sm font-semibold text-[#144229] hover:bg-[#eef5ee] px-4 py-2.5 rounded-xl border border-[#cfdfcf] bg-white transition-colors flex items-center gap-1.5 min-h-[44px]"
-                        title="View complete longitudinal growth timeline"
-                      >
-                        <GitBranch size={15} />
-                        <span>Timeline</span>
-                      </Link>
-                      <Link
-                        href={`/app/my-garden/${activePlant.id}/health`}
-                        className="text-xs sm:text-sm font-semibold text-[#144229] hover:bg-[#eef5ee] px-4 py-2.5 rounded-xl border border-[#cfdfcf] bg-white transition-colors flex items-center gap-1.5 min-h-[44px]"
-                        title="View complete health history and follow-ups"
-                      >
-                        <Activity size={15} />
-                        <span>Health</span>
-                      </Link>
-                      <button
-                        type="button"
-                        onClick={() => setActiveTab('reminders')}
-                        className="text-xs sm:text-sm font-semibold text-[#144229] hover:bg-[#eef5ee] px-4 py-2.5 rounded-xl border border-[#cfdfcf] bg-white transition-colors flex items-center gap-1.5 min-h-[44px] cursor-pointer"
-                        title="View reminders for this plant"
-                      >
-                        <Bell size={15} />
-                        <span>Reminders</span>
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() => setShowPropagationModal(true)}
-                        className="text-xs sm:text-sm font-semibold text-[#144229] hover:bg-[#eef5ee] px-4 py-2.5 rounded-xl border border-[#cfdfcf] bg-white transition-colors flex items-center gap-1.5 min-h-[44px] cursor-pointer"
-                        title="Propagate this plant"
-                      >
-                        <Scissors size={15} />
-                        <span>Propagate</span>
-                      </button>
-                      {activeBotanical && (
-                        <Link
-                          href={`/app/plants/${activeBotanical.slug}`}
-                          className="text-xs sm:text-sm font-semibold text-[#144229] hover:bg-[#eef5ee] px-4 py-2.5 rounded-xl border border-[#cfdfcf] bg-white transition-colors flex items-center gap-1.5 min-h-[44px]"
+                        <button
+                          type="button"
+                          onClick={() => setActiveTab('intelligence')}
+                          className={`text-xs sm:text-sm font-semibold px-3.5 sm:px-4 py-2.5 rounded-xl border transition-colors flex items-center gap-1.5 min-h-[44px] shrink-0 cursor-pointer ${
+                            activeTab === 'intelligence'
+                              ? 'bg-[#144229] text-white border-[#144229] shadow-xs'
+                              : 'bg-white text-[#144229] border-[#cfdfcf] hover:bg-[#eef5ee]'
+                          }`}
+                          title="View Grow Intelligence synthesis"
                         >
-                          <BookOpen size={15} />
-                          <span>Botanical Guide</span>
+                          <Sparkles size={15} />
+                          <span>Intelligence</span>
+                        </button>
+                        <Link
+                          href={`/app/my-garden/${activePlant.id}/timeline`}
+                          className="text-xs sm:text-sm font-semibold text-[#144229] hover:bg-[#eef5ee] px-3.5 sm:px-4 py-2.5 rounded-xl border border-[#cfdfcf] bg-white transition-colors flex items-center gap-1.5 min-h-[44px] shrink-0"
+                          title="View complete longitudinal growth timeline"
+                        >
+                          <GitBranch size={15} />
+                          <span>Timeline</span>
                         </Link>
-                      )}
-                      <button
-                        type="button"
-                        onClick={() => handleDeletePlant(activePlant.id)}
-                        className="p-2.5 text-[#b95835] hover:bg-[#fbeee9] rounded-xl transition-colors cursor-pointer min-h-[44px] min-w-[44px] flex items-center justify-center"
-                        title="Remove plant"
-                        aria-label="Remove plant"
-                      >
-                        <Trash2 size={18} />
-                      </button>
+                        <Link
+                          href={`/app/my-garden/${activePlant.id}/health`}
+                          className="text-xs sm:text-sm font-semibold text-[#144229] hover:bg-[#eef5ee] px-3.5 sm:px-4 py-2.5 rounded-xl border border-[#cfdfcf] bg-white transition-colors flex items-center gap-1.5 min-h-[44px] shrink-0"
+                          title="View complete health history and follow-ups"
+                        >
+                          <Activity size={15} />
+                          <span>Health</span>
+                        </Link>
+                        <button
+                          type="button"
+                          onClick={() => setActiveTab('reminders')}
+                          className={`text-xs sm:text-sm font-semibold px-3.5 sm:px-4 py-2.5 rounded-xl border transition-colors flex items-center gap-1.5 min-h-[44px] shrink-0 cursor-pointer ${
+                            activeTab === 'reminders'
+                              ? 'bg-[#144229] text-white border-[#144229] shadow-xs'
+                              : 'bg-white text-[#144229] border-[#cfdfcf] hover:bg-[#eef5ee]'
+                          }`}
+                          title="View reminders for this plant"
+                        >
+                          <Bell size={15} />
+                          <span>Reminders</span>
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => setShowPropagationModal(true)}
+                          className="text-xs sm:text-sm font-semibold text-[#144229] hover:bg-[#eef5ee] px-3.5 sm:px-4 py-2.5 rounded-xl border border-[#cfdfcf] bg-white transition-colors flex items-center gap-1.5 min-h-[44px] shrink-0 cursor-pointer"
+                          title="Propagate this plant"
+                        >
+                          <Scissors size={15} />
+                          <span>Propagate</span>
+                        </button>
+                        {activeBotanical && (
+                          <Link
+                            href={`/app/plants/${activeBotanical.slug}`}
+                            className="text-xs sm:text-sm font-semibold text-[#144229] hover:bg-[#eef5ee] px-3.5 sm:px-4 py-2.5 rounded-xl border border-[#cfdfcf] bg-white transition-colors flex items-center gap-1.5 min-h-[44px] shrink-0"
+                          >
+                            <BookOpen size={15} />
+                            <span>Botanical Guide</span>
+                          </Link>
+                        )}
+                        <button
+                          type="button"
+                          onClick={() => handleDeletePlant(activePlant.id)}
+                          className="p-2.5 text-[#b95835] hover:bg-[#fbeee9] rounded-xl transition-colors cursor-pointer min-h-[44px] min-w-[44px] flex items-center justify-center shrink-0 ml-auto"
+                          title="Remove plant"
+                          aria-label="Remove plant"
+                        >
+                          <Trash2 size={18} />
+                        </button>
+                      </div>
                     </div>
                   </div>
 
@@ -866,7 +950,13 @@ function MyGardenContent() {
                 </div>
 
                 {/* Journal View Switcher: Intelligence vs Conditions vs Feeding vs Production vs Care vs Photos vs Health vs Timeline vs Reminders */}
-                <div className="flex flex-wrap items-center gap-2 border-b border-[#ded5c5] pb-3">
+                <div
+                  className="flex items-center gap-2 border-b border-[#ded5c5] pb-3 overflow-x-auto scrollbar-none w-full min-w-0 sm:flex-wrap"
+                  style={{
+                    WebkitOverflowScrolling: 'touch',
+                    scrollbarWidth: 'none',
+                  }}
+                >
                   <button
                     type="button"
                     onClick={() => setActiveTab('intelligence')}
@@ -1223,6 +1313,70 @@ function MyGardenContent() {
                     onRefreshNeeded={loadGardenData}
                   />
                 )}
+
+                {/* Mobile / Tablet: Garden Health Overview & Care Tasks (< lg) */}
+                <div className="lg:hidden space-y-5 pt-4 min-w-0 max-w-full">
+                  <GardenHealthOverviewCard
+                    overview={gardenOverview}
+                    plants={userPlants}
+                    onSelectPlant={(id) => {
+                      setSelectedPlantId(id);
+                      setActiveTab('health');
+                    }}
+                    plantHealthMap={plantHealthMap}
+                  />
+
+                  {/* Plant Care Tasks Card */}
+                  <div className="bg-white p-5 rounded-2xl border border-[#ded5c5] space-y-4 shadow-xs">
+                    <div className="flex items-center justify-between pb-2 border-b border-[#f0ebe0]">
+                      <h4 className="font-serif font-bold text-sm text-[#0c2417] flex items-center gap-2">
+                        <Droplets size={16} className="text-[#144229]" />
+                        <span>Care Tasks</span>
+                      </h4>
+                      <span className="text-xs font-semibold text-[#144229] bg-[#eef5ee] px-2.5 py-0.5 rounded-full">
+                        {careTasks.filter((t) => !t.completed).length} pending
+                      </span>
+                    </div>
+
+                    <div className="space-y-2.5">
+                      {careTasks.map((task) => (
+                        <div
+                          key={task.id}
+                          onClick={() => handleTaskToggle(task)}
+                          className={`p-3 rounded-xl border text-xs sm:text-sm cursor-pointer flex items-start gap-3 transition-colors min-h-[48px] ${
+                            task.completed
+                              ? 'bg-[#f7f5ed] border-[#e2dbce] opacity-60'
+                              : 'bg-[#fbf9f4] border-[#ded5c5] hover:border-[#144229] hover:bg-white'
+                          }`}
+                        >
+                          <button
+                            type="button"
+                            className="mt-0.5 text-[#144229] focus:outline-none cursor-pointer min-w-[24px] min-h-[24px] flex items-center justify-center"
+                            aria-label={`Toggle task ${task.title}`}
+                          >
+                            {task.completed ? (
+                              <CheckCircle2 size={18} className="text-[#257a4d]" />
+                            ) : (
+                              <Circle size={18} className="text-[#9ab8a3]" />
+                            )}
+                          </button>
+                          <div className="flex-1 min-w-0">
+                            <p
+                              className={`font-medium ${
+                                task.completed ? 'line-through text-[#6d8573]' : 'text-[#0c2417]'
+                              }`}
+                            >
+                              {task.title}
+                            </p>
+                            <p className="text-xs text-[#6d8573] mt-0.5">
+                              {task.plantName.split('(')[0]} • Due {task.dueDate}
+                            </p>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
               </div>
             )}
           </div>

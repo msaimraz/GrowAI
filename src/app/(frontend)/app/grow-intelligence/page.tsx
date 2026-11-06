@@ -321,7 +321,7 @@ function GrowIntelligenceContent() {
         subtitle="Adaptive decision system: daily grow checks, prioritized next actions, and data-grounded garden queries"
       />
 
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 sm:pt-8 space-y-8">
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 sm:pt-8 space-y-8 min-w-0 max-w-full">
         {/* ==================================================================== */}
         {/* PHASE 11: TODAY & NEXT ACTIONS HERO SECTION                          */}
         {/* ==================================================================== */}

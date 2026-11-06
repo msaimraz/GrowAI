@@ -263,7 +263,7 @@ export default function PlannerPage() {
         subtitle="Horticultural layout intelligence, structural load verification, and photobiology simulations for home growers."
       />
 
-      <main className="flex-1 p-3.5 sm:p-6 lg:p-8 max-w-7xl mx-auto w-full space-y-6">
+      <main className="flex-1 p-3.5 sm:p-6 lg:p-8 max-w-7xl mx-auto w-full min-w-0 max-w-full space-y-6">
         {/* Conceptual Engineering & Photobiology Disclaimer Banner */}
         <div className="bg-[#f7f5ed] border border-[#ded5c5] p-4 sm:p-5 rounded-2xl flex items-start gap-3.5 text-xs sm:text-sm text-[#2e4435] shadow-2xs">
           <Info size={20} className="shrink-0 mt-0.5 text-[#144229]" />

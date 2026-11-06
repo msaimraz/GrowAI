@@ -13,8 +13,8 @@ export default function AppLayout({
       <AppSidebar />
 
       {/* Main Content Area */}
-      <div className="flex-1 flex flex-col min-w-0 pb-28 sm:pb-32 lg:pb-8">
-        <main className="flex-1">{children}</main>
+      <div className="flex-1 flex flex-col min-w-0 max-w-full pb-28 sm:pb-32 lg:pb-8">
+        <main className="flex-1 min-w-0 max-w-full">{children}</main>
       </div>
 
       {/* Mobile Bottom Navigation */}

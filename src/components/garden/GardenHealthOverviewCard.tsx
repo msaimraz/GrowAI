@@ -84,48 +84,48 @@ export function GardenHealthOverviewCard({
       ) : (
         <div className="space-y-3">
           {/* Status metrics grid */}
-          <div className="grid grid-cols-3 gap-2.5 text-center">
+          <div className="grid grid-cols-3 gap-1.5 sm:gap-2.5 text-center">
             <div
-              className={`p-2.5 rounded-xl border ${
+              className={`p-2 sm:p-2.5 rounded-xl border ${
                 overview.needsAttentionCount > 0
                   ? 'bg-[#fef2f2] border-[#fecaca] text-[#991b1b]'
                   : 'bg-[#fbf9f4] border-[#ded5c5] text-[#526a57]'
               }`}
             >
-              <strong className="block text-base font-bold font-serif">
+              <strong className="block text-base sm:text-lg font-bold font-serif">
                 {overview.needsAttentionCount}
               </strong>
-              <span className="text-[10px] font-semibold uppercase tracking-wider block">
+              <span className="text-[9px] sm:text-[10px] font-semibold uppercase tracking-wider block leading-tight break-words">
                 Needs Attention
               </span>
             </div>
 
             <div
-              className={`p-2.5 rounded-xl border ${
+              className={`p-2 sm:p-2.5 rounded-xl border ${
                 overview.monitoringCount > 0
                   ? 'bg-[#fffbeb] border-[#fde68a] text-[#92400e]'
                   : 'bg-[#fbf9f4] border-[#ded5c5] text-[#526a57]'
               }`}
             >
-              <strong className="block text-base font-bold font-serif">
+              <strong className="block text-base sm:text-lg font-bold font-serif">
                 {overview.monitoringCount}
               </strong>
-              <span className="text-[10px] font-semibold uppercase tracking-wider block">
+              <span className="text-[9px] sm:text-[10px] font-semibold uppercase tracking-wider block leading-tight break-words">
                 Monitoring
               </span>
             </div>
 
             <div
-              className={`p-2.5 rounded-xl border ${
+              className={`p-2 sm:p-2.5 rounded-xl border ${
                 overview.followUpsDueCount > 0
                   ? 'bg-[#fef2f2] border-[#fecaca] text-[#991b1b] animate-pulse'
                   : 'bg-[#fbf9f4] border-[#ded5c5] text-[#526a57]'
               }`}
             >
-              <strong className="block text-base font-bold font-serif">
+              <strong className="block text-base sm:text-lg font-bold font-serif">
                 {overview.followUpsDueCount}
               </strong>
-              <span className="text-[10px] font-semibold uppercase tracking-wider block">
+              <span className="text-[9px] sm:text-[10px] font-semibold uppercase tracking-wider block leading-tight break-words">
                 Follow-Up Due
               </span>
             </div>

@@ -105,7 +105,7 @@ export function AppHeader({
             )}
 
             {/* PWA Install Button (tablet prompt only; desktop sidebar already has install action) */}
-            {canInstall && (
+            {/* {canInstall && (
               <button
                 type="button"
                 onClick={promptInstall}
@@ -127,7 +127,7 @@ export function AppHeader({
                 <DownloadCloud size={15} />
                 <span>Install</span>
               </button>
-            )}
+            )} */}
 
             {/* Notifications & Reminders Bell */}
             <NotificationBell />

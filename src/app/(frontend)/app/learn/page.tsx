@@ -128,7 +128,7 @@ export default async function LearnPage() {
         subtitle="Explore peer-reviewed plant science, balcony vertical microclimates, and closed-loop home gardening."
       />
 
-      <div className="flex-1 p-4 sm:p-6 lg:p-8 max-w-7xl mx-auto w-full space-y-12">
+      <div className="flex-1 p-4 sm:p-6 lg:p-8 max-w-7xl mx-auto w-full min-w-0 max-w-full space-y-12">
         {/* Intro Hero Card */}
         <div className="bg-[#0e2a1b] text-white p-6 sm:p-10 rounded-3xl relative overflow-hidden shadow-sm space-y-4">
           <div className="max-w-3xl space-y-3">

@@ -354,7 +354,7 @@ function GrowPlansContent() {
         {/* Filters & Search Toolbar */}
         <div className="flex flex-col sm:flex-row gap-3 items-center justify-between bg-white p-3 rounded-2xl border border-[#ded5c5] shadow-xs">
           {/* Status Tabs */}
-          <div className="flex items-center gap-1.5 overflow-x-auto w-full sm:w-auto pb-1 sm:pb-0">
+          <div className="flex items-center gap-1.5 overflow-x-auto w-full sm:w-auto pb-1 sm:pb-0 scrollbar-none min-w-0">
             {tabs.map((tab) => (
               <button
                 key={tab.id}

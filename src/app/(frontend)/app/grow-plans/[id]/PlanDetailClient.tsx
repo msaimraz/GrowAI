@@ -200,7 +200,7 @@ export function PlanDetailClient({ planId }: PlanDetailClientProps) {
     <div className="min-h-screen bg-stone-50 dark:bg-stone-950 pb-20">
       <AppHeader />
 
-      <main className="max-w-4xl mx-auto px-4 py-6">
+      <main className="max-w-4xl mx-auto px-4 py-6 min-w-0 max-w-full">
         {/* Navigation Breadcrumb */}
         <div className="mb-4">
           <Link
@@ -212,9 +212,9 @@ export function PlanDetailClient({ planId }: PlanDetailClientProps) {
         </div>
 
         {/* Plan Header Card */}
-        <div className="bg-white dark:bg-stone-900 border border-stone-200 dark:border-stone-800 rounded-2xl p-5 mb-6 shadow-sm">
+        <div className="bg-white dark:bg-stone-900 border border-stone-200 dark:border-stone-800 rounded-2xl p-5 mb-6 shadow-sm min-w-0 max-w-full overflow-hidden">
           <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4">
-            <div>
+            <div className="min-w-0">
               <div className="flex items-center gap-2 flex-wrap mb-2">
                 <span className="text-xs px-2 py-0.5 rounded capitalize bg-stone-100 text-stone-700 dark:bg-stone-800 dark:text-stone-300">
                   {plan.scope} Scope
@@ -222,7 +222,7 @@ export function PlanDetailClient({ planId }: PlanDetailClientProps) {
                 <PlanStatusBadge status={plan.status} />
                 <PlanStatusBadge health={plan.healthStatus} />
               </div>
-              <h1 className="text-xl font-bold text-stone-900 dark:text-stone-100">
+              <h1 className="text-xl font-bold text-stone-900 dark:text-stone-100 truncate">
                 {plan.name}
               </h1>
               {plan.description && (
@@ -231,7 +231,7 @@ export function PlanDetailClient({ planId }: PlanDetailClientProps) {
                 </p>
               )}
               {primaryPlant && (
-                <div className="mt-3 flex items-center gap-2 text-xs text-stone-600 dark:text-stone-400">
+                <div className="mt-3 flex items-center gap-2 text-xs text-stone-600 dark:text-stone-400 flex-wrap">
                   <span className="font-medium text-stone-800 dark:text-stone-200">Associated Specimen:</span>
                   <Link
                     href={`/app/my-garden`}
@@ -244,7 +244,7 @@ export function PlanDetailClient({ planId }: PlanDetailClientProps) {
             </div>
 
             {/* Plan Consequential Actions */}
-            <div className="flex items-center gap-2 self-start">
+            <div className="flex items-center gap-2 self-start flex-wrap">
               {plan.status === 'active' && (
                 <button
                   type="button"
