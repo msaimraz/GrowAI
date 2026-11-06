@@ -280,14 +280,14 @@ export default function PlannerPage() {
         {/* Top Control Bar: Profile Switcher, Presets, and Actions */}
         <section
           aria-label="Space Profile Controls"
-          className="bg-white rounded-3xl border border-[#ded5c5] p-4 sm:p-6 shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-4"
+          className="bg-white rounded-3xl border border-[#ded5c5] p-4 sm:p-6 shadow-xs flex flex-col xl:flex-row xl:items-center justify-between gap-4"
         >
           {/* Active Space Profile Selector */}
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-3 min-w-0">
             <div className="w-10 h-10 rounded-2xl bg-[#eef5ee] text-[#144229] flex items-center justify-center shrink-0">
               <Layers size={22} />
             </div>
-            <div className="min-w-0">
+            <div className="min-w-0 flex-1">
               <div className="flex items-center gap-2 flex-wrap">
                 <span className="text-xs uppercase font-bold tracking-wider text-[#526a57]">
                   Active Growing Space:
@@ -298,11 +298,11 @@ export default function PlannerPage() {
                   </span>
                 )}
               </div>
-              <div className="flex items-center gap-2 mt-1">
+              <div className="flex items-center gap-2 mt-1 flex-wrap">
                 <select
                   value={activeProfile.id}
                   onChange={(e) => handleSwitchProfile(e.target.value)}
-                  className="font-serif font-bold text-lg sm:text-xl text-[#0c2417] bg-transparent border-b border-dashed border-[#ded5c5] focus:outline-none focus:border-[#144229] cursor-pointer max-w-[280px] sm:max-w-md truncate"
+                  className="font-serif font-bold text-lg sm:text-xl text-[#0c2417] bg-transparent border-b border-dashed border-[#ded5c5] focus:outline-hidden focus:border-[#144229] cursor-pointer max-w-full sm:max-w-md truncate"
                   aria-label="Select saved growing space"
                 >
                   {profiles.map((p) => (
@@ -318,13 +318,13 @@ export default function PlannerPage() {
             </div>
           </div>
 
-          {/* Action Buttons Toolbar */}
-          <div className="flex flex-wrap items-center gap-2 sm:gap-2.5">
+          {/* Action Buttons Toolbar — Wrapped & Overflow Safe */}
+          <div className="flex flex-wrap items-center gap-2 sm:gap-2.5 w-full xl:w-auto">
             {/* Suggested Layout Button */}
             <button
               type="button"
               onClick={() => setIsAutoLayoutOpen(true)}
-              className="inline-flex items-center justify-center gap-1.5 px-3.5 py-2 rounded-xl bg-[#eef5ee] hover:bg-[#dfeadf] text-[#144229] text-xs sm:text-sm font-semibold transition-colors cursor-pointer min-h-[44px]"
+              className="inline-flex items-center justify-center gap-1.5 px-3.5 py-2 rounded-xl bg-[#eef5ee] hover:bg-[#dfeadf] text-[#144229] text-xs sm:text-sm font-semibold transition-colors cursor-pointer min-h-[44px] flex-1 sm:flex-initial"
               title="Generate a suggested arrangement for herbs, salads, or microgreens"
             >
               <Sparkles size={16} />
@@ -335,7 +335,7 @@ export default function PlannerPage() {
             <button
               type="button"
               onClick={() => setIsSyncModalOpen(true)}
-              className="inline-flex items-center justify-center gap-1.5 px-4 py-2 rounded-xl bg-[#144229] hover:bg-[#0c2417] text-white text-xs sm:text-sm font-semibold shadow-xs transition-colors cursor-pointer min-h-[44px]"
+              className="inline-flex items-center justify-center gap-1.5 px-4 py-2 rounded-xl bg-[#144229] hover:bg-[#0c2417] text-white text-xs sm:text-sm font-semibold shadow-xs transition-colors cursor-pointer min-h-[44px] flex-1 sm:flex-initial"
               title="Create active tracking records in My Garden from this layout"
             >
               <Sprout size={16} />
@@ -346,7 +346,7 @@ export default function PlannerPage() {
             <button
               type="button"
               onClick={() => setIsConfigDrawerOpen((prev) => !prev)}
-              className={`inline-flex items-center justify-center gap-1.5 px-3.5 py-2 rounded-xl border text-xs sm:text-sm font-semibold transition-colors cursor-pointer min-h-[44px] ${
+              className={`inline-flex items-center justify-center gap-1.5 px-3.5 py-2 rounded-xl border text-xs sm:text-sm font-semibold transition-colors cursor-pointer min-h-[44px] flex-1 sm:flex-initial ${
                 isConfigDrawerOpen
                   ? 'border-[#144229] bg-[#144229] text-white'
                   : 'border-[#ded5c5] bg-white text-[#2e4435] hover:bg-[#f4f8f4]'
@@ -363,7 +363,7 @@ export default function PlannerPage() {
             <button
               type="button"
               onClick={handleResetToDefault}
-              className="p-2.5 rounded-xl border border-[#ded5c5] text-[#526a57] hover:text-[#9a3412] hover:bg-[#fbeee9] transition-colors cursor-pointer min-h-[44px] min-w-[44px] flex items-center justify-center"
+              className="p-2.5 rounded-xl border border-[#ded5c5] text-[#526a57] hover:text-[#9a3412] hover:bg-[#fbeee9] transition-colors cursor-pointer min-h-[44px] min-w-[44px] flex items-center justify-center shrink-0"
               title="Reset layout to standard defaults"
               aria-label="Reset layout to standard defaults"
             >

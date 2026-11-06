@@ -658,23 +658,23 @@ function GrowIntelligenceContent() {
         </div>
 
         {/* ==================================================================== */}
-        {/* PHASE 12: GROWER COPILOT — CONVERSATIONAL INTELLIGENCE               */}
+        {/* PHASE 12: GROWER COPILOT — ASK GROWAI                                */}
         {/* ==================================================================== */}
         <div className="space-y-4">
           <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2.5">
-              <div className="p-2.5 rounded-2xl bg-[#144229] text-white">
-                <Bot size={22} />
+            <div className="flex items-center gap-3">
+              <div className="w-11 h-11 rounded-2xl bg-[#174C35] text-white flex items-center justify-center text-xl shadow-xs">
+                🌱
               </div>
               <div>
                 <h3 className="font-serif font-bold text-lg sm:text-xl text-[#0c2417] flex items-center gap-2">
-                  <span>Grower Copilot</span>
-                  <span className="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-[#eef5ee] text-[#144229] border border-[#cfe0cf]">
-                    Conversational Intelligence
+                  <span>Ask GrowAI</span>
+                  <span className="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-[#E6F0E3] text-[#174C35]">
+                    Garden Copilot
                   </span>
                 </h3>
                 <p className="text-xs text-[#526a57]">
-                  Natural-language reasoning over your garden facts, health history, conditions, and schedules.
+                  What would you like help with? Grounded strictly in your living garden records.
                 </p>
               </div>
             </div>
@@ -739,12 +739,12 @@ function GrowIntelligenceContent() {
 
           {/* Quick Prompt Chips */}
           <div className="flex items-center gap-2 flex-wrap text-xs pt-1">
-            <span className="text-[11px] font-semibold text-[#6d8573]">Sample inquiries:</span>
+            <span className="text-[11px] font-semibold text-[#6d8573]">Quick questions:</span>
             {[
+              'How is my garden doing?',
               'What should I do today?',
-              'Which plants need attention?',
-              'What information am I missing?',
-              'Which crops produced the most historically?',
+              'What should I grow here?',
+              'Something looks wrong',
             ].map((prompt, idx) => (
               <button
                 key={idx}

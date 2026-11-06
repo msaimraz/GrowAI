@@ -17,9 +17,11 @@ import { PlantReferencesList } from '@/components/plants/PlantReferencesList';
 import {
   DidYouKnowCard,
   GardeningChallengeCard,
-  PlantQuizCard,
   SectionExploredToggle,
 } from '@/components/plants/PlantEducation';
+import { VisualPlantQuiz } from '@/components/plants/VisualPlantQuiz';
+import { CareBadge } from '@/components/ui/CareBadge';
+import { VisualProgress } from '@/components/ui/VisualProgress';
 import {
   Thermometer,
   Sun,
@@ -152,41 +154,124 @@ export function PlantDetailClient({ plant }: PlantDetailClientProps) {
               <div className="lg:col-span-7 space-y-5">
                 {/* Meta Badges */}
                 <div className="flex flex-wrap items-center gap-2">
-                  <Badge variant="sage" size="md">
-                    {plant.category.replace('-', ' ')}
-                  </Badge>
-
-                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#f7f5ed] border border-[#ded5c5] text-xs font-semibold text-[#144229]">
-                    <span className="capitalize">{plant.difficulty.level}</span>
-                    {renderCareScore(plant.difficulty.score)}
-                  </div>
-
+                  <CareBadge
+                    type="difficulty"
+                    label={`${plant.difficulty.level.charAt(0).toUpperCase() + plant.difficulty.level.slice(1)} Care`}
+                    size="md"
+                  />
+                  <CareBadge
+                    type="sun"
+                    label={plant.sunlight.includes('full') ? 'Bright Direct Sun' : plant.sunlight.includes('partial') ? 'Partial Sunlight' : 'Low/Indirect Light'}
+                    size="md"
+                  />
+                  <CareBadge
+                    type="water"
+                    label={`${plant.watering.moistureLevel.charAt(0).toUpperCase() + plant.watering.moistureLevel.slice(1)} Water`}
+                    size="md"
+                  />
                   {plant.badge && (
-                    <span className="text-xs font-semibold text-[#9a3412] bg-[#fbeee9] px-3 py-1 rounded-full border border-[#f8d7cb]">
+                    <span className="text-xs font-semibold text-[#9A5B00] bg-[#FFF0D8] px-3 py-1 rounded-full border border-[#FDE3B8]">
                       {plant.badge}
                     </span>
                   )}
-
-                  <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#144229] px-2.5 py-1 rounded-full bg-[#eef5ee] border border-[#cfe0cf]">
-                    <ShieldCheck size={15} />
-                    Verified Botanical Record
-                  </span>
                 </div>
 
                 {/* Common Name */}
-                <h1 className="text-3xl sm:text-4xl lg:text-5xl font-serif font-bold text-[#071c11] tracking-tight leading-tight">
+                <h1 className="text-3xl sm:text-4xl lg:text-5xl font-serif font-bold text-[#1F2A23] tracking-tight leading-tight">
                   {plant.commonName}
                 </h1>
 
                 {/* Scientific Name */}
-                <p className="text-xl sm:text-2xl font-serif italic text-[#1b5837]">
+                <p className="text-xl sm:text-2xl font-serif italic text-[#174C35]">
                   {plant.scientificName}
                 </p>
 
-                {/* Editorial Summary Paragraph (Minimum 16px body text) */}
-                <p className="text-base sm:text-lg text-[#1c261e] leading-relaxed">
+                {/* Primary CTA */}
+                <div className="pt-1">
+                  <button
+                    type="button"
+                    onClick={() => setModalOpen(true)}
+                    className="inline-flex items-center justify-center gap-2 font-medium bg-[#174C35] hover:bg-[#0f3424] text-white px-6 py-3 rounded-2xl shadow-xs transition-all cursor-pointer text-sm sm:text-base min-h-[46px]"
+                  >
+                    <Plus size={18} />
+                    <span>+ Add to My Garden</span>
+                  </button>
+                </div>
+
+                {/* Editorial Summary Paragraph */}
+                <p className="text-base text-[#1F2A23] leading-relaxed pt-1">
                   {plant.summary}
                 </p>
+
+                {/* Simple Visual Care Cards: Light, Water, Temp, Soil, Harvest */}
+                <div className="pt-4 space-y-3">
+                  <h3 className="text-xs font-mono uppercase tracking-wider font-bold text-[#174C35]">
+                    Quick Care Essentials
+                  </h3>
+                  <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2.5 text-xs">
+                    {/* ☀️ Light */}
+                    <div className="p-3 rounded-xl bg-[#FFF0D8]/70 border border-[#FDE3B8] space-y-1">
+                      <span className="text-base block">☀️</span>
+                      <strong className="text-[#1F2A23] block text-xs">Light</strong>
+                      <p className="text-[11px] text-[#68736B] leading-tight">
+                        {plant.sunlightHours || plant.sunlight.replace('-', ' ')}
+                      </p>
+                    </div>
+
+                    {/* 💧 Water */}
+                    <div className="p-3 rounded-xl bg-[#E3EFFB]/70 border border-[#C8E1F8] space-y-1">
+                      <span className="text-base block">💧</span>
+                      <strong className="text-[#1F2A23] block text-xs">Water</strong>
+                      <p className="text-[11px] text-[#68736B] leading-tight">
+                        {plant.watering.moistureLevel} · When top soil is dry
+                      </p>
+                    </div>
+
+                    {/* 🌡️ Temperature */}
+                    <div className="p-3 rounded-xl bg-[#FBE4DC]/70 border border-[#F8CEC1] space-y-1">
+                      <span className="text-base block">🌡️</span>
+                      <strong className="text-[#1F2A23] block text-xs">Temp</strong>
+                      <p className="text-[11px] text-[#68736B] leading-tight">
+                        {plant.temperatureRange.min}°C – {plant.temperatureRange.max}°C
+                      </p>
+                    </div>
+
+                    {/* 🌱 Soil */}
+                    <div className="p-3 rounded-xl bg-[#E6F0E3]/70 border border-[#CEE4C9] space-y-1">
+                      <span className="text-base block">🌱</span>
+                      <strong className="text-[#1F2A23] block text-xs">Soil</strong>
+                      <p className="text-[11px] text-[#68736B] leading-tight line-clamp-2">
+                        {plant.soil.type || 'Aerated container potting mix'}
+                      </p>
+                    </div>
+
+                    {/* ✂️ Harvest / Cycle */}
+                    <div className="p-3 rounded-xl bg-[#EEE8F6]/70 border border-[#DDD2EE] space-y-1 col-span-2 sm:col-span-1">
+                      <span className="text-base block">✂️</span>
+                      <strong className="text-[#1F2A23] block text-xs">Cycle</strong>
+                      <p className="text-[11px] text-[#68736B] leading-tight">
+                        {plant.timelines?.harvestDays?.max
+                          ? `${plant.timelines.harvestDays.max}d to harvest`
+                          : plant.daysToMaturity
+                          ? `${plant.daysToMaturity}d to harvest`
+                          : 'Continuous harvests'}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* How to grow it: Illustrated Progression */}
+                <div className="pt-4 border-t border-[#F3F6EC] space-y-2">
+                  <div className="flex items-center justify-between">
+                    <h3 className="text-xs font-mono uppercase tracking-wider font-bold text-[#174C35]">
+                      How to Grow It · Growth Journey
+                    </h3>
+                    <span className="text-[11px] font-mono text-[#68736B]">
+                      From seed/cutting to harvest
+                    </span>
+                  </div>
+                  <VisualProgress />
+                </div>
 
                 {/* Growing Environment Badges */}
                 <div className="pt-1 space-y-2">
@@ -640,8 +725,8 @@ export function PlantDetailClient({ plant }: PlantDetailClientProps) {
             </div>
           </div>
 
-          {/* C. Quick Knowledge Check Interactive Quiz */}
-          <PlantQuizCard plant={plant} />
+          {/* C. Quick Knowledge Check Interactive Quiz (Visual, fast) */}
+          <VisualPlantQuiz plant={plant} />
 
           {/* Section Explored Learning Tracker */}
           <SectionExploredToggle

@@ -81,18 +81,21 @@ function GrowPlansContent() {
   }, [plans, statusFilter, searchQuery]);
 
   return (
-    <div className="min-h-screen bg-stone-50 dark:bg-stone-950 text-stone-900 dark:text-stone-100 pb-20">
+    <div className="min-h-screen bg-[#FBF9F4] text-[#1F2A23] pb-24">
       <AppHeader title="Grow Plans" />
 
-      <main className="max-w-6xl mx-auto px-4 py-6 space-y-6">
+      <main className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 space-y-6 sm:space-y-8">
         {/* Top Header & Action */}
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
           <div>
-            <h1 className="text-2xl font-bold tracking-tight text-stone-900 dark:text-stone-100">
-              Adaptive Grow Plans
-            </h1>
-            <p className="text-xs text-stone-500 dark:text-stone-400 mt-1">
-              Structured botanical execution milestones backed by verified observations.
+            <div className="flex items-center gap-2">
+              <span className="text-xl">📋</span>
+              <h1 className="font-serif text-2xl sm:text-3xl font-bold tracking-tight text-[#1F2A23]">
+                Grow Plans
+              </h1>
+            </div>
+            <p className="text-xs sm:text-sm text-[#68736B] mt-1">
+              Step-by-step growing journeys from seed to harvest 🌱
             </p>
           </div>
 
@@ -102,7 +105,7 @@ function GrowPlansContent() {
                 type="button"
                 onClick={handleSync}
                 disabled={isSyncing}
-                className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-xl bg-amber-50 dark:bg-amber-950/40 text-amber-800 dark:text-amber-300 border border-amber-300 dark:border-amber-800 hover:bg-amber-100 transition"
+                className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-xl bg-amber-50 text-amber-800 border border-amber-300 hover:bg-amber-100 transition"
               >
                 <RefreshCw className={`w-3.5 h-3.5 ${isSyncing ? 'animate-spin' : ''}`} />
                 <span>{pendingSyncCount} pending sync</span>
@@ -112,9 +115,9 @@ function GrowPlansContent() {
             <button
               type="button"
               onClick={() => setIsCreateModalOpen(true)}
-              className="flex items-center gap-1.5 px-4 py-2 text-xs font-semibold rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white shadow-sm transition"
+              className="flex items-center gap-2 px-4 py-2.5 text-xs sm:text-sm font-semibold rounded-xl bg-[#174C35] hover:bg-[#0f3424] text-white shadow-xs transition cursor-pointer min-h-[44px]"
             >
-              <Plus className="w-4 h-4" />
+              <Plus size={16} />
               <span>Create Plan</span>
             </button>
           </div>

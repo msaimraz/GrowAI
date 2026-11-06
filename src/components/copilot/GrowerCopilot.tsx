@@ -73,15 +73,15 @@ export function GrowerCopilot({
   const defaultQuestions = activePlantNickname
     ? [
         `How is ${activePlantNickname} doing?`,
-        `Why is it being monitored?`,
-        `When was it last fed?`,
-        `What conditions have I recorded?`,
+        'What should I do today?',
+        'When was it last fed?',
+        'Something looks wrong',
       ]
     : [
-        'What needs my attention today?',
-        'Which plants are currently being monitored?',
-        'What information is missing from my garden?',
-        'Show me my recent harvests',
+        'How is my garden doing?',
+        'What should I do today?',
+        'What should I grow here?',
+        'Something looks wrong',
       ];
 
   const scrollToBottom = () => {
@@ -270,7 +270,10 @@ export function GrowerCopilot({
         }`}
       >
         {messages.length === 0 ? (
-          <CopilotEmptyState activePlantNickname={activePlantNickname} />
+          <CopilotEmptyState
+            activePlantNickname={activePlantNickname}
+            onSelectQuestion={handleSendMessage}
+          />
         ) : (
           messages.map((msg) => (
             <CopilotMessage

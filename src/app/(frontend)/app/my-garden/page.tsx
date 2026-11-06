@@ -31,6 +31,7 @@ import { GardenHealthOverviewCard } from '@/components/garden/GardenHealthOvervi
 import { PlantHealthTab } from '@/components/garden/PlantHealthTab';
 import { PlantTimelineTab } from '@/components/garden/PlantTimelineTab';
 import { PlantRemindersCard } from '@/components/garden/PlantRemindersCard';
+import { FriendlyEmptyState } from '@/components/ui/FriendlyEmptyState';
 import { PlantIntelligenceTab } from '@/components/garden/PlantIntelligenceTab';
 import { PlantConditionsTab } from '@/components/garden/PlantConditionsTab';
 import { PlantFeedingTab } from '@/components/garden/PlantFeedingTab';
@@ -459,26 +460,13 @@ function MyGardenContent() {
 
         {/* Empty State */}
         {!loading && userPlants.length === 0 ? (
-          <div className="bg-white rounded-3xl border border-[#ded5c5] p-12 sm:p-16 text-center space-y-5 max-w-xl mx-auto shadow-xs">
-            <div className="w-16 h-16 rounded-2xl bg-[#eef5ee] text-[#144229] flex items-center justify-center mx-auto shadow-inner">
-              <Sprout size={32} />
-            </div>
-            <h3 className="font-serif font-bold text-2xl text-[#0c2417]">
-              {isCloud ? 'Your Cloud Garden is Empty' : 'Your Garden Journal is Ready'}
-            </h3>
-            <p className="text-sm text-[#526a57] leading-relaxed max-w-md mx-auto">
-              Add your first companion plant from our curated 19 botanical profiles. You will be able to log daily observations, track growth stages, and complete care tasks.
-            </p>
-            <div className="pt-2">
-              <Link
-                href="/app/plants"
-                className="inline-flex items-center gap-2 text-sm font-semibold bg-[#144229] hover:bg-[#0c2417] text-white px-6 py-3 rounded-xl shadow-xs transition-colors min-h-[44px]"
-              >
-                <Plus size={18} />
-                <span>Explore Plant Catalog</span>
-              </Link>
-            </div>
-          </div>
+          <FriendlyEmptyState
+            emoji="🌱"
+            title={isCloud ? 'Your Cloud Garden is Empty' : 'Your Garden Journal is Ready'}
+            description="Add your first companion plant from our curated botanical profiles. Track growth stages, care tasks, and daily observations."
+            actionHref="/app/plants"
+            actionLabel="Explore Plant Catalog"
+          />
         ) : (
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
             {/* Left Column: Plant Selection Sidebar */}
@@ -492,7 +480,7 @@ function MyGardenContent() {
                 </div>
                 <Link
                   href="/app/plants"
-                  className="text-xs font-semibold text-[#144229] hover:text-[#0c2417] flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-[#cfdfcf] bg-white hover:bg-[#f4f8f4] transition-colors min-h-[44px]"
+                  className="text-xs font-semibold text-[#144229] hover:text-[#0c2417] flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-[#cfdfcf] bg-white hover:bg-[#f4f8f4] transition-colors min-h-[40px]"
                 >
                   <Plus size={14} />
                   <span>Add Plant</span>
@@ -500,7 +488,7 @@ function MyGardenContent() {
               </div>
 
               {/* Plant selection list */}
-              <div className="space-y-3">
+              <div className="space-y-2.5">
                 {userPlants.map((plant) => {
                   const isSelected = plant.id === activePlant?.id;
                   const botanical = PLANTS_DATA.find((p) => p.slug === plant.plantSlug);
@@ -509,47 +497,64 @@ function MyGardenContent() {
                     <div
                       key={plant.id}
                       onClick={() => setSelectedPlantId(plant.id)}
-                      className={`p-4 rounded-2xl border transition-all cursor-pointer flex items-center justify-between min-h-[56px] ${
+                      className={`p-3 rounded-2xl border transition-all cursor-pointer flex items-center justify-between min-h-[56px] ${
                         isSelected
-                          ? 'bg-[#144229] text-white border-[#0f2e1d] shadow-sm ring-2 ring-[#144229]/20'
-                          : 'bg-white text-[#0c2417] border-[#ded5c5] hover:bg-[#fbf9f4] hover:border-[#144229]'
+                          ? 'bg-[#174C35] text-white border-[#174C35] shadow-sm ring-2 ring-[#174C35]/20'
+                          : 'bg-white text-[#1F2A23] border-[#E8E4DA] hover:bg-[#F3F6EC] hover:border-[#174C35]'
                       }`}
                     >
-                      <div className="min-w-0 pr-3">
-                        <div className="flex items-center gap-2">
-                          <h4 className="font-serif font-bold text-base truncate">
-                            {plant.nickname}
-                          </h4>
-                          <span
-                            className={`text-[11px] px-2.5 py-0.5 rounded-full font-semibold ${
-                              isSelected
-                                ? 'bg-[#257a4d] text-white'
-                                : 'bg-[#eef5ee] text-[#144229]'
+                      <div className="flex items-center gap-3 min-w-0 pr-2">
+                        {botanical?.imageUrl ? (
+                          <img
+                            src={botanical.imageUrl}
+                            alt={plant.nickname}
+                            className="w-11 h-11 rounded-xl object-cover shrink-0 border border-black/5"
+                          />
+                        ) : (
+                          <div
+                            className={`w-11 h-11 rounded-xl flex items-center justify-center shrink-0 text-xl ${
+                              isSelected ? 'bg-white/20' : 'bg-[#E6F0E3]'
                             }`}
                           >
-                            {plant.currentStage}
-                          </span>
-                        </div>
-                        <div className="flex flex-wrap items-center gap-2 mt-1">
-                          <p
-                            className={`text-xs truncate ${
-                              isSelected ? 'text-[#bed4c5]' : 'text-[#526a57]'
-                            }`}
-                          >
-                            {botanical?.commonName} • {plant.notes?.length || 0} observation(s)
-                          </p>
-                          {plantHealthMap[plant.id]?.status !== 'unknown' && (
-                            <PlantHealthBadge
-                              status={plantHealthMap[plant.id].status as any}
-                              size="xs"
-                              className={isSelected ? '!bg-white/20 !text-white !border-white/30' : ''}
-                            />
-                          )}
+                            🌱
+                          </div>
+                        )}
+                        <div className="min-w-0">
+                          <div className="flex items-center gap-1.5">
+                            <h4 className="font-serif font-bold text-sm sm:text-base truncate">
+                              {plant.nickname}
+                            </h4>
+                            <span
+                              className={`text-[10px] px-2 py-0.5 rounded-full font-semibold shrink-0 ${
+                                isSelected
+                                  ? 'bg-white/25 text-white'
+                                  : 'bg-[#E6F0E3] text-[#174C35]'
+                              }`}
+                            >
+                              {plant.currentStage}
+                            </span>
+                          </div>
+                          <div className="flex flex-wrap items-center gap-1.5 mt-0.5">
+                            <p
+                              className={`text-xs truncate ${
+                                isSelected ? 'text-[#C5D8C9]' : 'text-[#68736B]'
+                              }`}
+                            >
+                              {botanical?.commonName} • {plant.notes?.length || 0} note(s)
+                            </p>
+                            {plantHealthMap[plant.id]?.status !== 'unknown' && (
+                              <PlantHealthBadge
+                                status={plantHealthMap[plant.id].status as any}
+                                size="xs"
+                                className={isSelected ? '!bg-white/20 !text-white !border-white/30' : ''}
+                              />
+                            )}
+                          </div>
                         </div>
                       </div>
                       <ChevronRight
                         size={18}
-                        className={isSelected ? 'text-white' : 'text-[#8ba391]'}
+                        className={`shrink-0 ${isSelected ? 'text-white' : 'text-[#8ba391]'}`}
                       />
                     </div>
                   );

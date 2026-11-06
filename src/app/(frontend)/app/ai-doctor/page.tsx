@@ -236,46 +236,43 @@ export default function AiDoctorPage() {
   return (
     <div className="min-h-screen flex flex-col bg-[#fbf9f4]">
       <AppHeader
-        title="AI Plant Doctor Consultation"
-        subtitle="Multimodal vision diagnostics powered by Gemini 3.8 Flash with verified agronomic heuristics."
+        title="Plant Check"
+        subtitle="Not sure what’s wrong with your plant? Snap a photo and we’ll help you investigate."
         actionHref="/app/ai-doctor/history"
-        actionLabel="Diagnosis History"
+        actionLabel="Check History"
         actionIcon="none"
       />
 
-      <div className="flex-1 p-4 sm:p-6 lg:p-8 max-w-5xl mx-auto w-full space-y-8">
+      <div className="flex-1 p-4 sm:p-6 lg:p-8 max-w-5xl mx-auto w-full space-y-6 sm:space-y-8">
         {/* Friendly Consultation Intro */}
-        <div className="bg-[#0e2a1b] text-white p-6 sm:p-8 rounded-3xl relative overflow-hidden shadow-sm space-y-4">
-          <div className="max-w-3xl space-y-2">
+        <div className="bg-[#174C35] text-white p-6 sm:p-8 rounded-3xl relative overflow-hidden shadow-xs space-y-3">
+          <div className="max-w-2xl space-y-2">
             <div className="flex items-center gap-2">
-              <span className="p-1.5 rounded-lg bg-[#1e4d34] text-white">
-                <Stethoscope size={18} />
+              <span className="p-1 rounded-lg bg-white/10 text-xl">
+                🌿
               </span>
-              <span className="text-xs font-bold uppercase tracking-wider text-[#9ec4a9]">
-                Friendly Plant Health Clinic
+              <span className="text-xs font-mono uppercase tracking-wider text-[#A7C8B6]">
+                Plant Health Clinic
               </span>
             </div>
-            <h2 className="text-2xl sm:text-3xl font-serif font-bold text-white tracking-tight">
-              Let&apos;s diagnose your plant together.
-            </h2>
-            <p className="text-sm sm:text-base text-[#d1e6d7] leading-relaxed">
-              Tell us what you notice and attach a photo. Clear natural lighting on the affected leaf or stem helps Gemini Vision distinguish between watering stress, pest damage, and fungal spots.
+            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-serif font-bold text-white tracking-tight">
+              Not sure what’s wrong?
+            </h1>
+            <p className="text-sm sm:text-base text-[#D0E2D7] leading-relaxed">
+              Take a photo of your plant and we’ll investigate. Good natural light on affected leaves helps spot whether it’s watering stress, sunlight issues, or bugs.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2 text-xs text-[#bed4c5]">
-            <div className="p-3 rounded-xl bg-white/5 border border-white/10 flex items-center gap-2.5">
-              <Camera size={16} className="text-[#a4f0bf] shrink-0" />
-              <span>Natural daylight close-ups</span>
-            </div>
-            <div className="p-3 rounded-xl bg-white/5 border border-white/10 flex items-center gap-2.5">
-              <Droplets size={16} className="text-[#a4f0bf] shrink-0" />
-              <span>Watering & environment details</span>
-            </div>
-            <div className="p-3 rounded-xl bg-white/5 border border-white/10 flex items-center gap-2.5">
-              <HeartHandshake size={16} className="text-[#a4f0bf] shrink-0" />
-              <span>Non-toxic, safe home care</span>
-            </div>
+          <div className="flex flex-wrap items-center gap-3 pt-2 text-xs text-[#D0E2D7]">
+            <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/10 border border-white/10">
+              📷 Clear daylight close-ups
+            </span>
+            <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/10 border border-white/10">
+              💧 Non-toxic home remedies
+            </span>
+            <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/10 border border-white/10">
+              🌱 Safe for edible herbs & greens
+            </span>
           </div>
         </div>
 
@@ -621,32 +618,33 @@ export default function AiDoctorPage() {
             {/* Results Header */}
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-5 border-b border-[#f0ebe0]">
               <div className="flex items-center gap-3.5">
-                <div className="w-10 h-10 rounded-2xl bg-[#eef5ee] text-[#144229] flex items-center justify-center">
-                  <CheckCircle2 size={24} />
+                <div className="w-10 h-10 rounded-2xl bg-[#eef5ee] text-[#144229] flex items-center justify-center text-xl">
+                  🌿
                 </div>
                 <div>
-                  <h3 className="font-serif font-bold text-xl sm:text-2xl text-[#0c2417]">
-                    Diagnostic Findings & Agronomic Report
+                  <span className="text-xs font-mono uppercase tracking-wider text-[#68736B] block">
+                    Plant Health Results
+                  </span>
+                  <h3 className="font-serif font-bold text-xl sm:text-2xl text-[#1F2A23]">
+                    Here’s what we found with your plant
                   </h3>
-                  <p className="text-xs text-[#526a57] mt-0.5">
-                    Assessment ID: {result.id} • Engine: <strong>{result.engine}</strong> ({result.modelUsed || 'Heuristic'})
-                  </p>
                 </div>
               </div>
 
-              {/* Status Badge */}
-              <div className="flex flex-wrap gap-2">
+              {/* Status Badge & Re-take */}
+              <div className="flex items-center gap-2">
+                <button
+                  type="button"
+                  onClick={handleReset}
+                  className="px-3.5 py-1.5 rounded-xl border border-[#ded5c5] hover:bg-[#F3F6EC] text-xs font-medium text-[#1F2A23] transition-colors cursor-pointer"
+                >
+                  Check Another Photo
+                </button>
                 {result.status === 'completed' && (
-                  <Badge variant="forest" size="md">Analysis Completed</Badge>
+                  <Badge variant="forest" size="md">Analysis Complete</Badge>
                 )}
                 {result.status === 'inconclusive' && (
-                  <Badge variant="amber" size="md">Inconclusive Result</Badge>
-                )}
-                {result.status === 'not_a_plant' && (
-                  <Badge variant="terracotta" size="md">Plant Not Detected</Badge>
-                )}
-                {result.status === 'service_unavailable' && (
-                  <Badge variant="neutral" size="md">Service Unavailable</Badge>
+                  <Badge variant="amber" size="md">Needs Clearer Photo</Badge>
                 )}
               </div>
             </div>

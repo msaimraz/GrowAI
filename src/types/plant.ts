@@ -72,6 +72,8 @@ export interface Plant {
   scientificName: string;
   category: PlantCategory;
   summary: string;
+  imageUrl?: string;
+  daysToMaturity?: number;
   environments: GrowingEnvironment[];
   temperatureRange: {
     min: number;

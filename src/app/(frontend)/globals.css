@@ -2,19 +2,30 @@
 
 :root {
   --background: #fbf9f4;
-  --foreground: #1c261e;
+  --foreground: #1f2a23;
   --card: #ffffff;
-  --card-foreground: #1c261e;
+  --card-foreground: #1f2a23;
   --border: #e4ded3;
   --input: #e4ded3;
-  --ring: #1b5837;
+  --ring: #174c35;
   --radius: 0.75rem;
+
+  /* Botanical Youthful Palette */
+  --bg-primary: #fbf9f4;
+  --bg-secondary: #f3f6ec;
+  --bg-soft-green: #e6f0e3;
+  --bg-warm-accent: #fff0d8;
+  --bg-soft-coral: #fbe4dc;
+  --bg-soft-lavender: #eee8f6;
+  --botanical-dark: #174c35;
+  --text-primary: #1f2a23;
+  --text-secondary: #68736b;
 
   /* Botanical Brand Identity */
   --forest-950: #071c11;
   --forest-900: #0f2e1d;
   --forest-800: #144229;
-  --forest-700: #1b5837;
+  --forest-700: #174c35;
   --forest-600: #257a4d;
   --forest-500: #349964;
 

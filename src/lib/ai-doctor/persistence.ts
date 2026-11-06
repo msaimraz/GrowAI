@@ -216,7 +216,11 @@ export async function saveDiagnosisToHistory(
       });
 
       if (recordError) {
-        return { success: false, error: `Failed to save diagnosis record: ${recordError.message}` };
+        console.error('Database error saving diagnosis record to Supabase:', recordError);
+        return {
+          success: false,
+          error: 'We couldn’t save this diagnosis to your garden history right now. Please try again in a moment.',
+        };
       }
 
       // 2. Insert Candidates if present
@@ -243,13 +247,17 @@ export async function saveDiagnosisToHistory(
           .insert(candidateInserts);
 
         if (candError) {
-          console.error('Error saving diagnosis candidates:', candError);
+          console.error('Error saving diagnosis candidates to Supabase:', candError);
         }
       }
 
       return { success: true, diagnosisId: record.id };
     } catch (err: any) {
-      return { success: false, error: err.message || 'Unexpected failure during diagnosis save.' };
+      console.error('Unexpected error in saveDiagnosisRecordToHistory:', err);
+      return {
+        success: false,
+        error: 'We couldn’t save your diagnosis right now. Please check your connection and try again.',
+      };
     }
   }
 
@@ -309,13 +317,15 @@ export async function fetchDiagnosisHistory(params?: {
       const { data, error } = await query;
 
       if (error) {
-        return { records: [], error: error.message };
+        console.error('Database error fetching diagnosis history from Supabase:', error);
+        return { records: [], error: 'Unable to load diagnosis history right now. Please try again.' };
       }
 
       const records: SavedDiagnosisRecord[] = (data || []).map(mapDatabaseRowToDiagnosisRecord);
       return { records };
     } catch (err: any) {
-      return { records: [], error: err.message };
+      console.error('Unexpected error fetching diagnosis history:', err);
+      return { records: [], error: 'Unable to load diagnosis history right now.' };
     }
   }
 

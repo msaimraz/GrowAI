@@ -1,0 +1,153 @@
+import React from 'react';
+import Link from 'next/link';
+import Image from 'next/image';
+import { CareBadge } from './CareBadge';
+import { Plant } from '@/types/plant';
+import { ArrowRight, Plus, Sparkles } from 'lucide-react';
+
+interface PlantCardProps {
+  plant: Plant;
+  onAddClick?: (plant: Plant) => void;
+  priority?: boolean;
+}
+
+export function PlantCard({ plant, onAddClick, priority = false }: PlantCardProps) {
+  // Determine friendly sunlight label
+  const getSunlightLabel = (sun: string) => {
+    if (sun.includes('full') || sun.includes('direct')) return 'Bright Sun';
+    if (sun.includes('partial')) return 'Some Sun';
+    return 'Low Light';
+  };
+
+  // Determine friendly water label
+  const getWaterLabel = (water: { frequency?: string; guidance?: string; moistureLevel?: string } | string) => {
+    const text = typeof water === 'string' ? water : `${water.moistureLevel || ''} ${water.frequency || ''}`;
+    const lower = text.toLowerCase();
+    if (lower.includes('high') || lower.includes('frequent')) {
+      return 'High Water';
+    }
+    if (lower.includes('low') || lower.includes('dry')) {
+      return 'Low Water';
+    }
+    return 'Moderate';
+  };
+
+  // Determine plant emoji based on category
+  const getCategoryEmoji = (cat: string) => {
+    switch (cat) {
+      case 'sprouts':
+        return '🌱';
+      case 'microgreens':
+        return '🌿';
+      case 'herbs-greens':
+        return '🌿';
+      case 'vegetables-fruits':
+        return '🍅';
+      case 'indoor-decorative':
+        return '🪴';
+      default:
+        return '🌱';
+    }
+  };
+
+  return (
+    <div className="group bg-white rounded-2xl border border-[#E8E4DA] hover:border-[#174C35]/30 shadow-xs hover:shadow-md transition-all duration-200 overflow-hidden flex flex-col justify-between">
+      {/* 1. Large Plant Photo / Visual Header */}
+      <Link href={`/app/plants/${plant.slug}`} className="block relative aspect-4/3 w-full bg-[#F3F6EC] overflow-hidden">
+        {plant.imageUrl ? (
+          <Image
+            src={plant.imageUrl}
+            alt={plant.commonName}
+            fill
+            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+            className="object-cover group-hover:scale-105 transition-transform duration-300"
+            priority={priority}
+          />
+        ) : (
+          <div className="w-full h-full flex flex-col items-center justify-center bg-gradient-to-br from-[#E6F0E3] to-[#FFF0D8] p-4 text-center">
+            <span className="text-4xl sm:text-5xl select-none mb-1 group-hover:scale-110 transition-transform">
+              {getCategoryEmoji(plant.category)}
+            </span>
+            <span className="text-xs font-mono text-[#68736B] uppercase tracking-wider">
+              {plant.category.replace('-', ' ')}
+            </span>
+          </div>
+        )}
+
+        {/* Difficulty Pill on Image */}
+        <div className="absolute top-2.5 left-2.5">
+          <CareBadge
+            type="difficulty"
+            label={plant.difficulty.level.charAt(0).toUpperCase() + plant.difficulty.level.slice(1)}
+            size="sm"
+            className="shadow-xs bg-white/95 backdrop-blur-xs border-white"
+          />
+        </div>
+
+        {/* Quick Add Button if provided */}
+        {onAddClick && (
+          <button
+            type="button"
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              onAddClick(plant);
+            }}
+            className="absolute top-2.5 right-2.5 w-8 h-8 rounded-full bg-white/95 hover:bg-[#174C35] text-[#174C35] hover:text-white border border-[#E8E4DA] flex items-center justify-center shadow-xs transition-colors cursor-pointer"
+            title={`Add ${plant.commonName} to garden`}
+            aria-label={`Add ${plant.commonName} to garden`}
+          >
+            <Plus size={16} />
+          </button>
+        )}
+      </Link>
+
+      {/* 2. Plant Identification & Badges */}
+      <div className="p-4 sm:p-5 flex-1 flex flex-col justify-between space-y-3.5">
+        <div>
+          <Link href={`/app/plants/${plant.slug}`} className="block group-hover:text-[#174C35] transition-colors">
+            <h3 className="font-serif text-lg sm:text-xl font-bold text-[#1F2A23] leading-snug line-clamp-1">
+              {getCategoryEmoji(plant.category)} {plant.commonName}
+            </h3>
+            <p className="text-xs text-[#68736B] italic font-serif mt-0.5 line-clamp-1">
+              {plant.scientificName}
+            </p>
+          </Link>
+        </div>
+
+        {/* Care Badges (Sun & Water) */}
+        <div className="flex flex-wrap gap-1.5 pt-1">
+          <CareBadge
+            type="sun"
+            label={getSunlightLabel(plant.sunlight)}
+            size="sm"
+          />
+          <CareBadge
+            type="water"
+            label={getWaterLabel(plant.watering)}
+            size="sm"
+          />
+        </div>
+
+        {/* 3. Action Footer */}
+        <div className="pt-2 border-t border-[#F3F6EC] flex items-center justify-between">
+          <span className="text-xs text-[#68736B] font-mono">
+            {plant.timelines?.maturityDays?.max
+              ? `${plant.timelines.maturityDays.max}d cycle`
+              : plant.daysToMaturity
+              ? `${plant.daysToMaturity}d cycle`
+              : 'Container ready'}
+          </span>
+          <Link
+            href={`/app/plants/${plant.slug}`}
+            className="inline-flex items-center gap-1 text-xs font-semibold text-[#174C35] group-hover:translate-x-0.5 transition-transform"
+          >
+            <span>Explore</span>
+            <ArrowRight size={13} />
+          </Link>
+        </div>
+      </div>
+    </div>
+  );
+}
+
