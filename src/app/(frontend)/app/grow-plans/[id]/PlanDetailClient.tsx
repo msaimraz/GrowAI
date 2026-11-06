@@ -131,6 +131,10 @@ export function PlanDetailClient({ planId }: PlanDetailClientProps) {
   // Plan Status Mutation (Pause, Resume, Cancel)
   const handleStatusChange = async (newStatus: 'active' | 'paused' | 'cancelled') => {
     if (!plan) return;
+    if (plan.status === 'completed' || plan.status === 'cancelled') {
+      console.warn(`Cannot change status from terminal state "${plan.status}"`);
+      return;
+    }
     try {
       const updates: Partial<GrowPlan> = {
         status: newStatus,

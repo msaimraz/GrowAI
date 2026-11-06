@@ -14,10 +14,369 @@ import {
 } from '@/types/grow-plan';
 import { createClient } from '@/lib/supabase/client';
 import { isSupabaseConfigured } from '@/lib/supabase/config';
+import { completePlanStep, evaluateAllPlanSteps } from './plan-step-engine';
+import { calculatePlanProgress } from './plan-progress';
 
 const DEMO_PLANS_KEY = 'growai_demo_grow_plans_v1';
 const DEMO_PLAN_EVENTS_KEY = 'growai_demo_grow_plan_events_v1';
 const PENDING_PLAN_MUTATIONS_KEY = 'growai_pending_plan_mutations_v1';
+
+export const INITIAL_DEMO_GROW_PLANS: GrowPlan[] = [
+  {
+    id: 'demo-plan-basil',
+    userId: 'demo-user',
+    name: 'Genovese Basil Establishment & Care',
+    description: 'Structure initial planting, microclimate logging, container transplanting, and baseline growth observations for Genovese Basil.',
+    scope: 'plant',
+    objective: 'establish_plant',
+    status: 'active',
+    healthStatus: 'on_track',
+    priority: 'normal',
+    startDate: '2026-10-15T09:00:00.000Z',
+    targetDate: '2026-11-20T18:00:00.000Z',
+    completedAt: null,
+    pausedAt: null,
+    cancelledAt: null,
+    plantId: 'demo-plant-1',
+    plantIds: ['demo-plant-1'],
+    steps: [
+      {
+        id: 'step-basil-1',
+        planId: 'demo-plan-basil',
+        userId: 'demo-user',
+        title: 'Sow Genovese Basil in seed-starting mix',
+        description: 'Sow 3–4 seeds in moist peat or coco coir plugs at 0.5 cm depth.',
+        category: 'care',
+        status: 'completed',
+        priority: 'normal',
+        completedAt: '2026-10-15T09:30:00.000Z',
+        requiresObservation: false,
+        requiresConfirmation: false,
+        source: 'manual',
+        evidence: [],
+        createdAt: '2026-10-15T09:00:00.000Z',
+        updatedAt: '2026-10-15T09:30:00.000Z',
+      },
+      {
+        id: 'step-basil-2',
+        planId: 'demo-plan-basil',
+        userId: 'demo-user',
+        title: 'Observe germination & baby cotyledon emergence',
+        description: 'Watch for initial sprout emergence within 5–10 days with warm ambient temperatures.',
+        category: 'observation',
+        status: 'completed',
+        priority: 'normal',
+        completedAt: '2026-10-19T10:00:00.000Z',
+        requiresObservation: true,
+        requiresConfirmation: false,
+        source: 'manual',
+        evidence: [],
+        createdAt: '2026-10-15T09:00:00.000Z',
+        updatedAt: '2026-10-19T10:00:00.000Z',
+      },
+      {
+        id: 'step-basil-3',
+        planId: 'demo-plan-basil',
+        userId: 'demo-user',
+        title: 'Ensure 6+ hours of filtered balcony sunlight',
+        description: 'Provide generous sunlight while avoiding intense midday scorch during early leaf expansion.',
+        category: 'environment',
+        status: 'completed',
+        priority: 'normal',
+        completedAt: '2026-10-24T08:00:00.000Z',
+        requiresObservation: false,
+        requiresConfirmation: false,
+        source: 'manual',
+        evidence: [],
+        createdAt: '2026-10-15T09:00:00.000Z',
+        updatedAt: '2026-10-24T08:00:00.000Z',
+      },
+      {
+        id: 'step-basil-4',
+        planId: 'demo-plan-basil',
+        userId: 'demo-user',
+        title: 'Transplant into a larger container',
+        description: 'Move vigorous seedling with intact root ball to final 15–20 cm pot with good bottom drainage.',
+        category: 'care',
+        status: 'ready',
+        priority: 'normal',
+        scheduledFor: '2026-11-06T09:00:00.000Z',
+        dueAt: '2026-11-06T18:00:00.000Z',
+        requiresObservation: false,
+        requiresConfirmation: false,
+        source: 'manual',
+        evidence: [],
+        createdAt: '2026-10-15T09:00:00.000Z',
+        updatedAt: '2026-10-24T08:00:00.000Z',
+      },
+      {
+        id: 'step-basil-5',
+        planId: 'demo-plan-basil',
+        userId: 'demo-user',
+        title: 'Pinch apical tips after 4th set of true leaves',
+        description: 'Snip top stem tip just above a leaf node to promote bushy bilateral branching.',
+        category: 'care',
+        status: 'pending',
+        priority: 'normal',
+        requiresObservation: false,
+        requiresConfirmation: false,
+        source: 'manual',
+        evidence: [],
+        createdAt: '2026-10-15T09:00:00.000Z',
+        updatedAt: '2026-10-15T09:00:00.000Z',
+      },
+    ],
+    progress: {
+      totalSteps: 5,
+      completedSteps: 3,
+      skippedSteps: 0,
+      pendingSteps: 1,
+      readySteps: 1,
+      blockedSteps: 0,
+      completionPercentage: 60,
+      taskCompletionPercentage: 60,
+      isComplete: false,
+    },
+    evidence: [],
+    adjustmentHistory: [],
+    metadata: {
+      plantNickname: 'Balcony Pesto King',
+      speciesName: 'Ocimum basilicum',
+    },
+    createdAt: '2026-10-15T09:00:00.000Z',
+    updatedAt: '2026-10-24T08:00:00.000Z',
+  },
+  {
+    id: 'demo-plan-tomato',
+    userId: 'demo-user',
+    name: 'Ruby Patio Sweetie Flowering & Nutrition',
+    description: 'Support vigorous flowering, wind pollination, and calcium-potassium feeding for sweet patio yield.',
+    scope: 'plant',
+    objective: 'general_care',
+    status: 'active',
+    healthStatus: 'on_track',
+    priority: 'high',
+    startDate: '2026-09-28T10:00:00.000Z',
+    targetDate: '2026-11-25T18:00:00.000Z',
+    completedAt: null,
+    pausedAt: null,
+    cancelledAt: null,
+    plantId: 'demo-plant-3',
+    plantIds: ['demo-plant-3'],
+    steps: [
+      {
+        id: 'step-tom-1',
+        planId: 'demo-plan-tomato',
+        userId: 'demo-user',
+        title: 'Stake and position tomato cage in upper balcony tier',
+        description: 'Insert supportive cage into 12-liter container before extensive root expansion.',
+        category: 'care',
+        status: 'completed',
+        priority: 'normal',
+        completedAt: '2026-10-02T11:00:00.000Z',
+        requiresObservation: false,
+        requiresConfirmation: false,
+        source: 'manual',
+        evidence: [],
+        createdAt: '2026-09-28T10:00:00.000Z',
+        updatedAt: '2026-10-02T11:00:00.000Z',
+      },
+      {
+        id: 'step-tom-2',
+        planId: 'demo-plan-tomato',
+        userId: 'demo-user',
+        title: 'Inspect for early yellow blossom clusters',
+        description: 'Check upper nodes for open flower trusses and assess plant vigor.',
+        category: 'observation',
+        status: 'completed',
+        priority: 'normal',
+        completedAt: '2026-10-26T14:00:00.000Z',
+        requiresObservation: true,
+        requiresConfirmation: false,
+        source: 'manual',
+        evidence: [],
+        createdAt: '2026-09-28T10:00:00.000Z',
+        updatedAt: '2026-10-26T14:00:00.000Z',
+      },
+      {
+        id: 'step-tom-3',
+        planId: 'demo-plan-tomato',
+        userId: 'demo-user',
+        title: 'Feed with organic potassium fertilizer for fruit set',
+        description: 'Apply balanced tomato organic liquid feed diluted per manufacturer label.',
+        category: 'feeding',
+        status: 'ready',
+        priority: 'high',
+        scheduledFor: '2026-11-07T09:00:00.000Z',
+        dueAt: '2026-11-07T18:00:00.000Z',
+        requiresObservation: false,
+        requiresConfirmation: false,
+        source: 'manual',
+        evidence: [],
+        createdAt: '2026-09-28T10:00:00.000Z',
+        updatedAt: '2026-10-26T14:00:00.000Z',
+      },
+      {
+        id: 'step-tom-4',
+        planId: 'demo-plan-tomato',
+        userId: 'demo-user',
+        title: 'Gently tap flowering stems for wind pollination',
+        description: 'Vibrate flowering trusses lightly during midday sun to release pollen on sheltered balconies.',
+        category: 'care',
+        status: 'pending',
+        priority: 'normal',
+        requiresObservation: false,
+        requiresConfirmation: false,
+        source: 'manual',
+        evidence: [],
+        createdAt: '2026-09-28T10:00:00.000Z',
+        updatedAt: '2026-09-28T10:00:00.000Z',
+      },
+      {
+        id: 'step-tom-5',
+        planId: 'demo-plan-tomato',
+        userId: 'demo-user',
+        title: 'Monitor fruit ripening and log harvest yield',
+        description: 'Harvest deep red clusters and record weight in production log.',
+        category: 'harvest',
+        status: 'pending',
+        priority: 'normal',
+        requiresObservation: false,
+        requiresConfirmation: false,
+        source: 'manual',
+        evidence: [],
+        createdAt: '2026-09-28T10:00:00.000Z',
+        updatedAt: '2026-09-28T10:00:00.000Z',
+      },
+    ],
+    progress: {
+      totalSteps: 5,
+      completedSteps: 2,
+      skippedSteps: 0,
+      pendingSteps: 2,
+      readySteps: 1,
+      blockedSteps: 0,
+      completionPercentage: 40,
+      taskCompletionPercentage: 40,
+      isComplete: false,
+    },
+    evidence: [],
+    adjustmentHistory: [],
+    metadata: {
+      plantNickname: 'Ruby Patio Sweetie',
+      speciesName: 'Solanum lycopersicum',
+    },
+    createdAt: '2026-09-28T10:00:00.000Z',
+    updatedAt: '2026-10-26T14:00:00.000Z',
+  },
+  {
+    id: 'demo-plan-lettuce',
+    userId: 'demo-user',
+    name: 'Crisp Kitchen Rosette Succession Harvest',
+    description: 'Continuous cut-and-come-again harvest for crisp butterhead salad greens on middle balcony shelf.',
+    scope: 'plant',
+    objective: 'prepare_for_harvest',
+    status: 'completed',
+    healthStatus: 'completed',
+    priority: 'normal',
+    startDate: '2026-10-05T08:00:00.000Z',
+    targetDate: '2026-10-28T12:00:00.000Z',
+    completedAt: '2026-10-28T12:00:00.000Z',
+    pausedAt: null,
+    cancelledAt: null,
+    plantId: 'demo-plant-2',
+    plantIds: ['demo-plant-2'],
+    steps: [
+      {
+        id: 'step-let-1',
+        planId: 'demo-plan-lettuce',
+        userId: 'demo-user',
+        title: 'Sow butterhead seeds in moist coco coir plug',
+        description: 'Surface-sow tiny seeds with light dusting of vermiculite.',
+        category: 'care',
+        status: 'completed',
+        priority: 'normal',
+        completedAt: '2026-10-05T08:30:00.000Z',
+        requiresObservation: false,
+        requiresConfirmation: false,
+        source: 'manual',
+        evidence: [],
+        createdAt: '2026-10-05T08:00:00.000Z',
+        updatedAt: '2026-10-05T08:30:00.000Z',
+      },
+      {
+        id: 'step-let-2',
+        planId: 'demo-plan-lettuce',
+        userId: 'demo-user',
+        title: 'Position in partial morning sun on middle shelf',
+        description: 'Provide gentle cool morning sun to prevent premature summer bolting.',
+        category: 'environment',
+        status: 'completed',
+        priority: 'normal',
+        completedAt: '2026-10-12T09:00:00.000Z',
+        requiresObservation: false,
+        requiresConfirmation: false,
+        source: 'manual',
+        evidence: [],
+        createdAt: '2026-10-05T08:00:00.000Z',
+        updatedAt: '2026-10-12T09:00:00.000Z',
+      },
+      {
+        id: 'step-let-3',
+        planId: 'demo-plan-lettuce',
+        userId: 'demo-user',
+        title: 'Harvest outer baby leaves for lunch salad',
+        description: 'Gently snip 3–4 lowest outer leaves leaving central growing rosette intact.',
+        category: 'harvest',
+        status: 'completed',
+        priority: 'normal',
+        completedAt: '2026-10-24T12:30:00.000Z',
+        requiresObservation: false,
+        requiresConfirmation: false,
+        source: 'manual',
+        evidence: [],
+        createdAt: '2026-10-05T08:00:00.000Z',
+        updatedAt: '2026-10-24T12:30:00.000Z',
+      },
+      {
+        id: 'step-let-4',
+        planId: 'demo-plan-lettuce',
+        userId: 'demo-user',
+        title: 'Record final harvest yield in garden production log',
+        description: 'Log 65g fresh leaf harvest in production tracking tab.',
+        category: 'data_quality',
+        status: 'completed',
+        priority: 'normal',
+        completedAt: '2026-10-28T12:00:00.000Z',
+        requiresObservation: false,
+        requiresConfirmation: false,
+        source: 'manual',
+        evidence: [],
+        createdAt: '2026-10-05T08:00:00.000Z',
+        updatedAt: '2026-10-28T12:00:00.000Z',
+      },
+    ],
+    progress: {
+      totalSteps: 4,
+      completedSteps: 4,
+      skippedSteps: 0,
+      pendingSteps: 0,
+      readySteps: 0,
+      blockedSteps: 0,
+      completionPercentage: 100,
+      taskCompletionPercentage: 100,
+      isComplete: true,
+    },
+    evidence: [],
+    adjustmentHistory: [],
+    metadata: {
+      plantNickname: 'Crisp Kitchen Rosette',
+      speciesName: 'Lactuca sativa',
+    },
+    createdAt: '2026-10-05T08:00:00.000Z',
+    updatedAt: '2026-10-28T12:00:00.000Z',
+  },
+];
 
 export interface PendingPlanMutation {
   id: string;
@@ -49,12 +408,21 @@ function generateUuid(): string {
 // ==============================================================================
 
 function getLocalPlans(): GrowPlan[] {
-  if (typeof window === 'undefined') return [];
+  if (typeof window === 'undefined') return INITIAL_DEMO_GROW_PLANS;
   try {
     const raw = localStorage.getItem(DEMO_PLANS_KEY);
-    return raw ? JSON.parse(raw) : [];
+    if (!raw) {
+      localStorage.setItem(DEMO_PLANS_KEY, JSON.stringify(INITIAL_DEMO_GROW_PLANS));
+      return INITIAL_DEMO_GROW_PLANS;
+    }
+    const parsed = JSON.parse(raw);
+    if (!Array.isArray(parsed) || parsed.length === 0) {
+      localStorage.setItem(DEMO_PLANS_KEY, JSON.stringify(INITIAL_DEMO_GROW_PLANS));
+      return INITIAL_DEMO_GROW_PLANS;
+    }
+    return parsed;
   } catch {
-    return [];
+    return INITIAL_DEMO_GROW_PLANS;
   }
 }
 
@@ -138,6 +506,7 @@ function mapDbToPlan(row: any, steps: GrowPlanStep[] = []): GrowPlan {
     readySteps: ready,
     blockedSteps: blocked,
     completionPercentage,
+    taskCompletionPercentage: completionPercentage,
     isComplete: applicable > 0 && completed === applicable,
   };
 
@@ -729,4 +1098,40 @@ export async function syncPendingPlanMutations(): Promise<{ synced: number; fail
   }
 
   return { synced, failed };
+}
+
+/**
+ * Completes a plan step triggered from a linked garden reminder.
+ * Updates step status, recalculates plan progress, and persists the updated plan.
+ */
+export async function completePlanStepFromReminder(
+  planId: string,
+  stepId: string
+): Promise<{ success: boolean; plan?: GrowPlan; error?: string }> {
+  try {
+    const { plan } = await fetchGrowPlanById(planId);
+    if (!plan) return { success: false, error: 'Plan not found.' };
+
+    const updatedSteps = completePlanStep(stepId, plan.steps);
+    const reevaluated = evaluateAllPlanSteps(updatedSteps);
+    const progress = calculatePlanProgress(reevaluated);
+    const isComplete = progress.completionPercentage === 100;
+
+    const updatedPlan: Partial<GrowPlan> = {
+      steps: reevaluated,
+      progress,
+      status: isComplete ? 'completed' : plan.status,
+      completedAt: isComplete ? new Date().toISOString() : plan.completedAt,
+      updatedAt: new Date().toISOString(),
+    };
+
+    const res = await updateGrowPlan(plan.id, updatedPlan);
+    if (res.plan) {
+      return { success: true, plan: res.plan };
+    }
+    return { success: false, error: res.error || 'Failed to update plan.' };
+  } catch (err: any) {
+    console.error('Failed to complete step from reminder:', err);
+    return { success: false, error: err.message };
+  }
 }

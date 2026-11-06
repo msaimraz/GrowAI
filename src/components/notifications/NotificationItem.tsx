@@ -35,6 +35,9 @@ export function NotificationItem({
   const active = isReminderActive(reminder);
 
   const getSourceIcon = () => {
+    if (reminder.metadata?.growPlanId) {
+      return <Sprout size={16} className="text-[#144229]" />;
+    }
     switch (reminder.reminderType) {
       case 'care':
         return <Droplets size={16} className="text-teal-700" />;
@@ -99,6 +102,11 @@ export function NotificationItem({
           {reminder.plantNickname && (
             <span className="px-1.5 py-0.2 text-[10px] rounded-md bg-[#eef5ee] text-[#144229] font-medium border border-[#c2d9c6]">
               {reminder.plantNickname}
+            </span>
+          )}
+          {reminder.metadata?.growPlanId && (
+            <span className="px-1.5 py-0.2 text-[10px] rounded-md bg-[#e7efe7] text-[#144229] font-semibold border border-[#c2d9c6]">
+              🌱 Grow Plan
             </span>
           )}
           {reminder.recurrence && reminder.recurrence.type !== 'none' && (

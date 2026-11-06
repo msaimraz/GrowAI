@@ -23,6 +23,7 @@ interface ReminderDetailModalProps {
   reminder: Reminder | null;
   isOpen: boolean;
   onClose: () => void;
+  onNavigate?: () => void;
   onComplete: (id: string) => Promise<void>;
   onDismiss: (id: string) => Promise<void>;
   onDelete: (id: string) => Promise<void>;
@@ -32,6 +33,7 @@ export function ReminderDetailModal({
   reminder,
   isOpen,
   onClose,
+  onNavigate,
   onComplete,
   onDismiss,
   onDelete,
@@ -76,8 +78,16 @@ export function ReminderDetailModal({
     }
   };
 
+  const handleNavigate = () => {
+    if (onNavigate) {
+      onNavigate();
+    } else {
+      onClose();
+    }
+  };
+
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/50 backdrop-blur-xs animate-in fade-in duration-200">
+    <div className="fixed inset-0 z-60 flex items-center justify-center p-3 sm:p-4 bg-black/50 backdrop-blur-xs animate-in fade-in duration-200">
       <div className="w-full max-w-[calc(100vw-24px)] sm:max-w-lg bg-[#fbf9f4] rounded-3xl border border-[#ded5c5] shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
         {/* Modal Header */}
         <div className="flex items-center justify-between p-5 border-b border-[#ded5c5] bg-white">
@@ -129,13 +139,41 @@ export function ReminderDetailModal({
               {reminder.plantId && (
                 <Link
                   href={`/app/my-garden?plantId=${reminder.plantId}`}
-                  onClick={onClose}
+                  onClick={handleNavigate}
                   className="inline-flex items-center gap-1 text-xs font-semibold text-[#144229] hover:underline"
                 >
                   <span>View Plant</span>
                   <ExternalLink size={12} />
                 </Link>
               )}
+            </div>
+          )}
+
+          {/* Grow Plan Link if attached */}
+          {reminder.metadata?.growPlanId && (
+            <div className="p-3.5 rounded-2xl bg-[#eef5ee] border border-[#c2d9c6] flex items-center justify-between gap-3">
+              <div className="flex items-center gap-2.5">
+                <div className="w-8 h-8 rounded-xl bg-[#144229] text-white flex items-center justify-center">
+                  <Sprout size={16} />
+                </div>
+                <div>
+                  <span className="text-[10px] uppercase font-bold text-[#144229] block">
+                    Associated Grow Plan
+                  </span>
+                  <span className="font-semibold text-xs text-[#0c2417]">
+                    {reminder.body?.split('—')[0]?.trim() || 'Active Grow Plan'}
+                  </span>
+                </div>
+              </div>
+
+              <Link
+                href={reminder.metadata?.actionUrl || `/app/grow-plans/${reminder.metadata.growPlanId}`}
+                onClick={handleNavigate}
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#144229] text-white text-xs font-semibold hover:bg-[#0c2417] transition"
+              >
+                <span>Open Plan</span>
+                <ExternalLink size={12} />
+              </Link>
             </div>
           )}
 
