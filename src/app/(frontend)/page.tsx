@@ -3,26 +3,24 @@ import type { Metadata } from 'next';
 import { Navbar } from '@/components/navigation/Navbar';
 import { Footer } from '@/components/navigation/Footer';
 import { Hero } from '@/components/landing/Hero';
-import { CoreIdeaSection } from '@/components/landing/CoreIdeaSection';
-import { PlanGrowAdaptSection } from '@/components/landing/PlanGrowAdaptSection';
-import { ProductContextStory } from '@/components/landing/ProductContextStory';
-import { SmallSpacePlannerSection } from '@/components/landing/SmallSpacePlannerSection';
-import { BotanicalTrustSection } from '@/components/landing/BotanicalTrustSection';
+import { WhatGrowAiDoesSection } from '@/components/landing/WhatGrowAiDoesSection';
+import { GrowWithGardenSection } from '@/components/landing/GrowWithGardenSection';
+import { RealProductCapabilitiesSection } from '@/components/landing/RealProductCapabilitiesSection';
+import { PlantIntelligenceSection } from '@/components/landing/PlantIntelligenceSection';
 import { FinalCtaSection } from '@/components/landing/FinalCtaSection';
-import { BotanicalRule } from '@/components/landing/BotanicalRule';
 
 export const metadata: Metadata = {
   title: 'GrowAI — Intelligent Cultivation & Botanical Systems',
   description:
-    'A minimal botanical editorial platform combining plant knowledge, small-space vertical planning, longitudinal growth tracking, and adaptive grow plans.',
+    'A calm botanical platform combining plant knowledge, small-space vertical planning, growth tracking, and adaptive grow plans.',
   keywords: [
-    'vertical gardening',
+    'gardening app',
+    'plant care',
+    'plant health check',
     'small space gardening',
-    'plant growth tracker',
-    'plant health monitoring',
+    'vertical garden planner',
     'grow plans',
-    'balcony garden planner',
-    'botanical intelligence',
+    'botanical knowledge',
   ],
   openGraph: {
     title: 'GrowAI — Intelligent Cultivation & Botanical Systems',
@@ -42,38 +40,31 @@ export const metadata: Metadata = {
 
 export default function LandingPage() {
   return (
-    <div className="min-h-screen flex flex-col bg-[#F6F1E8] text-[#263028]">
-      {/* Global Navigation — Editorial Header */}
+    <div className="min-h-screen flex flex-col bg-[#fbf9f4] text-[#0c2417]">
+      {/* 1. Global Navigation */}
       <Navbar />
 
-      <main className="flex-1">
-        {/* 1. HERO — Editorial Headline & Desk-Framed Product UI */}
+      <main className="flex-1 min-w-0 max-w-full">
+        {/* 2. Hero: Simple Headline, CTAs & Realistic Product UI Preview */}
         <Hero />
 
-        {/* 2. THE GROWING INTELLIGENCE SYSTEM — Open Design Diagram */}
-        <CoreIdeaSection />
+        {/* 3. What GrowAI Does: 5-Part Lightweight Editorial System */}
+        <WhatGrowAiDoesSection />
 
-        <BotanicalRule className="opacity-40" />
+        {/* 4. Grow With Your Garden: Plant → Observation → Condition → Intelligence → Action */}
+        <GrowWithGardenSection />
 
-        {/* 3. PLAN + GROW + ADAPT — 3 Editorial Columns & Live Engine View */}
-        <PlanGrowAdaptSection />
+        {/* 5. Real Product Capabilities: 6 Areas + Step Progression Preview */}
+        <RealProductCapabilitiesSection />
 
-        {/* 4. REAL PRODUCT / INTELLIGENCE — Copilot Story & Context Grounding */}
-        <ProductContextStory />
+        {/* 6. Plant Intelligence: Realistic Plant Record + 3-Tier Rack + Daily Growing Experience */}
+        <PlantIntelligenceSection />
 
-        <BotanicalRule className="opacity-40" />
-
-        {/* 5. SMALL-SPACE REALITY — Architectural Vertical Rack Elevation */}
-        <SmallSpacePlannerSection />
-
-        {/* 6. BOTANICAL KNOWLEDGE + TRUST — Large Botanical Specimen Plate & Lifecycle Strip */}
-        <BotanicalTrustSection />
-
-        {/* 7. FINAL CTA — Deep Botanical Ink (#163A2A) with Terracotta Detail */}
+        {/* 7. Final CTA: Deep Botanical Ink */}
         <FinalCtaSection />
       </main>
 
-      {/* Global Footer — Clean Publication Footer */}
+      {/* Global Footer */}
       <Footer />
     </div>
   );

@@ -38,8 +38,8 @@ export function Logo({
       <span className="flex items-center justify-center w-8 h-8 rounded-lg bg-[#144229] text-[#e7f0e7] shadow-sm">
         <Sprout size={iconSizes[size]} className="stroke-[2.2]" />
       </span>
-      <span className="font-serif font-bold tracking-tight text-[#0f2e1d]">
-        Grow<span className="text-[#257a4d] font-sans font-semibold">AI</span>
+      <span className={`font-serif font-bold tracking-tight ${variant === 'dark' ? 'text-white' : 'text-[#0f2e1d]'}`}>
+        Grow<span className={`${variant === 'dark' ? 'text-[#86efac]' : 'text-[#257a4d]'} font-sans font-semibold`}>AI</span>
       </span>
     </div>
   );
