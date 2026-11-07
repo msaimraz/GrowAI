@@ -232,7 +232,7 @@ export function CreatePlanModal({
             <button
               type="submit"
               disabled={isSubmitting}
-              className="px-5 py-2 text-xs font-medium rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white transition disabled:opacity-50"
+              className="px-5 py-2 text-xs font-medium rounded-xl bg-emerald-600 hover:bg-emerald-700 active:scale-95 text-white transition-all duration-75 select-none touch-manipulation cursor-pointer disabled:opacity-50"
             >
               {isSubmitting ? 'Creating Plan...' : 'Create Grow Plan'}
             </button>

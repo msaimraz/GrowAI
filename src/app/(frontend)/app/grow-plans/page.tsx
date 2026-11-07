@@ -30,10 +30,11 @@ function GrowPlansContent() {
   const loadData = async () => {
     setLoading(true);
     try {
-      const gardenRes = await fetchUserGarden();
+      const [gardenRes, plansRes] = await Promise.all([
+        fetchUserGarden(),
+        fetchGrowPlans(),
+      ]);
       setPlants(gardenRes.plants || []);
-
-      const plansRes = await fetchGrowPlans();
       setPlans(plansRes.plans || []);
 
       setPendingSyncCount(getPendingPlanMutationsCount());
@@ -343,7 +344,7 @@ function GrowPlansContent() {
             <button
               type="button"
               onClick={() => setIsCreateModalOpen(true)}
-              className="flex items-center gap-2 px-4 py-2.5 text-xs sm:text-sm font-semibold rounded-xl bg-[#144229] hover:bg-[#0c2417] text-white shadow-xs transition cursor-pointer min-h-[44px]"
+              className="flex items-center gap-2 px-4 py-2.5 text-xs sm:text-sm font-semibold rounded-xl bg-[#144229] hover:bg-[#0c2417] active:scale-95 text-white shadow-xs transition-all duration-75 cursor-pointer min-h-[44px] select-none touch-manipulation"
             >
               <Plus size={16} />
               <span>Create Plan</span>

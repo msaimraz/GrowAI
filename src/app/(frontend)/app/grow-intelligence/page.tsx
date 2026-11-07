@@ -83,8 +83,15 @@ export default function GrowIntelligencePage() {
   return (
     <React.Suspense
       fallback={
-        <div className="min-h-screen flex items-center justify-center text-sm text-[#526a57] bg-[#fbf9f4]">
-          Loading Grow Intelligence...
+        <div className="min-h-screen bg-[#FBF9F4] animate-pulse">
+          <div className="h-16 bg-[#fbf9f4]/95 border-b border-[#ded5c5] px-4 sm:px-8 flex items-center justify-between">
+            <div className="h-6 w-52 bg-[#E8E4DA] rounded-lg" />
+            <div className="h-9 w-9 bg-[#E8E4DA] rounded-xl" />
+          </div>
+          <div className="max-w-7xl mx-auto p-4 sm:p-6 lg:p-8 space-y-6">
+            <div className="h-44 bg-[#144229]/20 rounded-3xl border border-[#ded5c5] p-6" />
+            <div className="h-32 bg-white rounded-3xl border border-[#ded5c5]" />
+          </div>
         </div>
       }
     >

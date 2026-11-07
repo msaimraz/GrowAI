@@ -68,11 +68,12 @@ function AppDashboardContent() {
   const loadDashboardData = async () => {
     setLoading(true);
     try {
-      const { plants, isCloud: cloudMode } = await fetchUserGarden();
+      const [{ plants, isCloud: cloudMode }, tasksResult] = await Promise.all([
+        fetchUserGarden(),
+        fetchCareTasks(),
+      ]);
       setUserPlants(plants);
       setIsCloud(cloudMode);
-
-      const tasksResult = await fetchCareTasks();
       setCareTasks(tasksResult.tasks || []);
     } catch (err) {
       console.error('Error loading dashboard data:', err);
@@ -172,7 +173,7 @@ function AppDashboardContent() {
             <div className="flex items-center gap-2 self-start sm:self-auto">
               <Link
                 href="/app/plants"
-                className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-[#174C35] hover:bg-[#0f3424] text-white text-xs sm:text-sm font-semibold shadow-xs transition-colors cursor-pointer min-h-[40px]"
+                className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-[#174C35] hover:bg-[#0f3424] active:scale-95 text-white text-xs sm:text-sm font-semibold shadow-xs transition-all duration-75 cursor-pointer min-h-[40px] select-none touch-manipulation"
               >
                 <Plus size={15} />
                 <span>Add Plant</span>
@@ -245,7 +246,19 @@ function AppDashboardContent() {
             )}
           </div>
 
-          {careTasks.length === 0 ? (
+          {loading ? (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+              {[1, 2, 3].map((i) => (
+                <div
+                  key={i}
+                  className="h-20 rounded-2xl bg-white border border-[#E8E4DA] animate-pulse p-4 space-y-2"
+                >
+                  <div className="h-4 w-28 bg-[#E8E4DA] rounded-md" />
+                  <div className="h-3 w-40 bg-[#EFEAE0] rounded-md" />
+                </div>
+              ))}
+            </div>
+          ) : careTasks.length === 0 ? (
             <div className="p-6 rounded-2xl bg-white border border-[#E8E4DA] text-center text-xs text-[#68736B] space-y-1">
               <span className="text-2xl block select-none">🎉</span>
               <p className="font-medium text-[#1F2A23]">No tasks scheduled for today</p>
@@ -331,7 +344,22 @@ function AppDashboardContent() {
             )}
           </div>
 
-          {userPlants.length === 0 ? (
+          {loading ? (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6">
+              {[1, 2, 3, 4].map((i) => (
+                <div
+                  key={i}
+                  className="bg-white rounded-3xl border border-[#E8E4DA] animate-pulse overflow-hidden"
+                >
+                  <div className="aspect-4/3 bg-[#EFEAE0]" />
+                  <div className="p-4 space-y-2">
+                    <div className="h-5 w-32 bg-[#E8E4DA] rounded-md" />
+                    <div className="h-3 w-20 bg-[#EFEAE0] rounded-md" />
+                  </div>
+                </div>
+              ))}
+            </div>
+          ) : userPlants.length === 0 ? (
             <FriendlyEmptyState
               emoji="🪴"
               title="Your garden is empty"

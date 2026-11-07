@@ -71,7 +71,7 @@ export function AppHeader({
             <button
               type="button"
               onClick={() => setMobileMenuOpen(true)}
-              className="lg:hidden p-2 rounded-xl text-[#144229] hover:bg-[#ede7da] focus:outline-none focus:ring-2 focus:ring-[#144229] min-h-[44px] min-w-[44px] flex items-center justify-center cursor-pointer transition-colors shrink-0"
+              className="lg:hidden p-2 rounded-xl text-[#144229] hover:bg-[#ede7da] active:scale-95 focus:outline-none focus:ring-2 focus:ring-[#144229] min-h-[44px] min-w-[44px] flex items-center justify-center cursor-pointer transition-all duration-75 select-none touch-manipulation shrink-0"
               aria-label="Open navigation menu"
             >
               <Menu size={22} />
@@ -141,7 +141,7 @@ export function AppHeader({
             {actionLabel && actionHref && (
               <Link
                 href={actionHref}
-                className="inline-flex items-center justify-center gap-1.5 px-3 sm:px-3.5 py-2 text-xs sm:text-sm font-semibold bg-[#144229] text-white hover:bg-[#071c11] rounded-xl shadow-xs transition-all hover:shadow hover:-translate-y-0.5 active:translate-y-0 focus:outline-none focus:ring-2 focus:ring-[#144229] min-h-[40px] shrink-0"
+                className="inline-flex items-center justify-center gap-1.5 px-3 sm:px-3.5 py-2 text-xs sm:text-sm font-semibold bg-[#144229] text-white hover:bg-[#071c11] active:scale-95 rounded-xl shadow-xs transition-all duration-75 select-none touch-manipulation hover:shadow focus:outline-none focus:ring-2 focus:ring-[#144229] min-h-[40px] shrink-0"
                 aria-label={actionLabel}
               >
                 {actionIcon === 'plus' && <Plus size={15} className="shrink-0" />}

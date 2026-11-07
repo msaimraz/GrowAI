@@ -107,7 +107,7 @@ export function AppSidebar() {
                 <Link
                   key={item.href}
                   href={item.href}
-                  className={`flex items-center justify-between px-3 py-2.5 rounded-xl text-sm font-medium transition-all min-h-[44px] ${
+                  className={`flex items-center justify-between px-3 py-2.5 rounded-xl text-sm font-medium transition-all duration-75 active:scale-[0.98] active:bg-[#1E5C41]/90 select-none cursor-pointer touch-manipulation min-h-[44px] ${
                     isActive
                       ? 'bg-[#1E5C41] text-white shadow-xs font-semibold border border-[#2E7A57]'
                       : 'text-[#D0E2D7] hover:text-white hover:bg-[#1E5C41]/60'
@@ -144,7 +144,7 @@ export function AppSidebar() {
                 <Link
                   key={item.href}
                   href={item.href}
-                  className={`flex items-center justify-between px-3 py-2.5 rounded-xl text-sm font-medium transition-all min-h-[44px] ${
+                  className={`flex items-center justify-between px-3 py-2.5 rounded-xl text-sm font-medium transition-all duration-75 active:scale-[0.98] active:bg-[#1E5C41]/90 select-none cursor-pointer touch-manipulation min-h-[44px] ${
                     isActive
                       ? 'bg-[#1E5C41] text-white shadow-xs font-semibold border border-[#2E7A57]'
                       : 'text-[#D0E2D7] hover:text-white hover:bg-[#1E5C41]/60'

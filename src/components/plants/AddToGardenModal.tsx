@@ -212,7 +212,7 @@ export function AddToGardenModal({ plant, isOpen, onClose }: AddToGardenModalPro
             <button
               type="submit"
               disabled={saving}
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-2.5 text-sm font-semibold bg-[#144229] hover:bg-[#071c11] disabled:opacity-50 text-white rounded-xl shadow-xs cursor-pointer min-h-[44px]"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-2.5 text-sm font-semibold bg-[#144229] hover:bg-[#071c11] active:scale-[0.98] disabled:opacity-50 text-white rounded-xl shadow-xs cursor-pointer transition-all duration-75 select-none touch-manipulation min-h-[44px]"
             >
               {saving ? (
                 <>

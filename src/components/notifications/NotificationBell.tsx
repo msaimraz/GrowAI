@@ -19,6 +19,7 @@ export function NotificationBell({ plants = [] }: NotificationBellProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [unreadCount, setUnreadCount] = useState<number>(0);
   const [preferences, setPreferences] = useState<NotificationPreferences | null>(null);
+  const [cachedReminders, setCachedReminders] = useState<Reminder[]>([]);
 
   const checkUnread = useCallback(async () => {
     try {
@@ -26,9 +27,11 @@ export function NotificationBell({ plants = [] }: NotificationBellProps) {
         fetchUserReminders(),
         fetchNotificationPreferences(),
       ]);
+      const fetchedReminders = remRes.reminders || [];
+      setCachedReminders(fetchedReminders);
       setPreferences(prefRes.preferences);
       const count = getUnreadActiveRemindersCount(
-        remRes.reminders || [],
+        fetchedReminders,
         prefRes.preferences
       );
       setUnreadCount(count);
@@ -55,7 +58,7 @@ export function NotificationBell({ plants = [] }: NotificationBellProps) {
       <button
         type="button"
         onClick={() => setIsOpen(true)}
-        className="relative p-2 rounded-xl text-[#144229] hover:bg-[#ede7da] focus:outline-none focus:ring-2 focus:ring-[#144229] min-h-[40px] min-w-[40px] flex items-center justify-center cursor-pointer transition-colors shrink-0"
+        className="relative p-2 rounded-xl text-[#144229] hover:bg-[#ede7da] active:scale-90 focus:outline-none focus:ring-2 focus:ring-[#144229] min-h-[40px] min-w-[40px] flex items-center justify-center cursor-pointer transition-all duration-75 select-none touch-manipulation shrink-0"
         title="Garden Reminders & Notifications"
         aria-label={`Garden Reminders: ${unreadCount} unread`}
       >
@@ -76,6 +79,8 @@ export function NotificationBell({ plants = [] }: NotificationBellProps) {
             checkUnread();
           }}
           plants={plants}
+          initialReminders={cachedReminders}
+          initialPreferences={preferences}
           onRemindersChanged={checkUnread}
         />
       )}

@@ -150,9 +150,37 @@ function MyGardenContent() {
     setLoading(true);
     setErrorBanner(null);
     try {
-      const [gardenRes, tasksRes, healthRes, condRes, feedRes, propRes, harvRes] = await Promise.all([
+      // Step 1: Immediately fetch and render primary garden & tasks
+      const [gardenRes, tasksRes] = await Promise.all([
         fetchUserGarden(),
         fetchCareTasks(),
+      ]);
+
+      setIsCloud(gardenRes.isCloud);
+      if (gardenRes.error) {
+        setErrorBanner(`Failed to load cloud garden: ${gardenRes.error}`);
+      } else {
+        setUserPlants(gardenRes.plants);
+        if (gardenRes.plants.length > 0) {
+          if (highlightPlantId && gardenRes.plants.some((p) => p.id === highlightPlantId)) {
+            setSelectedPlantId(highlightPlantId);
+          } else if (!selectedPlantId || !gardenRes.plants.some((p) => p.id === selectedPlantId)) {
+            setSelectedPlantId(gardenRes.plants[0].id);
+          }
+        }
+      }
+
+      if (tasksRes.error) {
+        setErrorBanner((prev) => prev || `Failed to load care tasks: ${tasksRes.error}`);
+      } else {
+        setCareTasks(tasksRes.tasks);
+      }
+
+      // Allow UI to render immediately with primary specimens
+      setLoading(false);
+
+      // Step 2: Progressively fetch secondary telemetry in parallel
+      const [healthRes, condRes, feedRes, propRes, harvRes] = await Promise.all([
         fetchAllGardenDiagnoses(),
         fetchGrowingConditions(),
         fetchFeedingRecords(),
@@ -475,8 +503,36 @@ function MyGardenContent() {
           </div>
         )}
 
-        {/* Empty State */}
-        {!loading && userPlants.length === 0 ? (
+        {/* Loading & Empty States */}
+        {loading && userPlants.length === 0 ? (
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 min-w-0 max-w-full animate-pulse">
+            <div className="col-span-1 lg:col-span-4 space-y-4">
+              <div className="h-6 w-36 bg-[#E8E4DA] rounded-md" />
+              <div className="space-y-2.5">
+                {[1, 2, 3].map((i) => (
+                  <div key={i} className="p-3 rounded-2xl bg-white border border-[#E8E4DA] flex items-center gap-3">
+                    <div className="w-11 h-11 rounded-xl bg-[#E8E4DA] shrink-0" />
+                    <div className="flex-1 space-y-2">
+                      <div className="h-4 w-28 bg-[#E8E4DA] rounded-md" />
+                      <div className="h-3 w-40 bg-[#EFEAE0] rounded-md" />
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div className="col-span-1 lg:col-span-8">
+              <div className="bg-white rounded-3xl border border-[#ded5c5] p-6 space-y-5">
+                <div className="h-8 w-48 bg-[#E8E4DA] rounded-xl" />
+                <div className="h-4 w-72 bg-[#EFEAE0] rounded-md" />
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-3">
+                  {[1, 2, 3, 4].map((i) => (
+                    <div key={i} className="h-16 bg-[#FBF9F4] rounded-2xl border border-[#E8E4DA]" />
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        ) : !loading && userPlants.length === 0 ? (
           <FriendlyEmptyState
             emoji="🌱"
             title={isCloud ? 'Your Cloud Garden is Empty' : 'Your Garden Journal is Ready'}

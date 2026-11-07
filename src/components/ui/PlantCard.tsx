@@ -115,7 +115,7 @@ export function PlantCard({
               e.stopPropagation();
               onAddClick(plant);
             }}
-            className="absolute top-2.5 right-2.5 w-8 h-8 rounded-full bg-white/95 hover:bg-[#174C35] text-[#174C35] hover:text-white border border-[#E8E4DA] flex items-center justify-center shadow-xs transition-colors cursor-pointer"
+            className="absolute top-2.5 right-2.5 w-8 h-8 rounded-full bg-white/95 hover:bg-[#174C35] active:scale-90 text-[#174C35] hover:text-white border border-[#E8E4DA] flex items-center justify-center shadow-xs transition-all duration-75 cursor-pointer select-none touch-manipulation"
             title={`Add ${displayName} to garden`}
             aria-label={`Add ${displayName} to garden`}
           >

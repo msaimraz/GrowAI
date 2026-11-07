@@ -57,7 +57,7 @@ export function MobileBottomNav() {
                 key={link.href}
                 href={link.href}
                 onClick={() => setMoreOpen(false)}
-                className={`flex-1 flex flex-col items-center justify-center min-h-[48px] py-1 px-1 rounded-xl text-xs font-medium transition-all ${
+                className={`flex-1 flex flex-col items-center justify-center min-h-[48px] py-1 px-1 rounded-xl text-xs font-medium transition-all duration-75 active:scale-95 active:opacity-75 select-none touch-manipulation cursor-pointer ${
                   isActive
                     ? 'text-[#174C35] font-bold'
                     : 'text-[#68736B] hover:text-[#1F2A23]'
@@ -84,7 +84,7 @@ export function MobileBottomNav() {
           <button
             type="button"
             onClick={() => setMoreOpen(!moreOpen)}
-            className={`flex-1 flex flex-col items-center justify-center min-h-[48px] py-1 px-1 rounded-xl text-xs font-medium transition-all cursor-pointer ${
+            className={`flex-1 flex flex-col items-center justify-center min-h-[48px] py-1 px-1 rounded-xl text-xs font-medium transition-all duration-75 active:scale-95 active:opacity-75 select-none touch-manipulation cursor-pointer ${
               isMoreActive || moreOpen
                 ? 'text-[#174C35] font-bold'
                 : 'text-[#68736B] hover:text-[#1F2A23]'
@@ -140,7 +140,7 @@ export function MobileBottomNav() {
                     key={item.href}
                     href={item.href}
                     onClick={() => setMoreOpen(false)}
-                    className={`flex items-center justify-between p-3.5 rounded-2xl border transition-colors ${
+                    className={`flex items-center justify-between p-3.5 rounded-2xl border transition-all duration-75 active:scale-[0.98] active:bg-[#E6F0E3]/70 select-none touch-manipulation cursor-pointer ${
                       isActive
                         ? 'bg-[#E6F0E3] border-[#CEE4C9] text-[#174C35]'
                         : 'bg-white border-[#E8E4DA] hover:bg-[#F3F6EC] text-[#1F2A23]'

@@ -41,6 +41,8 @@ interface NotificationCenterProps {
   isOpen: boolean;
   onClose: () => void;
   plants?: UserPlant[];
+  initialReminders?: Reminder[];
+  initialPreferences?: NotificationPreferences | null;
   onRemindersChanged?: () => void;
 }
 
@@ -48,12 +50,14 @@ export function NotificationCenter({
   isOpen,
   onClose,
   plants = [],
+  initialReminders,
+  initialPreferences,
   onRemindersChanged,
 }: NotificationCenterProps) {
   const { showSuccess } = useGrowToast();
-  const [reminders, setReminders] = useState<Reminder[]>([]);
-  const [preferences, setPreferences] = useState<NotificationPreferences | null>(null);
-  const [loading, setLoading] = useState(true);
+  const [reminders, setReminders] = useState<Reminder[]>(initialReminders || []);
+  const [preferences, setPreferences] = useState<NotificationPreferences | null>(initialPreferences || null);
+  const [loading, setLoading] = useState(!(initialReminders && initialReminders.length > 0));
   const [activeFilter, setActiveFilter] = useState<'all' | 'due' | 'upcoming' | 'completed'>('all');
   const [categoryFilter, setCategoryFilter] = useState<string>('all');
   const [pendingCount, setPendingCount] = useState<number>(0);
@@ -375,10 +379,17 @@ export function NotificationCenter({
 
         {/* Body Content */}
         <div className="flex-1 overflow-y-auto p-4 space-y-5 pb-[max(1.5rem,env(safe-area-inset-bottom))]">
-          {loading && (
-            <div className="p-8 text-center">
-              <Loader2 size={24} className="animate-spin text-[#144229] mx-auto mb-2" />
-              <p className="text-xs text-[#526a57]">Loading reminders...</p>
+          {loading && reminders.length === 0 && (
+            <div className="space-y-3 animate-pulse">
+              {[1, 2, 3].map((i) => (
+                <div key={i} className="p-4 rounded-2xl bg-white border border-[#ded5c5] flex items-start gap-3">
+                  <div className="w-9 h-9 rounded-xl bg-[#E8E4DA] shrink-0" />
+                  <div className="flex-1 space-y-2">
+                    <div className="h-4 w-32 bg-[#E8E4DA] rounded-md" />
+                    <div className="h-3 w-48 bg-[#EFEAE0] rounded-md" />
+                  </div>
+                </div>
+              ))}
             </div>
           )}
 

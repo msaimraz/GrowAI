@@ -55,10 +55,11 @@ export function PlanDetailClient({ planId }: PlanDetailClientProps) {
   const loadPlan = async () => {
     setLoading(true);
     try {
-      const gardenRes = await fetchUserGarden();
+      const [gardenRes, planRes] = await Promise.all([
+        fetchUserGarden(),
+        getGrowPlanById(planId),
+      ]);
       setPlants(gardenRes.plants || []);
-
-      const planRes = await getGrowPlanById(planId);
       if (planRes.plan) {
         setPlan(planRes.plan);
       } else {
@@ -161,11 +162,32 @@ export function PlanDetailClient({ planId }: PlanDetailClientProps) {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-stone-50 dark:bg-stone-950 pb-20">
+      <div className="min-h-screen bg-[#FBF9F4] animate-pulse pb-20">
         <AppHeader />
-        <div className="max-w-4xl mx-auto px-4 py-12 text-center text-xs text-stone-500">
-          Loading Grow Plan...
-        </div>
+        <main className="max-w-4xl mx-auto px-4 py-6 space-y-6">
+          <div className="h-4 w-28 bg-[#E8E4DA] rounded-md" />
+          <div className="bg-white border border-[#ded5c5] rounded-2xl p-6 space-y-4">
+            <div className="flex gap-2 items-center">
+              <div className="h-5 w-20 bg-[#E8E4DA] rounded-md" />
+              <div className="h-5 w-16 bg-[#E8E4DA] rounded-md" />
+            </div>
+            <div className="h-7 w-64 bg-[#E8E4DA] rounded-xl" />
+            <div className="h-4 w-full max-w-xl bg-[#EFEAE0] rounded-md" />
+            <div className="h-4 w-40 bg-[#EFEAE0] rounded-md pt-2" />
+          </div>
+          <div className="bg-white border border-[#ded5c5] rounded-2xl p-6 space-y-3">
+            <div className="flex justify-between items-center">
+              <div className="h-5 w-32 bg-[#E8E4DA] rounded-md" />
+              <div className="h-5 w-12 bg-[#E8E4DA] rounded-md" />
+            </div>
+            <div className="h-3 w-full bg-[#E8E4DA] rounded-full" />
+          </div>
+          <div className="space-y-3">
+            {[1, 2, 3].map((i) => (
+              <div key={i} className="h-16 bg-white border border-[#ded5c5] rounded-2xl p-4" />
+            ))}
+          </div>
+        </main>
       </div>
     );
   }
