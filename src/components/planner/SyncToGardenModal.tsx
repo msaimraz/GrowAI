@@ -567,7 +567,7 @@ export function SyncToGardenModal({
                 type="button"
                 disabled={isSubmitting || isLoadingExisting}
                 onClick={handleConfirmSync}
-                className="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-[#144229] hover:bg-[#0f2e1d] disabled:bg-[#c2baa9] disabled:cursor-not-allowed text-white font-medium text-xs sm:text-sm transition-colors shadow-xs inline-flex items-center justify-center gap-2 cursor-pointer min-h-[44px]"
+                className="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-[#144229] hover:bg-[#0f2e1d] disabled:bg-[#c2baa9] disabled:cursor-not-allowed text-white font-medium text-xs sm:text-sm transition-colors shadow-xs active:scale-[0.98] select-none touch-manipulation inline-flex items-center justify-center gap-2 cursor-pointer min-h-[44px]"
               >
                 {isSubmitting ? (
                   <>

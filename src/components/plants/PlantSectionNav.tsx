@@ -76,13 +76,40 @@ export function PlantSectionNav({
   totalSections = SECTIONS.length,
 }: PlantSectionNavProps) {
   const [activeSection, setActiveSection] = useState('overview');
+  const [canScrollLeft, setCanScrollLeft] = useState(false);
+  const [canScrollRight, setCanScrollRight] = useState(true);
+
   const railRef = useRef<HTMLDivElement>(null);
   const activeTabRef = useRef<HTMLButtonElement>(null);
+
+  const checkScrollAffordance = () => {
+    const rail = railRef.current;
+    if (rail) {
+      const { scrollLeft, scrollWidth, clientWidth } = rail;
+      setCanScrollLeft(scrollLeft > 6);
+      setCanScrollRight(scrollLeft < scrollWidth - clientWidth - 6);
+    }
+  };
+
+  useEffect(() => {
+    checkScrollAffordance();
+    const rail = railRef.current;
+    if (rail) {
+      rail.addEventListener('scroll', checkScrollAffordance, { passive: true });
+      window.addEventListener('resize', checkScrollAffordance, { passive: true });
+      return () => {
+        rail.removeEventListener('scroll', checkScrollAffordance);
+        window.removeEventListener('resize', checkScrollAffordance);
+      };
+    }
+  }, []);
 
   // Active section tracking via scroll
   useEffect(() => {
     const handleScroll = () => {
-      const scrollPos = window.scrollY + 200;
+      const isMobile = window.innerWidth < 640;
+      const navOffset = isMobile ? 76 : 140;
+      const scrollPos = window.scrollY + navOffset + 20;
 
       for (let i = SECTIONS.length - 1; i >= 0; i--) {
         const sectionEl = document.getElementById(SECTIONS[i].id);
@@ -107,11 +134,12 @@ export function PlantSectionNav({
       const railScrollLeft = rail.scrollLeft;
       const railWidth = rail.clientWidth;
 
-      if (tabLeft < railScrollLeft) {
-        rail.scrollTo({ left: tabLeft - 16, behavior: 'smooth' });
-      } else if (tabRight > railScrollLeft + railWidth) {
-        rail.scrollTo({ left: tabRight - railWidth + 16, behavior: 'smooth' });
+      if (tabLeft < railScrollLeft + 20) {
+        rail.scrollTo({ left: Math.max(0, tabLeft - 20), behavior: 'smooth' });
+      } else if (tabRight > railScrollLeft + railWidth - 20) {
+        rail.scrollTo({ left: tabRight - railWidth + 20, behavior: 'smooth' });
       }
+      checkScrollAffordance();
     }
   }, [activeSection]);
 
@@ -119,14 +147,13 @@ export function PlantSectionNav({
     setActiveSection(id);
     const element = document.getElementById(id);
     if (element) {
-      const offset = 120; // accounts for top header + sticky nav bar
-      const bodyRect = document.body.getBoundingClientRect().top;
-      const elementRect = element.getBoundingClientRect().top;
-      const elementPosition = elementRect - bodyRect;
-      const offsetPosition = elementPosition - offset;
+      const isMobile = window.innerWidth < 640;
+      const navOffset = isMobile ? 68 : 132;
+      const elementPosition = element.getBoundingClientRect().top + window.scrollY;
+      const targetPosition = Math.max(0, elementPosition - navOffset);
 
       window.scrollTo({
-        top: offsetPosition,
+        top: targetPosition,
         behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches
           ? 'auto'
           : 'smooth',
@@ -137,58 +164,78 @@ export function PlantSectionNav({
   return (
     <nav
       aria-label="Plant profile navigation"
-      className="sticky top-[61px] z-20 bg-[#fbf9f4]/95 backdrop-blur-md border-b border-[#ded5c5] py-2 px-3 sm:px-6 shadow-2xs w-full max-w-full overflow-hidden"
+      className="sticky top-0 sm:top-16 z-30 bg-[#fbf9f4]/95 backdrop-blur-md border-b border-[#ded5c5] py-2 px-3 sm:px-6 shadow-2xs w-full max-w-full"
     >
       <div className="max-w-6xl mx-auto flex items-center justify-between gap-3 w-full min-w-0">
-        {/* Horizontally scrollable tab rail on mobile/tablet, horizontal flex on desktop */}
-        <div
-          ref={railRef}
-          role="tablist"
-          aria-label="Plant Sections"
-          className="flex items-center gap-1.5 sm:gap-2 overflow-x-auto scrollbar-none py-1 w-full min-w-0 flex-nowrap scroll-smooth -mx-1 px-1 lg:flex-wrap"
-          style={{
-            WebkitOverflowScrolling: 'touch',
-            scrollbarWidth: 'none',
-            msOverflowStyle: 'none',
-          }}
-        >
-          {SECTIONS.map((sec) => {
-            const Icon = sec.icon;
-            const isActive = activeSection === sec.id;
+        {/* Horizontally scrollable container with edge fades on mobile */}
+        <div className="relative w-full min-w-0 max-w-full overflow-hidden">
+          {/* Left Subtle Edge Fade Affordance (Mobile Only) */}
+          <div
+            aria-hidden="true"
+            className={`pointer-events-none absolute left-0 top-0 bottom-0 w-8 bg-gradient-to-r from-[#fbf9f4] via-[#fbf9f4]/80 to-transparent z-10 lg:hidden transition-opacity duration-200 ${
+              canScrollLeft ? 'opacity-100' : 'opacity-0'
+            }`}
+          />
 
-            return (
-              <button
-                key={sec.id}
-                ref={isActive ? activeTabRef : null}
-                role="tab"
-                aria-selected={isActive}
-                type="button"
-                onClick={() => scrollTo(sec.id)}
-                className={`min-h-[44px] px-3.5 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all duration-75 active:scale-95 flex items-center gap-2 cursor-pointer shrink-0 whitespace-nowrap select-none touch-manipulation ${
-                  isActive
-                    ? 'bg-[#144229] text-white shadow-xs font-bold ring-1 ring-[#144229]'
-                    : 'bg-white/90 text-[#2e4435] border border-[#ded5c5] hover:bg-white hover:text-[#071c11]'
-                }`}
-              >
-                <Icon
-                  size={16}
-                  className={isActive ? 'text-[#86efac]' : 'text-[#3d7a5a]'}
-                />
-                <span>{sec.label}</span>
-                {sec.badge && (
-                  <span
-                    className={`text-[10px] uppercase font-mono px-1.5 py-0.5 rounded-full ${
-                      isActive
-                        ? 'bg-[#205e3b] text-white'
-                        : 'bg-[#eef5ee] text-[#144229]'
-                    }`}
-                  >
-                    {sec.badge}
-                  </span>
-                )}
-              </button>
-            );
-          })}
+          {/* Horizontally scrollable tab rail on mobile/tablet, horizontal flex on desktop */}
+          <div
+            ref={railRef}
+            role="tablist"
+            aria-label="Plant Sections"
+            onScroll={checkScrollAffordance}
+            className="flex items-center gap-1.5 sm:gap-2 overflow-x-auto overflow-y-hidden scrollbar-none py-1 w-full min-w-0 max-w-full flex-nowrap scroll-smooth px-1 lg:flex-wrap [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
+            style={{
+              WebkitOverflowScrolling: 'touch',
+              scrollbarWidth: 'none',
+              msOverflowStyle: 'none',
+            }}
+          >
+            {SECTIONS.map((sec) => {
+              const Icon = sec.icon;
+              const isActive = activeSection === sec.id;
+
+              return (
+                <button
+                  key={sec.id}
+                  ref={isActive ? activeTabRef : null}
+                  role="tab"
+                  aria-selected={isActive}
+                  type="button"
+                  onClick={() => scrollTo(sec.id)}
+                  className={`min-h-[44px] px-3.5 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all duration-75 active:scale-95 flex items-center gap-2 cursor-pointer shrink-0 whitespace-nowrap select-none touch-manipulation ${
+                    isActive
+                      ? 'bg-[#144229] text-white shadow-xs font-bold ring-1 ring-[#144229]'
+                      : 'bg-white/90 text-[#2e4435] border border-[#ded5c5] hover:bg-white hover:text-[#071c11]'
+                  }`}
+                >
+                  <Icon
+                    size={16}
+                    className={isActive ? 'text-[#86efac]' : 'text-[#3d7a5a]'}
+                  />
+                  <span>{sec.label}</span>
+                  {sec.badge && (
+                    <span
+                      className={`text-[10px] uppercase font-mono px-1.5 py-0.5 rounded-full ${
+                        isActive
+                          ? 'bg-[#205e3b] text-white'
+                          : 'bg-[#eef5ee] text-[#144229]'
+                      }`}
+                    >
+                      {sec.badge}
+                    </span>
+                  )}
+                </button>
+              );
+            })}
+          </div>
+
+          {/* Right Subtle Edge Fade Affordance (Mobile Only) */}
+          <div
+            aria-hidden="true"
+            className={`pointer-events-none absolute right-0 top-0 bottom-0 w-10 bg-gradient-to-l from-[#fbf9f4] via-[#fbf9f4]/80 to-transparent z-10 lg:hidden transition-opacity duration-200 ${
+              canScrollRight ? 'opacity-100' : 'opacity-0'
+            }`}
+          />
         </div>
 
         {/* Quick learning progress indicator on desktop */}

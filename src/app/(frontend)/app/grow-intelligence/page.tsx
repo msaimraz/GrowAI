@@ -321,6 +321,57 @@ function GrowIntelligenceContent() {
     }
   };
 
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-[#fbf9f4] text-[#0c2417] pb-20 animate-pulse">
+        <AppHeader
+          title="Adaptive Grow Intelligence"
+          subtitle="Adaptive decision system: daily grow checks, prioritized next actions, and data-grounded garden queries"
+        />
+        <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 sm:pt-8 space-y-8 min-w-0 max-w-full">
+          {/* Daily Grow Check Hero Skeleton */}
+          <div className="bg-[#144229]/20 rounded-3xl p-6 sm:p-8 space-y-4 border border-[#ded5c5]">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-[#ded5c5]">
+              <div className="space-y-2">
+                <div className="h-4 w-40 bg-[#ded5c5] rounded-md" />
+                <div className="h-7 w-72 bg-[#ded5c5] rounded-xl" />
+              </div>
+              <div className="h-8 w-28 bg-[#ded5c5] rounded-full" />
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-1">
+              <div className="h-20 bg-white/40 rounded-2xl border border-[#ded5c5]" />
+              <div className="h-20 bg-white/40 rounded-2xl border border-[#ded5c5]" />
+            </div>
+          </div>
+
+          {/* Next Best Action Skeleton */}
+          <div className="bg-white rounded-3xl border border-[#ded5c5] p-6 sm:p-8 space-y-5">
+            <div className="flex items-center justify-between pb-3 border-b border-[#f0ebe0]">
+              <div className="h-5 w-48 bg-[#E8E4DA] rounded-lg" />
+              <div className="h-6 w-24 bg-[#EFEAE0] rounded-full" />
+            </div>
+            <div className="p-5 rounded-2xl bg-[#fbf9f4] border border-[#ded5c5] space-y-3">
+              <div className="h-4 w-32 bg-[#E8E4DA] rounded-md" />
+              <div className="h-6 w-3/4 bg-[#E8E4DA] rounded-lg" />
+              <div className="h-4 w-full bg-[#EFEAE0] rounded-md" />
+              <div className="h-10 w-full bg-[#E8E4DA]/50 rounded-xl" />
+            </div>
+          </div>
+
+          {/* Cards Grid Skeleton */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {[1, 2, 3].map((i) => (
+              <div key={i} className="bg-white rounded-3xl border border-[#ded5c5] p-6 space-y-4">
+                <div className="h-5 w-32 bg-[#E8E4DA] rounded-lg" />
+                <div className="h-16 bg-[#FBF9F4] rounded-2xl border border-[#ded5c5]" />
+              </div>
+            ))}
+          </div>
+        </main>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-[#fbf9f4] text-[#0c2417] pb-20">
       <AppHeader

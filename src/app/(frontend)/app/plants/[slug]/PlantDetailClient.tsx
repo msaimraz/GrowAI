@@ -124,8 +124,8 @@ export function PlantDetailClient({ plant }: PlantDetailClientProps) {
   return (
     <div className="min-h-screen flex flex-col pb-32 sm:pb-20 bg-[#fbf9f4]">
       {/* 1. Top Breadcrumb & Primary Actions Bar */}
-      <header className="bg-white border-b border-[#ded5c5] px-4 sm:px-8 py-3 sticky top-0 z-20 shadow-2xs">
-        <div className="max-w-6xl mx-auto flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4 min-w-0">
+      <header className="bg-white border-b border-[#ded5c5] px-4 sm:px-8 py-3 relative sm:sticky sm:top-0 sm:h-16 sm:py-0 z-20 shadow-2xs">
+        <div className="max-w-6xl mx-auto h-full flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4 min-w-0">
           <nav aria-label="Breadcrumb" className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2 text-sm min-w-0">
             <Link
               href="/app/plants"
@@ -159,7 +159,7 @@ export function PlantDetailClient({ plant }: PlantDetailClientProps) {
         {/* =========================================================
             SECTION 1: HERO & BOTANICAL OVERVIEW (#overview)
         ========================================================= */}
-        <section id="overview" className="scroll-mt-32 space-y-6 min-w-0 max-w-full">
+        <section id="overview" className="scroll-mt-[72px] sm:scroll-mt-[140px] space-y-6 min-w-0 max-w-full">
           <div className="space-y-1">
             <span className="text-xs font-mono uppercase tracking-widest font-bold text-[#144229]">
               Botanical Profile
@@ -381,7 +381,7 @@ export function PlantDetailClient({ plant }: PlantDetailClientProps) {
         {/* =========================================================
             SECTION 2: GROWING CONDITIONS GUIDE (#growing-guide)
         ========================================================= */}
-        <section id="growing-guide" className="scroll-mt-32 space-y-6">
+        <section id="growing-guide" className="scroll-mt-[72px] sm:scroll-mt-[140px] space-y-6 min-w-0 max-w-full">
           <div className="space-y-1">
             <span className="text-xs font-mono uppercase tracking-widest font-bold text-[#144229]">
               Horticultural Specifications
@@ -562,7 +562,7 @@ export function PlantDetailClient({ plant }: PlantDetailClientProps) {
         {/* =========================================================
             SECTION 3: GROWTH & HARVEST TIMELINE (#timeline)
         ========================================================= */}
-        <section id="timeline" className="scroll-mt-32 space-y-6">
+        <section id="timeline" className="scroll-mt-[72px] sm:scroll-mt-[140px] space-y-6 min-w-0 max-w-full">
           <div className="space-y-1">
             <span className="text-xs font-mono uppercase tracking-widest font-bold text-[#144229]">
               Phenological Milestones
@@ -675,7 +675,7 @@ export function PlantDetailClient({ plant }: PlantDetailClientProps) {
         {/* =========================================================
             SECTION 4: CARE & PROBLEMS (#care-problems)
         ========================================================= */}
-        <section id="care-problems" className="scroll-mt-32 space-y-6">
+        <section id="care-problems" className="scroll-mt-[72px] sm:scroll-mt-[140px] space-y-6 min-w-0 max-w-full">
           <div className="space-y-1">
             <span className="text-xs font-mono uppercase tracking-widest font-bold text-[#144229]">
               Diagnostic & Health
@@ -802,7 +802,7 @@ export function PlantDetailClient({ plant }: PlantDetailClientProps) {
             SECTION 5: MEDICINAL & PHYTOCHEMICAL PROFILE (#medicinal-profile)
         ========================================================= */}
         {plant.medicinalProfile ? (
-          <section id="medicinal-profile" className="scroll-mt-32 space-y-8">
+          <section id="medicinal-profile" className="scroll-mt-[72px] sm:scroll-mt-[140px] space-y-8 min-w-0 max-w-full">
             <div className="space-y-1">
               <span className="text-xs font-mono uppercase tracking-widest font-bold text-[#144229]">
                 Phytochemical Science
@@ -1121,7 +1121,7 @@ export function PlantDetailClient({ plant }: PlantDetailClientProps) {
         {/* =========================================================
             SECTION 6: SAFETY, TOXICITY & TOXICOLOGY (#safety-toxicity)
         ========================================================= */}
-        <section id="safety-toxicity" className="scroll-mt-32 space-y-6">
+        <section id="safety-toxicity" className="scroll-mt-[72px] sm:scroll-mt-[140px] space-y-6 min-w-0 max-w-full">
           <div className="space-y-1">
             <span className="text-xs font-mono uppercase tracking-widest font-bold text-[#991b1b]">
               Botanical Safety & Toxicology
@@ -1401,7 +1401,7 @@ export function PlantDetailClient({ plant }: PlantDetailClientProps) {
         {/* =========================================================
             SECTION 7: SCIENTIFIC REFERENCES (#references)
         ========================================================= */}
-        <section id="references" className="scroll-mt-32 space-y-6">
+        <section id="references" className="scroll-mt-[72px] sm:scroll-mt-[140px] space-y-6 min-w-0 max-w-full">
           <div className="space-y-1">
             <span className="text-xs font-mono uppercase tracking-widest font-bold text-[#144229]">
               Academic Citations

@@ -286,7 +286,7 @@ export function PropagationModal({
             <button
               type="submit"
               disabled={isSubmitting}
-              className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-[#144229] hover:bg-[#1e663f] text-white font-semibold text-xs shadow-xs transition-colors cursor-pointer disabled:opacity-50"
+              className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-[#144229] hover:bg-[#1e663f] text-white font-semibold text-xs shadow-xs active:scale-[0.98] select-none touch-manipulation transition-colors cursor-pointer disabled:opacity-50"
             >
               {isSubmitting ? (
                 <>

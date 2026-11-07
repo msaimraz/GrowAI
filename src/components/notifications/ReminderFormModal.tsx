@@ -311,7 +311,7 @@ export function ReminderFormModal({
             <button
               type="submit"
               disabled={submitting}
-              className="inline-flex items-center gap-1.5 px-4 py-2 text-xs font-semibold rounded-xl bg-[#144229] text-white hover:bg-[#0c2417] transition-all cursor-pointer min-h-[40px]"
+              className="inline-flex items-center gap-1.5 px-4 py-2 text-xs font-semibold rounded-xl bg-[#144229] text-white hover:bg-[#0c2417] active:scale-[0.98] disabled:opacity-50 select-none touch-manipulation transition-all cursor-pointer min-h-[40px]"
             >
               {submitting ? (
                 <>

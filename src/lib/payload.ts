@@ -12,6 +12,7 @@
  * 6. Never allow a CMS outage or configuration gap to crash GrowAI or break the public catalog.
  */
 
+import { cache } from 'react';
 import { Plant, CategoryMetadata, PlantCategory } from '@/types/plant';
 import { EditorialArticle } from '@/types/article';
 import { PLANTS_DATA, getPlantBySlug as getLocalPlantBySlug } from '@/data/plants';
@@ -325,7 +326,7 @@ function mapPayloadDocToPlant(doc: Record<string, any>): Plant | null {
  * Fetch all published plants from Payload CMS with fallback to PLANTS_DATA.
  * Checks Payload Local API first, then HTTP API, then local PLANTS_DATA.
  */
-export async function fetchPublishedPlants(): Promise<Plant[]> {
+export const fetchPublishedPlants = cache(async function fetchPublishedPlants(): Promise<Plant[]> {
   // 1. Try Payload Local API (fastest, embedded database access)
   const payload = await getPayloadClient();
   if (payload) {
@@ -382,12 +383,12 @@ export async function fetchPublishedPlants(): Promise<Plant[]> {
 
   // 3. Fallback to local verified dataset
   return PLANTS_DATA;
-}
+});
 
 /**
  * Fetch a single plant by slug from Payload CMS with fallback to PLANTS_DATA.
  */
-export async function fetchPlantBySlug(slug: string): Promise<Plant | undefined> {
+export const fetchPlantBySlug = cache(async function fetchPlantBySlug(slug: string): Promise<Plant | undefined> {
   // 1. Try Payload Local API
   const payload = await getPayloadClient();
   if (payload) {
@@ -434,12 +435,12 @@ export async function fetchPlantBySlug(slug: string): Promise<Plant | undefined>
   }
 
   return getLocalPlantBySlug(slug);
-}
+});
 
 /**
  * Fetch plant categories from Payload CMS with fallback to PLANT_CATEGORIES.
  */
-export async function fetchPublishedCategories(): Promise<CategoryMetadata[]> {
+export const fetchPublishedCategories = cache(async function fetchPublishedCategories(): Promise<CategoryMetadata[]> {
   // 1. Try Payload Local API
   const payload = await getPayloadClient();
   if (payload) {
@@ -490,12 +491,12 @@ export async function fetchPublishedCategories(): Promise<CategoryMetadata[]> {
   }
 
   return PLANT_CATEGORIES;
-}
+});
 
 /**
  * Fetch published educational articles from Payload CMS with fallback to ARTICLES_DATA.
  */
-export async function fetchPublishedArticles(category?: string): Promise<EditorialArticle[]> {
+export const fetchPublishedArticles = cache(async function fetchPublishedArticles(category?: string): Promise<EditorialArticle[]> {
   // 1. Try Payload Local API
   const payload = await getPayloadClient();
   if (payload) {
@@ -572,12 +573,12 @@ export async function fetchPublishedArticles(category?: string): Promise<Editori
   }
 
   return ARTICLES_DATA;
-}
+});
 
 /**
  * Fetch an educational article by slug from Payload CMS with fallback to ARTICLES_DATA.
  */
-export async function fetchArticleBySlug(slug: string): Promise<EditorialArticle | undefined> {
+export const fetchArticleBySlug = cache(async function fetchArticleBySlug(slug: string): Promise<EditorialArticle | undefined> {
   // 1. Try Payload Local API
   const payload = await getPayloadClient();
   if (payload) {
@@ -643,4 +644,4 @@ export async function fetchArticleBySlug(slug: string): Promise<EditorialArticle
   }
 
   return getLocalArticleBySlug(slug);
-}
+});

@@ -188,26 +188,6 @@ function MyGardenContent() {
         fetchHarvestRecords(),
       ]);
 
-      setIsCloud(gardenRes.isCloud);
-      if (gardenRes.error) {
-        setErrorBanner(`Failed to load cloud garden: ${gardenRes.error}`);
-      } else {
-        setUserPlants(gardenRes.plants);
-        if (gardenRes.plants.length > 0) {
-          if (highlightPlantId && gardenRes.plants.some((p) => p.id === highlightPlantId)) {
-            setSelectedPlantId(highlightPlantId);
-          } else if (!selectedPlantId || !gardenRes.plants.some((p) => p.id === selectedPlantId)) {
-            setSelectedPlantId(gardenRes.plants[0].id);
-          }
-        }
-      }
-
-      if (tasksRes.error) {
-        setErrorBanner((prev) => prev || `Failed to load care tasks: ${tasksRes.error}`);
-      } else {
-        setCareTasks(tasksRes.tasks);
-      }
-
       if (healthRes.diagnosesByPlantId) {
         setDiagnosesByPlantId(healthRes.diagnosesByPlantId);
       }
