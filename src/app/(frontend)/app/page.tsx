@@ -150,11 +150,11 @@ function AppDashboardContent() {
 
   return (
     <div className="min-h-screen flex flex-col bg-[#FBF9F4] text-[#1F2A23]">
-      <div className="flex-1 p-4 sm:p-6 lg:p-8 max-w-7xl mx-auto w-full min-w-0 max-w-full space-y-8 sm:space-y-10">
+      <div className="flex-1 p-3.5 sm:p-6 lg:p-8 max-w-7xl mx-auto w-full min-w-0 max-w-full space-y-5 sm:space-y-8">
         {/* =========================================================
             1. PERSONAL FRIENDLY GREETING & TODAY'S STATUS
         ========================================================= */}
-        <section className="space-y-4">
+        <section className="space-y-3 sm:space-y-4">
           <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-2">
             <div>
               {currentDate && (
@@ -162,7 +162,7 @@ function AppDashboardContent() {
                   {currentDate}
                 </span>
               )}
-              <h1 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-[#1F2A23] tracking-tight">
+              <h1 className="font-serif text-2xl sm:text-3xl lg:text-4xl font-bold text-[#1F2A23] tracking-tight">
                 {greeting}, {userName} 🌱
               </h1>
               <p className="text-sm sm:text-base text-[#68736B] mt-1">
@@ -182,7 +182,7 @@ function AppDashboardContent() {
           </div>
 
           {/* Quick Daily Summary Chips */}
-          <div className="flex flex-wrap items-center gap-2 pt-1 text-xs">
+          <div className="flex flex-wrap items-center gap-1.5 sm:gap-2 pt-1 text-xs">
             <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#FFF0D8] text-[#9A5B00] border border-[#FDE3B8] font-medium">
               <span>☀️</span>
               <span>Bright conditions</span>

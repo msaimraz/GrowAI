@@ -6,6 +6,7 @@ import Image from 'next/image';
 import { CareBadge } from './CareBadge';
 import { Plant } from '@/types/plant';
 import { ArrowRight, Plus } from 'lucide-react';
+import { PlantCategoryIcon } from '@/components/plants/PlantCategoryIcon';
 
 interface PlantCardProps {
   plant: Plant;
@@ -81,8 +82,8 @@ export function PlantCard({
           />
         ) : (
           <div className="w-full h-full flex flex-col items-center justify-center bg-gradient-to-br from-[#E6F0E3] to-[#FFF0D8] p-4 text-center">
-            <span className="text-4xl sm:text-5xl select-none mb-1 group-hover:scale-110 transition-transform">
-              {getCategoryEmoji(plant.category)}
+            <span className="w-12 h-12 rounded-2xl bg-white/80 border border-[#CEE4C9] flex items-center justify-center text-[#174C35] mb-2 shadow-xs group-hover:scale-105 transition-transform">
+              <PlantCategoryIcon category={plant.category} size={24} />
             </span>
             <span className="text-xs font-mono text-[#68736B] uppercase tracking-wider">
               {plant.category.replace('-', ' ')}
@@ -125,11 +126,14 @@ export function PlantCard({
       </Link>
 
       {/* 2. Plant Identification & Badges */}
-      <div className="p-4 sm:p-5 flex-1 flex flex-col justify-between space-y-3.5">
+      <div className="p-3.5 sm:p-5 flex-1 flex flex-col justify-between space-y-2.5 sm:space-y-3.5">
         <div>
-          <Link href={`/app/plants/${plant.slug}`} className="block group-hover:text-[#174C35] transition-colors">
-            <h3 className="font-serif text-lg sm:text-xl font-bold text-[#1F2A23] leading-snug line-clamp-2">
-              {getCategoryEmoji(plant.category)} {displayName}
+          <Link href={`/app/plants/${plant.slug}`} className="block group-hover:text-[#174C35] active:scale-[0.99] transition-all">
+            <h3 className="font-serif text-base sm:text-xl font-bold text-[#1F2A23] leading-snug line-clamp-2 flex items-center gap-1.5">
+              <span className="p-1 rounded-lg bg-[#E6F0E3] text-[#174C35] shrink-0 inline-flex items-center justify-center">
+                <PlantCategoryIcon category={plant.category} size={14} />
+              </span>
+              <span>{displayName}</span>
             </h3>
             {!hideScientific && plant.scientificName && (
               <p className="text-xs text-[#68736B] italic font-serif mt-0.5 line-clamp-1">
@@ -162,7 +166,7 @@ export function PlantCard({
           </span>
           <Link
             href={`/app/plants/${plant.slug}`}
-            className="inline-flex items-center gap-1 text-xs font-semibold text-[#174C35] group-hover:translate-x-0.5 transition-transform"
+            className="inline-flex items-center gap-1 text-xs font-semibold text-[#174C35] group-hover:translate-x-0.5 active:scale-95 transition-all select-none touch-manipulation"
           >
             <span>Explore</span>
             <ArrowRight size={13} />

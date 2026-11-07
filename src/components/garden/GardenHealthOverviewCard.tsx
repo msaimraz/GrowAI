@@ -41,8 +41,8 @@ export function GardenHealthOverviewCard({
   );
 
   return (
-    <div className="bg-white rounded-3xl border border-[#ded5c5] p-5 sm:p-6 shadow-xs space-y-4">
-      <div className="flex items-center justify-between pb-3 border-b border-[#f0ebe0]">
+    <div className="bg-white rounded-3xl border border-[#ded5c5] p-4 sm:p-6 shadow-xs space-y-3 sm:space-y-4">
+      <div className="flex items-center justify-between pb-2.5 sm:pb-3 border-b border-[#f0ebe0]">
         <div className="flex items-center gap-2.5">
           <div className="w-8 h-8 rounded-xl bg-[#eef5ee] text-[#144229] flex items-center justify-center shrink-0">
             <Activity size={18} />

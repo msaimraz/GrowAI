@@ -166,7 +166,7 @@ export function DailyCheckCard({ userPlantNames = [], className = '' }: DailyChe
             <span className="text-[11px] font-mono uppercase tracking-wider text-[#68736B] block">
               Daily Plant Check · {category}
             </span>
-            <h3 className="font-serif text-lg sm:text-xl font-bold text-[#1F2A23] leading-snug">
+            <h3 className="font-serif text-base sm:text-lg font-bold text-[#1F2A23] leading-snug">
               {text}
             </h3>
           </div>
@@ -186,7 +186,7 @@ export function DailyCheckCard({ userPlantNames = [], className = '' }: DailyChe
           <button
             type="button"
             onClick={() => handleSelectOption('good')}
-            className="flex items-center justify-center gap-2 py-3 px-4 rounded-2xl bg-white hover:bg-[#F3F6EC] border border-[#E8E4DA] hover:border-[#174C35]/30 text-sm font-semibold text-[#1F2A23] transition-all cursor-pointer shadow-2xs active:scale-[0.99] min-h-[44px]"
+            className="flex items-center justify-center gap-2 py-2.5 sm:py-3 px-3 sm:px-4 rounded-2xl bg-white hover:bg-[#F3F6EC] border border-[#E8E4DA] hover:border-[#174C35]/30 text-xs sm:text-sm font-semibold text-[#1F2A23] transition-all duration-75 cursor-pointer shadow-2xs active:scale-95 min-h-[44px] select-none touch-manipulation"
           >
             <span>Everything looks good</span>
             <span className="text-base">🌿</span>
@@ -195,7 +195,7 @@ export function DailyCheckCard({ userPlantNames = [], className = '' }: DailyChe
           <button
             type="button"
             onClick={() => handleSelectOption('different')}
-            className="flex items-center justify-center gap-2 py-3 px-4 rounded-2xl bg-white hover:bg-[#FFF0D8] border border-[#E8E4DA] hover:border-[#C86B4A]/40 text-sm font-semibold text-[#1F2A23] transition-all cursor-pointer shadow-2xs active:scale-[0.99] min-h-[44px]"
+            className="flex items-center justify-center gap-2 py-2.5 sm:py-3 px-3 sm:px-4 rounded-2xl bg-white hover:bg-[#FFF0D8] border border-[#E8E4DA] hover:border-[#C86B4A]/40 text-xs sm:text-sm font-semibold text-[#1F2A23] transition-all duration-75 cursor-pointer shadow-2xs active:scale-95 min-h-[44px] select-none touch-manipulation"
           >
             <span>Something looks different</span>
             <span className="text-base">👀</span>
@@ -204,7 +204,7 @@ export function DailyCheckCard({ userPlantNames = [], className = '' }: DailyChe
           <button
             type="button"
             onClick={() => handleSelectOption('unsure')}
-            className="flex items-center justify-center gap-2 py-3 px-4 rounded-2xl bg-white hover:bg-[#EEE8F6] border border-[#E8E4DA] hover:border-[#68736B]/30 text-sm font-semibold text-[#1F2A23] transition-all cursor-pointer shadow-2xs active:scale-[0.99] min-h-[44px]"
+            className="flex items-center justify-center gap-2 py-2.5 sm:py-3 px-3 sm:px-4 rounded-2xl bg-white hover:bg-[#EEE8F6] border border-[#E8E4DA] hover:border-[#68736B]/30 text-xs sm:text-sm font-semibold text-[#1F2A23] transition-all duration-75 cursor-pointer shadow-2xs active:scale-95 min-h-[44px] select-none touch-manipulation"
           >
             <span>I’m not sure</span>
             <span className="text-base">🤔</span>

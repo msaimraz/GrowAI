@@ -40,10 +40,18 @@ export function AppHeader({
   const pathname = usePathname();
   const { isOffline, canInstall, isIos, promptInstall, setShowIosInstructions } = usePwa();
 
-  // Prevent background scrolling while mobile drawer is open
+  // Prevent background scrolling while mobile drawer is open & handle Escape key
   useEffect(() => {
     if (mobileMenuOpen) {
       document.body.style.overflow = 'hidden';
+      const handleKeyDown = (e: KeyboardEvent) => {
+        if (e.key === 'Escape') setMobileMenuOpen(false);
+      };
+      window.addEventListener('keydown', handleKeyDown);
+      return () => {
+        window.removeEventListener('keydown', handleKeyDown);
+        document.body.style.overflow = '';
+      };
     } else {
       document.body.style.overflow = '';
     }
@@ -161,13 +169,16 @@ export function AppHeader({
         <div className="lg:hidden fixed inset-0 z-50 flex">
           {/* Backdrop with transition */}
           <div
-            className="fixed inset-0 bg-black/60 backdrop-blur-xs transition-opacity"
+            className="fixed inset-0 bg-black/60 backdrop-blur-xs animate-in fade-in duration-200"
             onClick={() => setMobileMenuOpen(false)}
             aria-hidden="true"
           />
 
           {/* Drawer Content */}
-          <div className="relative w-80 max-w-[85vw] bg-[#0e2a1b] text-[#e3ece5] p-5 flex flex-col justify-between shadow-2xl z-10 overflow-y-auto">
+          <div role="dialog"
+            aria-modal="true"
+            aria-label="Navigation Menu"
+            className="relative w-80 max-w-[85vw] bg-[#0e2a1b] text-[#e3ece5] p-5 flex flex-col justify-between shadow-2xl z-10 overflow-y-auto animate-in slide-in-from-left duration-200 ease-out">
             <div className="space-y-4">
               {/* Drawer Brand & Close Button */}
               <div className="flex items-center justify-between pb-4 border-b border-[#1b4a30]">
@@ -182,7 +193,7 @@ export function AppHeader({
                 <button
                   type="button"
                   onClick={() => setMobileMenuOpen(false)}
-                  className="p-2 rounded-xl text-[#bed4c5] hover:text-white hover:bg-[#153e27] min-h-[44px] min-w-[44px] flex items-center justify-center cursor-pointer transition-colors"
+                  className="p-2 rounded-xl text-[#bed4c5] hover:text-white hover:bg-[#153e27] active:scale-90 active:bg-[#1a472d] min-h-[44px] min-w-[44px] flex items-center justify-center cursor-pointer transition-all duration-75 select-none touch-manipulation"
                   aria-label="Close navigation menu"
                 >
                   <X size={20} />
@@ -199,7 +210,7 @@ export function AppHeader({
                       if (canInstall) promptInstall();
                       else if (isIos) setShowIosInstructions(true);
                     }}
-                    className="w-full flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl bg-[#257a4d] text-white font-semibold text-xs shadow-sm hover:bg-[#1e663f] transition-colors cursor-pointer min-h-[44px]"
+                    className="w-full flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl bg-[#257a4d] text-white font-semibold text-xs shadow-sm hover:bg-[#1e663f] active:scale-95 transition-all duration-75 cursor-pointer min-h-[44px] select-none touch-manipulation"
                   >
                     <DownloadCloud size={16} />
                     <span>Install GrowAI PWA</span>
@@ -213,7 +224,7 @@ export function AppHeader({
                   <Link
                     href={actionHref}
                     onClick={() => setMobileMenuOpen(false)}
-                    className="w-full flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl bg-[#1e663f] text-white font-semibold text-xs shadow-sm hover:bg-[#257a4d] transition-colors min-h-[44px]"
+                    className="w-full flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl bg-[#1e663f] text-white font-semibold text-xs shadow-sm hover:bg-[#257a4d] active:scale-95 transition-all duration-75 min-h-[44px] select-none touch-manipulation"
                   >
                     {actionIcon === 'plus' && <Plus size={16} />}
                     {actionIcon === 'sparkles' && <Sparkles size={16} />}
@@ -232,7 +243,7 @@ export function AppHeader({
                       key={item.href}
                       href={item.href}
                       onClick={() => setMobileMenuOpen(false)}
-                      className={`flex items-center gap-3 px-3.5 py-3 rounded-xl text-sm font-medium transition-colors min-h-[44px] ${
+                      className={`flex items-center gap-3 px-3.5 py-3 rounded-xl text-sm font-medium transition-all duration-75 active:scale-[0.98] select-none touch-manipulation min-h-[44px] ${
                         isActive
                           ? 'bg-[#1a472d] text-white font-semibold border border-[#2a6844]'
                           : 'text-[#bed4c5] hover:bg-[#143824] hover:text-white'

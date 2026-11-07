@@ -772,11 +772,11 @@ function MyGardenContent() {
             {activePlant && (
               <div className="lg:col-span-8 space-y-6 min-w-0 max-w-full">
                 {/* Active Plant Banner Card */}
-                <div className="bg-white rounded-3xl border border-[#ded5c5] p-5 sm:p-6 lg:p-8 shadow-xs space-y-6 min-w-0 max-w-full overflow-hidden">
-                  <div className="flex flex-col gap-4 pb-5 border-b border-[#f0ebe0]">
+                <div className="bg-white rounded-3xl border border-[#ded5c5] p-4 sm:p-6 lg:p-8 shadow-xs space-y-4 sm:space-y-6 min-w-0 max-w-full overflow-hidden">
+                  <div className="flex flex-col gap-3 sm:gap-4 pb-3.5 sm:pb-5 border-b border-[#f0ebe0]">
                     <div className="min-w-0">
                       <div className="flex flex-wrap items-center gap-2 sm:gap-3">
-                        <h2 className="text-xl sm:text-2xl lg:text-3xl font-serif font-bold text-[#0c2417] truncate max-w-full">
+                        <h2 className="text-lg sm:text-2xl lg:text-3xl font-serif font-bold text-[#0c2417] truncate max-w-full">
                           {activePlant.nickname}
                         </h2>
                         <Badge variant="sage" size="md">{activePlant.currentStage}</Badge>
@@ -912,7 +912,7 @@ function MyGardenContent() {
                   />
 
                   {/* Supportive Botanical Message Box */}
-                  <div className="bg-[#eef5ee] border border-[#cfe0cf] p-4 sm:p-5 rounded-2xl flex items-start gap-3.5 text-xs sm:text-sm text-[#1e613b]">
+                  <div className="bg-[#eef5ee] border border-[#cfe0cf] p-3.5 sm:p-5 rounded-2xl flex items-start gap-3 sm:gap-3.5 text-xs sm:text-sm text-[#1e613b]">
                     <Sparkles size={20} className="text-[#144229] shrink-0 mt-0.5" />
                     <div>
                       <strong className="block text-[#0c2417] font-serif text-sm sm:text-base mb-0.5">
@@ -961,7 +961,7 @@ function MyGardenContent() {
                     <label className="text-xs font-bold uppercase tracking-wider text-[#144229] block">
                       Growth Stage Milestone (Click to update):
                     </label>
-                    <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2.5">
+                    <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2 sm:gap-2.5">
                       {GROWTH_STAGES.map((st, index) => {
                         const isCurrent = activePlant.currentStage === st;
                         const currentIndex = GROWTH_STAGES.indexOf(activePlant.currentStage);
@@ -972,7 +972,7 @@ function MyGardenContent() {
                             key={st}
                             type="button"
                             onClick={() => handleStageChange(activePlant.id, st)}
-                            className={`py-3 px-2 text-xs font-semibold rounded-xl border text-center transition-all cursor-pointer min-h-[44px] flex flex-col items-center justify-center gap-1 ${
+                            className={`py-2 sm:py-3 px-1.5 sm:px-2 text-xs font-semibold rounded-xl border text-center transition-all duration-75 active:scale-95 select-none touch-manipulation cursor-pointer min-h-[44px] flex flex-col items-center justify-center gap-1 ${
                               isCurrent
                                 ? 'bg-[#144229] text-white border-[#0f2e1d] shadow-sm ring-2 ring-[#144229]/20 font-bold'
                                 : isPast

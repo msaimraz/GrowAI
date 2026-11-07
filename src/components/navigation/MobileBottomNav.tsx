@@ -20,6 +20,25 @@ export function MobileBottomNav() {
   const pathname = usePathname();
   const [moreOpen, setMoreOpen] = useState(false);
 
+  React.useEffect(() => {
+    if (moreOpen) {
+      document.body.style.overflow = 'hidden';
+      const handleKeyDown = (e: KeyboardEvent) => {
+        if (e.key === 'Escape') setMoreOpen(false);
+      };
+      window.addEventListener('keydown', handleKeyDown);
+      return () => {
+        window.removeEventListener('keydown', handleKeyDown);
+        document.body.style.overflow = '';
+      };
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [moreOpen]);
+
   const primaryLinks = [
     { label: 'Home', href: '/app', icon: LayoutDashboard, exact: true },
     { label: 'Plants', href: '/app/plants', icon: Library },
@@ -42,7 +61,7 @@ export function MobileBottomNav() {
     <>
       {/* Mobile Bottom Navigation Bar */}
       <nav
-        className="lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-[#FBF9F4]/95 backdrop-blur-md border-t border-[#E8E4DA] text-[#1F2A23] px-2 py-1 shadow-lg select-none"
+        className="lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-[#FBF9F4]/95 backdrop-blur-md border-t border-[#E8E4DA] text-[#1F2A23] px-2 pt-1 pb-[max(0.35rem,env(safe-area-inset-bottom))] shadow-lg select-none"
         aria-label="Mobile Bottom Navigation"
       >
         <div className="flex items-center justify-around max-w-md mx-auto">
@@ -116,7 +135,10 @@ export function MobileBottomNav() {
             onClick={() => setMoreOpen(false)}
             aria-hidden="true"
           />
-          <div className="relative bg-[#FBF9F4] rounded-t-3xl border-t border-[#E8E4DA] p-5 shadow-2xl space-y-4 max-h-[80vh] overflow-y-auto">
+          <div role="dialog"
+            aria-modal="true"
+            aria-label="More Features"
+            className="relative bg-[#FBF9F4] rounded-t-3xl border-t border-[#E8E4DA] p-5 shadow-2xl space-y-4 max-h-[80vh] overflow-y-auto animate-in slide-in-from-bottom duration-200 ease-out">
             <div className="flex items-center justify-between pb-3 border-b border-[#E8E4DA]">
               <span className="font-serif text-lg font-bold text-[#1F2A23]">
                 More Features
@@ -124,7 +146,7 @@ export function MobileBottomNav() {
               <button
                 type="button"
                 onClick={() => setMoreOpen(false)}
-                className="p-1.5 rounded-full hover:bg-[#E8E4DA]/50 text-[#68736B] hover:text-[#1F2A23] cursor-pointer"
+                className="p-2 rounded-xl text-[#68736B] hover:text-[#1F2A23] hover:bg-[#E8E4DA]/50 active:scale-90 min-h-[44px] min-w-[44px] flex items-center justify-center cursor-pointer select-none touch-manipulation transition-all duration-75"
                 aria-label="Close menu"
               >
                 <X size={20} />

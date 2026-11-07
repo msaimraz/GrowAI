@@ -134,7 +134,7 @@ export function PlantIntelligenceSection() {
                 <span className="text-[#526a57]">Verified container minimum: 20 cm depth</span>
                 <Link
                   href="/app/plants/genovese-basil"
-                  className="font-semibold text-[#144229] hover:underline"
+                  className="font-semibold text-[#144229] hover:underline active:scale-95 transition-all select-none touch-manipulation min-h-[36px] inline-flex items-center"
                 >
                   View Botanical Profile →
                 </Link>

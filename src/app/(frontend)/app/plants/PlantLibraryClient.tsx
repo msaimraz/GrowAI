@@ -6,27 +6,22 @@ import { PlantCard } from '@/components/ui/PlantCard';
 import { FriendlyEmptyState } from '@/components/ui/FriendlyEmptyState';
 import { AddToGardenModal } from '@/components/plants/AddToGardenModal';
 import { Search, SlidersHorizontal, X, Sparkles } from 'lucide-react';
+import { PlantCategoryIcon } from '@/components/plants/PlantCategoryIcon';
 
 interface PlantLibraryClientProps {
   initialPlants: Plant[];
   initialCategories: CategoryMetadata[];
 }
 
-interface CategoryFilterItem {
-  id: string;
-  label: string;
-  emoji: string;
-}
-
-const ICON_CATEGORIES: CategoryFilterItem[] = [
-  { id: 'all', label: 'All', emoji: '🌿' },
-  { id: 'edible', label: 'Edible', emoji: '🍅' },
-  { id: 'herbs', label: 'Herbs', emoji: '🌱' },
-  { id: 'leafy', label: 'Leafy', emoji: '🥬' },
-  { id: 'flowers', label: 'Flowers', emoji: '🌸' },
-  { id: 'indoor', label: 'Indoor', emoji: '🏠' },
-  { id: 'balcony', label: 'Balcony', emoji: '☀️' },
-  { id: 'beginner', label: 'Beginner', emoji: '⭐' },
+const ICON_CATEGORIES = [
+  { id: 'all', label: 'All' },
+  { id: 'edible', label: 'Edible' },
+  { id: 'herbs', label: 'Herbs' },
+  { id: 'leafy', label: 'Leafy' },
+  { id: 'flowers', label: 'Flowers' },
+  { id: 'indoor', label: 'Indoor' },
+  { id: 'balcony', label: 'Balcony' },
+  { id: 'beginner', label: 'Beginner' },
 ];
 
 export function PlantLibraryClient({
@@ -229,13 +224,17 @@ export function PlantLibraryClient({
                 key={cat.id}
                 type="button"
                 onClick={() => setSelectedCategory(cat.id)}
-                className={`inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full text-xs sm:text-sm font-medium whitespace-nowrap transition-all cursor-pointer select-none min-h-[38px] ${
+                className={`inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full text-xs sm:text-sm font-medium whitespace-nowrap transition-all duration-75 active:scale-95 cursor-pointer select-none touch-manipulation min-h-[38px] ${
                   isSelected
                     ? 'bg-[#174C35] text-white shadow-xs'
                     : 'bg-white hover:bg-[#F3F6EC] text-[#1F2A23] border border-[#E8E4DA]'
                 }`}
               >
-                <span>{cat.emoji}</span>
+                <PlantCategoryIcon
+                  category={cat.id}
+                  size={15}
+                  className={isSelected ? 'text-[#86efac]' : 'text-[#174C35]'}
+                />
                 <span>{cat.label}</span>
               </button>
             );

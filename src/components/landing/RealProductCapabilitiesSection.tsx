@@ -95,7 +95,7 @@ export function RealProductCapabilitiesSection() {
 
                 <Link
                   href={cap.href}
-                  className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#144229] hover:underline pt-1"
+                  className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#144229] hover:underline pt-1 active:scale-95 transition-all duration-75 select-none touch-manipulation min-h-[38px]"
                 >
                   <span>Explore {cap.title}</span>
                   <ArrowRight size={13} />

@@ -21,14 +21,14 @@ export function FinalCtaSection() {
         <div className="flex flex-col sm:flex-row items-center justify-center gap-3.5 pt-3">
           <Link
             href="/app"
-            className="inline-flex items-center justify-center gap-2 text-sm sm:text-base font-semibold bg-white text-[#0e2a1b] hover:bg-[#eef5ee] px-7 py-3.5 rounded-2xl shadow-xs transition-all w-full sm:w-auto min-h-[48px] cursor-pointer"
+            className="inline-flex items-center justify-center gap-2 text-sm sm:text-base font-semibold bg-white text-[#0e2a1b] hover:bg-[#eef5ee] active:scale-95 px-7 py-3.5 rounded-2xl shadow-xs transition-all duration-75 w-full sm:w-auto min-h-[48px] cursor-pointer select-none touch-manipulation"
           >
             <span>Launch GrowAI</span>
             <ArrowRight size={16} />
           </Link>
           <Link
             href="/app/plants"
-            className="inline-flex items-center justify-center gap-2 text-sm sm:text-base font-semibold bg-transparent hover:bg-white/10 text-white px-6 py-3.5 rounded-2xl border border-white/30 hover:border-white transition-colors w-full sm:w-auto min-h-[48px] cursor-pointer"
+            className="inline-flex items-center justify-center gap-2 text-sm sm:text-base font-semibold bg-transparent hover:bg-white/10 active:scale-95 text-white px-6 py-3.5 rounded-2xl border border-white/30 hover:border-white transition-all duration-75 w-full sm:w-auto min-h-[48px] cursor-pointer select-none touch-manipulation"
           >
             <span>Explore Plant Library</span>
           </Link>

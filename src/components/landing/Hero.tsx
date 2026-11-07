@@ -40,7 +40,7 @@ export function Hero() {
             <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 pt-1">
               <Link
                 href="/app"
-                className="inline-flex items-center justify-center gap-2 text-sm sm:text-base font-semibold bg-[#144229] hover:bg-[#071c11] text-white px-6 py-3.5 rounded-2xl shadow-xs transition-all cursor-pointer min-h-[48px]"
+                className="inline-flex items-center justify-center gap-2 text-sm sm:text-base font-semibold bg-[#144229] hover:bg-[#071c11] active:scale-95 text-white px-6 py-3.5 rounded-2xl shadow-xs transition-all duration-75 cursor-pointer min-h-[48px] select-none touch-manipulation"
               >
                 <span>Explore GrowAI</span>
                 <ArrowRight size={16} />
@@ -48,7 +48,7 @@ export function Hero() {
 
               <a
                 href="#what-growai-does"
-                className="inline-flex items-center justify-center gap-2 text-sm sm:text-base font-semibold text-[#144229] bg-transparent hover:bg-[#eef5ee] border border-[#cfdfcf] px-6 py-3.5 rounded-2xl transition-colors cursor-pointer min-h-[48px]"
+                className="inline-flex items-center justify-center gap-2 text-sm sm:text-base font-semibold text-[#144229] bg-transparent hover:bg-[#eef5ee] active:scale-95 border border-[#cfdfcf] px-6 py-3.5 rounded-2xl transition-all duration-75 cursor-pointer min-h-[48px] select-none touch-manipulation"
               >
                 <span>See How It Works</span>
               </a>
