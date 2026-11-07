@@ -134,10 +134,10 @@ export function PlantSectionNav({
       const railScrollLeft = rail.scrollLeft;
       const railWidth = rail.clientWidth;
 
-      if (tabLeft < railScrollLeft + 20) {
-        rail.scrollTo({ left: Math.max(0, tabLeft - 20), behavior: 'smooth' });
-      } else if (tabRight > railScrollLeft + railWidth - 20) {
-        rail.scrollTo({ left: tabRight - railWidth + 20, behavior: 'smooth' });
+      if (tabLeft < railScrollLeft + 24) {
+        rail.scrollTo({ left: Math.max(0, tabLeft - 24), behavior: 'smooth' });
+      } else if (tabRight > railScrollLeft + railWidth - 24) {
+        rail.scrollTo({ left: tabRight - railWidth + 24, behavior: 'smooth' });
       }
       checkScrollAffordance();
     }
@@ -167,23 +167,23 @@ export function PlantSectionNav({
       className="sticky top-0 sm:top-16 z-30 bg-[#fbf9f4]/95 backdrop-blur-md border-b border-[#ded5c5] py-2 px-3 sm:px-6 shadow-2xs w-full max-w-full"
     >
       <div className="max-w-6xl mx-auto flex items-center justify-between gap-3 w-full min-w-0">
-        {/* Horizontally scrollable container with edge fades on mobile */}
+        {/* Horizontally scrollable container with edge fades on mobile & tablet */}
         <div className="relative w-full min-w-0 max-w-full overflow-hidden">
-          {/* Left Subtle Edge Fade Affordance (Mobile Only) */}
+          {/* Left Subtle Edge Fade Affordance (Mobile & Tablet) */}
           <div
             aria-hidden="true"
-            className={`pointer-events-none absolute left-0 top-0 bottom-0 w-8 bg-gradient-to-r from-[#fbf9f4] via-[#fbf9f4]/80 to-transparent z-10 lg:hidden transition-opacity duration-200 ${
+            className={`pointer-events-none absolute left-0 top-0 bottom-0 w-8 bg-gradient-to-r from-[#fbf9f4] via-[#fbf9f4]/80 to-transparent z-10 xl:hidden transition-opacity duration-200 ${
               canScrollLeft ? 'opacity-100' : 'opacity-0'
             }`}
           />
 
-          {/* Horizontally scrollable tab rail on mobile/tablet, horizontal flex on desktop */}
+          {/* Horizontally scrollable tab rail on mobile/tablet, wrap on wide desktop */}
           <div
             ref={railRef}
             role="tablist"
             aria-label="Plant Sections"
             onScroll={checkScrollAffordance}
-            className="flex items-center gap-1.5 sm:gap-2 overflow-x-auto overflow-y-hidden scrollbar-none py-1 w-full min-w-0 max-w-full flex-nowrap scroll-smooth px-1 lg:flex-wrap [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
+            className="flex items-center gap-1.5 sm:gap-2 overflow-x-auto overflow-y-hidden scrollbar-none py-1 w-full min-w-0 max-w-full flex-nowrap scroll-smooth px-2 sm:px-3 xl:flex-wrap [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
             style={{
               WebkitOverflowScrolling: 'touch',
               scrollbarWidth: 'none',
@@ -229,16 +229,16 @@ export function PlantSectionNav({
             })}
           </div>
 
-          {/* Right Subtle Edge Fade Affordance (Mobile Only) */}
+          {/* Right Subtle Edge Fade Affordance (Mobile & Tablet) */}
           <div
             aria-hidden="true"
-            className={`pointer-events-none absolute right-0 top-0 bottom-0 w-10 bg-gradient-to-l from-[#fbf9f4] via-[#fbf9f4]/80 to-transparent z-10 lg:hidden transition-opacity duration-200 ${
+            className={`pointer-events-none absolute right-0 top-0 bottom-0 w-10 bg-gradient-to-l from-[#fbf9f4] via-[#fbf9f4]/80 to-transparent z-10 xl:hidden transition-opacity duration-200 ${
               canScrollRight ? 'opacity-100' : 'opacity-0'
             }`}
           />
         </div>
 
-        {/* Quick learning progress indicator on desktop */}
+        {/* Quick learning progress indicator on wide desktop */}
         {exploredCount > 0 && (
           <div className="hidden xl:flex items-center gap-2 text-xs font-semibold text-[#144229] bg-[#eef5ee] px-3 py-1.5 rounded-xl border border-[#cfe0cf] shrink-0">
             <Check size={14} />
