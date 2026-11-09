@@ -1,6 +1,7 @@
 import React from 'react';
 import { notFound } from 'next/navigation';
 import { Metadata } from 'next';
+import { connection } from 'next/server';
 import { fetchPlantBySlug } from '@/lib/payload';
 import { PlantDetailClient } from './PlantDetailClient';
 
@@ -10,6 +11,7 @@ interface PageProps {
 export const instant = false;
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  await connection();
   const { slug } = await params;
   const plant = await fetchPlantBySlug(slug);
 
@@ -26,6 +28,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 }
 
 export default async function PlantDetailPage({ params }: PageProps) {
+  await connection();
   const { slug } = await params;
   const plant = await fetchPlantBySlug(slug);
 

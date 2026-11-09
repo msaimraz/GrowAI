@@ -8,7 +8,7 @@
  * Dependent steps must not become actionable before their prerequisites are satisfied.
  */
 
-import { GrowPlan, GrowPlanStep, StepStatus, GrowPlanStatus } from '@/types/grow-plan';
+import { GrowPlan, GrowPlanStep, StepStatus, GrowPlanStatus, PlanProgress } from '@/types/grow-plan';
 import { calculatePlanProgress, evaluatePlanHealthStatus } from './plan-progress';
 
 export interface PrerequisiteCheckResult {
@@ -143,9 +143,131 @@ export function getNextActionableStep(steps: GrowPlanStep[]): GrowPlanStep | nul
  * Marks a step as completed and re-evaluates all subsequent steps.
  * Supports both (plan, stepId, notes) and (stepId, steps, completedAt).
  */
+export interface StepExecutionResult extends GrowPlan {
+  plan: GrowPlan;
+  updatedPlan: GrowPlan;
+  updatedSteps: GrowPlanStep[];
+  completedStep: GrowPlanStep | null;
+  nextActionableStep: GrowPlanStep | null;
+  isPlanCompleted: boolean;
+  progress: PlanProgress;
+}
+
+export interface StepSkipResult extends GrowPlan {
+  plan: GrowPlan;
+  updatedPlan: GrowPlan;
+  updatedSteps: GrowPlanStep[];
+  skippedStep: GrowPlanStep | null;
+  nextActionableStep: GrowPlanStep | null;
+  isPlanCompleted: boolean;
+  progress: PlanProgress;
+}
+
+/**
+ * Completes a step directly within an array of steps.
+ * Returns a steps array enriched with completedStep, nextActionableStep, and progress.
+ */
+export function completeStepInList(
+  steps: GrowPlanStep[],
+  stepId: string,
+  notes?: string
+): GrowPlanStep[] & {
+  updatedSteps: GrowPlanStep[];
+  completedStep: GrowPlanStep | null;
+  nextActionableStep: GrowPlanStep | null;
+  progress: PlanProgress;
+} {
+  const targetIdx = steps.findIndex((s) => s.id === stepId);
+  if (targetIdx < 0) {
+    const res = [...steps] as any;
+    res.updatedSteps = steps;
+    res.completedStep = null;
+    res.nextActionableStep = getNextActionableStep(steps);
+    res.progress = calculatePlanProgress(steps);
+    return res;
+  }
+
+  const now = new Date().toISOString();
+  const modified = [...steps];
+  modified[targetIdx] = {
+    ...modified[targetIdx],
+    status: 'completed',
+    notes: notes || modified[targetIdx].notes,
+    completedAt: now,
+    updatedAt: now,
+  };
+
+  if (modified[targetIdx].requiresObservation) {
+    modified[targetIdx].metadata = {
+      ...modified[targetIdx].metadata,
+      observationRecorded: true,
+      observedAt: now,
+      observationText: notes || modified[targetIdx].notes,
+    };
+  }
+
+  const evaluated = evaluateAllPlanSteps(modified, now) as any;
+  evaluated.updatedSteps = evaluated;
+  evaluated.completedStep = evaluated[targetIdx];
+  evaluated.nextActionableStep = getNextActionableStep(evaluated);
+  evaluated.progress = calculatePlanProgress(evaluated);
+  return evaluated;
+}
+
+/**
+ * Skips a step directly within an array of steps.
+ * Returns a steps array enriched with skippedStep, nextActionableStep, and progress.
+ */
+export function skipStepInList(
+  steps: GrowPlanStep[],
+  stepId: string,
+  reason?: string
+): GrowPlanStep[] & {
+  updatedSteps: GrowPlanStep[];
+  skippedStep: GrowPlanStep | null;
+  nextActionableStep: GrowPlanStep | null;
+  progress: PlanProgress;
+} {
+  const targetIdx = steps.findIndex((s) => s.id === stepId);
+  if (targetIdx < 0) {
+    const res = [...steps] as any;
+    res.updatedSteps = steps;
+    res.skippedStep = null;
+    res.nextActionableStep = getNextActionableStep(steps);
+    res.progress = calculatePlanProgress(steps);
+    return res;
+  }
+
+  const now = new Date().toISOString();
+  const modified = [...steps];
+  modified[targetIdx] = {
+    ...modified[targetIdx],
+    status: 'skipped',
+    notes: reason || modified[targetIdx].notes,
+    metadata: {
+      ...modified[targetIdx].metadata,
+      skipReason: reason || 'Skipped by grower',
+    },
+    updatedAt: now,
+  };
+
+  const evaluated = evaluateAllPlanSteps(modified, now) as any;
+  evaluated.updatedSteps = evaluated;
+  evaluated.skippedStep = evaluated[targetIdx];
+  evaluated.nextActionableStep = getNextActionableStep(evaluated);
+  evaluated.progress = calculatePlanProgress(evaluated);
+  return evaluated;
+}
+
+/**
+ * Canonical plan-level step completion.
+ * Deterministically transitions the step to 'completed', updates timestamps,
+ * re-evaluates dependency cascades, recalculates progress, and returns a strongly
+ * typed result containing both the updated plan and step execution properties.
+ */
 export function completePlanStep(
-  arg1: any,
-  arg2: any,
+  arg1: GrowPlan | string | any,
+  arg2: string | GrowPlanStep[] | any,
   arg3?: string
 ): any {
   // Support (stepId, plan, notes)
@@ -153,13 +275,25 @@ export function completePlanStep(
     return completePlanStep(arg2, arg1, arg3);
   }
 
+  // Canonical signature: (plan: GrowPlan, stepId: string, notes?: string)
   if (typeof arg1 === 'object' && arg1 !== null && Array.isArray(arg1.steps)) {
     const plan: GrowPlan = arg1;
     const stepId: string = arg2;
     const notes: string | undefined = arg3;
 
     const targetIdx = plan.steps.findIndex((s) => s.id === stepId);
-    if (targetIdx < 0) return plan;
+    if (targetIdx < 0) {
+      return {
+        ...plan,
+        plan,
+        updatedPlan: plan,
+        updatedSteps: plan.steps,
+        completedStep: null,
+        nextActionableStep: getNextActionableStep(plan.steps),
+        isPlanCompleted: plan.status === 'completed',
+        progress: plan.progress,
+      };
+    }
 
     const now = new Date().toISOString();
     const modified = [...plan.steps];
@@ -171,64 +305,67 @@ export function completePlanStep(
       updatedAt: now,
     };
 
+    if (modified[targetIdx].requiresObservation) {
+      modified[targetIdx].metadata = {
+        ...modified[targetIdx].metadata,
+        observationRecorded: true,
+        observedAt: now,
+        observationText: notes || modified[targetIdx].notes,
+      };
+    }
+
     const evaluated = evaluateAllPlanSteps(modified, now);
     const progress = calculatePlanProgress(evaluated);
     const allDone = progress.isComplete;
     const newStatus: GrowPlanStatus = allDone ? 'completed' : plan.status;
     const health = evaluatePlanHealthStatus(newStatus, evaluated, false);
+    const nextActionable = getNextActionableStep(evaluated);
 
-    return {
+    const updatedPlan: GrowPlan = {
       ...plan,
       steps: evaluated,
       status: newStatus,
       healthStatus: health,
       progress,
-      completedAt: allDone ? now : plan.completedAt,
+      completedAt: allDone ? (plan.completedAt || now) : plan.completedAt,
       updatedAt: now,
+    };
+
+    return {
+      ...updatedPlan,
+      plan: updatedPlan,
+      updatedPlan,
+      updatedSteps: evaluated,
+      completedStep: evaluated[targetIdx],
+      nextActionableStep: nextActionable,
+      isPlanCompleted: allDone,
+      progress,
     };
   }
 
-  // Support (steps, stepId, completedAt)
+  // Backwards compatibility for steps array callers: (stepId, steps) or (steps, stepId)
   let stepId: string = arg1;
   let steps: GrowPlanStep[] = arg2;
-  let completedAt: string | undefined = arg3;
+  let notesVal: string | undefined = arg3;
 
   if (Array.isArray(arg1) && typeof arg2 === 'string') {
     steps = arg1;
     stepId = arg2;
-    completedAt = arg3;
+    notesVal = arg3;
   }
 
-  const targetIdx = steps.findIndex((s) => s.id === stepId);
-  if (targetIdx < 0) {
-    const fallback = [...steps];
-    return Object.assign(fallback, { updatedSteps: fallback, completedStep: null });
-  }
-
-  const now = completedAt || new Date().toISOString();
-  const modified = [...steps];
-  modified[targetIdx] = {
-    ...modified[targetIdx],
-    status: 'completed',
-    completedAt: now,
-    updatedAt: now,
-  };
-
-  // Re-evaluate downstream steps now that dependency is satisfied
-  const evaluated = evaluateAllPlanSteps(modified, now);
-  return Object.assign([...evaluated], {
-    updatedSteps: evaluated,
-    completedStep: evaluated[targetIdx],
-  });
+  return completeStepInList(steps, stepId, notesVal);
 }
 
 /**
- * Marks a step as skipped and re-evaluates all subsequent steps.
- * Supports both (plan, stepId, reason) and (stepId, steps, reason).
+ * Canonical plan-level step skipping.
+ * Deterministically transitions the step to 'skipped', preserves skip reason,
+ * unblocks downstream steps whose prerequisites are resolved, and returns a
+ * strongly typed result.
  */
 export function skipPlanStep(
-  arg1: any,
-  arg2: any,
+  arg1: GrowPlan | string | any,
+  arg2: string | GrowPlanStep[] | any,
   arg3?: string
 ): any {
   // Support (stepId, plan, reason)
@@ -236,13 +373,25 @@ export function skipPlanStep(
     return skipPlanStep(arg2, arg1, arg3);
   }
 
+  // Canonical signature: (plan: GrowPlan, stepId: string, reason?: string)
   if (typeof arg1 === 'object' && arg1 !== null && Array.isArray(arg1.steps)) {
     const plan: GrowPlan = arg1;
     const stepId: string = arg2;
     const reason: string | undefined = arg3;
 
     const targetIdx = plan.steps.findIndex((s) => s.id === stepId);
-    if (targetIdx < 0) return plan;
+    if (targetIdx < 0) {
+      return {
+        ...plan,
+        plan,
+        updatedPlan: plan,
+        updatedSteps: plan.steps,
+        skippedStep: null,
+        nextActionableStep: getNextActionableStep(plan.steps),
+        isPlanCompleted: plan.status === 'completed',
+        progress: plan.progress,
+      };
+    }
 
     const now = new Date().toISOString();
     const modified = [...plan.steps];
@@ -262,51 +411,40 @@ export function skipPlanStep(
     const allDone = progress.isComplete;
     const newStatus: GrowPlanStatus = allDone ? 'completed' : plan.status;
     const health = evaluatePlanHealthStatus(newStatus, evaluated, false);
+    const nextActionable = getNextActionableStep(evaluated);
 
-    return {
+    const updatedPlan: GrowPlan = {
       ...plan,
       steps: evaluated,
       status: newStatus,
       healthStatus: health,
       progress,
-      completedAt: allDone ? now : plan.completedAt,
+      completedAt: allDone ? (plan.completedAt || now) : plan.completedAt,
       updatedAt: now,
+    };
+
+    return {
+      ...updatedPlan,
+      plan: updatedPlan,
+      updatedPlan,
+      updatedSteps: evaluated,
+      skippedStep: evaluated[targetIdx],
+      nextActionableStep: nextActionable,
+      isPlanCompleted: allDone,
+      progress,
     };
   }
 
-  // Support (steps, stepId, reason)
+  // Backwards compatibility for steps array callers
   let stepId: string = arg1;
   let steps: GrowPlanStep[] = arg2;
-  let reason: string | undefined = arg3;
+  let reasonVal: string | undefined = arg3;
 
   if (Array.isArray(arg1) && typeof arg2 === 'string') {
     steps = arg1;
     stepId = arg2;
-    reason = arg3;
+    reasonVal = arg3;
   }
 
-  const targetIdx = steps.findIndex((s) => s.id === stepId);
-  if (targetIdx < 0) {
-    const fallback = [...steps];
-    return Object.assign(fallback, { updatedSteps: fallback, skippedStep: null });
-  }
-
-  const now = new Date().toISOString();
-  const modified = [...steps];
-  modified[targetIdx] = {
-    ...modified[targetIdx],
-    status: 'skipped',
-    metadata: {
-      ...modified[targetIdx].metadata,
-      skipReason: reason || 'Skipped by grower',
-    },
-    updatedAt: now,
-  };
-
-  // Re-evaluate downstream steps
-  const evaluated = evaluateAllPlanSteps(modified, now);
-  return Object.assign([...evaluated], {
-    updatedSteps: evaluated,
-    skippedStep: evaluated[targetIdx],
-  });
+  return skipStepInList(steps, stepId, reasonVal);
 }

@@ -39,6 +39,13 @@ import { reconcileGrowPlans } from './src/lib/grow-plans/reconciliation';
 import { buildPlantTimeline } from './src/lib/plant-timeline';
 import { classifyCopilotIntent } from './src/lib/grower-copilot/intent-classifier';
 import { executeCopilotAction } from './src/lib/grower-copilot/action-executor';
+import {
+  createGrowPlan,
+  fetchGrowPlanById,
+  updateGrowPlan,
+  fetchPlanEvents,
+  recordPlanEvent,
+} from './src/lib/grow-plans/storage';
 import { checkQuerySafety } from './src/lib/grower-copilot/safety-guard';
 
 let totalTests = 0;
@@ -907,6 +914,143 @@ async function runTests() {
   assert(afterCompleteStep3.status === 'completed', 'Plan automatically transitions to completed when all steps resolved');
   assert(afterCompleteStep3.progress.isComplete === true, 'Plan progress isComplete is true');
   assert(afterCompleteStep3.progress.completionPercentage === 100, 'Plan progress reaches 100%');
+
+  // 5. TEST A — Real Plan Creation & Refresh Persistence
+  console.log('\n--- Real Runtime Persistence Lifecycle Verification ---');
+  const createRes = await createGrowPlan({
+    userId: 'user-runtime-test',
+    name: 'Real Runtime Tomato Plan',
+    description: 'Automated persistence verification plan',
+    scope: 'plant',
+    objective: 'establish_plant',
+    plantId: mockPlant.id,
+    steps: [
+      {
+        id: 's-rt-1',
+        planId: '',
+        userId: 'user-runtime-test',
+        title: 'Water medium',
+        description: 'Initial watering',
+        category: 'watering',
+        status: 'ready',
+        priority: 'high',
+        requiresObservation: false,
+        requiresConfirmation: false,
+        evidence: [],
+      },
+      {
+        id: 's-rt-2',
+        planId: '',
+        userId: 'user-runtime-test',
+        title: 'Observe foliar emergence',
+        description: 'Verify leaf growth',
+        category: 'observation',
+        status: 'blocked',
+        priority: 'normal',
+        requiresObservation: true,
+        observationPrompt: 'Check first cotyledons',
+        requiresConfirmation: false,
+        evidence: [],
+        prerequisites: ['s-rt-1'],
+      },
+      {
+        id: 's-rt-3',
+        planId: '',
+        userId: 'user-runtime-test',
+        title: 'Apply fertilizer',
+        description: 'Fertilize seedling',
+        category: 'feeding',
+        status: 'blocked',
+        priority: 'normal',
+        requiresObservation: false,
+        requiresConfirmation: false,
+        evidence: [],
+        prerequisites: ['s-rt-2'],
+      },
+    ],
+  });
+
+  assert(Boolean(createRes.plan), 'TEST A: Plan created successfully');
+  const createdPlanId = createRes.plan!.id;
+  assert(createRes.plan!.steps.length === 3, 'TEST A: 3 steps initialized in created plan');
+  assert(createRes.plan!.steps[0].planId === createdPlanId, 'TEST A: Step 1 mapped to created plan ID');
+
+  // Verify plan_created audit event
+  const eventsAfterCreate = await fetchPlanEvents(createdPlanId);
+  assert(
+    eventsAfterCreate.events.some((e) => e.eventType === 'plan_created'),
+    'TEST A: plan_created audit event recorded in events log'
+  );
+
+  // Simulate browser refresh by fetching freshly from storage
+  const reloadedPlanA = await fetchGrowPlanById(createdPlanId);
+  assert(Boolean(reloadedPlanA.plan), 'TEST A: Plan persists and survives reload');
+  assert(reloadedPlanA.plan?.name === 'Real Runtime Tomato Plan', 'TEST A: Plan name preserved on reload');
+  assert(reloadedPlanA.plan?.steps.length === 3, 'TEST A: All steps preserved on reload');
+
+  // 6. TEST B — Complete Step & Refresh Persistence
+  const updatedPlanB = completePlanStep(reloadedPlanA.plan!, 's-rt-1', 'Rainwater applied 150ml');
+  const saveResB = await updateGrowPlan(createdPlanId, {
+    steps: updatedPlanB.steps,
+    progress: updatedPlanB.progress,
+    status: updatedPlanB.status,
+    completedAt: updatedPlanB.completedAt,
+    healthStatus: updatedPlanB.healthStatus,
+  });
+  assert(Boolean(saveResB.plan), 'TEST B: Step completion saved to storage');
+
+  // Simulate browser refresh
+  const reloadedPlanB = await fetchGrowPlanById(createdPlanId);
+  assert(reloadedPlanB.plan?.steps[0].status === 'completed', 'TEST B: Step 1 completed status persists after refresh');
+  assert(reloadedPlanB.plan?.steps[0].notes === 'Rainwater applied 150ml', 'TEST B: Step 1 grower notes persist after refresh');
+  assert(Boolean(reloadedPlanB.plan?.steps[0].completedAt), 'TEST B: Step 1 completedAt persists after refresh');
+  assert(reloadedPlanB.plan?.steps[1].status === 'ready', 'TEST B: Step 2 dynamically unblocked to ready on reload');
+  assert(reloadedPlanB.plan?.progress.completedSteps === 1, 'TEST B: Progress completed count is 1 after refresh');
+
+  // 7. TEST C & D — Observation Recording, Skip & Completion
+  // Record observation on Step 2
+  const reloadedStepsC = reloadedPlanB.plan!.steps.map((s) => {
+    if (s.id === 's-rt-2') {
+      return {
+        ...s,
+        notes: 'Rich green cotyledons visible, no yellowing',
+        metadata: {
+          ...s.metadata,
+          observationRecorded: true,
+          observedAt: new Date().toISOString(),
+          observationText: 'Rich green cotyledons visible, no yellowing',
+        },
+      };
+    }
+    return s;
+  });
+  await updateGrowPlan(createdPlanId, { steps: reloadedStepsC });
+
+  // Simulate refresh to verify observation persistence
+  const reloadedPlanC = await fetchGrowPlanById(createdPlanId);
+  const reloadedStep2 = reloadedPlanC.plan?.steps.find((s) => s.id === 's-rt-2');
+  assert(reloadedStep2?.metadata?.observationRecorded === true, 'TEST D: Observation verified state persists after reload');
+  assert(reloadedStep2?.metadata?.observationText === 'Rich green cotyledons visible, no yellowing', 'TEST D: Observation text persists after reload');
+
+  // Skip Step 2
+  const skippedPlan = skipPlanStep(reloadedPlanC.plan!, 's-rt-2', 'Skipped after observation baseline recorded');
+  await updateGrowPlan(createdPlanId, {
+    steps: skippedPlan.steps,
+    progress: skippedPlan.progress,
+    status: skippedPlan.status,
+  });
+
+  const reloadedPlanSkip = await fetchGrowPlanById(createdPlanId);
+  assert(reloadedPlanSkip.plan?.steps[1].status === 'skipped', 'TEST C: Step 2 skipped status persists after reload');
+  assert(reloadedPlanSkip.plan?.steps[1].metadata?.skipReason === 'Skipped after observation baseline recorded', 'TEST C: Skip reason persists after reload');
+  assert(reloadedPlanSkip.plan?.steps[2].status === 'ready', 'TEST C: Step 3 unblocked to ready after Step 2 skipped');
+
+  // 8. TEST E — Failure Simulation
+  const fakeUpdateRes = await updateGrowPlan('non-existent-plan-id-999', { status: 'paused' });
+  assert(Boolean(fakeUpdateRes.error), 'TEST E: Updating non-existent plan returns explicit error');
+  assert(fakeUpdateRes.error === 'Plan not found.', 'TEST E: Error message is "Plan not found."');
+  const intactCheck = await fetchGrowPlanById(createdPlanId);
+  assert(intactCheck.plan?.name === 'Real Runtime Tomato Plan', 'TEST E: Failed operation does not corrupt existing plans');
 
   // --------------------------------------------------------------------------
   // SUMMARY

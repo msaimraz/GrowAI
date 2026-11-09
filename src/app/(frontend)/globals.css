@@ -1,6 +1,7 @@
 @import "tailwindcss";
 
 :root {
+  color-scheme: light;
   --background: #fbf9f4;
   --foreground: #1f2a23;
   --card: #ffffff;
@@ -72,6 +73,8 @@
 }
 
 html {
+  color-scheme: light;
+  background-color: var(--background);
   font-size: 16px;
   -webkit-text-size-adjust: 100%;
 }

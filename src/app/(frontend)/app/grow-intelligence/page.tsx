@@ -581,24 +581,24 @@ function GrowIntelligenceContent() {
                   return (
                     <div
                       key={p.id}
-                      className="p-4 rounded-2xl border border-stone-200 dark:border-stone-800 bg-stone-50/50 dark:bg-stone-900/50 text-xs space-y-2 flex flex-col justify-between"
+                      className="p-4 rounded-2xl border border-[#ded5c5] bg-white text-xs space-y-2 flex flex-col justify-between shadow-xs"
                     >
                       <div>
                         <div className="flex justify-between items-start gap-2 mb-1">
-                          <h4 className="font-bold text-stone-900 dark:text-stone-100">{p.name}</h4>
-                          <span className="px-2 py-0.5 rounded-full capitalize text-[10px] font-semibold bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300 shrink-0">
+                          <h4 className="font-serif font-bold text-[#0c2417]">{p.name}</h4>
+                          <span className="px-2 py-0.5 rounded-full capitalize text-[10px] font-semibold bg-[#eef5ee] text-[#144229] border border-[#c2d9c6] shrink-0">
                             {p.healthStatus.replace(/_/g, ' ')}
                           </span>
                         </div>
-                        <div className="w-full bg-stone-200 dark:bg-stone-700 h-2 rounded-full overflow-hidden my-2">
-                          <div className="bg-emerald-600 h-full" style={{ width: `${taskPct}%` }} />
+                        <div className="w-full bg-[#f4efe6] h-2 rounded-full overflow-hidden my-2">
+                          <div className="bg-[#144229] h-full" style={{ width: `${taskPct}%` }} />
                         </div>
-                        <div className="flex justify-between items-center text-[11px] text-stone-500 mb-2">
+                        <div className="flex justify-between items-center text-[11px] text-[#526a57] mb-2">
                           <span>{taskPct}% tasks complete</span>
                           <span>{p.steps.filter((s) => s.status === 'completed').length}/{p.steps.length} steps</span>
                         </div>
                         {nextStep && (
-                          <div className="p-2 rounded-lg bg-emerald-50 dark:bg-emerald-950/40 text-[11px] text-stone-700 dark:text-stone-300">
+                          <div className="p-2.5 rounded-xl bg-[#eef5ee] border border-[#c2d9c6] text-[11px] text-[#144229]">
                             <strong>Next:</strong> {nextStep.title}
                           </div>
                         )}
@@ -606,7 +606,7 @@ function GrowIntelligenceContent() {
                       <div className="pt-2 text-right">
                         <Link
                           href={`/app/grow-plans/${p.id}`}
-                          className="font-semibold text-emerald-600 hover:underline"
+                          className="font-semibold text-[#144229] hover:text-[#0c2417] hover:underline"
                         >
                           View Plan →
                         </Link>

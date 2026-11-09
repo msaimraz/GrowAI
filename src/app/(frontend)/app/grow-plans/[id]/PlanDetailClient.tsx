@@ -99,6 +99,11 @@ export function PlanDetailClient({ planId }: PlanDetailClientProps) {
         updatedAt: new Date().toISOString(),
       });
 
+      if (res.error) {
+        showInfo("Couldn't complete step", res.error || "Your progress wasn't saved. Please try again.");
+        return;
+      }
+
       await recordPlanEvent({
         userId: plan.userId,
         planId: plan.id,
@@ -121,7 +126,7 @@ export function PlanDetailClient({ planId }: PlanDetailClientProps) {
       }
     } catch (err: any) {
       console.error('Failed to complete step:', err);
-      showInfo('Step note', err?.message || 'Could not complete step.');
+      showInfo("Couldn't complete step", err?.message || "An unexpected error occurred. Please try again.");
     } finally {
       setExecutingStepId(null);
     }
@@ -144,6 +149,11 @@ export function PlanDetailClient({ planId }: PlanDetailClientProps) {
         updatedAt: new Date().toISOString(),
       });
 
+      if (res.error) {
+        showInfo("Couldn't skip step", res.error || "Your progress wasn't saved. Please try again.");
+        return;
+      }
+
       await recordPlanEvent({
         userId: plan.userId,
         planId: plan.id,
@@ -159,8 +169,9 @@ export function PlanDetailClient({ planId }: PlanDetailClientProps) {
       const nextPlan = res.plan || updatedPlan;
       setPlan(nextPlan);
       showInfo('Step skipped', 'Step skipped and subsequent steps updated.');
-    } catch (err) {
+    } catch (err: any) {
       console.error('Failed to skip step:', err);
+      showInfo("Couldn't skip step", err?.message || "An unexpected error occurred. Please try again.");
     } finally {
       setExecutingStepId(null);
     }
@@ -195,6 +206,11 @@ export function PlanDetailClient({ planId }: PlanDetailClientProps) {
         updatedAt: now,
       });
 
+      if (res.error) {
+        showInfo("Couldn't save observation", res.error || "Your observation wasn't saved. Please try again.");
+        return;
+      }
+
       await recordPlanEvent({
         userId: plan.userId,
         planId: plan.id,
@@ -213,8 +229,9 @@ export function PlanDetailClient({ planId }: PlanDetailClientProps) {
         setPlan({ ...plan, steps: updatedSteps });
       }
       showSuccess('🔍 Observation recorded!', 'Observation saved for this step.', '🔍');
-    } catch (err) {
+    } catch (err: any) {
       console.error('Failed to record observation:', err);
+      showInfo("Couldn't record observation", err?.message || "An unexpected error occurred. Please try again.");
     } finally {
       setExecutingStepId(null);
     }
@@ -236,6 +253,11 @@ export function PlanDetailClient({ planId }: PlanDetailClientProps) {
       };
 
       const res = await updateGrowPlan(plan.id, updates);
+      if (res.error) {
+        showInfo("Couldn't update plan status", res.error);
+        return;
+      }
+
       if (res.plan) {
         setPlan(res.plan);
         if (newStatus === 'active') {
@@ -246,8 +268,9 @@ export function PlanDetailClient({ planId }: PlanDetailClientProps) {
           showInfo('Plan cancelled', 'This plan has been retired.');
         }
       }
-    } catch (err) {
+    } catch (err: any) {
       console.error('Failed to update plan status:', err);
+      showInfo("Couldn't update plan status", err?.message || "An unexpected error occurred. Please try again.");
     } finally {
       setConfirmModal({ isOpen: false, action: null, title: '', message: '' });
     }

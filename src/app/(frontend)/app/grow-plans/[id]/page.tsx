@@ -23,9 +23,9 @@ export default async function GrowPlanDetailPage({ params }: PageProps) {
   return (
     <Suspense
       fallback={
-        <div className="min-h-screen flex flex-col items-center justify-center bg-stone-50 dark:bg-stone-950 p-8 text-stone-600 dark:text-stone-400 gap-3">
-          <Loader2 size={32} className="animate-spin text-emerald-600" />
-          <p className="text-sm font-medium">Loading grow plan details...</p>
+        <div className="min-h-screen flex flex-col items-center justify-center bg-[#FBF9F4] p-8 text-[#526a57] gap-3">
+          <Loader2 size={32} className="animate-spin text-[#144229]" />
+          <p className="text-sm font-semibold text-[#0c2417]">Loading grow plan details...</p>
         </div>
       }
     >

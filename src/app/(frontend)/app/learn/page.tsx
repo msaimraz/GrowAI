@@ -1,4 +1,5 @@
 import React from 'react';
+import { connection } from 'next/server';
 import { AppHeader } from '@/components/navigation/AppHeader';
 import { Badge } from '@/components/ui/Badge';
 import { fetchPublishedArticles, fetchPublishedPlants } from '@/lib/payload';
@@ -18,6 +19,7 @@ import {
 export const instant = false;
 
 export default async function LearnPage() {
+  await connection();
   const [articles, plants] = await Promise.all([
     fetchPublishedArticles(),
     fetchPublishedPlants(),

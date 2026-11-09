@@ -50,7 +50,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className="h-full antialiased scroll-smooth">
+    <html lang="en" className="h-full antialiased scroll-smooth" style={{ colorScheme: 'light' }}>
       <body className="min-h-full flex flex-col bg-[#F6F1E8] text-[#263028]">
         <PwaProvider>
           <AuthProvider>

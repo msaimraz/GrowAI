@@ -407,8 +407,16 @@ function generateUuid(): string {
 // 1. LOCAL STORAGE HELPERS
 // ==============================================================================
 
+let inMemoryPlans: GrowPlan[] | null = null;
+let inMemoryEvents: GrowPlanEvent[] | null = null;
+
 function getLocalPlans(): GrowPlan[] {
-  if (typeof window === 'undefined') return INITIAL_DEMO_GROW_PLANS;
+  if (typeof window === 'undefined') {
+    if (!inMemoryPlans) {
+      inMemoryPlans = JSON.parse(JSON.stringify(INITIAL_DEMO_GROW_PLANS));
+    }
+    return inMemoryPlans || [];
+  }
   try {
     const raw = localStorage.getItem(DEMO_PLANS_KEY);
     if (!raw) {
@@ -427,7 +435,10 @@ function getLocalPlans(): GrowPlan[] {
 }
 
 function saveLocalPlans(plans: GrowPlan[]): void {
-  if (typeof window === 'undefined') return;
+  if (typeof window === 'undefined') {
+    inMemoryPlans = plans;
+    return;
+  }
   try {
     localStorage.setItem(DEMO_PLANS_KEY, JSON.stringify(plans));
   } catch (err) {
@@ -436,7 +447,12 @@ function saveLocalPlans(plans: GrowPlan[]): void {
 }
 
 function getLocalPlanEvents(): GrowPlanEvent[] {
-  if (typeof window === 'undefined') return [];
+  if (typeof window === 'undefined') {
+    if (!inMemoryEvents) {
+      inMemoryEvents = [];
+    }
+    return inMemoryEvents || [];
+  }
   try {
     const raw = localStorage.getItem(DEMO_PLAN_EVENTS_KEY);
     return raw ? JSON.parse(raw) : [];
@@ -446,7 +462,10 @@ function getLocalPlanEvents(): GrowPlanEvent[] {
 }
 
 function saveLocalPlanEvents(events: GrowPlanEvent[]): void {
-  if (typeof window === 'undefined') return;
+  if (typeof window === 'undefined') {
+    inMemoryEvents = events;
+    return;
+  }
   try {
     localStorage.setItem(DEMO_PLAN_EVENTS_KEY, JSON.stringify(events));
   } catch (err) {
@@ -486,6 +505,73 @@ export function getPendingPlanMutationsCount(): number {
 // ==============================================================================
 // 2. DB MAPPING UTILITIES
 // ==============================================================================
+
+const DB_ALLOWED_CATEGORIES = new Set([
+  'care',
+  'health',
+  'environment',
+  'feeding',
+  'growth',
+  'propagation',
+  'production',
+  'harvest',
+  'space',
+  'observation',
+  'data_quality',
+  'review',
+]);
+
+export function normalizeStepCategoryForDb(cat: string): string {
+  if (DB_ALLOWED_CATEGORIES.has(cat)) return cat;
+  if (cat === 'watering' || cat === 'pruning') return 'care';
+  if (cat === 'pest_check') return 'health';
+  if (cat === 'verification') return 'review';
+  return 'care';
+}
+
+export function normalizePriorityForDb(p?: string): string {
+  if (p === 'critical') return 'urgent';
+  if (p === 'medium') return 'normal';
+  if (p === 'urgent' || p === 'high' || p === 'low') return p;
+  return 'normal';
+}
+
+export function mapStepToDbPayload(s: GrowPlanStep, planId: string, userId: string) {
+  const meta = {
+    ...(s.metadata || {}),
+    notes: s.notes || s.metadata?.notes || null,
+    stepOrder: s.stepOrder ?? 1,
+    observationPrompt: s.observationPrompt || s.metadata?.observationPrompt || null,
+    prerequisiteStepIds: s.prerequisiteStepIds || s.prerequisites || [],
+    prerequisites: s.prerequisites || s.prerequisiteStepIds || [],
+    observationRecorded: Boolean(s.metadata?.observationRecorded),
+    observedAt: s.metadata?.observedAt || null,
+    observationText: s.metadata?.observationText || null,
+    skipReason: s.metadata?.skipReason || null,
+    linkedTimelineEventId: s.linkedTimelineEventId,
+  };
+
+  return {
+    id: s.id || generateUuid(),
+    user_id: userId,
+    plan_id: planId,
+    title: s.title,
+    description: s.description || '',
+    category: normalizeStepCategoryForDb(s.category),
+    status: s.status,
+    priority: normalizePriorityForDb(s.priority),
+    scheduled_for: s.scheduledFor || null,
+    due_at: s.dueAt || null,
+    completed_at: s.completedAt || null,
+    requires_observation: Boolean(s.requiresObservation),
+    requires_confirmation: Boolean(s.requiresConfirmation),
+    source_type: s.source || 'manual',
+    evidence: s.evidence || [],
+    dependency_metadata: meta,
+    reminder_id: s.linkedReminderId || null,
+    updated_at: new Date().toISOString(),
+  };
+}
 
 function mapDbToPlan(row: any, steps: GrowPlanStep[] = []): GrowPlan {
   const planSteps = steps.filter((s) => s.planId === row.id);
@@ -540,6 +626,7 @@ function mapDbToPlan(row: any, steps: GrowPlanStep[] = []): GrowPlan {
 }
 
 function mapDbToStep(row: any): GrowPlanStep {
+  const meta = row.dependency_metadata || {};
   return {
     id: row.id,
     planId: row.plan_id,
@@ -549,6 +636,7 @@ function mapDbToStep(row: any): GrowPlanStep {
     category: row.category,
     status: row.status,
     priority: row.priority || 'normal',
+    stepOrder: meta.stepOrder ?? 1,
     scheduledFor: row.scheduled_for,
     dueAt: row.due_at,
     completedAt: row.completed_at,
@@ -556,10 +644,14 @@ function mapDbToStep(row: any): GrowPlanStep {
     requiresConfirmation: Boolean(row.requires_confirmation),
     source: row.source_type,
     evidence: row.evidence || [],
+    notes: meta.notes || null,
+    observationPrompt: meta.observationPrompt || null,
+    startedAt: meta.startedAt || null,
     linkedReminderId: row.reminder_id,
-    linkedTimelineEventId: row.dependency_metadata?.linkedTimelineEventId,
-    prerequisiteStepIds: row.dependency_metadata?.prerequisiteStepIds || [],
-    metadata: row.dependency_metadata || {},
+    linkedTimelineEventId: meta.linkedTimelineEventId,
+    prerequisiteStepIds: meta.prerequisiteStepIds || meta.prerequisites || [],
+    prerequisites: meta.prerequisites || meta.prerequisiteStepIds || [],
+    metadata: meta,
     createdAt: row.created_at,
     updatedAt: row.updated_at,
   };
@@ -659,11 +751,17 @@ export async function saveGrowPlan(plan: GrowPlan): Promise<{
   isPendingSync?: boolean;
   error?: string;
 }> {
-  // Ensure IDs
+  // Ensure IDs and map step planIds
   const planId = plan.id || generateUuid();
   const completePlan: GrowPlan = {
     ...plan,
     id: planId,
+    steps: (plan.steps || []).map((s, idx) => ({
+      ...s,
+      id: s.id || generateUuid(),
+      planId,
+      stepOrder: s.stepOrder ?? idx + 1,
+    })),
     createdAt: plan.createdAt || new Date().toISOString(),
     updatedAt: new Date().toISOString(),
   };
@@ -694,7 +792,7 @@ export async function saveGrowPlan(plan: GrowPlan): Promise<{
           scope: completePlan.scope,
           objective: completePlan.objective,
           status: completePlan.status,
-          priority: completePlan.priority,
+          priority: normalizePriorityForDb(completePlan.priority),
           start_date: completePlan.startDate,
           target_date: completePlan.targetDate || null,
           plant_id: completePlan.plantId || null,
@@ -713,33 +811,9 @@ export async function saveGrowPlan(plan: GrowPlan): Promise<{
         const { error: upsertErr } = await supabase.from('grow_plans').upsert(payload);
         if (upsertErr) throw upsertErr;
 
-        // Upsert steps if any
+        // Upsert steps with normalized fields
         if (completePlan.steps && completePlan.steps.length > 0) {
-          const stepPayloads = completePlan.steps.map((s) => ({
-            id: s.id || generateUuid(),
-            user_id: user.id,
-            plan_id: completePlan.id,
-            title: s.title,
-            description: s.description || '',
-            category: s.category,
-            status: s.status,
-            priority: s.priority,
-            scheduled_for: s.scheduledFor || null,
-            due_at: s.dueAt || null,
-            completed_at: s.completedAt || null,
-            requires_observation: s.requiresObservation,
-            requires_confirmation: s.requiresConfirmation,
-            source_type: s.source || 'manual',
-            evidence: s.evidence || [],
-            dependency_metadata: {
-              ...s.metadata,
-              prerequisiteStepIds: s.prerequisiteStepIds,
-              linkedTimelineEventId: s.linkedTimelineEventId,
-            },
-            reminder_id: s.linkedReminderId || null,
-            updated_at: new Date().toISOString(),
-          }));
-
+          const stepPayloads = completePlan.steps.map((s) => mapStepToDbPayload(s, completePlan.id, user.id));
           const { error: stepsErr } = await supabase.from('grow_plan_steps').upsert(stepPayloads);
           if (stepsErr) throw stepsErr;
         }
@@ -772,12 +846,35 @@ export async function createGrowPlan(params: CreateGrowPlanParams | GrowPlan): P
   error?: string;
 }> {
   if ('id' in params && (params as any).steps) {
-    return saveGrowPlan(params as GrowPlan);
+    const res = await saveGrowPlan(params as GrowPlan);
+    if (res.plan) {
+      await recordPlanEvent({
+        userId: res.plan.userId,
+        planId: res.plan.id,
+        eventType: 'plan_created',
+        metadata: {
+          planName: res.plan.name,
+          scope: res.plan.scope,
+          objective: res.plan.objective,
+          plantId: res.plan.plantId,
+          stepsCount: res.plan.steps.length,
+        },
+      });
+    }
+    return res;
   }
   const p = params as CreateGrowPlanParams;
+  const planId = generateUuid();
+  const initialSteps = (p.steps || []).map((s, idx) => ({
+    ...s,
+    id: s.id || generateUuid(),
+    planId,
+    stepOrder: s.stepOrder ?? idx + 1,
+  }));
+
   const newPlan: GrowPlan = {
-    id: generateUuid(),
-    userId: 'user-local',
+    id: planId,
+    userId: p.userId || 'user-local',
     name: p.name,
     description: p.description || '',
     scope: p.scope,
@@ -791,17 +888,17 @@ export async function createGrowPlan(params: CreateGrowPlanParams | GrowPlan): P
     plantIds: p.plantIds || (p.plantId ? [p.plantId] : []),
     productionCycleId: p.productionCycleId || null,
     propagationEventId: p.propagationEventId || null,
-    steps: p.steps || [],
+    steps: initialSteps,
     evidence: (p as any).evidence || p.evidenceBasis || [],
     evidenceBasis: p.evidenceBasis || [],
     adjustmentHistory: [],
     progress: {
-      totalSteps: (p.steps || []).length,
+      totalSteps: initialSteps.length,
       completedSteps: 0,
       skippedSteps: 0,
-      pendingSteps: (p.steps || []).length,
-      readySteps: (p.steps || []).filter((s) => s.status === 'ready').length,
-      blockedSteps: (p.steps || []).filter((s) => s.status === 'blocked').length,
+      pendingSteps: initialSteps.filter((s) => s.status === 'pending').length,
+      readySteps: initialSteps.filter((s) => s.status === 'ready').length,
+      blockedSteps: initialSteps.filter((s) => s.status === 'blocked').length,
       completionPercentage: 0,
       isComplete: false,
     },
@@ -809,7 +906,23 @@ export async function createGrowPlan(params: CreateGrowPlanParams | GrowPlan): P
     createdAt: new Date().toISOString(),
     updatedAt: new Date().toISOString(),
   };
-  return saveGrowPlan(newPlan);
+
+  const res = await saveGrowPlan(newPlan);
+  if (res.plan) {
+    await recordPlanEvent({
+      userId: res.plan.userId,
+      planId: res.plan.id,
+      eventType: 'plan_created',
+      metadata: {
+        planName: res.plan.name,
+        scope: res.plan.scope,
+        objective: res.plan.objective,
+        plantId: res.plan.plantId,
+        stepsCount: res.plan.steps.length,
+      },
+    });
+  }
+  return res;
 }
 
 export const fetchGrowPlans = fetchUserGrowPlans;
@@ -864,31 +977,9 @@ export async function updateGrowPlan(
       if (updates.steps && updates.steps.length > 0) {
         const { data: { user } } = await supabase.auth.getUser();
         if (user) {
-          const stepPayloads = updates.steps.map((s) => ({
-            id: s.id || generateUuid(),
-            user_id: user.id,
-            plan_id: planId,
-            title: s.title,
-            description: s.description || '',
-            category: s.category,
-            status: s.status,
-            priority: s.priority,
-            scheduled_for: s.scheduledFor || null,
-            due_at: s.dueAt || null,
-            completed_at: s.completedAt || null,
-            requires_observation: s.requiresObservation,
-            requires_confirmation: s.requiresConfirmation,
-            source_type: s.source || 'manual',
-            evidence: s.evidence || [],
-            dependency_metadata: {
-              ...s.metadata,
-              prerequisiteStepIds: s.prerequisiteStepIds,
-              linkedTimelineEventId: s.linkedTimelineEventId,
-            },
-            reminder_id: s.linkedReminderId || null,
-            updated_at: new Date().toISOString(),
-          }));
-          await supabase.from('grow_plan_steps').upsert(stepPayloads);
+          const stepPayloads = updates.steps.map((s) => mapStepToDbPayload(s, planId, user.id));
+          const { error: stepsErr } = await supabase.from('grow_plan_steps').upsert(stepPayloads);
+          if (stepsErr) throw stepsErr;
         }
       }
 
