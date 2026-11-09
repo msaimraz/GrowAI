@@ -50,7 +50,16 @@ export function calculatePlanProgress(steps: GrowPlanStep[]): PlanProgress {
       ? Math.round((completedBiological / biologicalSteps.length) * 100)
       : null;
 
-  const isComplete = applicable > 0 && completed === applicable;
+  // Check if any mandatory biological or safety observation step was skipped
+  const hasSkippedMandatory = steps.some(
+    (s) =>
+      s.status === 'skipped' &&
+      (s.metadata?.isMandatory === true ||
+        s.metadata?.isMandatoryObservation === true ||
+        s.metadata?.isSafetyCritical === true)
+  );
+
+  const isComplete = applicable > 0 && completed === applicable && !hasSkippedMandatory;
 
   return {
     totalSteps: total,
@@ -96,9 +105,16 @@ export function evaluatePlanHealthStatus(
     return 'completed';
   }
 
-  // Any step marked needs_review or concerning evidence attached
+  // Any step marked needs_review or concerning evidence attached or skipped mandatory step
   const hasStepNeedsReview = steps.some((s) => s.status === 'needs_review');
-  if (hasStepNeedsReview || hasConcerningEvidence || planStatus === 'needs_review') {
+  const hasSkippedMandatory = steps.some(
+    (s) =>
+      s.status === 'skipped' &&
+      (s.metadata?.isMandatory === true ||
+        s.metadata?.isMandatoryObservation === true ||
+        s.metadata?.isSafetyCritical === true)
+  );
+  if (hasStepNeedsReview || hasConcerningEvidence || hasSkippedMandatory || planStatus === 'needs_review') {
     return 'needs_attention';
   }
 

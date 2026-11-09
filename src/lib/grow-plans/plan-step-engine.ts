@@ -34,10 +34,39 @@ export function checkStepPrerequisites(
 
   for (const prereqId of prereqIds) {
     const found = allSteps.find((s) => s.id === prereqId);
-    if (!found || (found.status !== 'completed' && found.status !== 'skipped')) {
+    if (!found) {
       unmetIds.push(prereqId);
-      unmetTitles.push(found?.title || `Prerequisite (${prereqId})`);
+      unmetTitles.push(`Prerequisite (${prereqId})`);
+      continue;
     }
+
+    if (found.status === 'completed') {
+      // Completed steps satisfy prerequisites
+      continue;
+    }
+
+    if (found.status === 'skipped') {
+      // A skipped step satisfies prerequisites ONLY IF it is not a mandatory biological or safety observation
+      const isMandatoryObservation = Boolean(
+        found.metadata?.isMandatoryObservation ||
+        found.metadata?.isSafetyCritical ||
+        (found.requiresObservation && found.metadata?.isMandatory) ||
+        step.metadata?.strictPrerequisites?.includes(found.id)
+      );
+
+      if (isMandatoryObservation) {
+        unmetIds.push(prereqId);
+        unmetTitles.push(`${found.title} (Mandatory Observation Required)`);
+        continue;
+      }
+
+      // Optional step skipped legitimately allows dependent step to proceed
+      continue;
+    }
+
+    // Step is pending, ready, blocked, or in_progress -> prerequisite unmet
+    unmetIds.push(prereqId);
+    unmetTitles.push(found.title);
   }
 
   return {
@@ -281,6 +310,21 @@ export function completePlanStep(
     const stepId: string = arg2;
     const notes: string | undefined = arg3;
 
+    // Terminal state protection: Cancelled plans cannot be modified
+    if (plan.status === 'cancelled') {
+      return {
+        ...plan,
+        plan,
+        updatedPlan: plan,
+        updatedSteps: plan.steps,
+        completedStep: null,
+        nextActionableStep: null,
+        isPlanCompleted: false,
+        progress: plan.progress,
+        error: 'Cannot modify a cancelled plan.',
+      };
+    }
+
     const targetIdx = plan.steps.findIndex((s) => s.id === stepId);
     if (targetIdx < 0) {
       return {
@@ -378,6 +422,21 @@ export function skipPlanStep(
     const plan: GrowPlan = arg1;
     const stepId: string = arg2;
     const reason: string | undefined = arg3;
+
+    // Terminal state protection: Cancelled plans cannot be modified
+    if (plan.status === 'cancelled') {
+      return {
+        ...plan,
+        plan,
+        updatedPlan: plan,
+        updatedSteps: plan.steps,
+        skippedStep: null,
+        nextActionableStep: null,
+        isPlanCompleted: false,
+        progress: plan.progress,
+        error: 'Cannot modify a cancelled plan.',
+      };
+    }
 
     const targetIdx = plan.steps.findIndex((s) => s.id === stepId);
     if (targetIdx < 0) {

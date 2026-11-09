@@ -1,4 +1,6 @@
 // @ts-nocheck
+process.env.NODE_ENV = 'test';
+process.env.GROWAI_TEST_MODE = 'true';
 /**
  * GrowAI Phase 13 Test Suite: Adaptive Grow Plans & Execution System
  * Comprehensive automated verification covering domain models, templates,
@@ -43,8 +45,15 @@ import {
   createGrowPlan,
   fetchGrowPlanById,
   updateGrowPlan,
+  updatePlanStep,
   fetchPlanEvents,
   recordPlanEvent,
+  mapStepToDbPayload,
+  mapDbToStep,
+  mapDbToPlan,
+  normalizeStepCategoryForDb,
+  normalizePriorityForDb,
+  isValidUuid,
 } from './src/lib/grow-plans/storage';
 import { checkQuerySafety } from './src/lib/grower-copilot/safety-guard';
 
@@ -1051,6 +1060,181 @@ async function runTests() {
   assert(fakeUpdateRes.error === 'Plan not found.', 'TEST E: Error message is "Plan not found."');
   const intactCheck = await fetchGrowPlanById(createdPlanId);
   assert(intactCheck.plan?.name === 'Real Runtime Tomato Plan', 'TEST E: Failed operation does not corrupt existing plans');
+
+  // --------------------------------------------------------------------------
+  // SECTION 10: PRODUCTION INTEGRITY AUDIT VERIFICATION
+  // --------------------------------------------------------------------------
+  console.log('\n--- 10. Production Integrity & Rigorous Storage Safety ---');
+
+  // 10A. Skipped-Step Semantics: Mandatory vs Optional
+  const mandatoryObsStep: GrowPlanStep = {
+    id: 's-mand-obs',
+    planId: createdPlanId,
+    userId: 'user-audit',
+    title: 'Inspect for Spider Mites on Undersides of Leaves',
+    description: 'Mandatory phytosanitary pest verification',
+    category: 'observation',
+    status: 'skipped',
+    priority: 'high',
+    requiresObservation: true,
+    requiresConfirmation: false,
+    evidence: [],
+    metadata: {
+      isMandatoryObservation: true,
+      isSafetyCritical: true,
+      skipReason: 'Grower skipped phytosanitary inspection',
+    },
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+  };
+
+  const dependentTreatmentStep: GrowPlanStep = {
+    id: 's-treatment',
+    planId: createdPlanId,
+    userId: 'user-audit',
+    title: 'Apply Targeted Botanical Spray',
+    description: 'Requires verified observation of pest presence before application',
+    category: 'care',
+    status: 'pending',
+    priority: 'normal',
+    requiresObservation: false,
+    requiresConfirmation: false,
+    evidence: [],
+    prerequisites: ['s-mand-obs'],
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+  };
+
+  const checkMandatoryResult = checkStepPrerequisites(dependentTreatmentStep, [mandatoryObsStep, dependentTreatmentStep]);
+  assert(checkMandatoryResult.isMet === false, 'Skipping a mandatory biological/safety observation does NOT satisfy prerequisite');
+  assert(checkMandatoryResult.unmetStepTitles.some((t) => t.includes('Mandatory Observation Required')), 'Unmet titles explicitly flags mandatory observation requirement');
+
+  const evaluatedStepStatusBlocked = evaluateStepStatus(dependentTreatmentStep, [mandatoryObsStep, dependentTreatmentStep]);
+  assert(evaluatedStepStatusBlocked === 'blocked', 'Dependent step remains blocked when mandatory prerequisite was skipped');
+
+  // 10B. Plan Completion Integrity: Cannot complete by skipping 100% or skipping mandatory
+  const allSkippedSteps: GrowPlanStep[] = [
+    { ...mandatoryObsStep, status: 'skipped' },
+    { ...dependentTreatmentStep, status: 'skipped' },
+  ];
+  const allSkippedProgress = calculatePlanProgress(allSkippedSteps);
+  assert(allSkippedProgress.isComplete === false, 'Plan cannot achieve completion when 100% of steps are skipped');
+
+  const stepCompletedA: GrowPlanStep = {
+    id: 's-comp-a',
+    planId: 'plan-mand-test',
+    userId: 'user-audit',
+    title: 'Routine Base Water',
+    category: 'care',
+    status: 'completed',
+    priority: 'normal',
+    requiresObservation: false,
+    requiresConfirmation: false,
+    evidence: [],
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+  };
+  const mixedStepsWithSkippedMandatory = [stepCompletedA, mandatoryObsStep];
+  const mixedProgress = calculatePlanProgress(mixedStepsWithSkippedMandatory);
+  assert(mixedProgress.isComplete === false, 'Plan cannot achieve completion if a mandatory step was skipped');
+
+  // Cancelled Plan Terminal State Protection
+  const cancelledPlan: GrowPlan = {
+    ...createRes.plan!,
+    id: 'plan-cancelled-test',
+    status: 'cancelled',
+  };
+  const execOnCancelled = completePlanStep(cancelledPlan, 's-rt-1', 'Attempting completion on cancelled plan');
+  assert(execOnCancelled.status === 'cancelled', 'Cancelled plan remains terminal upon completion attempt');
+  assert(Boolean(execOnCancelled.error), 'Attempt to complete step on cancelled plan returns explicit error');
+  const skipOnCancelled = skipPlanStep(cancelledPlan, 's-rt-1', 'Attempting skip on cancelled plan');
+  assert(skipOnCancelled.status === 'cancelled', 'Cancelled plan remains terminal upon skip attempt');
+  assert(Boolean(skipOnCancelled.error), 'Attempt to skip step on cancelled plan returns explicit error');
+
+  // 10C. Database Mapping Round-Trip Fidelity
+  const domainStep: GrowPlanStep = {
+    id: '3fa85f64-5717-4562-b3fc-2c963f66afa6',
+    planId: '2fa85f64-5717-4562-b3fc-2c963f66afa5',
+    userId: '1fa85f64-5717-4562-b3fc-2c963f66afa4',
+    title: 'Morning Drip Irrigation Cycle',
+    description: 'Run targeted root-zone hydration with 350ml filtered water',
+    category: 'watering',
+    status: 'ready',
+    priority: 'critical',
+    stepOrder: 2,
+    scheduledFor: '2026-11-10T08:00:00.000Z',
+    dueAt: '2026-11-10T11:00:00.000Z',
+    completedAt: null,
+    requiresObservation: true,
+    requiresConfirmation: false,
+    source: 'automated_rule',
+    evidence: [{
+      sourceType: 'growing_condition',
+      provenance: 'sensor_telemetry',
+      description: 'Soil moisture dropped below 28%',
+    }],
+    notes: 'Prior note on substrate drainage',
+    observationPrompt: 'Verify substrate absorbs evenly without runoff pooling',
+    prerequisites: ['11111111-1111-4111-8111-111111111111'],
+    prerequisiteStepIds: ['11111111-1111-4111-8111-111111111111'],
+    metadata: {
+      customFlowRateMlMin: 45,
+      isMandatory: true,
+      skipReason: null,
+      observationRecorded: false,
+    },
+    createdAt: '2026-11-09T08:00:00.000Z',
+    updatedAt: '2026-11-09T08:00:00.000Z',
+  };
+
+  // Convert to DB payload
+  const dbPayload = mapStepToDbPayload(domainStep, domainStep.planId, domainStep.userId);
+  assert(dbPayload.category === 'care', 'Domain category "watering" normalized to DB allowed category "care"');
+  assert(dbPayload.priority === 'urgent', 'Domain priority "critical" normalized to DB allowed priority "urgent"');
+  assert(dbPayload.dependency_metadata.originalCategory === 'watering', 'Original category "watering" preserved in dependency_metadata');
+  assert(dbPayload.dependency_metadata.originalPriority === 'critical', 'Original priority "critical" preserved in dependency_metadata');
+  assert(dbPayload.dependency_metadata.customFlowRateMlMin === 45, 'Custom unknown metadata fields preserved in JSONB payload');
+
+  // Convert back from simulated DB row to domain model
+  const simulatedDbRow = {
+    id: dbPayload.id,
+    user_id: dbPayload.user_id,
+    plan_id: dbPayload.plan_id,
+    title: dbPayload.title,
+    description: dbPayload.description,
+    category: dbPayload.category,
+    status: dbPayload.status,
+    priority: dbPayload.priority,
+    scheduled_for: dbPayload.scheduled_for,
+    due_at: dbPayload.due_at,
+    completed_at: dbPayload.completed_at,
+    requires_observation: dbPayload.requires_observation,
+    requires_confirmation: dbPayload.requires_confirmation,
+    source_type: dbPayload.source_type,
+    evidence: dbPayload.evidence,
+    dependency_metadata: dbPayload.dependency_metadata,
+    reminder_id: dbPayload.reminder_id,
+    created_at: domainStep.createdAt,
+    updated_at: dbPayload.updated_at,
+  };
+
+  const reconstructedStep = mapDbToStep(simulatedDbRow);
+  assert(reconstructedStep.category === 'watering', 'DB row correctly reconstructed back to domain category "watering"');
+  assert(reconstructedStep.priority === 'critical', 'DB row correctly reconstructed back to domain priority "critical"');
+  assert(reconstructedStep.notes === 'Prior note on substrate drainage', 'Grower notes reconstructed accurately');
+  assert(reconstructedStep.observationPrompt === 'Verify substrate absorbs evenly without runoff pooling', 'Observation prompt reconstructed');
+  assert(reconstructedStep.metadata?.customFlowRateMlMin === 45, 'Custom metadata fields survive round-trip');
+  assert(reconstructedStep.requiresObservation === true, 'requiresObservation preserved in round-trip');
+
+  // 10D. Step Update Failure Simulation
+  const fakeStepUpdate = await updatePlanStep('non-existent-step-id-999', { notes: 'Test failure note' });
+  assert(Boolean(fakeStepUpdate.error), 'Updating non-existent step returns explicit error');
+  assert(fakeStepUpdate.error === 'Step not found.', 'Step error message is "Step not found."');
+
+  // UUID Validation Integrity
+  assert(isValidUuid('3fa85f64-5717-4562-b3fc-2c963f66afa6') === true, 'Valid UUID correctly identified');
+  assert(isValidUuid('demo-plant-1') === false, 'Demo slug string safely rejected as non-UUID');
+  assert(isValidUuid(null) === false, 'Null safely handled as non-UUID');
 
   // --------------------------------------------------------------------------
   // SUMMARY
