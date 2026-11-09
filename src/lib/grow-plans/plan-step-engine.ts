@@ -87,12 +87,20 @@ export function evaluateStepStatus(
  * Re-evaluates all steps in a plan in topological order to ensure cascades update correctly.
  */
 export function evaluateAllPlanSteps(
-  steps: GrowPlanStep[],
+  steps: GrowPlanStep[] | any,
   referenceDate?: Date | string
 ): GrowPlanStep[] {
+  const stepList: GrowPlanStep[] = Array.isArray(steps)
+    ? steps
+    : Array.isArray(steps?.updatedSteps)
+    ? steps.updatedSteps
+    : Array.isArray(steps?.steps)
+    ? steps.steps
+    : [];
+
   // First pass: compute new statuses
-  return steps.map((step) => {
-    const newStatus = evaluateStepStatus(step, steps, referenceDate);
+  return stepList.map((step) => {
+    const newStatus = evaluateStepStatus(step, stepList, referenceDate);
     if (newStatus !== step.status) {
       return {
         ...step,
@@ -140,6 +148,11 @@ export function completePlanStep(
   arg2: any,
   arg3?: string
 ): any {
+  // Support (stepId, plan, notes)
+  if (typeof arg1 === 'string' && typeof arg2 === 'object' && arg2 !== null && Array.isArray(arg2.steps)) {
+    return completePlanStep(arg2, arg1, arg3);
+  }
+
   if (typeof arg1 === 'object' && arg1 !== null && Array.isArray(arg1.steps)) {
     const plan: GrowPlan = arg1;
     const stepId: string = arg2;
@@ -175,13 +188,21 @@ export function completePlanStep(
     };
   }
 
-  const stepId: string = arg1;
-  const steps: GrowPlanStep[] = arg2;
-  const completedAt: string | undefined = arg3;
+  // Support (steps, stepId, completedAt)
+  let stepId: string = arg1;
+  let steps: GrowPlanStep[] = arg2;
+  let completedAt: string | undefined = arg3;
+
+  if (Array.isArray(arg1) && typeof arg2 === 'string') {
+    steps = arg1;
+    stepId = arg2;
+    completedAt = arg3;
+  }
 
   const targetIdx = steps.findIndex((s) => s.id === stepId);
   if (targetIdx < 0) {
-    return { updatedSteps: steps, completedStep: null };
+    const fallback = [...steps];
+    return Object.assign(fallback, { updatedSteps: fallback, completedStep: null });
   }
 
   const now = completedAt || new Date().toISOString();
@@ -195,10 +216,10 @@ export function completePlanStep(
 
   // Re-evaluate downstream steps now that dependency is satisfied
   const evaluated = evaluateAllPlanSteps(modified, now);
-  return {
+  return Object.assign([...evaluated], {
     updatedSteps: evaluated,
     completedStep: evaluated[targetIdx],
-  };
+  });
 }
 
 /**
@@ -210,6 +231,11 @@ export function skipPlanStep(
   arg2: any,
   arg3?: string
 ): any {
+  // Support (stepId, plan, reason)
+  if (typeof arg1 === 'string' && typeof arg2 === 'object' && arg2 !== null && Array.isArray(arg2.steps)) {
+    return skipPlanStep(arg2, arg1, arg3);
+  }
+
   if (typeof arg1 === 'object' && arg1 !== null && Array.isArray(arg1.steps)) {
     const plan: GrowPlan = arg1;
     const stepId: string = arg2;
@@ -248,13 +274,21 @@ export function skipPlanStep(
     };
   }
 
-  const stepId: string = arg1;
-  const steps: GrowPlanStep[] = arg2;
-  const reason: string | undefined = arg3;
+  // Support (steps, stepId, reason)
+  let stepId: string = arg1;
+  let steps: GrowPlanStep[] = arg2;
+  let reason: string | undefined = arg3;
+
+  if (Array.isArray(arg1) && typeof arg2 === 'string') {
+    steps = arg1;
+    stepId = arg2;
+    reason = arg3;
+  }
 
   const targetIdx = steps.findIndex((s) => s.id === stepId);
   if (targetIdx < 0) {
-    return { updatedSteps: steps, skippedStep: null };
+    const fallback = [...steps];
+    return Object.assign(fallback, { updatedSteps: fallback, skippedStep: null });
   }
 
   const now = new Date().toISOString();
@@ -271,8 +305,8 @@ export function skipPlanStep(
 
   // Re-evaluate downstream steps
   const evaluated = evaluateAllPlanSteps(modified, now);
-  return {
+  return Object.assign([...evaluated], {
     updatedSteps: evaluated,
     skippedStep: evaluated[targetIdx],
-  };
+  });
 }

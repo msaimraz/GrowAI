@@ -789,6 +789,126 @@ async function runTests() {
   );
 
   // --------------------------------------------------------------------------
+  // SECTION 9: STEP COMPLETION, SKIPPING, OBSERVATION & STORAGE EXECUTION
+  // --------------------------------------------------------------------------
+  console.log('\n--- 9. Step Completion, Skipping & Observation Integration ---');
+
+  const executionPlan: GrowPlan = {
+    id: 'plan-exec-test-1',
+    userId: 'user-exec',
+    name: 'Execution Test Plan',
+    scope: 'plant',
+    objective: 'plant_establishment',
+    status: 'active',
+    healthStatus: 'on_track',
+    priority: 'normal',
+    startDate: '2026-11-09T00:00:00.000Z',
+    targetDate: '2026-12-01T00:00:00.000Z',
+    completedAt: null,
+    pausedAt: null,
+    cancelledAt: null,
+    plantId: 'plant-exec-1',
+    plantIds: ['plant-exec-1'],
+    steps: [
+      {
+        id: 's-ex-1',
+        planId: 'plan-exec-test-1',
+        userId: 'user-exec',
+        title: 'Step 1: Soil Pre-wetting',
+        description: 'Moisten seedling medium evenly.',
+        category: 'watering',
+        status: 'ready',
+        priority: 'high',
+        requiresObservation: false,
+        requiresConfirmation: false,
+        evidence: [],
+        stepOrder: 1,
+        prerequisites: [],
+        createdAt: '2026-11-09T00:00:00.000Z',
+        updatedAt: '2026-11-09T00:00:00.000Z',
+      },
+      {
+        id: 's-ex-2',
+        planId: 'plan-exec-test-1',
+        userId: 'user-exec',
+        title: 'Step 2: Sprout Inspection',
+        description: 'Check emergence and true leaves.',
+        category: 'observation',
+        status: 'blocked',
+        priority: 'normal',
+        requiresObservation: true,
+        observationPrompt: 'Verify first true leaf development.',
+        requiresConfirmation: false,
+        evidence: [],
+        stepOrder: 2,
+        prerequisites: ['s-ex-1'],
+        createdAt: '2026-11-09T00:00:00.000Z',
+        updatedAt: '2026-11-09T00:00:00.000Z',
+      },
+      {
+        id: 's-ex-3',
+        planId: 'plan-exec-test-1',
+        userId: 'user-exec',
+        title: 'Step 3: Gentle Fertilizer Feed',
+        description: 'Apply quarter-strength liquid feed.',
+        category: 'feeding',
+        status: 'blocked',
+        priority: 'low',
+        requiresObservation: false,
+        requiresConfirmation: false,
+        evidence: [],
+        stepOrder: 3,
+        prerequisites: ['s-ex-2'],
+        createdAt: '2026-11-09T00:00:00.000Z',
+        updatedAt: '2026-11-09T00:00:00.000Z',
+      },
+    ],
+    progress: {
+      totalSteps: 3,
+      completedSteps: 0,
+      skippedSteps: 0,
+      pendingSteps: 2,
+      readySteps: 1,
+      blockedSteps: 2,
+      completionPercentage: 0,
+      isComplete: false,
+    },
+    evidence: [],
+    adjustmentHistory: [],
+    createdAt: '2026-11-09T00:00:00.000Z',
+    updatedAt: '2026-11-09T00:00:00.000Z',
+  };
+
+  // 1. Complete step 1 with notes
+  const afterCompleteStep1 = completePlanStep(executionPlan, 's-ex-1', 'Medium saturated with 200ml rainwater');
+  assert(afterCompleteStep1.steps[0].status === 'completed', 'Step 1 status is completed');
+  assert(afterCompleteStep1.steps[0].notes === 'Medium saturated with 200ml rainwater', 'Step 1 recorded grower notes');
+  assert(Boolean(afterCompleteStep1.steps[0].completedAt), 'Step 1 completedAt timestamp recorded');
+  assert(afterCompleteStep1.steps[1].status === 'ready', 'Step 2 dynamically unblocked to ready');
+  assert(afterCompleteStep1.steps[2].status === 'blocked', 'Step 3 remains blocked until Step 2 is done');
+  assert(afterCompleteStep1.progress.completedSteps === 1, 'Progress completedSteps updated to 1');
+
+  // 2. Both calling signatures (stepId, steps) and (plan, stepId) work without error
+  const stepEngineArrayResult = completePlanStep('s-ex-1', executionPlan.steps, 'Direct step call');
+  assert(Array.isArray(stepEngineArrayResult), 'completePlanStep(stepId, steps) is an array');
+  assert(stepEngineArrayResult.completedStep?.status === 'completed', 'completedStep property is accessible');
+  const reevalDirect = evaluateAllPlanSteps(stepEngineArrayResult);
+  assert(Array.isArray(reevalDirect), 'evaluateAllPlanSteps safely handles step engine result without .map error');
+
+  // 3. Skip step 2
+  const afterSkipStep2 = skipPlanStep(afterCompleteStep1, 's-ex-2', 'Seedling skipped foliar observation step');
+  assert(afterSkipStep2.steps[1].status === 'skipped', 'Step 2 marked as skipped');
+  assert(afterSkipStep2.steps[1].metadata?.skipReason === 'Seedling skipped foliar observation step', 'Step 2 skipReason recorded in metadata');
+  assert(afterSkipStep2.steps[2].status === 'ready', 'Step 3 dynamically unblocked to ready after Step 2 skipped');
+
+  // 4. Complete final step 3 -> Plan transitions to completed
+  const afterCompleteStep3 = completePlanStep(afterSkipStep2, 's-ex-3', 'Final feeding applied');
+  assert(afterCompleteStep3.steps[2].status === 'completed', 'Step 3 completed');
+  assert(afterCompleteStep3.status === 'completed', 'Plan automatically transitions to completed when all steps resolved');
+  assert(afterCompleteStep3.progress.isComplete === true, 'Plan progress isComplete is true');
+  assert(afterCompleteStep3.progress.completionPercentage === 100, 'Plan progress reaches 100%');
+
+  // --------------------------------------------------------------------------
   // SUMMARY
   // --------------------------------------------------------------------------
   console.log('\n================================================================');

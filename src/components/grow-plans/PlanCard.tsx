@@ -92,10 +92,10 @@ export function PlanCard({ plan, plantNickname }: PlanCardProps) {
         </span>
         <Link
           href={`/app/grow-plans/${plan.id}`}
-          className="font-semibold text-[#144229] hover:text-[#0c2417] hover:underline flex items-center gap-1"
+          className="font-semibold text-[#144229] hover:text-[#0c2417] min-h-[44px] inline-flex items-center gap-1.5 px-3 py-2 rounded-xl hover:bg-[#eef5ee] active:scale-95 transition-all select-none touch-manipulation cursor-pointer"
         >
           <span>View Plan</span>
-          <span>→</span>
+          <span className="text-base leading-none">→</span>
         </Link>
       </div>
     </div>

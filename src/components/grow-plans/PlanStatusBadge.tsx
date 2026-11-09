@@ -11,27 +11,27 @@ interface PlanStatusBadgeProps {
 }
 
 export function PlanStatusBadge({ status, health, stepStatus, size = 'sm' }: PlanStatusBadgeProps) {
-  const sizeClasses = size === 'sm' ? 'px-2 py-0.5 text-xs' : 'px-2.5 py-1 text-sm';
+  const sizeClasses = size === 'sm' ? 'px-2.5 py-0.5 text-xs' : 'px-3 py-1 text-sm';
 
   if (status) {
-    let colorClass = 'bg-stone-100 text-stone-700 dark:bg-stone-800 dark:text-stone-300';
+    let colorClass = 'bg-[#f4efe6] text-[#526a57] border border-[#ded5c5]';
     let label = status.replace(/_/g, ' ');
 
     switch (status) {
       case 'active':
-        colorClass = 'bg-emerald-100 text-emerald-800 dark:bg-emerald-950/60 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-800';
+        colorClass = 'bg-[#eef5ee] text-[#144229] border border-[#c2d9c6]';
         break;
       case 'completed':
-        colorClass = 'bg-teal-100 text-teal-800 dark:bg-teal-950/60 dark:text-teal-300 border border-teal-300 dark:border-teal-800';
+        colorClass = 'bg-[#f4efe6] text-[#0c2417] border border-[#ded5c5] font-semibold';
         break;
       case 'paused':
-        colorClass = 'bg-amber-100 text-amber-800 dark:bg-amber-950/60 dark:text-amber-300 border border-amber-300 dark:border-amber-800';
+        colorClass = 'bg-[#fbf4eb] text-[#8c501e] border border-[#f0d8c2]';
         break;
       case 'cancelled':
-        colorClass = 'bg-rose-100 text-rose-800 dark:bg-rose-950/60 dark:text-rose-300 border border-rose-300 dark:border-rose-800';
+        colorClass = 'bg-rose-50 text-rose-700 border border-rose-200';
         break;
       case 'draft':
-        colorClass = 'bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300 border border-slate-300 dark:border-slate-700';
+        colorClass = 'bg-[#f4efe6] text-[#6d8573] border border-[#ded5c5]';
         break;
     }
 
@@ -43,24 +43,24 @@ export function PlanStatusBadge({ status, health, stepStatus, size = 'sm' }: Pla
   }
 
   if (health) {
-    let colorClass = 'bg-stone-100 text-stone-700 dark:bg-stone-800 dark:text-stone-300';
+    let colorClass = 'bg-[#f4efe6] text-[#526a57] border border-[#ded5c5]';
     let label = health.replace(/_/g, ' ');
 
     switch (health) {
       case 'on_track':
-        colorClass = 'bg-emerald-100 text-emerald-800 dark:bg-emerald-950/60 dark:text-emerald-300';
+        colorClass = 'bg-[#eef5ee] text-[#144229] border border-[#c2d9c6]';
         break;
       case 'needs_attention':
-        colorClass = 'bg-rose-100 text-rose-800 dark:bg-rose-950/60 dark:text-rose-300';
+        colorClass = 'bg-rose-50 text-rose-700 border border-rose-200';
         break;
       case 'blocked':
-        colorClass = 'bg-amber-100 text-amber-800 dark:bg-amber-950/60 dark:text-amber-300';
+        colorClass = 'bg-[#fbf4eb] text-[#8c501e] border border-[#f0d8c2]';
         break;
       case 'waiting_for_observation':
-        colorClass = 'bg-indigo-100 text-indigo-800 dark:bg-indigo-950/60 dark:text-indigo-300';
+        colorClass = 'bg-[#edf4fb] text-[#1e4d75] border border-[#cbe1f5]';
         break;
       case 'completed':
-        colorClass = 'bg-teal-100 text-teal-800 dark:bg-teal-950/60 dark:text-teal-300';
+        colorClass = 'bg-[#f4efe6] text-[#0c2417] border border-[#ded5c5] font-semibold';
         break;
     }
 
@@ -72,24 +72,24 @@ export function PlanStatusBadge({ status, health, stepStatus, size = 'sm' }: Pla
   }
 
   if (stepStatus) {
-    let colorClass = 'bg-stone-100 text-stone-700 dark:bg-stone-800 dark:text-stone-300';
+    let colorClass = 'bg-[#f4efe6] text-[#526a57] border border-[#ded5c5]';
     let label = stepStatus.replace(/_/g, ' ');
 
     switch (stepStatus) {
       case 'completed':
-        colorClass = 'bg-emerald-100 text-emerald-800 dark:bg-emerald-950/60 dark:text-emerald-300';
+        colorClass = 'bg-[#eef5ee] text-[#144229] border border-[#c2d9c6] font-medium';
         break;
       case 'in_progress':
-        colorClass = 'bg-blue-100 text-blue-800 dark:bg-blue-950/60 dark:text-blue-300 animate-pulse';
+        colorClass = 'bg-[#eef5ee] text-[#144229] border border-[#144229]/40 animate-pulse font-semibold';
         break;
       case 'ready':
-        colorClass = 'bg-cyan-100 text-cyan-800 dark:bg-cyan-950/60 dark:text-cyan-300';
+        colorClass = 'bg-[#edf4fb] text-[#1e4d75] border border-[#cbe1f5] font-semibold';
         break;
       case 'blocked':
-        colorClass = 'bg-amber-100 text-amber-800 dark:bg-amber-950/60 dark:text-amber-300';
+        colorClass = 'bg-[#faf7f2] text-[#8c7e6c] border border-[#ded5c5]';
         break;
       case 'skipped':
-        colorClass = 'bg-stone-200 text-stone-600 dark:bg-stone-800 dark:text-stone-400 line-through';
+        colorClass = 'bg-[#f4efe6] text-[#8c7e6c] line-through border border-[#ded5c5]';
         break;
     }
 

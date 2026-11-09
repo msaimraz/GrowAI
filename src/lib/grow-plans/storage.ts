@@ -859,6 +859,39 @@ export async function updateGrowPlan(
 
       const { error } = await supabase.from('grow_plans').update(payload).eq('id', planId);
       if (error) throw error;
+
+      // Upsert steps to Supabase if steps were modified
+      if (updates.steps && updates.steps.length > 0) {
+        const { data: { user } } = await supabase.auth.getUser();
+        if (user) {
+          const stepPayloads = updates.steps.map((s) => ({
+            id: s.id || generateUuid(),
+            user_id: user.id,
+            plan_id: planId,
+            title: s.title,
+            description: s.description || '',
+            category: s.category,
+            status: s.status,
+            priority: s.priority,
+            scheduled_for: s.scheduledFor || null,
+            due_at: s.dueAt || null,
+            completed_at: s.completedAt || null,
+            requires_observation: s.requiresObservation,
+            requires_confirmation: s.requiresConfirmation,
+            source_type: s.source || 'manual',
+            evidence: s.evidence || [],
+            dependency_metadata: {
+              ...s.metadata,
+              prerequisiteStepIds: s.prerequisiteStepIds,
+              linkedTimelineEventId: s.linkedTimelineEventId,
+            },
+            reminder_id: s.linkedReminderId || null,
+            updated_at: new Date().toISOString(),
+          }));
+          await supabase.from('grow_plan_steps').upsert(stepPayloads);
+        }
+      }
+
       return { plan: updated, isPendingSync: false };
     } catch (err: any) {
       queuePendingMutation({
@@ -983,9 +1016,10 @@ export async function updatePlanStep(
 // ==============================================================================
 
 export async function recordPlanEvent(
-  event: Omit<GrowPlanEvent, 'id' | 'createdAt'>
+  event: (Omit<GrowPlanEvent, 'id' | 'createdAt' | 'userId'> & { userId?: string })
 ): Promise<{ event?: GrowPlanEvent; error?: string }> {
   const completeEvent: GrowPlanEvent = {
+    userId: 'user-local',
     ...event,
     id: generateUuid(),
     createdAt: new Date().toISOString(),
@@ -1112,20 +1146,27 @@ export async function completePlanStepFromReminder(
     const { plan } = await fetchGrowPlanById(planId);
     if (!plan) return { success: false, error: 'Plan not found.' };
 
-    const updatedSteps = completePlanStep(stepId, plan.steps);
-    const reevaluated = evaluateAllPlanSteps(updatedSteps);
-    const progress = calculatePlanProgress(reevaluated);
-    const isComplete = progress.completionPercentage === 100;
+    const updatedPlan = completePlanStep(plan, stepId);
 
-    const updatedPlan: Partial<GrowPlan> = {
-      steps: reevaluated,
-      progress,
-      status: isComplete ? 'completed' : plan.status,
-      completedAt: isComplete ? new Date().toISOString() : plan.completedAt,
+    const res = await updateGrowPlan(plan.id, {
+      steps: updatedPlan.steps,
+      progress: updatedPlan.progress,
+      status: updatedPlan.status,
+      completedAt: updatedPlan.completedAt,
+      healthStatus: updatedPlan.healthStatus,
       updatedAt: new Date().toISOString(),
-    };
+    });
 
-    const res = await updateGrowPlan(plan.id, updatedPlan);
+    await recordPlanEvent({
+      planId: plan.id,
+      stepId,
+      eventType: 'plan_step_completed',
+      metadata: {
+        source: 'reminder',
+        completedAt: new Date().toISOString(),
+      },
+    });
+
     if (res.plan) {
       return { success: true, plan: res.plan };
     }
