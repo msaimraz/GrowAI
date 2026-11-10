@@ -38,9 +38,9 @@ export const EVIDENCE_CONFIG: Record<
     tagline: 'Supported by Controlled Human Clinical Studies',
     description:
       'Rigorous scientific data derived from peer-reviewed human clinical trials, randomized controlled studies, or formal pharmacokinetic evaluations.',
-    bg: 'bg-[#eef5ee]',
-    border: 'border-[#cfe0cf]',
-    text: 'text-[#144229]',
+    bg: 'bg-[#EAF1E4]',
+    border: 'border-[#E3DFD2]',
+    text: 'text-[#174C35]',
     icon: CheckCircle2,
   },
   'preliminary-research': {
@@ -48,9 +48,9 @@ export const EVIDENCE_CONFIG: Record<
     tagline: 'Laboratory (In Vitro) & Animal (In Vivo) Models',
     description:
       'Observed in laboratory cell culture assays or animal models. Demonstrates biological pathways and mechanisms of action, but is not yet validated by human clinical efficacy trials.',
-    bg: 'bg-[#f0f7ff]',
-    border: 'border-[#bae0fd]',
-    text: 'text-[#0369a1]',
+    bg: 'bg-[#E7F2F9]',
+    border: 'border-[#65A8D0/30]',
+    text: 'text-[#1B5D88]',
     icon: FlaskConical,
   },
   'traditional-use': {
@@ -58,9 +58,9 @@ export const EVIDENCE_CONFIG: Record<
     tagline: 'Historically Documented Ethnobotanical Practices',
     description:
       'Documented in ancient or regional herbal traditions (e.g. Ayurveda, Traditional Chinese Medicine, Greco-Roman, Unani). Reflects historical cultural practices without modern clinical confirmation.',
-    bg: 'bg-[#fef9ee]',
-    border: 'border-[#fed7aa]',
-    text: 'text-[#c2410c]',
+    bg: 'bg-[#FFF3D7]',
+    border: 'border-[#F0C04D/30]',
+    text: 'text-[#8A6400]',
     icon: BookOpen,
   },
   'insufficient-evidence': {
@@ -68,9 +68,9 @@ export const EVIDENCE_CONFIG: Record<
     tagline: 'Substantiation Unavailable in Scientific Literature',
     description:
       'Current pharmacological and clinical literature cannot adequately confirm or validate proposed physiological activities or health claims.',
-    bg: 'bg-[#f8fafc]',
-    border: 'border-[#cbd5e1]',
-    text: 'text-[#475569]',
+    bg: 'bg-[#F8F6EE]',
+    border: 'border-[#E3DFD2]',
+    text: 'text-[#68766C]',
     icon: HelpCircle,
   },
 };
@@ -109,36 +109,36 @@ export function EvidenceFrameworkGuide() {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <div className="bg-[#f7f5ed] rounded-2xl border border-[#ded5c5] overflow-hidden">
+    <div className="bg-[#F8F6EE] rounded-2xl border border-[#E3DFD2] overflow-hidden">
       <button
         type="button"
         onClick={() => setIsOpen(!isOpen)}
-        className="w-full p-4 sm:p-5 flex items-center justify-between gap-4 text-left hover:bg-[#f2efe4] transition-colors cursor-pointer"
+        className="w-full p-4 sm:p-5 flex items-center justify-between gap-4 text-left hover:bg-[#EAF1E4] transition-colors cursor-pointer"
         aria-expanded={isOpen}
       >
         <div className="flex items-center gap-3">
-          <span className="w-9 h-9 rounded-xl bg-white border border-[#ded5c5] flex items-center justify-center text-[#144229] shrink-0">
+          <span className="w-9 h-9 rounded-xl bg-white border border-[#E3DFD2] flex items-center justify-center text-[#174C35] shrink-0">
             <Info size={20} />
           </span>
           <div>
-            <h4 className="text-base sm:text-lg font-serif font-bold text-[#071c11]">
+            <h4 className="text-base sm:text-lg font-serif font-bold text-[#203027]">
               Scientific Evidence Hierarchy Guide
             </h4>
-            <p className="text-xs sm:text-sm text-[#5a7662]">
+            <p className="text-xs sm:text-sm text-[#68766C]">
               How GrowAI evaluates clinical trials, in vitro laboratory research, and traditional medicine.
             </p>
           </div>
         </div>
 
-        <div className="flex items-center gap-2 text-xs sm:text-sm font-semibold text-[#144229] shrink-0">
+        <div className="flex items-center gap-2 text-xs sm:text-sm font-semibold text-[#174C35] shrink-0">
           <span>{isOpen ? 'Hide Framework' : 'View Standards'}</span>
           {isOpen ? <ChevronUp size={18} /> : <ChevronDown size={18} />}
         </div>
       </button>
 
       {isOpen && (
-        <div className="p-4 sm:p-6 border-t border-[#ded5c5] bg-white space-y-4">
-          <p className="text-sm sm:text-base text-[#1c261e] leading-relaxed">
+        <div className="p-4 sm:p-6 border-t border-[#E3DFD2] bg-white space-y-4">
+          <p className="text-sm sm:text-base text-[#203027] leading-relaxed">
             GrowAI adheres to strict pharmacological reporting standards to prevent misleading health claims. We distinguish historically documented folklore from contemporary biochemical investigations:
           </p>
 
@@ -156,10 +156,10 @@ export function EvidenceFrameworkGuide() {
                       {item.label}
                     </h5>
                   </div>
-                  <p className="text-xs font-semibold text-[#071c11]">
+                  <p className="text-xs font-semibold text-[#203027]">
                     {item.tagline}
                   </p>
-                  <p className="text-xs sm:text-sm text-[#2e4435] leading-relaxed">
+                  <p className="text-xs sm:text-sm text-[#203027] leading-relaxed">
                     {item.description}
                   </p>
                 </div>
@@ -167,8 +167,8 @@ export function EvidenceFrameworkGuide() {
             })}
           </div>
 
-          <div className="p-3.5 bg-[#fef3c7]/70 rounded-xl border border-[#fde68a] text-xs sm:text-sm text-[#92400e] leading-relaxed flex items-start gap-2.5">
-            <AlertCircle size={18} className="shrink-0 mt-0.5 text-[#92400e]" />
+          <div className="p-3.5 bg-[#FFF3D7]/70 rounded-xl border border-[#F0C04D/30] text-xs sm:text-sm text-[#8A6400] leading-relaxed flex items-start gap-2.5">
+            <AlertCircle size={18} className="shrink-0 mt-0.5 text-[#8A6400]" />
             <span>
               <strong>Crucial Distinction:</strong> In vitro assays (test-tube cell cultures) and animal experiments reveal biological pathways but do <em>never</em> constitute proven clinical medical efficacy in humans. Dietary presence of phytochemicals (such as sulforaphane or vitexin) does not substitute for approved pharmaceuticals.
             </span>

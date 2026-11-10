@@ -14,87 +14,93 @@ export function PlanStatusBadge({ status, health, stepStatus, size = 'sm' }: Pla
   const sizeClasses = size === 'sm' ? 'px-2.5 py-0.5 text-xs' : 'px-3 py-1 text-sm';
 
   if (status) {
-    let colorClass = 'bg-[#f4efe6] text-[#526a57] border border-[#ded5c5]';
+    let colorClass = 'bg-[#F8F6EE] text-[#68766C] border border-[#E3DFD2]';
     let label = status.replace(/_/g, ' ');
 
     switch (status) {
       case 'active':
-        colorClass = 'bg-[#eef5ee] text-[#144229] border border-[#c2d9c6]';
+        // Semantic Active: Fresh Botanical Green
+        colorClass = 'bg-[#EAF1E4] text-[#174C35] border border-[#78A95A]/35 font-medium';
         break;
       case 'completed':
-        colorClass = 'bg-[#f4efe6] text-[#0c2417] border border-[#ded5c5] font-semibold';
+        // Semantic Completed: Fresh Green
+        colorClass = 'bg-[#EAF1E4] text-[#174C35] border border-[#78A95A]/45 font-semibold';
         break;
       case 'paused':
-        colorClass = 'bg-[#fbf4eb] text-[#8c501e] border border-[#f0d8c2]';
+        // Semantic Paused: Warm Amber / Sunshine
+        colorClass = 'bg-[#FFF3D7] text-[#8A6400] border border-[#F0C04D]/35';
         break;
       case 'cancelled':
-        colorClass = 'bg-rose-50 text-rose-700 border border-rose-200';
+        // Semantic Cancelled: Muted Coral
+        colorClass = 'bg-[#FBE9E2] text-[#963A23] border border-[#E4775D]/35';
         break;
       case 'draft':
-        colorClass = 'bg-[#f4efe6] text-[#6d8573] border border-[#ded5c5]';
+        colorClass = 'bg-[#F8F6EE] text-[#68766C] border border-[#E3DFD2]';
         break;
     }
 
     return (
-      <span className={`inline-flex items-center font-medium rounded-full capitalize ${sizeClasses} ${colorClass}`}>
+      <span className={`inline-flex items-center rounded-full capitalize ${sizeClasses} ${colorClass}`}>
         {label}
       </span>
     );
   }
 
   if (health) {
-    let colorClass = 'bg-[#f4efe6] text-[#526a57] border border-[#ded5c5]';
+    let colorClass = 'bg-[#F8F6EE] text-[#68766C] border border-[#E3DFD2]';
     let label = health.replace(/_/g, ' ');
 
     switch (health) {
       case 'on_track':
-        colorClass = 'bg-[#eef5ee] text-[#144229] border border-[#c2d9c6]';
+        colorClass = 'bg-[#EAF1E4] text-[#174C35] border border-[#78A95A]/35 font-medium';
         break;
       case 'needs_attention':
-        colorClass = 'bg-rose-50 text-rose-700 border border-rose-200';
+        // Semantic Needs Attention: Muted Coral
+        colorClass = 'bg-[#FBE9E2] text-[#963A23] border border-[#E4775D]/35 font-medium';
         break;
       case 'blocked':
-        colorClass = 'bg-[#fbf4eb] text-[#8c501e] border border-[#f0d8c2]';
+        // Semantic Blocked: Muted Amber
+        colorClass = 'bg-[#FFF3D7] text-[#8A6400] border border-[#F0C04D]/35';
         break;
       case 'waiting_for_observation':
-        colorClass = 'bg-[#edf4fb] text-[#1e4d75] border border-[#cbe1f5]';
+        colorClass = 'bg-[#E7F2F9] text-[#1B5D88] border border-[#65A8D0]/35';
         break;
       case 'completed':
-        colorClass = 'bg-[#f4efe6] text-[#0c2417] border border-[#ded5c5] font-semibold';
+        colorClass = 'bg-[#EAF1E4] text-[#174C35] border border-[#78A95A]/45 font-semibold';
         break;
     }
 
     return (
-      <span className={`inline-flex items-center font-medium rounded-full capitalize ${sizeClasses} ${colorClass}`}>
+      <span className={`inline-flex items-center rounded-full capitalize ${sizeClasses} ${colorClass}`}>
         {label}
       </span>
     );
   }
 
   if (stepStatus) {
-    let colorClass = 'bg-[#f4efe6] text-[#526a57] border border-[#ded5c5]';
+    let colorClass = 'bg-[#F8F6EE] text-[#68766C] border border-[#E3DFD2]';
     let label = stepStatus.replace(/_/g, ' ');
 
     switch (stepStatus) {
       case 'completed':
-        colorClass = 'bg-[#eef5ee] text-[#144229] border border-[#c2d9c6] font-medium';
+        colorClass = 'bg-[#EAF1E4] text-[#174C35] border border-[#78A95A]/45 font-medium';
         break;
       case 'in_progress':
-        colorClass = 'bg-[#eef5ee] text-[#144229] border border-[#144229]/40 animate-pulse font-semibold';
+        colorClass = 'bg-[#EAF1E4] text-[#174C35] border border-[#174C35]/40 animate-pulse font-semibold';
         break;
       case 'ready':
-        colorClass = 'bg-[#edf4fb] text-[#1e4d75] border border-[#cbe1f5] font-semibold';
+        colorClass = 'bg-[#E7F2F9] text-[#1B5D88] border border-[#65A8D0]/35 font-semibold';
         break;
       case 'blocked':
-        colorClass = 'bg-[#faf7f2] text-[#8c7e6c] border border-[#ded5c5]';
+        colorClass = 'bg-[#FFF3D7] text-[#8A6400] border border-[#F0C04D]/35';
         break;
       case 'skipped':
-        colorClass = 'bg-[#f4efe6] text-[#8c7e6c] line-through border border-[#ded5c5]';
+        colorClass = 'bg-[#F8F6EE] text-[#68766C] line-through border border-[#E3DFD2]';
         break;
     }
 
     return (
-      <span className={`inline-flex items-center font-medium rounded-full capitalize ${sizeClasses} ${colorClass}`}>
+      <span className={`inline-flex items-center rounded-full capitalize ${sizeClasses} ${colorClass}`}>
         {label}
       </span>
     );
@@ -102,4 +108,3 @@ export function PlanStatusBadge({ status, health, stepStatus, size = 'sm' }: Pla
 
   return null;
 }
-

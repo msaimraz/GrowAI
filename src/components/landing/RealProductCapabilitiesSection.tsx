@@ -55,17 +55,17 @@ export function RealProductCapabilitiesSection() {
   ];
 
   return (
-    <section className="py-16 sm:py-20 lg:py-24 bg-white border-b border-[#ded5c5]">
+    <section className="py-16 sm:py-20 lg:py-24 bg-white border-b border-[#E3DFD2]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12 sm:space-y-16">
         {/* Editorial Heading */}
         <div className="max-w-2xl mx-auto text-center space-y-3">
-          <span className="text-[11px] font-mono tracking-widest text-[#526a57] uppercase font-bold block">
+          <span className="text-[11px] font-mono tracking-widest text-[#68766C] uppercase font-bold block">
             CORE CAPABILITIES
           </span>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-serif font-bold text-[#0c2417] tracking-tight leading-tight">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-serif font-bold text-[#203027] tracking-tight leading-tight">
             Everything You Need to Grow Well.
           </h2>
-          <p className="text-base sm:text-lg text-[#526a57] leading-relaxed pt-1">
+          <p className="text-base sm:text-lg text-[#68766C] leading-relaxed pt-1">
             Practical gardening tools built for real home spaces, combined into one calm experience.
           </p>
         </div>
@@ -77,17 +77,17 @@ export function RealProductCapabilitiesSection() {
             return (
               <div
                 key={cap.title}
-                className="p-6 rounded-3xl border border-[#ded5c5] bg-[#fbf9f4] hover:bg-white hover:border-[#144229]/30 transition-all shadow-xs space-y-4 flex flex-col justify-between"
+                className="p-6 rounded-3xl border border-[#E3DFD2] bg-[#F8F6EE] hover:bg-white hover:border-[#174C35]/30 transition-all shadow-xs space-y-4 flex flex-col justify-between"
               >
                 <div className="space-y-3">
-                  <div className="w-10 h-10 rounded-xl bg-white border border-[#ded5c5] flex items-center justify-center text-[#144229] shadow-2xs">
+                  <div className="w-10 h-10 rounded-xl bg-white border border-[#E3DFD2] flex items-center justify-center text-[#174C35] shadow-2xs">
                     <Icon size={18} className="stroke-[2.2]" />
                   </div>
                   <div>
-                    <h3 className="font-serif font-bold text-lg text-[#0c2417]">
+                    <h3 className="font-serif font-bold text-lg text-[#203027]">
                       {cap.title}
                     </h3>
-                    <p className="text-xs sm:text-sm text-[#526a57] mt-1 leading-relaxed">
+                    <p className="text-xs sm:text-sm text-[#68766C] mt-1 leading-relaxed">
                       {cap.description}
                     </p>
                   </div>
@@ -95,7 +95,7 @@ export function RealProductCapabilitiesSection() {
 
                 <Link
                   href={cap.href}
-                  className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#144229] hover:underline pt-1 active:scale-95 transition-all duration-75 select-none touch-manipulation min-h-[38px]"
+                  className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#174C35] hover:underline pt-1 active:scale-95 transition-all duration-75 select-none touch-manipulation min-h-[38px]"
                 >
                   <span>Explore {cap.title}</span>
                   <ArrowRight size={13} />
@@ -107,23 +107,23 @@ export function RealProductCapabilitiesSection() {
 
         {/* Editorial Preview Composition: Live UI Preview Snippet */}
         <div className="pt-6">
-          <div className="bg-[#fbf9f4] rounded-3xl border border-[#ded5c5] p-6 sm:p-8 lg:p-10 shadow-xs">
+          <div className="bg-[#F8F6EE] rounded-3xl border border-[#E3DFD2] p-6 sm:p-8 lg:p-10 shadow-xs">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
               {/* Left Column: Story Note */}
               <div className="lg:col-span-5 space-y-4">
-                <span className="text-[11px] font-mono tracking-widest text-[#144229] uppercase font-bold block">
+                <span className="text-[11px] font-mono tracking-widest text-[#174C35] uppercase font-bold block">
                   ADAPTIVE EXECUTION
                 </span>
-                <h3 className="font-serif font-bold text-2xl sm:text-3xl text-[#0c2417] leading-snug">
+                <h3 className="font-serif font-bold text-2xl sm:text-3xl text-[#203027] leading-snug">
                   Follow step-by-step journeys without information overload.
                 </h3>
-                <p className="text-xs sm:text-sm text-[#526a57] leading-relaxed">
+                <p className="text-xs sm:text-sm text-[#68766C] leading-relaxed">
                   Grow Plans turn botanical goals into simple milestones. Whether starting microgreens or pruning basil for bushier growth, each step tells you what to observe and what to do next.
                 </p>
                 <div className="pt-2">
                   <Link
                     href="/app/grow-plans"
-                    className="inline-flex items-center gap-2 text-xs sm:text-sm font-semibold bg-[#144229] text-white hover:bg-[#071c11] px-5 py-2.5 rounded-xl shadow-xs transition-colors"
+                    className="inline-flex items-center gap-2 text-xs sm:text-sm font-semibold bg-[#174C35] text-white hover:bg-[#203027] px-5 py-2.5 rounded-xl shadow-xs transition-colors"
                   >
                     <span>Browse Grow Plans</span>
                     <ArrowRight size={14} />
@@ -132,52 +132,52 @@ export function RealProductCapabilitiesSection() {
               </div>
 
               {/* Right Column: Realistic Step Progression UI */}
-              <div className="lg:col-span-7 bg-white rounded-2xl border border-[#ded5c5] p-5 sm:p-6 shadow-2xs space-y-4">
-                <div className="flex items-center justify-between pb-3 border-b border-[#f0ebe0]">
+              <div className="lg:col-span-7 bg-white rounded-2xl border border-[#E3DFD2] p-5 sm:p-6 shadow-2xs space-y-4">
+                <div className="flex items-center justify-between pb-3 border-b border-[#E3DFD2]">
                   <div className="flex items-center gap-2 min-w-0">
-                    <span className="w-7 h-7 rounded-lg bg-[#eef5ee] text-[#144229] flex items-center justify-center font-bold text-xs">
+                    <span className="w-7 h-7 rounded-lg bg-[#EAF1E4] text-[#174C35] flex items-center justify-center font-bold text-xs">
                       🌱
                     </span>
-                    <span className="font-serif font-bold text-sm text-[#0c2417] truncate">
+                    <span className="font-serif font-bold text-sm text-[#203027] truncate">
                       Genovese Basil — Seed to First Harvest
                     </span>
                   </div>
-                  <span className="text-[11px] font-semibold text-[#144229] bg-[#eef5ee] px-2.5 py-0.5 rounded-full shrink-0">
+                  <span className="text-[11px] font-semibold text-[#174C35] bg-[#EAF1E4] px-2.5 py-0.5 rounded-full shrink-0">
                     Step 3 of 5
                   </span>
                 </div>
 
                 {/* Steps Mini Rail */}
                 <div className="grid grid-cols-5 gap-1.5 sm:gap-2 text-center text-[10px] font-medium">
-                  <div className="p-2 rounded-xl bg-[#eef5ee] text-[#144229] border border-[#cfe0cf]">
-                    <CheckCircle2 size={12} className="mx-auto mb-0.5 text-[#257a4d]" />
+                  <div className="p-2 rounded-xl bg-[#EAF1E4] text-[#174C35] border border-[#E3DFD2]">
+                    <CheckCircle2 size={12} className="mx-auto mb-0.5 text-[#174C35]" />
                     <span>01 Start</span>
                   </div>
-                  <div className="p-2 rounded-xl bg-[#eef5ee] text-[#144229] border border-[#cfe0cf]">
-                    <CheckCircle2 size={12} className="mx-auto mb-0.5 text-[#257a4d]" />
+                  <div className="p-2 rounded-xl bg-[#EAF1E4] text-[#174C35] border border-[#E3DFD2]">
+                    <CheckCircle2 size={12} className="mx-auto mb-0.5 text-[#174C35]" />
                     <span>02 Grow</span>
                   </div>
-                  <div className="p-2 rounded-xl bg-[#144229] text-white font-bold shadow-2xs">
+                  <div className="p-2 rounded-xl bg-[#174C35] text-white font-bold shadow-2xs">
                     <span className="block text-[10px]">👉</span>
                     <span>03 Pinch</span>
                   </div>
-                  <div className="p-2 rounded-xl bg-[#fbf9f4] text-[#6d8573] border border-[#ded5c5]">
+                  <div className="p-2 rounded-xl bg-[#F8F6EE] text-[#68766C] border border-[#E3DFD2]">
                     <span>04 Branch</span>
                   </div>
-                  <div className="p-2 rounded-xl bg-[#fbf9f4] text-[#6d8573] border border-[#ded5c5]">
+                  <div className="p-2 rounded-xl bg-[#F8F6EE] text-[#68766C] border border-[#E3DFD2]">
                     <span>05 Harvest</span>
                   </div>
                 </div>
 
                 {/* Active Step Card */}
-                <div className="p-4 rounded-xl bg-[#fbf9f4] border border-[#ded5c5] space-y-2">
+                <div className="p-4 rounded-xl bg-[#F8F6EE] border border-[#E3DFD2] space-y-2">
                   <div className="flex items-center justify-between">
-                    <span className="text-xs font-bold text-[#0c2417]">
+                    <span className="text-xs font-bold text-[#203027]">
                       Current Action: Pinch top center node
                     </span>
-                    <span className="text-[10px] text-[#257a4d] font-semibold">Recommended Now</span>
+                    <span className="text-[10px] text-[#174C35] font-semibold">Recommended Now</span>
                   </div>
-                  <p className="text-xs text-[#526a57] leading-relaxed">
+                  <p className="text-xs text-[#68766C] leading-relaxed">
                     Snip above the second set of true leaves. This encourages lateral shoots to branch out, doubling your leaf yield.
                   </p>
                 </div>

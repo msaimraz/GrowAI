@@ -63,10 +63,10 @@ export function VisualProgress({
               key={stg.stage}
               className={`p-3.5 rounded-xl border transition-all text-center space-y-1.5 ${
                 isCurrent
-                  ? 'bg-[#E6F0E3] border-[#174C35] shadow-xs'
+                  ? 'bg-[#EAF1E4] border-[#174C35] shadow-xs'
                   : isDone
-                  ? 'bg-white border-[#CEE4C9]'
-                  : 'bg-[#FBF9F4] border-[#E8E4DA] opacity-70'
+                  ? 'bg-white border-[#E3DFD2]'
+                  : 'bg-[#F8F6EE] border-[#E3DFD2] opacity-70'
               }`}
             >
               <div className="flex items-center justify-center">
@@ -75,23 +75,23 @@ export function VisualProgress({
                     isCurrent
                       ? 'bg-white ring-2 ring-[#174C35]'
                       : isDone
-                      ? 'bg-[#E6F0E3]'
+                      ? 'bg-[#EAF1E4]'
                       : 'bg-white'
                   }`}
                 >
                   {stg.emoji}
                 </span>
               </div>
-              <h4 className="font-serif font-bold text-sm text-[#1F2A23]">
+              <h4 className="font-serif font-bold text-sm text-[#203027]">
                 {stg.label}
               </h4>
               {stg.timing && (
-                <span className="text-[10px] font-mono text-[#68736B] block">
+                <span className="text-[10px] font-mono text-[#68766C] block">
                   {stg.timing}
                 </span>
               )}
               {stg.description && (
-                <p className="text-[11px] text-[#68736B] leading-snug line-clamp-2">
+                <p className="text-[11px] text-[#68766C] leading-snug line-clamp-2">
                   {stg.description}
                 </p>
               )}
@@ -111,10 +111,10 @@ export function VisualProgress({
               key={stg.stage}
               className={`p-3 rounded-xl border flex items-center gap-3 ${
                 isCurrent
-                  ? 'bg-[#E6F0E3] border-[#174C35]'
+                  ? 'bg-[#EAF1E4] border-[#174C35]'
                   : isDone
-                  ? 'bg-white border-[#CEE4C9]'
-                  : 'bg-[#FBF9F4] border-[#E8E4DA] opacity-75'
+                  ? 'bg-white border-[#E3DFD2]'
+                  : 'bg-[#F8F6EE] border-[#E3DFD2] opacity-75'
               }`}
             >
               <span className="w-9 h-9 rounded-full bg-white flex items-center justify-center text-lg shrink-0 shadow-2xs">
@@ -122,17 +122,17 @@ export function VisualProgress({
               </span>
               <div className="min-w-0 flex-1">
                 <div className="flex items-baseline justify-between gap-1">
-                  <h4 className="font-serif font-bold text-sm text-[#1F2A23]">
+                  <h4 className="font-serif font-bold text-sm text-[#203027]">
                     {stg.label}
                   </h4>
                   {stg.timing && (
-                    <span className="text-[10px] font-mono text-[#68736B]">
+                    <span className="text-[10px] font-mono text-[#68766C]">
                       {stg.timing}
                     </span>
                   )}
                 </div>
                 {stg.description && (
-                  <p className="text-xs text-[#68736B] truncate">
+                  <p className="text-xs text-[#68766C] truncate">
                     {stg.description}
                   </p>
                 )}

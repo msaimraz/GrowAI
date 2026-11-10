@@ -38,7 +38,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: '#163A2A',
+  themeColor: '#174C35',
   width: 'device-width',
   initialScale: 1,
   maximumScale: 5,
@@ -51,7 +51,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className="h-full antialiased scroll-smooth" style={{ colorScheme: 'light' }}>
-      <body className="min-h-full flex flex-col bg-[#F6F1E8] text-[#263028]">
+      <body className="min-h-full flex flex-col bg-[#F8F6EE] text-[#203027]">
         <PwaProvider>
           <AuthProvider>
             <GrowToastProvider>

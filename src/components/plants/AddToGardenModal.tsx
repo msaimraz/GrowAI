@@ -77,10 +77,10 @@ export function AddToGardenModal({ plant, isOpen, onClose }: AddToGardenModalPro
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/50 backdrop-blur-xs">
-      <div className="bg-white rounded-3xl border border-[#ded5c5] max-w-[calc(100vw-24px)] sm:max-w-lg w-full p-5 sm:p-6 shadow-2xl space-y-5 animate-in fade-in zoom-in-95 duration-150 max-h-[90vh] overflow-y-auto">
-        <div className="flex items-center justify-between pb-3 border-b border-[#f0ebe0]">
+      <div className="bg-white rounded-3xl border border-[#E3DFD2] max-w-[calc(100vw-24px)] sm:max-w-lg w-full p-5 sm:p-6 shadow-2xl space-y-5 animate-in fade-in zoom-in-95 duration-150 max-h-[90vh] overflow-y-auto">
+        <div className="flex items-center justify-between pb-3 border-b border-[#E3DFD2]">
           <div className="flex items-center gap-3 min-w-0">
-            <div className="w-12 h-12 rounded-2xl overflow-hidden shrink-0 border border-[#ded5c5] shadow-xs relative">
+            <div className="w-12 h-12 rounded-2xl overflow-hidden shrink-0 border border-[#E3DFD2] shadow-xs relative">
               <PlantImage
                 src={plant.imageUrl || `/plants/${plant.slug}.webp`}
                 alt={plant.commonName}
@@ -90,10 +90,10 @@ export function AddToGardenModal({ plant, isOpen, onClose }: AddToGardenModalPro
               />
             </div>
             <div className="min-w-0">
-              <h3 className="font-serif font-bold text-lg text-[#0c2417] truncate">
+              <h3 className="font-serif font-bold text-lg text-[#203027] truncate">
                 Add to My Garden Log
               </h3>
-              <p className="text-xs text-[#526a57] truncate">
+              <p className="text-xs text-[#68766C] truncate">
                 {plant.commonName} ({plant.scientificName})
               </p>
             </div>
@@ -101,7 +101,7 @@ export function AddToGardenModal({ plant, isOpen, onClose }: AddToGardenModalPro
           <button
             type="button"
             onClick={onClose}
-            className="p-1.5 rounded-lg text-[#698570] hover:text-[#0c2417] hover:bg-[#f4f8f4]"
+            className="p-1.5 rounded-lg text-[#68766C] hover:text-[#203027] hover:bg-[#EAF1E4]"
             aria-label="Close dialog"
           >
             <X size={20} />
@@ -110,7 +110,7 @@ export function AddToGardenModal({ plant, isOpen, onClose }: AddToGardenModalPro
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label className="block text-xs sm:text-sm font-semibold text-[#071c11] mb-1.5">
+            <label className="block text-xs sm:text-sm font-semibold text-[#203027] mb-1.5">
               Plant Nickname
             </label>
             <input
@@ -118,13 +118,13 @@ export function AddToGardenModal({ plant, isOpen, onClose }: AddToGardenModalPro
               value={nickname}
               onChange={(e) => setNickname(e.target.value)}
               required
-              className="w-full h-11 px-3.5 text-sm rounded-xl border border-[#ded5c5] bg-[#fbf9f4] text-[#071c11] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#1b5837]"
+              className="w-full h-11 px-3.5 text-sm rounded-xl border border-[#E3DFD2] bg-[#F8F6EE] text-[#203027] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#174C35]"
             />
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div>
-              <label className="block text-xs sm:text-sm font-semibold text-[#071c11] mb-1.5">
+              <label className="block text-xs sm:text-sm font-semibold text-[#203027] mb-1.5">
                 Planted Date
               </label>
               <input
@@ -132,18 +132,18 @@ export function AddToGardenModal({ plant, isOpen, onClose }: AddToGardenModalPro
                 value={plantedDate}
                 onChange={(e) => setPlantedDate(e.target.value)}
                 required
-                className="w-full h-11 px-3.5 text-sm rounded-xl border border-[#ded5c5] bg-[#fbf9f4] text-[#071c11] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#1b5837]"
+                className="w-full h-11 px-3.5 text-sm rounded-xl border border-[#E3DFD2] bg-[#F8F6EE] text-[#203027] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#174C35]"
               />
             </div>
 
             <div>
-              <label className="block text-xs sm:text-sm font-semibold text-[#071c11] mb-1.5">
+              <label className="block text-xs sm:text-sm font-semibold text-[#203027] mb-1.5">
                 Starting Stage
               </label>
               <select
                 value={stage}
                 onChange={(e) => setStage(e.target.value as GrowthStage)}
-                className="w-full h-11 px-3.5 text-sm rounded-xl border border-[#ded5c5] bg-[#fbf9f4] text-[#071c11] focus:outline-none focus:ring-2 focus:ring-[#1b5837] cursor-pointer"
+                className="w-full h-11 px-3.5 text-sm rounded-xl border border-[#E3DFD2] bg-[#F8F6EE] text-[#203027] focus:outline-none focus:ring-2 focus:ring-[#174C35] cursor-pointer"
               >
                 <option value="Seed">Seed (Day 0)</option>
                 <option value="Germination">Germination (Sprout)</option>
@@ -156,13 +156,13 @@ export function AddToGardenModal({ plant, isOpen, onClose }: AddToGardenModalPro
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div>
-              <label className="block text-xs sm:text-sm font-semibold text-[#071c11] mb-1.5">
+              <label className="block text-xs sm:text-sm font-semibold text-[#203027] mb-1.5">
                 Growing Location
               </label>
               <select
                 value={location}
                 onChange={(e) => setLocation(e.target.value as any)}
-                className="w-full h-11 px-3.5 text-sm rounded-xl border border-[#ded5c5] bg-[#fbf9f4] text-[#071c11] focus:outline-none focus:ring-2 focus:ring-[#1b5837] cursor-pointer"
+                className="w-full h-11 px-3.5 text-sm rounded-xl border border-[#E3DFD2] bg-[#F8F6EE] text-[#203027] focus:outline-none focus:ring-2 focus:ring-[#174C35] cursor-pointer"
               >
                 <option value="Balcony Rack">Balcony Rack</option>
                 <option value="Kitchen Tier">Kitchen Tier</option>
@@ -173,13 +173,13 @@ export function AddToGardenModal({ plant, isOpen, onClose }: AddToGardenModalPro
             </div>
 
             <div>
-              <label className="block text-xs sm:text-sm font-semibold text-[#071c11] mb-1.5">
+              <label className="block text-xs sm:text-sm font-semibold text-[#203027] mb-1.5">
                 Vertical Rack Tier
               </label>
               <select
                 value={tier}
                 onChange={(e) => setTier(e.target.value as any)}
-                className="w-full h-11 px-3.5 text-sm rounded-xl border border-[#ded5c5] bg-[#fbf9f4] text-[#071c11] focus:outline-none focus:ring-2 focus:ring-[#1b5837] cursor-pointer"
+                className="w-full h-11 px-3.5 text-sm rounded-xl border border-[#E3DFD2] bg-[#F8F6EE] text-[#203027] focus:outline-none focus:ring-2 focus:ring-[#174C35] cursor-pointer"
               >
                 <option value="top">Top Tier (Sun/Heat)</option>
                 <option value="middle">Middle Tier (Greens/Herbs)</option>
@@ -189,19 +189,19 @@ export function AddToGardenModal({ plant, isOpen, onClose }: AddToGardenModalPro
           </div>
 
           <div>
-            <label className="block text-xs sm:text-sm font-semibold text-[#071c11] mb-1.5">
+            <label className="block text-xs sm:text-sm font-semibold text-[#203027] mb-1.5">
               Initial Growth Note (Optional)
             </label>
             <textarea
               value={initialNote}
               onChange={(e) => setInitialNote(e.target.value)}
               rows={2}
-              className="w-full px-3.5 py-2.5 text-sm rounded-xl border border-[#ded5c5] bg-[#fbf9f4] text-[#071c11] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#1b5837]"
+              className="w-full px-3.5 py-2.5 text-sm rounded-xl border border-[#E3DFD2] bg-[#F8F6EE] text-[#203027] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#174C35]"
             />
           </div>
 
           {errorMsg && (
-            <div className="p-3.5 rounded-xl bg-[#fbeee9] border border-[#f8d7cb] text-xs sm:text-sm text-[#9a3412] flex items-start gap-2">
+            <div className="p-3.5 rounded-xl bg-[#FBE9E2] border border-[#E4775D]/35 text-xs sm:text-sm text-[#963A23] flex items-start gap-2">
               <AlertCircle size={18} className="shrink-0 mt-0.5" />
               <span>{errorMsg}</span>
             </div>
@@ -212,14 +212,14 @@ export function AddToGardenModal({ plant, isOpen, onClose }: AddToGardenModalPro
               type="button"
               onClick={onClose}
               disabled={saving}
-              className="w-full sm:w-auto px-5 py-2.5 text-sm font-semibold text-[#2e4435] hover:bg-[#f4f8f4] rounded-xl border border-[#ded5c5] cursor-pointer min-h-[44px]"
+              className="w-full sm:w-auto px-5 py-2.5 text-sm font-semibold text-[#68766C] hover:bg-[#EAF1E4] rounded-xl border border-[#E3DFD2] cursor-pointer min-h-[44px]"
             >
               Cancel
             </button>
             <button
               type="submit"
               disabled={saving}
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-2.5 text-sm font-semibold bg-[#144229] hover:bg-[#071c11] active:scale-[0.98] disabled:opacity-50 text-white rounded-xl shadow-xs cursor-pointer transition-all duration-75 select-none touch-manipulation min-h-[44px]"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-2.5 text-sm font-semibold bg-[#174C35] hover:bg-[#123E2A] active:scale-[0.98] disabled:opacity-50 text-white rounded-xl shadow-xs cursor-pointer transition-all duration-75 select-none touch-manipulation min-h-[44px]"
             >
               {saving ? (
                 <>

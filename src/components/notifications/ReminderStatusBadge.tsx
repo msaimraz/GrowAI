@@ -9,7 +9,7 @@ interface ReminderStatusBadgeProps {
 
 export function ReminderStatusBadge({ status, size = 'sm' }: ReminderStatusBadgeProps) {
   let label = 'Scheduled';
-  let classes = 'bg-[#f4efe6] text-[#526a57] border-[#ded5c5]';
+  let classes = 'bg-[#F8F6EE] text-[#68766C] border-[#E3DFD2]';
   let icon = <Calendar size={size === 'sm' ? 12 : 14} />;
 
   switch (status) {
@@ -30,8 +30,8 @@ export function ReminderStatusBadge({ status, size = 'sm' }: ReminderStatusBadge
       break;
     case 'dismissed':
       label = 'Dismissed';
-      classes = 'bg-[#f0ece1] text-[#78716c] border-[#ded5c5]';
-      icon = <XCircle size={size === 'sm' ? 12 : 14} className="text-[#a8a29e]" />;
+      classes = 'bg-[#E3DFD2] text-[#68766C] border-[#E3DFD2]';
+      icon = <XCircle size={size === 'sm' ? 12 : 14} className="text-[#68766C]" />;
       break;
     case 'cancelled':
       label = 'Cancelled';
@@ -41,8 +41,8 @@ export function ReminderStatusBadge({ status, size = 'sm' }: ReminderStatusBadge
     case 'scheduled':
     default:
       label = 'Scheduled';
-      classes = 'bg-[#eef5ee] text-[#144229] border-[#c2d9c6]';
-      icon = <Calendar size={size === 'sm' ? 12 : 14} className="text-[#144229]" />;
+      classes = 'bg-[#EAF1E4] text-[#174C35] border-[#E3DFD2]';
+      icon = <Calendar size={size === 'sm' ? 12 : 14} className="text-[#174C35]" />;
       break;
   }
 

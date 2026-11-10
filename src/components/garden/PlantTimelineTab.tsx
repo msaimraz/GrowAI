@@ -124,17 +124,17 @@ export function PlantTimelineTab({
   const getEventIcon = (event: PlantTimelineEvent) => {
     switch (event.eventType) {
       case 'planting':
-        return <Sprout size={16} className="text-[#144229]" />;
+        return <Sprout size={16} className="text-[#174C35]" />;
       case 'plant_added':
-        return <Calendar size={16} className="text-[#526a57]" />;
+        return <Calendar size={16} className="text-[#68766C]" />;
       case 'germination':
         return <Sparkles size={16} className="text-emerald-600" />;
       case 'transplant':
         return <Layers size={16} className="text-teal-600" />;
       case 'stage_change':
-        return <Sprout size={16} className="text-[#144229]" />;
+        return <Sprout size={16} className="text-[#174C35]" />;
       case 'growth_observation':
-        return <Clock size={16} className="text-[#526a57]" />;
+        return <Clock size={16} className="text-[#68766C]" />;
       case 'photo':
         return <Camera size={16} className="text-amber-600" />;
       case 'health_assessment':
@@ -154,7 +154,7 @@ export function PlantTimelineTab({
       case 'harvest':
         return <Scissors size={16} className="text-emerald-800" />;
       default:
-        return <Clock size={16} className="text-[#526a57]" />;
+        return <Clock size={16} className="text-[#68766C]" />;
     }
   };
 
@@ -169,20 +169,20 @@ export function PlantTimelineTab({
       case 'info':
         return 'bg-blue-50 text-blue-800 border-blue-200';
       case 'accent':
-        return 'bg-[#eef5ee] text-[#144229] border-[#c2d9c6] font-semibold';
+        return 'bg-[#EAF1E4] text-[#174C35] border-[#E3DFD2] font-semibold';
       default:
-        return 'bg-[#f4efe6] text-[#526a57] border-[#ded5c5]';
+        return 'bg-[#F8F6EE] text-[#68766C] border-[#E3DFD2]';
     }
   };
 
   return (
     <div className="space-y-6">
       {/* 1. Compact Growth Summary Card */}
-      <div className="p-5 rounded-2xl bg-[#fbf9f4] border border-[#ded5c5] shadow-xs">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-[#ded5c5]">
+      <div className="p-5 rounded-2xl bg-[#F8F6EE] border border-[#E3DFD2] shadow-xs">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-[#E3DFD2]">
           <div>
             <div className="flex items-center gap-2">
-              <span className="text-xs uppercase tracking-wider font-semibold text-[#6d8573]">
+              <span className="text-xs uppercase tracking-wider font-semibold text-[#68766C]">
                 Growth Timeline & Journal
               </span>
               {summary.hasPropagationLineage && (
@@ -196,16 +196,16 @@ export function PlantTimelineTab({
                 </span>
               )}
             </div>
-            <h3 className="font-serif text-xl sm:text-2xl text-[#0c2417] font-bold mt-1">
+            <h3 className="font-serif text-xl sm:text-2xl text-[#203027] font-bold mt-1">
               {summary.nickname}
             </h3>
           </div>
 
           <div className="flex flex-wrap items-center gap-2">
-            <span className="px-3 py-1.5 rounded-xl text-xs font-bold bg-[#144229] text-white shadow-xs">
+            <span className="px-3 py-1.5 rounded-xl text-xs font-bold bg-[#174C35] text-white shadow-xs">
               {summary.ageDisplay}
             </span>
-            <span className="px-3 py-1.5 rounded-xl text-xs font-semibold bg-white border border-[#ded5c5] text-[#0c2417]">
+            <span className="px-3 py-1.5 rounded-xl text-xs font-semibold bg-white border border-[#E3DFD2] text-[#203027]">
               Stage: {summary.currentStage}
             </span>
             {summary.healthStatus && summary.healthStatus !== 'unknown' && (
@@ -216,7 +216,7 @@ export function PlantTimelineTab({
             {showFullTimelineLink && (
               <Link
                 href={`/app/my-garden/${plant.id}/timeline`}
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold bg-white text-[#144229] border border-[#144229] hover:bg-[#eef5ee] transition-all cursor-pointer min-h-[36px]"
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold bg-white text-[#174C35] border border-[#174C35] hover:bg-[#EAF1E4] transition-all cursor-pointer min-h-[36px]"
               >
                 <span>Full Timeline</span>
                 <ArrowRight size={13} />
@@ -227,21 +227,21 @@ export function PlantTimelineTab({
 
         {/* Stage Progression Chain */}
         {summary.stageHistory.length > 1 && (
-          <div className="py-3 border-b border-[#ded5c5] flex flex-wrap items-center gap-1.5 text-xs text-[#526a57]">
-            <span className="font-semibold text-[#0c2417]">Observed Stages:</span>
+          <div className="py-3 border-b border-[#E3DFD2] flex flex-wrap items-center gap-1.5 text-xs text-[#68766C]">
+            <span className="font-semibold text-[#203027]">Observed Stages:</span>
             {summary.stageHistory.map((stg, idx) => (
               <React.Fragment key={stg}>
                 <span
                   className={`px-2 py-0.5 rounded-md ${
                     stg === summary.currentStage
-                      ? 'bg-[#144229] text-white font-bold'
-                      : 'bg-white border border-[#ded5c5] text-[#526a57]'
+                      ? 'bg-[#174C35] text-white font-bold'
+                      : 'bg-white border border-[#E3DFD2] text-[#68766C]'
                   }`}
                 >
                   {stg}
                 </span>
                 {idx < summary.stageHistory.length - 1 && (
-                  <ChevronRight size={13} className="text-[#a89f91]" />
+                  <ChevronRight size={13} className="text-[#68766C]" />
                 )}
               </React.Fragment>
             ))}
@@ -250,21 +250,21 @@ export function PlantTimelineTab({
 
         {/* Botanical Metrics Grid */}
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-4 text-xs">
-          <div className="p-3 bg-white rounded-xl border border-[#ded5c5]">
-            <span className="text-[#6d8573] block mb-0.5">Planted Date</span>
-            <strong className="text-[#0c2417] text-sm">{summary.plantedDateDisplay}</strong>
+          <div className="p-3 bg-white rounded-xl border border-[#E3DFD2]">
+            <span className="text-[#68766C] block mb-0.5">Planted Date</span>
+            <strong className="text-[#203027] text-sm">{summary.plantedDateDisplay}</strong>
           </div>
-          <div className="p-3 bg-white rounded-xl border border-[#ded5c5]">
-            <span className="text-[#6d8573] block mb-0.5">Last Observation</span>
-            <strong className="text-[#0c2417] text-sm">{summary.lastObservationDateDisplay}</strong>
+          <div className="p-3 bg-white rounded-xl border border-[#E3DFD2]">
+            <span className="text-[#68766C] block mb-0.5">Last Observation</span>
+            <strong className="text-[#203027] text-sm">{summary.lastObservationDateDisplay}</strong>
           </div>
-          <div className="p-3 bg-white rounded-xl border border-[#ded5c5]">
-            <span className="text-[#6d8573] block mb-0.5">Photo Journal</span>
-            <strong className="text-[#0c2417] text-sm">{summary.totalPhotosCount} photos</strong>
+          <div className="p-3 bg-white rounded-xl border border-[#E3DFD2]">
+            <span className="text-[#68766C] block mb-0.5">Photo Journal</span>
+            <strong className="text-[#203027] text-sm">{summary.totalPhotosCount} photos</strong>
           </div>
-          <div className="p-3 bg-white rounded-xl border border-[#ded5c5]">
-            <span className="text-[#6d8573] block mb-0.5">AI Health Records</span>
-            <strong className="text-[#0c2417] text-sm">
+          <div className="p-3 bg-white rounded-xl border border-[#E3DFD2]">
+            <span className="text-[#68766C] block mb-0.5">AI Health Records</span>
+            <strong className="text-[#203027] text-sm">
               {summary.totalHealthAssessmentsCount} assessments
             </strong>
           </div>
@@ -272,7 +272,7 @@ export function PlantTimelineTab({
       </div>
 
       {/* 2. Timeline Filters */}
-      <div className="flex flex-wrap items-center gap-2 pb-1 border-b border-[#ded5c5] overflow-x-auto">
+      <div className="flex flex-wrap items-center gap-2 pb-1 border-b border-[#E3DFD2] overflow-x-auto">
         {(
           [
             { id: 'all', label: 'All' },
@@ -293,14 +293,14 @@ export function PlantTimelineTab({
               onClick={() => setFilter(tab.id)}
               className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold transition-all cursor-pointer min-h-[38px] ${
                 isActive
-                  ? 'bg-[#144229] text-white shadow-xs'
-                  : 'bg-white text-[#526a57] hover:bg-[#eef5ee] hover:text-[#144229] border border-[#ded5c5]'
+                  ? 'bg-[#174C35] text-white shadow-xs'
+                  : 'bg-white text-[#68766C] hover:bg-[#EAF1E4] hover:text-[#174C35] border border-[#E3DFD2]'
               }`}
             >
               <span>{tab.label}</span>
               <span
                 className={`text-[10px] px-1.5 py-0.2 rounded-full ${
-                  isActive ? 'bg-white/20 text-white' : 'bg-[#ded5c5] text-[#0c2417]'
+                  isActive ? 'bg-white/20 text-white' : 'bg-[#E3DFD2] text-[#203027]'
                 }`}
               >
                 {count}
@@ -312,12 +312,12 @@ export function PlantTimelineTab({
 
       {/* 3. Chronological Botanical Timeline */}
       {filteredEvents.length === 0 ? (
-        <div className="p-8 text-center bg-white rounded-2xl border border-[#ded5c5]">
-          <Sprout className="w-10 h-10 text-[#6d8573] mx-auto mb-3 opacity-60" />
-          <h4 className="font-serif text-lg font-bold text-[#0c2417] mb-1">
+        <div className="p-8 text-center bg-white rounded-2xl border border-[#E3DFD2]">
+          <Sprout className="w-10 h-10 text-[#68766C] mx-auto mb-3 opacity-60" />
+          <h4 className="font-serif text-lg font-bold text-[#203027] mb-1">
             No events in this category yet
           </h4>
-          <p className="text-xs text-[#526a57] max-w-sm mx-auto mb-4">
+          <p className="text-xs text-[#68766C] max-w-sm mx-auto mb-4">
             {filter === 'photos'
               ? 'Add progress photos from the Photo Journal tab to record visual changes.'
               : filter === 'health'
@@ -330,28 +330,28 @@ export function PlantTimelineTab({
             <button
               type="button"
               onClick={() => setFilter('all')}
-              className="text-xs font-semibold text-[#144229] underline cursor-pointer"
+              className="text-xs font-semibold text-[#174C35] underline cursor-pointer"
             >
               Show all timeline events
             </button>
           )}
         </div>
       ) : (
-        <div className="relative pl-6 sm:pl-8 space-y-6 before:content-[''] before:absolute before:left-3 before:sm:left-4 before:top-3 before:bottom-3 before:w-0.5 before:bg-[#ded5c5]">
+        <div className="relative pl-6 sm:pl-8 space-y-6 before:content-[''] before:absolute before:left-3 before:sm:left-4 before:top-3 before:bottom-3 before:w-0.5 before:bg-[#E3DFD2]">
           {filteredEvents.map((evt) => (
             <div key={evt.id} className="relative group">
               {/* Stem Node Dot */}
               <div className="absolute -left-6 sm:-left-8 top-1.5 w-6 sm:w-8 flex items-center justify-center">
-                <div className="w-6 h-6 rounded-full bg-white border-2 border-[#144229] flex items-center justify-center shadow-xs">
+                <div className="w-6 h-6 rounded-full bg-white border-2 border-[#174C35] flex items-center justify-center shadow-xs">
                   {getEventIcon(evt)}
                 </div>
               </div>
 
               {/* Event Card */}
-              <div className="p-4 sm:p-5 rounded-2xl bg-white border border-[#ded5c5] hover:border-[#144229]/40 transition-all shadow-xs">
+              <div className="p-4 sm:p-5 rounded-2xl bg-white border border-[#E3DFD2] hover:border-[#174C35]/40 transition-all shadow-xs">
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1.5 mb-2">
                   <div className="flex flex-wrap items-center gap-2">
-                    <span className="text-xs font-bold text-[#144229]">
+                    <span className="text-xs font-bold text-[#174C35]">
                       {formatTimelineDate(evt.eventDate)}
                     </span>
                     {evt.badge && (
@@ -364,29 +364,29 @@ export function PlantTimelineTab({
                       </span>
                     )}
                     {evt.metadata?.heightCm && (
-                      <span className="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-[#eef5ee] text-[#144229] border border-[#c2d9c6]">
+                      <span className="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-[#EAF1E4] text-[#174C35] border border-[#E3DFD2]">
                         {evt.metadata.heightCm} cm
                       </span>
                     )}
                   </div>
 
-                  <span className="text-[11px] text-[#6d8573] capitalize">
+                  <span className="text-[11px] text-[#68766C] capitalize">
                     {evt.category}
                   </span>
                 </div>
 
-                <h4 className="font-serif text-base sm:text-lg font-bold text-[#0c2417] mb-1">
+                <h4 className="font-serif text-base sm:text-lg font-bold text-[#203027] mb-1">
                   {evt.title}
                 </h4>
 
-                <p className="text-xs sm:text-sm text-[#526a57] leading-relaxed mb-3">
+                <p className="text-xs sm:text-sm text-[#68766C] leading-relaxed mb-3">
                   {evt.description}
                 </p>
 
                 {/* Optional Media Preview */}
                 {evt.media?.signedUrl && (
                   <div className="mb-3">
-                    <div className="relative w-full max-w-sm rounded-xl overflow-hidden border border-[#ded5c5] bg-[#fbf9f4]">
+                    <div className="relative w-full max-w-sm rounded-xl overflow-hidden border border-[#E3DFD2] bg-[#F8F6EE]">
                       <img
                         src={evt.media.signedUrl}
                         alt={evt.media.caption || evt.title}
@@ -394,7 +394,7 @@ export function PlantTimelineTab({
                         loading="lazy"
                       />
                       {evt.media.caption && (
-                        <div className="p-2 text-[11px] text-[#526a57] bg-white/90 border-t border-[#ded5c5]">
+                        <div className="p-2 text-[11px] text-[#68766C] bg-white/90 border-t border-[#E3DFD2]">
                           {evt.media.caption}
                         </div>
                       )}
@@ -404,10 +404,10 @@ export function PlantTimelineTab({
 
                 {/* Action Link (e.g. AI Doctor assessment link) */}
                 {evt.actionLink && (
-                  <div className="pt-2 border-t border-[#ded5c5]/60">
+                  <div className="pt-2 border-t border-[#E3DFD2]/60">
                     <Link
                       href={evt.actionLink.href}
-                      className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#144229] hover:underline cursor-pointer"
+                      className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#174C35] hover:underline cursor-pointer"
                     >
                       <span>{evt.actionLink.label}</span>
                       <ExternalLink size={12} />

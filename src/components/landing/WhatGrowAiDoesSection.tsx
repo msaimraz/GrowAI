@@ -7,46 +7,46 @@ export function WhatGrowAiDoesSection() {
       icon: Sprout,
       title: 'Plants',
       description: 'Know what you’re growing with curated botanical guidance.',
-      accent: 'text-[#144229] bg-[#eef5ee]',
+      accent: 'text-[#174C35] bg-[#EAF1E4]',
     },
     {
       icon: Droplets,
       title: 'Care',
       description: 'Keep up with what needs attention without guesswork.',
-      accent: 'text-teal-800 bg-[#e6f4f2]',
+      accent: 'text-teal-800 bg-[#E7F2F9]',
     },
     {
       icon: Stethoscope,
       title: 'Health',
       description: 'Check symptoms with photo diagnosis and track recovery.',
-      accent: 'text-emerald-800 bg-[#e7f5eb]',
+      accent: 'text-emerald-800 bg-[#EAF1E4]',
     },
     {
       icon: Layers,
       title: 'Space',
       description: 'Plan balcony, windowsill, and vertical growing racks.',
-      accent: 'text-amber-800 bg-[#fef7ea]',
+      accent: 'text-amber-800 bg-[#FFF3D7]',
     },
     {
       icon: TrendingUp,
       title: 'Growth',
       description: 'Track milestones and progress from planting to harvest.',
-      accent: 'text-indigo-800 bg-[#eef0f8]',
+      accent: 'text-indigo-800 bg-[#F0ECF7]',
     },
   ];
 
   return (
-    <section id="what-growai-does" className="py-16 sm:py-20 lg:py-24 bg-white border-b border-[#ded5c5]">
+    <section id="what-growai-does" className="py-16 sm:py-20 lg:py-24 bg-white border-b border-[#E3DFD2]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12 sm:space-y-16">
         {/* Editorial Heading */}
         <div className="max-w-2xl mx-auto text-center space-y-3">
-          <span className="text-[11px] font-mono tracking-widest text-[#526a57] uppercase font-bold block">
+          <span className="text-[11px] font-mono tracking-widest text-[#68766C] uppercase font-bold block">
             EVERYDAY GROWING SIMPLIFIED
           </span>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-serif font-bold text-[#0c2417] tracking-tight leading-tight">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-serif font-bold text-[#203027] tracking-tight leading-tight">
             Your Garden, All in One Place.
           </h2>
-          <p className="text-base sm:text-lg text-[#526a57] leading-relaxed pt-1">
+          <p className="text-base sm:text-lg text-[#68766C] leading-relaxed pt-1">
             GrowAI connects the everyday things growers need — plants, care, health, space, plans, and progress.
           </p>
         </div>
@@ -63,10 +63,10 @@ export function WhatGrowAiDoesSection() {
                   <Icon size={22} className="stroke-[2.2]" />
                 </div>
                 <div className="space-y-1">
-                  <h3 className="font-serif font-bold text-lg text-[#0c2417]">
+                  <h3 className="font-serif font-bold text-lg text-[#203027]">
                     {item.title}
                   </h3>
-                  <p className="text-xs sm:text-sm text-[#526a57] leading-relaxed">
+                  <p className="text-xs sm:text-sm text-[#68766C] leading-relaxed">
                     {item.description}
                   </p>
                 </div>

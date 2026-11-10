@@ -90,9 +90,9 @@ export function PlantHealthTab({ plant, isCloud, onRefreshNeeded }: PlantHealthT
 
   if (loading) {
     return (
-      <div className="bg-white rounded-3xl border border-[#ded5c5] p-8 text-center space-y-3 shadow-xs">
-        <Loader2 size={24} className="animate-spin text-[#144229] mx-auto" />
-        <p className="text-xs text-[#526a57]">Loading health history for {plant.nickname}...</p>
+      <div className="bg-white rounded-3xl border border-[#E3DFD2] p-8 text-center space-y-3 shadow-xs">
+        <Loader2 size={24} className="animate-spin text-[#174C35] mx-auto" />
+        <p className="text-xs text-[#68766C]">Loading health history for {plant.nickname}...</p>
       </div>
     );
   }
@@ -100,25 +100,25 @@ export function PlantHealthTab({ plant, isCloud, onRefreshNeeded }: PlantHealthT
   return (
     <div className="space-y-6">
       {/* 1. Health Status Banner */}
-      <div className="bg-white rounded-3xl border border-[#ded5c5] p-6 sm:p-7 shadow-xs space-y-5">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-[#f0ebe0]">
+      <div className="bg-white rounded-3xl border border-[#E3DFD2] p-6 sm:p-7 shadow-xs space-y-5">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-[#E3DFD2]">
           <div>
             <div className="flex items-center gap-2 mb-1.5">
-              <span className="text-[11px] font-bold uppercase tracking-wider text-[#144229] bg-[#eef5ee] px-2.5 py-0.5 rounded-full inline-flex items-center gap-1">
+              <span className="text-[11px] font-bold uppercase tracking-wider text-[#174C35] bg-[#EAF1E4] px-2.5 py-0.5 rounded-full inline-flex items-center gap-1">
                 <Activity size={12} />
                 Health Profile
               </span>
               <PlantHealthBadge status={summary.status} size="sm" />
               {summary.isFollowUpDue && (
-                <span className="text-[11px] font-bold px-2 py-0.5 rounded-full bg-[#fef2f2] text-[#991b1b] border border-[#fecaca] animate-pulse">
+                <span className="text-[11px] font-bold px-2 py-0.5 rounded-full bg-[#FBE9E2] text-[#963A23] border border-[#E4775D/30] animate-pulse">
                   Follow-Up Due
                 </span>
               )}
             </div>
-            <h3 className="font-serif font-bold text-xl text-[#0c2417]">
+            <h3 className="font-serif font-bold text-xl text-[#203027]">
               Plant Health & Monitoring
             </h3>
-            <p className="text-xs text-[#526a57] mt-0.5">
+            <p className="text-xs text-[#68766C] mt-0.5">
               {summary.lastCheckedDate
                 ? `Last evaluated on ${new Date(summary.lastCheckedDate).toLocaleDateString()}`
                 : 'No diagnostic assessments recorded yet'}
@@ -130,7 +130,7 @@ export function PlantHealthTab({ plant, isCloud, onRefreshNeeded }: PlantHealthT
               <button
                 type="button"
                 onClick={() => setSelectedDiagnosisForFollowUp(latestDiagnosis)}
-                className="inline-flex items-center gap-1.5 px-3.5 py-2 bg-[#144229] hover:bg-[#0c2417] text-white rounded-xl text-xs font-semibold shadow-xs transition-colors min-h-[40px] cursor-pointer"
+                className="inline-flex items-center gap-1.5 px-3.5 py-2 bg-[#174C35] hover:bg-[#203027] text-white rounded-xl text-xs font-semibold shadow-xs transition-colors min-h-[40px] cursor-pointer"
               >
                 <Plus size={14} />
                 <span>Record Follow-Up</span>
@@ -139,7 +139,7 @@ export function PlantHealthTab({ plant, isCloud, onRefreshNeeded }: PlantHealthT
 
             <Link
               href={`/app/my-garden/${plant.id}/health`}
-              className="inline-flex items-center gap-1.5 px-3.5 py-2 bg-white hover:bg-[#f4efe6] text-[#144229] border border-[#cfdfcf] rounded-xl text-xs font-semibold transition-colors min-h-[40px]"
+              className="inline-flex items-center gap-1.5 px-3.5 py-2 bg-white hover:bg-[#F8F6EE] text-[#174C35] border border-[#E3DFD2] rounded-xl text-xs font-semibold transition-colors min-h-[40px]"
             >
               <span>Full History</span>
               <ChevronRight size={14} />
@@ -149,38 +149,38 @@ export function PlantHealthTab({ plant, isCloud, onRefreshNeeded }: PlantHealthT
 
         {/* Stats Grid */}
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs">
-          <div className="p-3 rounded-2xl bg-[#fbf9f4] border border-[#ded5c5]">
-            <span className="text-[#647f6c] block text-[11px] mb-0.5">Active Issue</span>
-            <strong className="text-[#0c2417] text-sm font-semibold truncate block">
+          <div className="p-3 rounded-2xl bg-[#F8F6EE] border border-[#E3DFD2]">
+            <span className="text-[#68766C] block text-[11px] mb-0.5">Active Issue</span>
+            <strong className="text-[#203027] text-sm font-semibold truncate block">
               {summary.activeIssue || 'None detected'}
             </strong>
           </div>
 
-          <div className="p-3 rounded-2xl bg-[#fbf9f4] border border-[#ded5c5]">
-            <span className="text-[#647f6c] block text-[11px] mb-0.5">Latest Outcome</span>
-            <strong className="text-[#0c2417] text-sm font-semibold capitalize">
+          <div className="p-3 rounded-2xl bg-[#F8F6EE] border border-[#E3DFD2]">
+            <span className="text-[#68766C] block text-[11px] mb-0.5">Latest Outcome</span>
+            <strong className="text-[#203027] text-sm font-semibold capitalize">
               {summary.latestFollowUpOutcome || 'Awaiting check'}
             </strong>
           </div>
 
-          <div className="p-3 rounded-2xl bg-[#fbf9f4] border border-[#ded5c5]">
-            <span className="text-[#647f6c] block text-[11px] mb-0.5">Pending Actions</span>
-            <strong className="text-[#0c2417] text-sm font-semibold">
+          <div className="p-3 rounded-2xl bg-[#F8F6EE] border border-[#E3DFD2]">
+            <span className="text-[#68766C] block text-[11px] mb-0.5">Pending Actions</span>
+            <strong className="text-[#203027] text-sm font-semibold">
               {summary.pendingTreatmentsCount} task(s)
             </strong>
           </div>
 
-          <div className="p-3 rounded-2xl bg-[#fbf9f4] border border-[#ded5c5]">
-            <span className="text-[#647f6c] block text-[11px] mb-0.5">Total Assessments</span>
-            <strong className="text-[#0c2417] text-sm font-semibold">{diagnoses.length} logs</strong>
+          <div className="p-3 rounded-2xl bg-[#F8F6EE] border border-[#E3DFD2]">
+            <span className="text-[#68766C] block text-[11px] mb-0.5">Total Assessments</span>
+            <strong className="text-[#203027] text-sm font-semibold">{diagnoses.length} logs</strong>
           </div>
         </div>
 
         {/* Next Action Guidance */}
-        <div className="bg-[#eef5ee] border border-[#cfe0cf] p-4 rounded-2xl flex items-start gap-3 text-xs text-[#1e613b]">
-          <Sparkles size={18} className="text-[#144229] shrink-0 mt-0.5" />
+        <div className="bg-[#EAF1E4] border border-[#E3DFD2] p-4 rounded-2xl flex items-start gap-3 text-xs text-[#174C35]">
+          <Sparkles size={18} className="text-[#174C35] shrink-0 mt-0.5" />
           <div className="space-y-0.5">
-            <strong className="font-serif font-bold text-sm text-[#0c2417] block">
+            <strong className="font-serif font-bold text-sm text-[#203027] block">
               Agronomic Guidance:
             </strong>
             <p className="leading-relaxed opacity-95">{summary.nextActionGuidance}</p>
@@ -189,10 +189,10 @@ export function PlantHealthTab({ plant, isCloud, onRefreshNeeded }: PlantHealthT
       </div>
 
       {/* 2. Recent Diagnoses & Follow-Ups */}
-      <div className="bg-white rounded-3xl border border-[#ded5c5] p-6 sm:p-7 shadow-xs space-y-5">
-        <div className="flex items-center justify-between pb-3 border-b border-[#f0ebe0]">
-          <h4 className="font-serif font-bold text-base text-[#0c2417] flex items-center gap-2">
-            <Clock size={16} className="text-[#144229]" />
+      <div className="bg-white rounded-3xl border border-[#E3DFD2] p-6 sm:p-7 shadow-xs space-y-5">
+        <div className="flex items-center justify-between pb-3 border-b border-[#E3DFD2]">
+          <h4 className="font-serif font-bold text-base text-[#203027] flex items-center gap-2">
+            <Clock size={16} className="text-[#174C35]" />
             <span>Health Assessments & Interventions</span>
           </h4>
 
@@ -200,7 +200,7 @@ export function PlantHealthTab({ plant, isCloud, onRefreshNeeded }: PlantHealthT
             href={`/app/ai-doctor?plantId=${plant.id}&plantSlug=${plant.plantSlug}&plantName=${encodeURIComponent(
               plant.nickname
             )}`}
-            className="text-xs font-semibold text-[#144229] hover:underline flex items-center gap-1 min-h-[36px]"
+            className="text-xs font-semibold text-[#174C35] hover:underline flex items-center gap-1 min-h-[36px]"
           >
             <Stethoscope size={13} />
             <span>Scan Specimen</span>
@@ -208,10 +208,10 @@ export function PlantHealthTab({ plant, isCloud, onRefreshNeeded }: PlantHealthT
         </div>
 
         {diagnoses.length === 0 ? (
-          <div className="text-center py-10 space-y-3 bg-[#fbf9f4] rounded-2xl border border-dashed border-[#ded5c5]">
-            <Stethoscope size={28} className="text-[#8ba391] mx-auto" />
-            <p className="text-sm font-serif font-bold text-[#0c2417]">No Health Records Yet</p>
-            <p className="text-xs text-[#526a57] max-w-sm mx-auto">
+          <div className="text-center py-10 space-y-3 bg-[#F8F6EE] rounded-2xl border border-dashed border-[#E3DFD2]">
+            <Stethoscope size={28} className="text-[#68766C] mx-auto" />
+            <p className="text-sm font-serif font-bold text-[#203027]">No Health Records Yet</p>
+            <p className="text-xs text-[#68766C] max-w-sm mx-auto">
               Scan this {plant.nickname} with AI Doctor to diagnose foliar stress, track disease recovery, and log treatments.
             </p>
             <div className="pt-2">
@@ -219,7 +219,7 @@ export function PlantHealthTab({ plant, isCloud, onRefreshNeeded }: PlantHealthT
                 href={`/app/ai-doctor?plantId=${plant.id}&plantSlug=${plant.plantSlug}&plantName=${encodeURIComponent(
                   plant.nickname
                 )}`}
-                className="inline-flex items-center gap-2 px-5 py-2.5 bg-[#144229] hover:bg-[#0c2417] text-white rounded-xl text-xs font-semibold shadow-xs transition-colors min-h-[40px]"
+                className="inline-flex items-center gap-2 px-5 py-2.5 bg-[#174C35] hover:bg-[#203027] text-white rounded-xl text-xs font-semibold shadow-xs transition-colors min-h-[40px]"
               >
                 <Stethoscope size={15} />
                 <span>Start Health Assessment</span>
@@ -235,31 +235,31 @@ export function PlantHealthTab({ plant, isCloud, onRefreshNeeded }: PlantHealthT
               return (
                 <div
                   key={diag.id}
-                  className="p-4 sm:p-5 rounded-2xl bg-[#fbf9f4] border border-[#ded5c5] space-y-3 text-xs"
+                  className="p-4 sm:p-5 rounded-2xl bg-[#F8F6EE] border border-[#E3DFD2] space-y-3 text-xs"
                 >
                   <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
                     <div className="flex items-center gap-2">
-                      <span className="font-serif font-bold text-sm text-[#0c2417]">
+                      <span className="font-serif font-bold text-sm text-[#203027]">
                         {diag.candidates?.[0]?.conditionName || diag.plantIdentification}
                       </span>
                       {diag.candidates?.[0]?.confidenceCategory && (
-                        <span className="text-[10px] px-2 py-0.5 rounded-full bg-white border border-[#ded5c5] text-[#526a57]">
+                        <span className="text-[10px] px-2 py-0.5 rounded-full bg-white border border-[#E3DFD2] text-[#68766C]">
                           {diag.candidates[0].confidenceCategory} confidence
                         </span>
                       )}
                     </div>
-                    <span className="text-[11px] text-[#526a57] flex items-center gap-1">
+                    <span className="text-[11px] text-[#68766C] flex items-center gap-1">
                       <Calendar size={12} />
                       {diag.diagnosedAt ? new Date(diag.diagnosedAt).toLocaleDateString() : ''}
                     </span>
                   </div>
 
-                  <p className="text-[#3c5240] leading-relaxed line-clamp-2">{diag.summary}</p>
+                  <p className="text-[#203027] leading-relaxed line-clamp-2">{diag.summary}</p>
 
                   {/* Treatments list if any */}
                   {treatments.length > 0 && (
                     <div className="pt-1 space-y-1.5">
-                      <strong className="text-[11px] font-bold uppercase tracking-wider text-[#144229] block">
+                      <strong className="text-[11px] font-bold uppercase tracking-wider text-[#174C35] block">
                         Care Actions:
                       </strong>
                       <div className="space-y-1">
@@ -267,12 +267,12 @@ export function PlantHealthTab({ plant, isCloud, onRefreshNeeded }: PlantHealthT
                           <div
                             key={t.id}
                             onClick={() => handleToggleTreatment(t)}
-                            className="p-2 rounded-xl bg-white border border-[#ded5c5] flex items-center justify-between cursor-pointer hover:border-[#144229] transition-colors"
+                            className="p-2 rounded-xl bg-white border border-[#E3DFD2] flex items-center justify-between cursor-pointer hover:border-[#174C35] transition-colors"
                           >
-                            <span className={t.status === 'completed' ? 'line-through text-[#6d8573]' : 'text-[#0c2417] font-medium'}>
+                            <span className={t.status === 'completed' ? 'line-through text-[#68766C]' : 'text-[#203027] font-medium'}>
                               {t.actionTitle}
                             </span>
-                            <span className="text-[10px] uppercase font-bold text-[#144229]">
+                            <span className="text-[10px] uppercase font-bold text-[#174C35]">
                               {t.status}
                             </span>
                           </div>
@@ -283,7 +283,7 @@ export function PlantHealthTab({ plant, isCloud, onRefreshNeeded }: PlantHealthT
 
                   {/* Latest follow-up outcome */}
                   {followUps.length > 0 && (
-                    <div className="pt-1 flex items-center justify-between text-[11px] text-[#1e613b] bg-[#eef5ee] p-2.5 rounded-xl border border-[#cfe0cf]">
+                    <div className="pt-1 flex items-center justify-between text-[11px] text-[#174C35] bg-[#EAF1E4] p-2.5 rounded-xl border border-[#E3DFD2]">
                       <span className="font-semibold capitalize">
                         Latest Follow-up: {followUps[0].outcomeStatus}
                       </span>
@@ -298,7 +298,7 @@ export function PlantHealthTab({ plant, isCloud, onRefreshNeeded }: PlantHealthT
               <div className="text-center pt-2">
                 <Link
                   href={`/app/my-garden/${plant.id}/health`}
-                  className="text-xs font-semibold text-[#144229] hover:underline"
+                  className="text-xs font-semibold text-[#174C35] hover:underline"
                 >
                   View all {diagnoses.length} assessments in full timeline →
                 </Link>

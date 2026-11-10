@@ -164,7 +164,7 @@ export function PlantSectionNav({
   return (
     <nav
       aria-label="Plant profile navigation"
-      className="sticky top-0 sm:top-16 z-30 bg-[#fbf9f4]/95 backdrop-blur-md border-b border-[#ded5c5] py-2 px-3 sm:px-6 shadow-2xs w-full max-w-full"
+      className="sticky top-0 sm:top-16 z-30 bg-[#F8F6EE]/95 backdrop-blur-md border-b border-[#E3DFD2] py-2 px-3 sm:px-6 shadow-2xs w-full max-w-full"
     >
       <div className="max-w-6xl mx-auto flex items-center justify-between gap-3 w-full min-w-0">
         {/* Horizontally scrollable container with edge fades on mobile & tablet */}
@@ -172,7 +172,7 @@ export function PlantSectionNav({
           {/* Left Subtle Edge Fade Affordance (Mobile & Tablet) */}
           <div
             aria-hidden="true"
-            className={`pointer-events-none absolute left-0 top-0 bottom-0 w-8 bg-gradient-to-r from-[#fbf9f4] via-[#fbf9f4]/80 to-transparent z-10 xl:hidden transition-opacity duration-200 ${
+            className={`pointer-events-none absolute left-0 top-0 bottom-0 w-8 bg-gradient-to-r from-[#F8F6EE] via-[#F8F6EE]/80 to-transparent z-10 xl:hidden transition-opacity duration-200 ${
               canScrollLeft ? 'opacity-100' : 'opacity-0'
             }`}
           />
@@ -204,21 +204,21 @@ export function PlantSectionNav({
                   onClick={() => scrollTo(sec.id)}
                   className={`min-h-[44px] px-3.5 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all duration-75 active:scale-95 flex items-center gap-2 cursor-pointer shrink-0 whitespace-nowrap select-none touch-manipulation ${
                     isActive
-                      ? 'bg-[#144229] text-white shadow-xs font-bold ring-1 ring-[#144229]'
-                      : 'bg-white/90 text-[#2e4435] border border-[#ded5c5] hover:bg-white hover:text-[#071c11]'
+                      ? 'bg-[#174C35] text-white shadow-xs font-bold ring-1 ring-[#174C35]'
+                      : 'bg-white/90 text-[#68766C] border border-[#E3DFD2] hover:bg-white hover:text-[#203027]'
                   }`}
                 >
                   <Icon
                     size={16}
-                    className={isActive ? 'text-[#86efac]' : 'text-[#3d7a5a]'}
+                    className={isActive ? 'text-[#78A95A]' : 'text-[#78A95A]/70'}
                   />
                   <span>{sec.label}</span>
                   {sec.badge && (
                     <span
                       className={`text-[10px] uppercase font-mono px-1.5 py-0.5 rounded-full ${
                         isActive
-                          ? 'bg-[#205e3b] text-white'
-                          : 'bg-[#eef5ee] text-[#144229]'
+                          ? 'bg-[#123E2A] text-white'
+                          : 'bg-[#F0ECF7] text-[#594186]'
                       }`}
                     >
                       {sec.badge}
@@ -232,7 +232,7 @@ export function PlantSectionNav({
           {/* Right Subtle Edge Fade Affordance (Mobile & Tablet) */}
           <div
             aria-hidden="true"
-            className={`pointer-events-none absolute right-0 top-0 bottom-0 w-10 bg-gradient-to-l from-[#fbf9f4] via-[#fbf9f4]/80 to-transparent z-10 xl:hidden transition-opacity duration-200 ${
+            className={`pointer-events-none absolute right-0 top-0 bottom-0 w-10 bg-gradient-to-l from-[#F8F6EE] via-[#F8F6EE]/80 to-transparent z-10 xl:hidden transition-opacity duration-200 ${
               canScrollRight ? 'opacity-100' : 'opacity-0'
             }`}
           />
@@ -240,7 +240,7 @@ export function PlantSectionNav({
 
         {/* Quick learning progress indicator on wide desktop */}
         {exploredCount > 0 && (
-          <div className="hidden xl:flex items-center gap-2 text-xs font-semibold text-[#144229] bg-[#eef5ee] px-3 py-1.5 rounded-xl border border-[#cfe0cf] shrink-0">
+          <div className="hidden xl:flex items-center gap-2 text-xs font-semibold text-[#174C35] bg-[#EAF1E4] px-3 py-1.5 rounded-xl border border-[#78A95A]/35 shrink-0">
             <Check size={14} />
             <span>
               {exploredCount} of {totalSections} Explored

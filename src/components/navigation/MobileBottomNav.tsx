@@ -61,7 +61,7 @@ export function MobileBottomNav() {
     <>
       {/* Mobile Bottom Navigation Bar */}
       <nav
-        className="lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-[#FBF9F4]/95 backdrop-blur-md border-t border-[#E8E4DA] text-[#1F2A23] px-2 pt-1 pb-[max(0.35rem,env(safe-area-inset-bottom))] shadow-lg select-none"
+        className="lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-[#F8F6EE]/95 backdrop-blur-md border-t border-[#E3DFD2] text-[#203027] px-2 pt-1 pb-[max(0.35rem,env(safe-area-inset-bottom))] shadow-lg select-none"
         aria-label="Mobile Bottom Navigation"
       >
         <div className="flex items-center justify-around max-w-md mx-auto">
@@ -79,12 +79,12 @@ export function MobileBottomNav() {
                 className={`flex-1 flex flex-col items-center justify-center min-h-[48px] py-1 px-1 rounded-xl text-xs font-medium transition-all duration-75 active:scale-95 active:opacity-75 select-none touch-manipulation cursor-pointer ${
                   isActive
                     ? 'text-[#174C35] font-bold'
-                    : 'text-[#68736B] hover:text-[#1F2A23]'
+                    : 'text-[#68766C] hover:text-[#203027]'
                 }`}
               >
                 <span
                   className={`p-1 rounded-lg flex items-center justify-center transition-colors ${
-                    isActive ? 'bg-[#E6F0E3]' : ''
+                    isActive ? 'bg-[#EAF1E4]' : ''
                   }`}
                 >
                   <Icon
@@ -106,13 +106,13 @@ export function MobileBottomNav() {
             className={`flex-1 flex flex-col items-center justify-center min-h-[48px] py-1 px-1 rounded-xl text-xs font-medium transition-all duration-75 active:scale-95 active:opacity-75 select-none touch-manipulation cursor-pointer ${
               isMoreActive || moreOpen
                 ? 'text-[#174C35] font-bold'
-                : 'text-[#68736B] hover:text-[#1F2A23]'
+                : 'text-[#68766C] hover:text-[#203027]'
             }`}
             aria-label="Open more navigation options"
           >
             <span
               className={`p-1 rounded-lg flex items-center justify-center transition-colors ${
-                isMoreActive || moreOpen ? 'bg-[#E6F0E3]' : ''
+                isMoreActive || moreOpen ? 'bg-[#EAF1E4]' : ''
               }`}
             >
               <MoreHorizontal
@@ -138,15 +138,15 @@ export function MobileBottomNav() {
           <div role="dialog"
             aria-modal="true"
             aria-label="More Features"
-            className="relative bg-[#FBF9F4] rounded-t-3xl border-t border-[#E8E4DA] p-5 shadow-2xl space-y-4 max-h-[80vh] overflow-y-auto animate-in slide-in-from-bottom duration-200 ease-out">
-            <div className="flex items-center justify-between pb-3 border-b border-[#E8E4DA]">
-              <span className="font-serif text-lg font-bold text-[#1F2A23]">
+            className="relative bg-[#F8F6EE] rounded-t-3xl border-t border-[#E3DFD2] p-5 shadow-2xl space-y-4 max-h-[80vh] overflow-y-auto animate-in slide-in-from-bottom duration-200 ease-out">
+            <div className="flex items-center justify-between pb-3 border-b border-[#E3DFD2]">
+              <span className="font-serif text-lg font-bold text-[#203027]">
                 More Features
               </span>
               <button
                 type="button"
                 onClick={() => setMoreOpen(false)}
-                className="p-2 rounded-xl text-[#68736B] hover:text-[#1F2A23] hover:bg-[#E8E4DA]/50 active:scale-90 min-h-[44px] min-w-[44px] flex items-center justify-center cursor-pointer select-none touch-manipulation transition-all duration-75"
+                className="p-2 rounded-xl text-[#68766C] hover:text-[#203027] hover:bg-[#E3DFD2]/50 active:scale-90 min-h-[44px] min-w-[44px] flex items-center justify-center cursor-pointer select-none touch-manipulation transition-all duration-75"
                 aria-label="Close menu"
               >
                 <X size={20} />
@@ -162,26 +162,26 @@ export function MobileBottomNav() {
                     key={item.href}
                     href={item.href}
                     onClick={() => setMoreOpen(false)}
-                    className={`flex items-center justify-between p-3.5 rounded-2xl border transition-all duration-75 active:scale-[0.98] active:bg-[#E6F0E3]/70 select-none touch-manipulation cursor-pointer ${
+                    className={`flex items-center justify-between p-3.5 rounded-2xl border transition-all duration-75 active:scale-[0.98] active:bg-[#EAF1E4]/70 select-none touch-manipulation cursor-pointer ${
                       isActive
-                        ? 'bg-[#E6F0E3] border-[#CEE4C9] text-[#174C35]'
-                        : 'bg-white border-[#E8E4DA] hover:bg-[#F3F6EC] text-[#1F2A23]'
+                        ? 'bg-[#EAF1E4] border-[#78A95A]/35 text-[#174C35]'
+                        : 'bg-white border-[#E3DFD2] hover:bg-[#EAF1E4] text-[#203027]'
                     }`}
                   >
                     <div className="flex items-center gap-3">
-                      <span className="w-10 h-10 rounded-xl bg-[#F3F6EC] flex items-center justify-center text-[#174C35]">
+                      <span className="w-10 h-10 rounded-xl bg-[#EAF1E4] flex items-center justify-center text-[#174C35]">
                         <Icon size={20} />
                       </span>
                       <div>
                         <h4 className="font-serif font-bold text-sm leading-tight">
                           {item.label}
                         </h4>
-                        <p className="text-xs text-[#68736B] mt-0.5">
+                        <p className="text-xs text-[#68766C] mt-0.5">
                           {item.desc}
                         </p>
                       </div>
                     </div>
-                    <span className="text-[#68736B]/60 text-xs">→</span>
+                    <span className="text-[#68766C]/60 text-xs">→</span>
                   </Link>
                 );
               })}

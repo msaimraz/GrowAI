@@ -276,7 +276,7 @@ export function DiagnosisDetailClient({ diagnosisId }: DiagnosisDetailClientProp
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#fbf9f4]">
+    <div className="min-h-screen flex flex-col bg-[#F8F6EE]">
       <AppHeader
         title="Diagnostic Assessment Snapshot"
         subtitle="Historical consultation, differential reasoning, treatment tracking, and outcome monitoring."
@@ -290,7 +290,7 @@ export function DiagnosisDetailClient({ diagnosisId }: DiagnosisDetailClientProp
         <div className="flex items-center justify-between">
           <Link
             href="/app/ai-doctor/history"
-            className="inline-flex items-center gap-2 text-xs sm:text-sm font-semibold text-[#144229] hover:underline"
+            className="inline-flex items-center gap-2 text-xs sm:text-sm font-semibold text-[#174C35] hover:underline"
           >
             <ArrowLeft size={16} />
             <span>Back to Diagnosis History</span>
@@ -300,7 +300,7 @@ export function DiagnosisDetailClient({ diagnosisId }: DiagnosisDetailClientProp
             type="button"
             onClick={handleDeleteDiagnosis}
             disabled={deleting}
-            className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#8c9e91] hover:text-red-600 transition-colors cursor-pointer"
+            className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#68766C] hover:text-red-600 transition-colors cursor-pointer"
           >
             <Trash2 size={14} />
             <span>{deleting ? 'Deleting...' : 'Delete Assessment'}</span>
@@ -309,21 +309,21 @@ export function DiagnosisDetailClient({ diagnosisId }: DiagnosisDetailClientProp
 
         {/* Loading State */}
         {loading ? (
-          <div className="py-24 flex flex-col items-center justify-center gap-3 text-[#526a57]">
-            <Loader2 size={32} className="animate-spin text-[#144229]" />
+          <div className="py-24 flex flex-col items-center justify-center gap-3 text-[#68766C]">
+            <Loader2 size={32} className="animate-spin text-[#174C35]" />
             <p className="text-sm font-medium">Retrieving diagnosis assessment details...</p>
           </div>
         ) : error || !record ? (
           /* Error State */
-          <div className="bg-white rounded-3xl border border-[#ded5c5] p-10 text-center space-y-4">
-            <AlertTriangle size={36} className="text-[#9a3412] mx-auto" />
-            <h3 className="font-serif font-bold text-xl text-[#0c2417]">Assessment Not Found</h3>
-            <p className="text-xs sm:text-sm text-[#526a57] max-w-md mx-auto">
+          <div className="bg-white rounded-3xl border border-[#E3DFD2] p-10 text-center space-y-4">
+            <AlertTriangle size={36} className="text-[#963A23] mx-auto" />
+            <h3 className="font-serif font-bold text-xl text-[#203027]">Assessment Not Found</h3>
+            <p className="text-xs sm:text-sm text-[#68766C] max-w-md mx-auto">
               {error || 'The requested diagnosis record could not be found or you do not have permission to access it.'}
             </p>
             <Link
               href="/app/ai-doctor/history"
-              className="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl bg-[#144229] text-white text-xs font-semibold"
+              className="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl bg-[#174C35] text-white text-xs font-semibold"
             >
               Return to History
             </Link>
@@ -332,8 +332,8 @@ export function DiagnosisDetailClient({ diagnosisId }: DiagnosisDetailClientProp
           /* Record Loaded */
           <div className="space-y-8">
             {/* 1. Header Snapshot Card */}
-            <div className="bg-[#0e2a1b] text-white p-6 sm:p-8 rounded-3xl space-y-4 shadow-sm">
-              <div className="flex flex-wrap items-center justify-between gap-3 text-xs text-[#bed4c5] pb-3 border-b border-white/10">
+            <div className="bg-[#203027] text-white p-6 sm:p-8 rounded-3xl space-y-4 shadow-sm">
+              <div className="flex flex-wrap items-center justify-between gap-3 text-xs text-[#E3DFD2] pb-3 border-b border-white/10">
                 <div className="flex items-center gap-2">
                   <Calendar size={14} />
                   <span>
@@ -353,7 +353,7 @@ export function DiagnosisDetailClient({ diagnosisId }: DiagnosisDetailClientProp
                       ? 'Gemini 3.8 Flash Vision'
                       : 'Agronomic Heuristic'}
                   </span>
-                  <span className="px-2 py-0.5 rounded-full bg-white/10 text-[#a4f0bf] font-medium text-[11px]">
+                  <span className="px-2 py-0.5 rounded-full bg-white/10 text-[#78A95A] font-medium text-[11px]">
                     Schema v{record.schemaVersion}
                   </span>
                 </div>
@@ -364,7 +364,7 @@ export function DiagnosisDetailClient({ diagnosisId }: DiagnosisDetailClientProp
                   <h2 className="text-2xl sm:text-3xl font-serif font-bold text-white tracking-tight">
                     {record.plantIdentification}
                   </h2>
-                  <p className="text-xs sm:text-sm text-[#d1e6d7] mt-1">
+                  <p className="text-xs sm:text-sm text-[#EAF1E4] mt-1">
                     Identification Confidence: <strong className="capitalize">{record.plantIdentificationConfidence}</strong>
                   </p>
                 </div>
@@ -380,22 +380,22 @@ export function DiagnosisDetailClient({ diagnosisId }: DiagnosisDetailClientProp
               </div>
 
               {/* Grower Context Grid */}
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-3 border-t border-white/10 text-xs text-[#bed4c5]">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-3 border-t border-white/10 text-xs text-[#E3DFD2]">
                 {record.userContext?.watering && (
                   <div className="flex items-center gap-2">
-                    <Droplets size={14} className="text-[#a4f0bf] shrink-0" />
+                    <Droplets size={14} className="text-[#78A95A] shrink-0" />
                     <span>Watering: {record.userContext.watering}</span>
                   </div>
                 )}
                 {record.userContext?.sunlight && (
                   <div className="flex items-center gap-2">
-                    <Sun size={14} className="text-[#a4f0bf] shrink-0" />
+                    <Sun size={14} className="text-[#78A95A] shrink-0" />
                     <span>Sunlight: {record.userContext.sunlight}</span>
                   </div>
                 )}
                 {record.userContext?.environment && (
                   <div className="flex items-center gap-2">
-                    <Layers size={14} className="text-[#a4f0bf] shrink-0" />
+                    <Layers size={14} className="text-[#78A95A] shrink-0" />
                     <span>Location: {record.userContext.environment}</span>
                   </div>
                 )}
@@ -405,7 +405,7 @@ export function DiagnosisDetailClient({ diagnosisId }: DiagnosisDetailClientProp
                 <div className="pt-2 border-t border-white/10">
                   <Link
                     href={`/app/my-garden/${record.userPlantId}/health`}
-                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white/10 hover:bg-white/20 text-[#a4f0bf] text-xs font-semibold transition-colors"
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white/10 hover:bg-white/20 text-[#78A95A] text-xs font-semibold transition-colors"
                   >
                     <Activity size={14} />
                     <span>View Specimen Health History in My Garden →</span>
@@ -415,42 +415,42 @@ export function DiagnosisDetailClient({ diagnosisId }: DiagnosisDetailClientProp
             </div>
 
             {/* Reported Symptoms & Summary */}
-            <div className="bg-white rounded-3xl border border-[#ded5c5] p-6 sm:p-8 space-y-4 shadow-xs">
-              <h3 className="font-serif font-bold text-lg text-[#0c2417] flex items-center gap-2">
-                <FileText size={18} className="text-[#144229]" />
+            <div className="bg-white rounded-3xl border border-[#E3DFD2] p-6 sm:p-8 space-y-4 shadow-xs">
+              <h3 className="font-serif font-bold text-lg text-[#203027] flex items-center gap-2">
+                <FileText size={18} className="text-[#174C35]" />
                 Grower Reported Symptoms & Clinical Summary
               </h3>
 
               {record.symptoms && (
-                <div className="p-4 rounded-2xl bg-[#fbf9f4] border border-[#ded5c5] text-xs sm:text-sm text-[#2e4435]">
-                  <strong className="text-[#0c2417] block mb-1">Observations Described:</strong>
+                <div className="p-4 rounded-2xl bg-[#F8F6EE] border border-[#E3DFD2] text-xs sm:text-sm text-[#203027]">
+                  <strong className="text-[#203027] block mb-1">Observations Described:</strong>
                   {record.symptoms}
                 </div>
               )}
 
-              <p className="text-xs sm:text-sm text-[#2e4435] leading-relaxed">
+              <p className="text-xs sm:text-sm text-[#203027] leading-relaxed">
                 {record.summary}
               </p>
             </div>
 
             {/* Evidence Separation (Observed vs Interpretation vs Unknowns) */}
             {record.evidenceSeparation && (
-              <div className="bg-white rounded-3xl border border-[#ded5c5] p-6 sm:p-8 space-y-4 shadow-xs">
-                <h3 className="font-serif font-bold text-lg text-[#0c2417] flex items-center gap-2">
-                  <ShieldCheck size={18} className="text-[#144229]" />
+              <div className="bg-white rounded-3xl border border-[#E3DFD2] p-6 sm:p-8 space-y-4 shadow-xs">
+                <h3 className="font-serif font-bold text-lg text-[#203027] flex items-center gap-2">
+                  <ShieldCheck size={18} className="text-[#174C35]" />
                   Evidence Separation & Diagnostic Grounding
                 </h3>
-                <p className="text-xs text-[#526a57]">
+                <p className="text-xs text-[#68766C]">
                   Strictly delineates directly visible photographic clues from botanical hypotheses and unseen environmental factors.
                 </p>
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-2">
                   {/* Observed Evidence */}
-                  <div className="p-4 rounded-2xl bg-[#eef5ee] border border-[#cfe0cf] space-y-2">
-                    <h5 className="font-bold text-xs uppercase tracking-wider text-[#144229]">
+                  <div className="p-4 rounded-2xl bg-[#EAF1E4] border border-[#E3DFD2] space-y-2">
+                    <h5 className="font-bold text-xs uppercase tracking-wider text-[#174C35]">
                       1. Observed Facts
                     </h5>
-                    <ul className="text-xs text-[#1e613b] space-y-1.5">
+                    <ul className="text-xs text-[#174C35] space-y-1.5">
                       {record.evidenceSeparation.observedEvidence?.map((fact, i) => (
                         <li key={i} className="flex items-start gap-1.5">
                           <span>•</span>
@@ -461,11 +461,11 @@ export function DiagnosisDetailClient({ diagnosisId }: DiagnosisDetailClientProp
                   </div>
 
                   {/* Diagnostic Interpretation */}
-                  <div className="p-4 rounded-2xl bg-[#fff8e6] border border-[#fde68a] space-y-2">
-                    <h5 className="font-bold text-xs uppercase tracking-wider text-[#92400e]">
+                  <div className="p-4 rounded-2xl bg-[#FFF3D7] border border-[#F0C04D/30] space-y-2">
+                    <h5 className="font-bold text-xs uppercase tracking-wider text-[#8A6400]">
                       2. Agronomic Hypotheses
                     </h5>
-                    <ul className="text-xs text-[#78350f] space-y-1.5">
+                    <ul className="text-xs text-[#8A6400] space-y-1.5">
                       {record.evidenceSeparation.diagnosticInterpretation?.map((hyp, i) => (
                         <li key={i} className="flex items-start gap-1.5">
                           <span>•</span>
@@ -476,11 +476,11 @@ export function DiagnosisDetailClient({ diagnosisId }: DiagnosisDetailClientProp
                   </div>
 
                   {/* Unknown Information */}
-                  <div className="p-4 rounded-2xl bg-[#fbf9f4] border border-[#ded5c5] space-y-2">
-                    <h5 className="font-bold text-xs uppercase tracking-wider text-[#526a57]">
+                  <div className="p-4 rounded-2xl bg-[#F8F6EE] border border-[#E3DFD2] space-y-2">
+                    <h5 className="font-bold text-xs uppercase tracking-wider text-[#68766C]">
                       3. Unknown Factors
                     </h5>
-                    <ul className="text-xs text-[#2e4435] space-y-1.5">
+                    <ul className="text-xs text-[#203027] space-y-1.5">
                       {record.evidenceSeparation.unknownInformation?.map((unk, i) => (
                         <li key={i} className="flex items-start gap-1.5">
                           <span>•</span>
@@ -495,13 +495,13 @@ export function DiagnosisDetailClient({ diagnosisId }: DiagnosisDetailClientProp
 
             {/* Differential Candidates (Preserved Snapshot) */}
             {record.candidates && record.candidates.length > 0 && (
-              <div className="bg-white rounded-3xl border border-[#ded5c5] p-6 sm:p-8 space-y-6 shadow-xs">
+              <div className="bg-white rounded-3xl border border-[#E3DFD2] p-6 sm:p-8 space-y-6 shadow-xs">
                 <div>
-                  <h3 className="font-serif font-bold text-xl text-[#0c2417] flex items-center gap-2">
-                    <Search size={20} className="text-[#144229]" />
+                  <h3 className="font-serif font-bold text-xl text-[#203027] flex items-center gap-2">
+                    <Search size={20} className="text-[#174C35]" />
                     Differential Diagnosis Candidates
                   </h3>
-                  <p className="text-xs text-[#526a57] mt-0.5">
+                  <p className="text-xs text-[#68766C] mt-0.5">
                     Up to three hypotheses evaluated by the diagnostic engine, ordered by plausibility.
                   </p>
                 </div>
@@ -510,20 +510,20 @@ export function DiagnosisDetailClient({ diagnosisId }: DiagnosisDetailClientProp
                   {record.candidates.map((cand) => (
                     <div
                       key={cand.id}
-                      className="p-5 rounded-2xl border border-[#ded5c5] bg-[#fbf9f4] space-y-3"
+                      className="p-5 rounded-2xl border border-[#E3DFD2] bg-[#F8F6EE] space-y-3"
                     >
                       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
                         <div className="flex items-center gap-2.5">
-                          <span className="w-6 h-6 rounded-full bg-[#144229] text-white text-xs font-bold flex items-center justify-center shrink-0">
+                          <span className="w-6 h-6 rounded-full bg-[#174C35] text-white text-xs font-bold flex items-center justify-center shrink-0">
                             {cand.candidateRank}
                           </span>
-                          <h4 className="font-serif font-bold text-base text-[#0c2417]">
+                          <h4 className="font-serif font-bold text-base text-[#203027]">
                             {cand.conditionName}
                           </h4>
                           {cand.kbConditionId && (
                             <Link
                               href="/app/learn"
-                              className="text-xs font-semibold text-[#144229] hover:underline flex items-center gap-1"
+                              className="text-xs font-semibold text-[#174C35] hover:underline flex items-center gap-1"
                               title="Explore condition in knowledge base"
                             >
                               <span>KB: {cand.kbConditionId}</span>
@@ -544,15 +544,15 @@ export function DiagnosisDetailClient({ diagnosisId }: DiagnosisDetailClientProp
                         </div>
                       </div>
 
-                      <p className="text-xs sm:text-sm text-[#2e4435] leading-relaxed">
+                      <p className="text-xs sm:text-sm text-[#203027] leading-relaxed">
                         {cand.explanation}
                       </p>
 
                       {/* Supporting Clues */}
                       {cand.supportingEvidence?.length > 0 && (
                         <div className="text-xs space-y-1">
-                          <strong className="text-[#0c2417]">Supporting Visual Clues:</strong>
-                          <ul className="list-disc list-inside text-[#2e4435] pl-1 space-y-0.5">
+                          <strong className="text-[#203027]">Supporting Visual Clues:</strong>
+                          <ul className="list-disc list-inside text-[#203027] pl-1 space-y-0.5">
                             {cand.supportingEvidence.map((s, idx) => (
                               <li key={idx}>{s}</li>
                             ))}
@@ -562,24 +562,24 @@ export function DiagnosisDetailClient({ diagnosisId }: DiagnosisDetailClientProp
 
                       {/* Grounded Treatments Snapshot */}
                       {cand.groundedTreatment && (
-                        <div className="pt-2 border-t border-[#ded5c5]/60 mt-2 space-y-2 text-xs">
-                          <strong className="text-[#144229] block">
+                        <div className="pt-2 border-t border-[#E3DFD2]/60 mt-2 space-y-2 text-xs">
+                          <strong className="text-[#174C35] block">
                             Knowledge-Grounded Corrective Guidelines:
                           </strong>
                           {cand.groundedTreatment.culturalCorrections?.length > 0 && (
-                            <div className="text-[#2e4435]">
-                              <span className="font-medium text-[#0c2417]">Cultural:</span>{' '}
+                            <div className="text-[#203027]">
+                              <span className="font-medium text-[#203027]">Cultural:</span>{' '}
                               {cand.groundedTreatment.culturalCorrections.join('; ')}
                             </div>
                           )}
                           {cand.groundedTreatment.mechanicalPhysicalControls?.length > 0 && (
-                            <div className="text-[#2e4435]">
-                              <span className="font-medium text-[#0c2417]">Mechanical:</span>{' '}
+                            <div className="text-[#203027]">
+                              <span className="font-medium text-[#203027]">Mechanical:</span>{' '}
                               {cand.groundedTreatment.mechanicalPhysicalControls.join('; ')}
                             </div>
                           )}
                           {cand.groundedTreatment.cureDisclaimer && (
-                            <p className="italic text-[11px] text-[#526a57] pt-1">
+                            <p className="italic text-[11px] text-[#68766C] pt-1">
                               {cand.groundedTreatment.cureDisclaimer}
                             </p>
                           )}
@@ -593,12 +593,12 @@ export function DiagnosisDetailClient({ diagnosisId }: DiagnosisDetailClientProp
 
             {/* Follow-up Questions (If Present) */}
             {record.followUpQuestions && record.followUpQuestions.length > 0 && (
-              <div className="bg-white rounded-3xl border border-[#ded5c5] p-6 sm:p-8 space-y-4 shadow-xs">
-                <h3 className="font-serif font-bold text-lg text-[#0c2417] flex items-center gap-2">
-                  <HelpCircle size={18} className="text-[#144229]" />
+              <div className="bg-white rounded-3xl border border-[#E3DFD2] p-6 sm:p-8 space-y-4 shadow-xs">
+                <h3 className="font-serif font-bold text-lg text-[#203027] flex items-center gap-2">
+                  <HelpCircle size={18} className="text-[#174C35]" />
                   Context Follow-Up Questions
                 </h3>
-                <p className="text-xs text-[#526a57]">
+                <p className="text-xs text-[#68766C]">
                   These diagnostic questions were suggested to differentiate between the leading hypotheses.
                 </p>
 
@@ -606,10 +606,10 @@ export function DiagnosisDetailClient({ diagnosisId }: DiagnosisDetailClientProp
                   {record.followUpQuestions.map((q, idx) => (
                     <div
                       key={idx}
-                      className="p-3.5 rounded-xl bg-[#fbf9f4] border border-[#ded5c5] text-xs space-y-1"
+                      className="p-3.5 rounded-xl bg-[#F8F6EE] border border-[#E3DFD2] text-xs space-y-1"
                     >
-                      <p className="font-semibold text-[#0c2417]">{q.question}</p>
-                      <p className="text-[#526a57] italic">Rationale: {q.rationale}</p>
+                      <p className="font-semibold text-[#203027]">{q.question}</p>
+                      <p className="text-[#68766C] italic">Rationale: {q.rationale}</p>
                     </div>
                   ))}
                 </div>
@@ -617,18 +617,18 @@ export function DiagnosisDetailClient({ diagnosisId }: DiagnosisDetailClientProp
             )}
 
             {/* 2. SECTION C: TREATMENT & ACTION TRACKING */}
-            <div className="bg-white rounded-3xl border border-[#ded5c5] p-6 sm:p-8 space-y-6 shadow-xs">
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-[#f0ebe0]">
+            <div className="bg-white rounded-3xl border border-[#E3DFD2] p-6 sm:p-8 space-y-6 shadow-xs">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-[#E3DFD2]">
                 <div>
                   <div className="flex items-center gap-2">
-                    <span className="p-1.5 rounded-lg bg-[#eef5ee] text-[#144229]">
+                    <span className="p-1.5 rounded-lg bg-[#EAF1E4] text-[#174C35]">
                       <ClipboardList size={20} />
                     </span>
-                    <h3 className="font-serif font-bold text-xl text-[#0c2417]">
+                    <h3 className="font-serif font-bold text-xl text-[#203027]">
                       Treatment & Action Tracking
                     </h3>
                   </div>
-                  <p className="text-xs text-[#526a57] mt-1">
+                  <p className="text-xs text-[#68766C] mt-1">
                     Record cultural adjustments, physical steps, and observations taken in response to this diagnosis.
                   </p>
                 </div>
@@ -636,7 +636,7 @@ export function DiagnosisDetailClient({ diagnosisId }: DiagnosisDetailClientProp
                 <button
                   type="button"
                   onClick={() => setShowAddTreatment(!showAddTreatment)}
-                  className="inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-[#144229] hover:bg-[#0c2417] text-white text-xs font-semibold transition-colors cursor-pointer min-h-[44px] shrink-0"
+                  className="inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-[#174C35] hover:bg-[#203027] text-white text-xs font-semibold transition-colors cursor-pointer min-h-[44px] shrink-0"
                 >
                   <PlusCircle size={16} />
                   <span>{showAddTreatment ? 'Cancel' : 'Record Action'}</span>
@@ -647,25 +647,25 @@ export function DiagnosisDetailClient({ diagnosisId }: DiagnosisDetailClientProp
               {showAddTreatment && (
                 <form
                   onSubmit={handleCreateTreatment}
-                  className="p-5 rounded-2xl bg-[#fbf9f4] border border-[#ded5c5] space-y-4 text-xs animate-in fade-in"
+                  className="p-5 rounded-2xl bg-[#F8F6EE] border border-[#E3DFD2] space-y-4 text-xs animate-in fade-in"
                 >
-                  <h4 className="font-serif font-bold text-sm text-[#0c2417]">
+                  <h4 className="font-serif font-bold text-sm text-[#203027]">
                     New Plant Treatment / Action
                   </h4>
 
                   {treatmentError && (
-                    <div className="p-3 rounded-xl bg-[#fee2e2] text-[#991b1b]">
+                    <div className="p-3 rounded-xl bg-[#FBE9E2] text-[#963A23]">
                       {treatmentError}
                     </div>
                   )}
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div className="space-y-1.5">
-                      <label className="font-semibold text-[#0c2417]">Action Type</label>
+                      <label className="font-semibold text-[#203027]">Action Type</label>
                       <select
                         value={actionType}
                         onChange={(e) => setActionType(e.target.value as TreatmentActionType)}
-                        className="w-full p-2.5 rounded-xl border border-[#ded5c5] bg-white text-xs"
+                        className="w-full p-2.5 rounded-xl border border-[#E3DFD2] bg-white text-xs"
                       >
                         <option value="adjust_watering">Adjust Watering Schedule</option>
                         <option value="inspect_plant">Physical Inspection / Leaf Undersides</option>
@@ -679,11 +679,11 @@ export function DiagnosisDetailClient({ diagnosisId }: DiagnosisDetailClientProp
                     </div>
 
                     <div className="space-y-1.5">
-                      <label className="font-semibold text-[#0c2417]">Initial Status</label>
+                      <label className="font-semibold text-[#203027]">Initial Status</label>
                       <select
                         value={treatmentStatus}
                         onChange={(e) => setTreatmentStatus(e.target.value as TreatmentStatus)}
-                        className="w-full p-2.5 rounded-xl border border-[#ded5c5] bg-white text-xs"
+                        className="w-full p-2.5 rounded-xl border border-[#E3DFD2] bg-white text-xs"
                       >
                         <option value="planned">Planned</option>
                         <option value="started">Started</option>
@@ -694,35 +694,35 @@ export function DiagnosisDetailClient({ diagnosisId }: DiagnosisDetailClientProp
                   </div>
 
                   <div className="space-y-1.5">
-                    <label className="font-semibold text-[#0c2417]">Action Title</label>
+                    <label className="font-semibold text-[#203027]">Action Title</label>
                     <input
                       type="text"
                       placeholder="e.g. Switched to bottom watering every 3 days"
                       value={actionTitle}
                       onChange={(e) => setActionTitle(e.target.value)}
-                      className="w-full p-2.5 rounded-xl border border-[#ded5c5] bg-white text-xs text-[#0c2417]"
+                      className="w-full p-2.5 rounded-xl border border-[#E3DFD2] bg-white text-xs text-[#203027]"
                     />
                   </div>
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div className="space-y-1.5">
-                      <label className="font-semibold text-[#0c2417]">Action Date</label>
+                      <label className="font-semibold text-[#203027]">Action Date</label>
                       <input
                         type="date"
                         value={actionDate}
                         onChange={(e) => setActionDate(e.target.value)}
-                        className="w-full p-2.5 rounded-xl border border-[#ded5c5] bg-white text-xs text-[#0c2417]"
+                        className="w-full p-2.5 rounded-xl border border-[#E3DFD2] bg-white text-xs text-[#203027]"
                       />
                     </div>
 
                     <div className="space-y-1.5">
-                      <label className="font-semibold text-[#0c2417]">Notes (Optional)</label>
+                      <label className="font-semibold text-[#203027]">Notes (Optional)</label>
                       <input
                         type="text"
                         placeholder="e.g. Soil was completely waterlogged at root level"
                         value={treatmentNotes}
                         onChange={(e) => setTreatmentNotes(e.target.value)}
-                        className="w-full p-2.5 rounded-xl border border-[#ded5c5] bg-white text-xs text-[#0c2417]"
+                        className="w-full p-2.5 rounded-xl border border-[#E3DFD2] bg-white text-xs text-[#203027]"
                       />
                     </div>
                   </div>
@@ -731,14 +731,14 @@ export function DiagnosisDetailClient({ diagnosisId }: DiagnosisDetailClientProp
                     <button
                       type="button"
                       onClick={() => setShowAddTreatment(false)}
-                      className="px-4 py-2 rounded-xl border border-[#ded5c5] bg-white text-xs font-semibold text-[#0c2417]"
+                      className="px-4 py-2 rounded-xl border border-[#E3DFD2] bg-white text-xs font-semibold text-[#203027]"
                     >
                       Cancel
                     </button>
                     <button
                       type="submit"
                       disabled={savingTreatment}
-                      className="px-5 py-2 rounded-xl bg-[#144229] hover:bg-[#0c2417] text-white text-xs font-semibold flex items-center gap-1.5"
+                      className="px-5 py-2 rounded-xl bg-[#174C35] hover:bg-[#203027] text-white text-xs font-semibold flex items-center gap-1.5"
                     >
                       {savingTreatment ? <Loader2 size={14} className="animate-spin" /> : <Check size={14} />}
                       <span>Save Action</span>
@@ -753,22 +753,22 @@ export function DiagnosisDetailClient({ diagnosisId }: DiagnosisDetailClientProp
                   {record.treatments.map((treatment) => (
                     <div
                       key={treatment.id}
-                      className="p-4 rounded-2xl border border-[#ded5c5] bg-[#fbf9f4] flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs"
+                      className="p-4 rounded-2xl border border-[#E3DFD2] bg-[#F8F6EE] flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs"
                     >
                       <div className="space-y-1 flex-1">
                         <div className="flex flex-wrap items-center gap-2">
-                          <span className="font-bold text-sm text-[#0c2417]">
+                          <span className="font-bold text-sm text-[#203027]">
                             {treatment.actionTitle}
                           </span>
                           <Badge variant={getStatusBadgeVariant(treatment.status)} size="sm">
                             {treatment.status}
                           </Badge>
-                          <span className="text-[11px] text-[#526a57]">
+                          <span className="text-[11px] text-[#68766C]">
                             ({treatment.actionDate})
                           </span>
                         </div>
                         {treatment.notes && (
-                          <p className="text-[#2e4435]">{treatment.notes}</p>
+                          <p className="text-[#203027]">{treatment.notes}</p>
                         )}
                       </div>
 
@@ -779,7 +779,7 @@ export function DiagnosisDetailClient({ diagnosisId }: DiagnosisDetailClientProp
                           onChange={(e) =>
                             handleUpdateStatus(treatment.id, e.target.value as TreatmentStatus)
                           }
-                          className="px-2.5 py-1.5 rounded-lg border border-[#ded5c5] bg-white text-xs text-[#0c2417] cursor-pointer"
+                          className="px-2.5 py-1.5 rounded-lg border border-[#E3DFD2] bg-white text-xs text-[#203027] cursor-pointer"
                         >
                           <option value="planned">Planned</option>
                           <option value="started">Started</option>
@@ -790,7 +790,7 @@ export function DiagnosisDetailClient({ diagnosisId }: DiagnosisDetailClientProp
                         <button
                           type="button"
                           onClick={() => handleDeleteTreatment(treatment.id)}
-                          className="p-1.5 text-[#8c9e91] hover:text-red-600 transition-colors rounded cursor-pointer"
+                          className="p-1.5 text-[#68766C] hover:text-red-600 transition-colors rounded cursor-pointer"
                           title="Delete action"
                         >
                           <Trash2 size={15} />
@@ -800,8 +800,8 @@ export function DiagnosisDetailClient({ diagnosisId }: DiagnosisDetailClientProp
                   ))}
                 </div>
               ) : (
-                <div className="p-6 rounded-2xl border border-dashed border-[#ded5c5] text-center space-y-1.5 text-xs text-[#526a57]">
-                  <p className="font-medium text-[#0c2417]">No Treatments Recorded Yet</p>
+                <div className="p-6 rounded-2xl border border-dashed border-[#E3DFD2] text-center space-y-1.5 text-xs text-[#68766C]">
+                  <p className="font-medium text-[#203027]">No Treatments Recorded Yet</p>
                   <p>
                     Log actions like watering changes, leaf pruning, or pest monitoring to track plant health progress.
                   </p>
@@ -810,18 +810,18 @@ export function DiagnosisDetailClient({ diagnosisId }: DiagnosisDetailClientProp
             </div>
 
             {/* 3. SECTION D: FOLLOW-UP / OUTCOME TRACKING */}
-            <div className="bg-white rounded-3xl border border-[#ded5c5] p-6 sm:p-8 space-y-6 shadow-xs">
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-[#f0ebe0]">
+            <div className="bg-white rounded-3xl border border-[#E3DFD2] p-6 sm:p-8 space-y-6 shadow-xs">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-[#E3DFD2]">
                 <div>
                   <div className="flex items-center gap-2">
-                    <span className="p-1.5 rounded-lg bg-[#eef5ee] text-[#144229]">
+                    <span className="p-1.5 rounded-lg bg-[#EAF1E4] text-[#174C35]">
                       <Activity size={20} />
                     </span>
-                    <h3 className="font-serif font-bold text-xl text-[#0c2417]">
+                    <h3 className="font-serif font-bold text-xl text-[#203027]">
                       Follow-Up / Recovery Outcome Tracking
                     </h3>
                   </div>
-                  <p className="text-xs text-[#526a57] mt-1">
+                  <p className="text-xs text-[#68766C] mt-1">
                     Record subsequent observations. Note: Outcomes track plant response and do not prove or disprove initial hypotheses.
                   </p>
                 </div>
@@ -830,7 +830,7 @@ export function DiagnosisDetailClient({ diagnosisId }: DiagnosisDetailClientProp
                   <button
                     type="button"
                     onClick={() => setShowFollowUpModal(true)}
-                    className="inline-flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-xl bg-[#144229] hover:bg-[#0c2417] text-white text-xs font-semibold transition-colors cursor-pointer min-h-[44px] shrink-0"
+                    className="inline-flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-xl bg-[#174C35] hover:bg-[#203027] text-white text-xs font-semibold transition-colors cursor-pointer min-h-[44px] shrink-0"
                   >
                     <Camera size={15} />
                     <span>Record with Photo</span>
@@ -838,7 +838,7 @@ export function DiagnosisDetailClient({ diagnosisId }: DiagnosisDetailClientProp
                   <button
                     type="button"
                     onClick={() => setShowAddFollowUp(!showAddFollowUp)}
-                    className="inline-flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-xl bg-white border border-[#cfdfcf] text-[#144229] hover:bg-[#f4efe6] text-xs font-semibold transition-colors cursor-pointer min-h-[44px] shrink-0"
+                    className="inline-flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-xl bg-white border border-[#E3DFD2] text-[#174C35] hover:bg-[#F8F6EE] text-xs font-semibold transition-colors cursor-pointer min-h-[44px] shrink-0"
                   >
                     <PlusCircle size={15} />
                     <span>{showAddFollowUp ? 'Cancel' : 'Quick Note'}</span>
@@ -850,25 +850,25 @@ export function DiagnosisDetailClient({ diagnosisId }: DiagnosisDetailClientProp
               {showAddFollowUp && (
                 <form
                   onSubmit={handleCreateFollowUp}
-                  className="p-5 rounded-2xl bg-[#fbf9f4] border border-[#ded5c5] space-y-4 text-xs animate-in fade-in"
+                  className="p-5 rounded-2xl bg-[#F8F6EE] border border-[#E3DFD2] space-y-4 text-xs animate-in fade-in"
                 >
-                  <h4 className="font-serif font-bold text-sm text-[#0c2417]">
+                  <h4 className="font-serif font-bold text-sm text-[#203027]">
                     New Follow-Up Observation
                   </h4>
 
                   {followUpError && (
-                    <div className="p-3 rounded-xl bg-[#fee2e2] text-[#991b1b]">
+                    <div className="p-3 rounded-xl bg-[#FBE9E2] text-[#963A23]">
                       {followUpError}
                     </div>
                   )}
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div className="space-y-1.5">
-                      <label className="font-semibold text-[#0c2417]">Observed Outcome</label>
+                      <label className="font-semibold text-[#203027]">Observed Outcome</label>
                       <select
                         value={followUpOutcome}
                         onChange={(e) => setFollowUpOutcome(e.target.value as FollowUpOutcome)}
-                        className="w-full p-2.5 rounded-xl border border-[#ded5c5] bg-white text-xs"
+                        className="w-full p-2.5 rounded-xl border border-[#E3DFD2] bg-white text-xs"
                       >
                         <option value="improving">Improving (Signs of recovery, new healthy growth)</option>
                         <option value="unchanged">Unchanged (Symptoms stable, no significant progress)</option>
@@ -879,24 +879,24 @@ export function DiagnosisDetailClient({ diagnosisId }: DiagnosisDetailClientProp
                     </div>
 
                     <div className="space-y-1.5">
-                      <label className="font-semibold text-[#0c2417]">Observation Date</label>
+                      <label className="font-semibold text-[#203027]">Observation Date</label>
                       <input
                         type="date"
                         value={followUpDate}
                         onChange={(e) => setFollowUpDate(e.target.value)}
-                        className="w-full p-2.5 rounded-xl border border-[#ded5c5] bg-white text-xs text-[#0c2417]"
+                        className="w-full p-2.5 rounded-xl border border-[#E3DFD2] bg-white text-xs text-[#203027]"
                       />
                     </div>
                   </div>
 
                   <div className="space-y-1.5">
-                    <label className="font-semibold text-[#0c2417]">Observation Notes</label>
+                    <label className="font-semibold text-[#203027]">Observation Notes</label>
                     <textarea
                       rows={2}
                       placeholder="e.g. Yellowing stopped advancing, baby leaves at apex emerging bright green"
                       value={followUpNotes}
                       onChange={(e) => setFollowUpNotes(e.target.value)}
-                      className="w-full p-2.5 rounded-xl border border-[#ded5c5] bg-white text-xs text-[#0c2417]"
+                      className="w-full p-2.5 rounded-xl border border-[#E3DFD2] bg-white text-xs text-[#203027]"
                     />
                   </div>
 
@@ -904,14 +904,14 @@ export function DiagnosisDetailClient({ diagnosisId }: DiagnosisDetailClientProp
                     <button
                       type="button"
                       onClick={() => setShowAddFollowUp(false)}
-                      className="px-4 py-2 rounded-xl border border-[#ded5c5] bg-white text-xs font-semibold text-[#0c2417]"
+                      className="px-4 py-2 rounded-xl border border-[#E3DFD2] bg-white text-xs font-semibold text-[#203027]"
                     >
                       Cancel
                     </button>
                     <button
                       type="submit"
                       disabled={savingFollowUp}
-                      className="px-5 py-2 rounded-xl bg-[#144229] hover:bg-[#0c2417] text-white text-xs font-semibold flex items-center gap-1.5"
+                      className="px-5 py-2 rounded-xl bg-[#174C35] hover:bg-[#203027] text-white text-xs font-semibold flex items-center gap-1.5"
                     >
                       {savingFollowUp ? <Loader2 size={14} className="animate-spin" /> : <Check size={14} />}
                       <span>Save Follow-Up</span>
@@ -926,20 +926,20 @@ export function DiagnosisDetailClient({ diagnosisId }: DiagnosisDetailClientProp
                   {record.followUps.map((fu) => (
                     <div
                       key={fu.id}
-                      className="p-4 rounded-2xl border border-[#ded5c5] bg-[#fbf9f4] space-y-1.5 text-xs"
+                      className="p-4 rounded-2xl border border-[#E3DFD2] bg-[#F8F6EE] space-y-1.5 text-xs"
                     >
                       <div className="flex items-center justify-between gap-2">
                         <div className="flex items-center gap-2">
                           <Badge variant={getOutcomeBadgeVariant(fu.outcomeStatus)} size="sm">
                             {fu.outcomeStatus}
                           </Badge>
-                          <span className="font-semibold text-[#0c2417]">
+                          <span className="font-semibold text-[#203027]">
                             Observed on {new Date(fu.followUpDate).toLocaleDateString()}
                           </span>
                         </div>
                       </div>
                       {fu.observationNotes && (
-                        <p className="text-[#2e4435] leading-relaxed pt-1">
+                        <p className="text-[#203027] leading-relaxed pt-1">
                           {fu.observationNotes}
                         </p>
                       )}
@@ -947,8 +947,8 @@ export function DiagnosisDetailClient({ diagnosisId }: DiagnosisDetailClientProp
                   ))}
                 </div>
               ) : (
-                <div className="p-6 rounded-2xl border border-dashed border-[#ded5c5] text-center space-y-1.5 text-xs text-[#526a57]">
-                  <p className="font-medium text-[#0c2417]">No Follow-Up Outcomes Logged</p>
+                <div className="p-6 rounded-2xl border border-dashed border-[#E3DFD2] text-center space-y-1.5 text-xs text-[#68766C]">
+                  <p className="font-medium text-[#203027]">No Follow-Up Outcomes Logged</p>
                   <p>
                     Return after 48–72 hours to record whether foliage is improving, unchanged, or worsening.
                   </p>
@@ -957,8 +957,8 @@ export function DiagnosisDetailClient({ diagnosisId }: DiagnosisDetailClientProp
             </div>
 
             {/* Disclaimer Footer */}
-            <div className="p-5 rounded-2xl bg-[#fbf9f4] border border-[#ded5c5] text-xs text-[#526a57] space-y-1">
-              <strong className="text-[#0c2417] block">Botanical Care Disclaimer:</strong>
+            <div className="p-5 rounded-2xl bg-[#F8F6EE] border border-[#E3DFD2] text-xs text-[#68766C] space-y-1">
+              <strong className="text-[#203027] block">Botanical Care Disclaimer:</strong>
               <p className="leading-relaxed">{record.disclaimer}</p>
             </div>
           </div>

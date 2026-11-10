@@ -32,7 +32,7 @@ export default function AppDashboardPage() {
   return (
     <React.Suspense
       fallback={
-        <div className="min-h-screen flex items-center justify-center text-sm text-[#68736B] bg-[#FBF9F4]">
+        <div className="min-h-screen flex items-center justify-center text-sm text-[#68766C] bg-[#F8F6EE]">
           Loading your garden...
         </div>
       }
@@ -166,7 +166,7 @@ function AppDashboardContent() {
   });
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#FBF9F4] text-[#1F2A23]">
+    <div className="min-h-screen flex flex-col bg-[#F8F6EE] text-[#203027]">
       <div className="flex-1 p-3.5 sm:p-6 lg:p-8 max-w-7xl mx-auto w-full min-w-0 max-w-full space-y-5 sm:space-y-8">
         {/* =========================================================
             1. PERSONAL FRIENDLY GREETING & TODAY'S STATUS
@@ -175,14 +175,14 @@ function AppDashboardContent() {
           <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-2">
             <div>
               {currentDate && (
-                <span className="text-xs font-mono uppercase tracking-wider text-[#68736B] block">
+                <span className="text-xs font-mono uppercase tracking-wider text-[#68766C] block">
                   {currentDate}
                 </span>
               )}
-              <h1 className="font-serif text-2xl sm:text-3xl lg:text-4xl font-bold text-[#1F2A23] tracking-tight">
+              <h1 className="font-serif text-2xl sm:text-3xl lg:text-4xl font-bold text-[#203027] tracking-tight">
                 {greeting}, {userName} 🌱
               </h1>
-              <p className="text-sm sm:text-base text-[#68736B] mt-1">
+              <p className="text-sm sm:text-base text-[#68766C] mt-1">
                 Here’s what your garden needs today.
               </p>
             </div>
@@ -190,7 +190,7 @@ function AppDashboardContent() {
             <div className="flex items-center gap-2 self-start sm:self-auto">
               <Link
                 href="/app/plants"
-                className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-[#174C35] hover:bg-[#0f3424] active:scale-95 text-white text-xs sm:text-sm font-semibold shadow-xs transition-all duration-75 cursor-pointer min-h-[40px] select-none touch-manipulation"
+                className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-[#174C35] hover:bg-[#123E2A] active:scale-95 text-white text-xs sm:text-sm font-semibold shadow-xs transition-all duration-75 cursor-pointer min-h-[40px] select-none touch-manipulation"
               >
                 <Plus size={15} />
                 <span>Add Plant</span>
@@ -198,14 +198,14 @@ function AppDashboardContent() {
             </div>
           </div>
 
-          {/* Quick Daily Summary Chips */}
+          {/* Quick Daily Summary Chips (Semantic Coordinated Palette) */}
           <div className="flex flex-wrap items-center gap-1.5 sm:gap-2 pt-1 text-xs">
-            <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#FFF0D8] text-[#9A5B00] border border-[#FDE3B8] font-medium">
+            <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#FFF3D7] text-[#8A6400] border border-[#F0C04D]/35 font-medium">
               <span>☀️</span>
               <span>Bright conditions</span>
             </span>
 
-            <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#E6F0E3] text-[#174C35] border border-[#CEE4C9] font-medium">
+            <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#E7F2F9] text-[#1B5D88] border border-[#65A8D0]/35 font-medium">
               <span>💧</span>
               <span>
                 {pendingTasks.length > 0
@@ -214,23 +214,23 @@ function AppDashboardContent() {
               </span>
             </span>
 
-            <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#EEE8F6] text-[#5C3FA3] border border-[#DDD2EE] font-medium">
+            <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#EAF1E4] text-[#174C35] border border-[#78A95A]/35 font-medium">
               <span>🌿</span>
               <span>{userPlants.length} active plants</span>
             </span>
 
             {isCloud && user ? (
-              <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#E6F0E3] text-[#174C35] border border-[#CEE4C9] font-medium">
+              <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#EAF1E4] text-[#174C35] border border-[#78A95A]/35 font-medium">
                 <span>☁️</span>
                 <span>Synced</span>
               </span>
             ) : isOffline ? (
-              <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#FFF0D8] text-[#9A5B00] border border-[#FDE3B8] font-medium">
+              <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#FFF3D7] text-[#8A6400] border border-[#F0C04D]/35 font-medium">
                 <span>⚡</span>
                 <span>Offline mode</span>
               </span>
             ) : (
-              <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#F3F6EC] text-[#68736B] border border-[#E8E4DA] font-medium">
+              <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#EAF1E4] text-[#68766C] border border-[#E3DFD2] font-medium">
                 <span>🌱</span>
                 <span>Guest mode</span>
               </span>
@@ -256,12 +256,12 @@ function AppDashboardContent() {
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
               <span className="text-xl">💧</span>
-              <h2 className="font-serif text-xl sm:text-2xl font-bold text-[#1F2A23]">
+              <h2 className="font-serif text-xl sm:text-2xl font-bold text-[#203027]">
                 Today’s Care
               </h2>
             </div>
             {careTasks.length > 0 && (
-              <span className="text-xs font-mono text-[#68736B]">
+              <span className="text-xs font-mono text-[#68766C]">
                 {completedTasks.length} of {careTasks.length} done
               </span>
             )}
@@ -272,17 +272,17 @@ function AppDashboardContent() {
               {[1, 2, 3].map((i) => (
                 <div
                   key={i}
-                  className="h-24 rounded-2xl bg-white border border-[#E8E4DA] animate-pulse p-4 space-y-2"
+                  className="h-24 rounded-2xl bg-white border border-[#E3DFD2] animate-pulse p-4 space-y-2"
                 >
-                  <div className="h-4 w-32 bg-[#E8E4DA] rounded-md" />
-                  <div className="h-3 w-48 bg-[#EFEAE0] rounded-md" />
+                  <div className="h-4 w-32 bg-[#E3DFD2] rounded-md" />
+                  <div className="h-3 w-48 bg-[#EAF1E4] rounded-md" />
                 </div>
               ))}
             </div>
           ) : careTasks.length === 0 ? (
-            <div className="p-6 rounded-2xl bg-white border border-[#E8E4DA] text-center text-xs text-[#68736B] space-y-1">
+            <div className="p-6 rounded-2xl bg-white border border-[#E3DFD2] text-center text-xs text-[#68766C] space-y-1">
               <span className="text-2xl block select-none">🎉</span>
-              <p className="font-medium text-[#1F2A23]">No tasks scheduled for today</p>
+              <p className="font-medium text-[#203027]">No tasks scheduled for today</p>
               <p>Your garden is happy and hydrated. Enjoy watching it grow!</p>
             </div>
           ) : (
@@ -297,6 +297,7 @@ function AppDashboardContent() {
                         key={task.id}
                         id={task.id}
                         icon={task.type === 'water' ? '💧' : task.type === 'fertilize' ? '🌱' : task.type === 'harvest' ? '✂️' : '🌿'}
+                        category={task.type}
                         title={action}
                         subtitle={subtitle}
                         tag={task.dueDate || 'Today'}
@@ -307,7 +308,7 @@ function AppDashboardContent() {
                   })}
                 </div>
               ) : (
-                <div className="p-4 rounded-2xl bg-[#E6F0E3]/60 border border-[#CEE4C9] text-xs text-[#174C35] font-medium flex items-center gap-2">
+                <div className="p-4 rounded-2xl bg-[#EAF1E4] border border-[#78A95A]/35 text-xs text-[#174C35] font-medium flex items-center gap-2">
                   <CheckCircle2 size={16} />
                   <span>All tasks for today are complete! Nice job keeping your garden thriving.</span>
                 </div>
@@ -317,7 +318,7 @@ function AppDashboardContent() {
               {completedTasks.length > 0 && (
                 <div className="pt-2">
                   <div className="flex items-center justify-between mb-2">
-                    <span className="text-[11px] font-mono uppercase tracking-wider text-[#8A958D] font-bold">
+                    <span className="text-[11px] font-mono uppercase tracking-wider text-[#68766C] font-bold">
                       Completed Today ({completedTasks.length})
                     </span>
                     {completedTasks.length > 2 && (
@@ -344,7 +345,7 @@ function AppDashboardContent() {
                             subtitle="Completed"
                             completed={true}
                             onToggle={() => handleTaskToggle(task)}
-                            className="opacity-60 bg-[#F9F8F5]"
+                            className="opacity-60 bg-[#F8F6EE]"
                           />
                         );
                       })}
@@ -363,7 +364,7 @@ function AppDashboardContent() {
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
               <span className="text-xl">🌿</span>
-              <h2 className="font-serif text-xl sm:text-2xl font-bold text-[#1F2A23]">
+              <h2 className="font-serif text-xl sm:text-2xl font-bold text-[#203027]">
                 My Plants
               </h2>
             </div>
@@ -371,7 +372,7 @@ function AppDashboardContent() {
             {userPlants.length > 0 && (
               <Link
                 href="/app/my-garden"
-                className="text-xs font-semibold text-[#174C35] hover:underline flex items-center gap-1"
+                className="text-xs font-semibold text-[#174C35] hover:text-[#123E2A] hover:underline flex items-center gap-1"
               >
                 <span>View All ({userPlants.length})</span>
                 <ArrowRight size={13} />
@@ -384,12 +385,12 @@ function AppDashboardContent() {
               {[1, 2, 3, 4].map((i) => (
                 <div
                   key={i}
-                  className="bg-white rounded-3xl border border-[#E8E4DA] animate-pulse overflow-hidden"
+                  className="bg-white rounded-3xl border border-[#E3DFD2] animate-pulse overflow-hidden"
                 >
-                  <div className="aspect-4/3 bg-[#EFEAE0]" />
+                  <div className="aspect-4/3 bg-[#EAF1E4]" />
                   <div className="p-4 space-y-2">
-                    <div className="h-5 w-32 bg-[#E8E4DA] rounded-md" />
-                    <div className="h-3 w-20 bg-[#EFEAE0] rounded-md" />
+                    <div className="h-5 w-32 bg-[#E3DFD2] rounded-md" />
+                    <div className="h-3 w-20 bg-[#EAF1E4] rounded-md" />
                   </div>
                 </div>
               ))}
@@ -422,14 +423,14 @@ function AppDashboardContent() {
                 return (
                   <div
                     key={up.id}
-                    className="p-5 rounded-3xl bg-white border border-[#E8E4DA] space-y-3"
+                    className="p-5 rounded-3xl bg-white border border-[#E3DFD2] space-y-3"
                   >
                     <div className="flex items-center gap-3">
-                      <div className="w-12 h-12 rounded-2xl bg-[#E6F0E3] flex items-center justify-center text-2xl">
+                      <div className="w-12 h-12 rounded-2xl bg-[#EAF1E4] flex items-center justify-center text-2xl">
                         🌱
                       </div>
                       <div>
-                        <h4 className="font-serif font-bold text-base text-[#1F2A23] leading-snug">
+                        <h4 className="font-serif font-bold text-base text-[#203027] leading-snug">
                           {up.nickname || up.plantSlug}
                         </h4>
                         <span className="text-xs text-[#174C35] font-semibold">
@@ -439,7 +440,7 @@ function AppDashboardContent() {
                     </div>
                     <Link
                       href={`/app/my-garden`}
-                      className="text-xs font-semibold text-[#174C35] hover:underline block pt-2 border-t border-[#F3F6EC]"
+                      className="text-xs font-semibold text-[#174C35] hover:underline block pt-2 border-t border-[#E3DFD2]"
                     >
                       View in Garden →
                     </Link>
@@ -453,9 +454,9 @@ function AppDashboardContent() {
         {/* =========================================================
             5. QUICK TOOLS
         ========================================================= */}
-        <section className="pt-4 border-t border-[#E8E4DA] space-y-4">
+        <section className="pt-4 border-t border-[#E3DFD2] space-y-4">
           <div className="flex items-center justify-between">
-            <h3 className="text-xs font-mono uppercase tracking-wider text-[#68736B] font-bold">
+            <h3 className="text-xs font-mono uppercase tracking-wider text-[#68766C] font-bold">
               Quick Tools
             </h3>
           </div>
@@ -463,16 +464,16 @@ function AppDashboardContent() {
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
             <Link
               href="/app/ai-doctor"
-              className="p-4 rounded-2xl bg-white hover:bg-[#F3F6EC] border border-[#E8E4DA] hover:border-[#174C35]/30 transition-all flex items-center gap-3.5 shadow-2xs group active:scale-95 touch-manipulation min-h-[56px] select-none"
+              className="p-4 rounded-2xl bg-white hover:bg-[#EAF1E4] border border-[#E3DFD2] hover:border-[#174C35]/35 transition-all flex items-center gap-3.5 shadow-2xs group active:scale-95 touch-manipulation min-h-[56px] select-none"
             >
-              <span className="w-10 h-10 rounded-xl bg-[#FFF0D8] text-xl flex items-center justify-center shrink-0">
+              <span className="w-10 h-10 rounded-xl bg-[#E7F2F9] text-[#1B5D88] text-xl flex items-center justify-center shrink-0">
                 📷
               </span>
               <div className="min-w-0">
-                <h4 className="font-serif font-bold text-sm text-[#1F2A23] group-hover:text-[#174C35]">
+                <h4 className="font-serif font-bold text-sm text-[#203027] group-hover:text-[#174C35]">
                   Plant Check
                 </h4>
-                <p className="text-xs text-[#68736B] whitespace-normal leading-normal">
+                <p className="text-xs text-[#68766C] whitespace-normal leading-normal">
                   Check a plant
                 </p>
               </div>
@@ -480,16 +481,16 @@ function AppDashboardContent() {
 
             <Link
               href="/app/planner"
-              className="p-4 rounded-2xl bg-white hover:bg-[#F3F6EC] border border-[#E8E4DA] hover:border-[#174C35]/30 transition-all flex items-center gap-3.5 shadow-2xs group active:scale-95 touch-manipulation min-h-[56px] select-none"
+              className="p-4 rounded-2xl bg-white hover:bg-[#EAF1E4] border border-[#E3DFD2] hover:border-[#174C35]/35 transition-all flex items-center gap-3.5 shadow-2xs group active:scale-95 touch-manipulation min-h-[56px] select-none"
             >
-              <span className="w-10 h-10 rounded-xl bg-[#E6F0E3] text-xl flex items-center justify-center shrink-0">
+              <span className="w-10 h-10 rounded-xl bg-[#EAF1E4] text-[#174C35] text-xl flex items-center justify-center shrink-0">
                 🪴
               </span>
               <div className="min-w-0">
-                <h4 className="font-serif font-bold text-sm text-[#1F2A23] group-hover:text-[#174C35]">
+                <h4 className="font-serif font-bold text-sm text-[#203027] group-hover:text-[#174C35]">
                   Space Planner
                 </h4>
-                <p className="text-xs text-[#68736B] whitespace-normal leading-normal">
+                <p className="text-xs text-[#68766C] whitespace-normal leading-normal">
                   Plan your space
                 </p>
               </div>
@@ -497,16 +498,16 @@ function AppDashboardContent() {
 
             <Link
               href="/app/grow-plans"
-              className="p-4 rounded-2xl bg-white hover:bg-[#F3F6EC] border border-[#E8E4DA] hover:border-[#174C35]/30 transition-all flex items-center gap-3.5 shadow-2xs group active:scale-95 touch-manipulation min-h-[56px] select-none"
+              className="p-4 rounded-2xl bg-white hover:bg-[#EAF1E4] border border-[#E3DFD2] hover:border-[#174C35]/35 transition-all flex items-center gap-3.5 shadow-2xs group active:scale-95 touch-manipulation min-h-[56px] select-none"
             >
-              <span className="w-10 h-10 rounded-xl bg-[#EEE8F6] text-xl flex items-center justify-center shrink-0">
+              <span className="w-10 h-10 rounded-xl bg-[#F0ECF7] text-[#594186] text-xl flex items-center justify-center shrink-0">
                 📋
               </span>
               <div className="min-w-0">
-                <h4 className="font-serif font-bold text-sm text-[#1F2A23] group-hover:text-[#174C35]">
+                <h4 className="font-serif font-bold text-sm text-[#203027] group-hover:text-[#174C35]">
                   Grow Plans
                 </h4>
-                <p className="text-xs text-[#68736B] whitespace-normal leading-normal">
+                <p className="text-xs text-[#68766C] whitespace-normal leading-normal">
                   Follow a growing journey
                 </p>
               </div>

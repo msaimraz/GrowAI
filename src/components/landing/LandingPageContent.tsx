@@ -40,7 +40,7 @@ export const landingMetadata: Metadata = {
 
 export function LandingPageContent() {
   return (
-    <div className="min-h-screen flex flex-col bg-[#fbf9f4] text-[#0c2417]">
+    <div className="min-h-screen flex flex-col bg-[#F8F6EE] text-[#203027]">
       {/* 1. Global Navigation */}
       <Navbar />
 

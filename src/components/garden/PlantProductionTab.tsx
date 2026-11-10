@@ -190,13 +190,13 @@ export function PlantProductionTab({
   return (
     <div className="space-y-6">
       {/* Header & Quick Action Row */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white p-5 sm:p-6 rounded-3xl border border-[#ded5c5] shadow-xs">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white p-5 sm:p-6 rounded-3xl border border-[#E3DFD2] shadow-xs">
         <div>
-          <h3 className="font-serif font-bold text-lg text-[#0c2417] flex items-center gap-2">
-            <ShoppingBag size={20} className="text-[#144229]" />
+          <h3 className="font-serif font-bold text-lg text-[#203027] flex items-center gap-2">
+            <ShoppingBag size={20} className="text-[#174C35]" />
             <span>Propagation, Production & Harvest Log</span>
           </h3>
-          <p className="text-xs sm:text-sm text-[#526a57] mt-0.5">
+          <p className="text-xs sm:text-sm text-[#68766C] mt-0.5">
             Track lineage, cuttings in progress, harvest frequency, and measured yields.
           </p>
         </div>
@@ -205,7 +205,7 @@ export function PlantProductionTab({
           <button
             type="button"
             onClick={() => setShowPropModal(true)}
-            className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-white border border-[#ded5c5] text-[#144229] hover:bg-[#eef5ee] text-xs sm:text-sm font-semibold transition-colors cursor-pointer min-h-[44px]"
+            className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-white border border-[#E3DFD2] text-[#174C35] hover:bg-[#EAF1E4] text-xs sm:text-sm font-semibold transition-colors cursor-pointer min-h-[44px]"
           >
             <Scissors size={15} />
             <span>Propagate Plant</span>
@@ -214,7 +214,7 @@ export function PlantProductionTab({
           <button
             type="button"
             onClick={() => setShowHarvestModal(true)}
-            className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-[#144229] text-white hover:bg-[#1b5535] text-xs sm:text-sm font-semibold transition-colors cursor-pointer min-h-[44px]"
+            className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-[#174C35] text-white hover:bg-[#174C35] text-xs sm:text-sm font-semibold transition-colors cursor-pointer min-h-[44px]"
           >
             <Plus size={16} />
             <span>Log Harvest</span>
@@ -224,21 +224,21 @@ export function PlantProductionTab({
 
       {/* Yield Analytics Banner */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5">
-        <div className="p-4 rounded-2xl bg-white border border-[#ded5c5]">
-          <span className="text-xs font-semibold text-[#6d8573] block mb-1">Total Harvest Events</span>
-          <strong className="text-xl font-bold text-[#0c2417]">
+        <div className="p-4 rounded-2xl bg-white border border-[#E3DFD2]">
+          <span className="text-xs font-semibold text-[#68766C] block mb-1">Total Harvest Events</span>
+          <strong className="text-xl font-bold text-[#203027]">
             {yieldMetrics.totalHarvestCount}
           </strong>
-          <span className="text-[11px] text-[#526a57] block mt-0.5">
+          <span className="text-[11px] text-[#68766C] block mt-0.5">
             {yieldMetrics.latestHarvestDate
               ? `Latest: ${new Date(yieldMetrics.latestHarvestDate).toLocaleDateString()}`
               : 'No harvests recorded yet'}
           </span>
         </div>
 
-        <div className="p-4 rounded-2xl bg-white border border-[#ded5c5]">
-          <span className="text-xs font-semibold text-[#6d8573] block mb-1">Cumulative Recorded Yield</span>
-          <div className="text-sm font-bold text-[#0c2417] space-y-0.5">
+        <div className="p-4 rounded-2xl bg-white border border-[#E3DFD2]">
+          <span className="text-xs font-semibold text-[#68766C] block mb-1">Cumulative Recorded Yield</span>
+          <div className="text-sm font-bold text-[#203027] space-y-0.5">
             {Object.keys(yieldMetrics.totalsByUnit).length > 0 ? (
               Object.entries(yieldMetrics.totalsByUnit).map(([unit, total]) => (
                 <div key={unit}>
@@ -246,17 +246,17 @@ export function PlantProductionTab({
                 </div>
               ))
             ) : (
-              <span className="text-xs font-normal text-[#6d8573]">0 units</span>
+              <span className="text-xs font-normal text-[#68766C]">0 units</span>
             )}
           </div>
         </div>
 
-        <div className="p-4 rounded-2xl bg-white border border-[#ded5c5]">
-          <span className="text-xs font-semibold text-[#6d8573] block mb-1">Lineage & Descendants</span>
-          <strong className="text-xl font-bold text-[#0c2417]">
+        <div className="p-4 rounded-2xl bg-white border border-[#E3DFD2]">
+          <span className="text-xs font-semibold text-[#68766C] block mb-1">Lineage & Descendants</span>
+          <strong className="text-xl font-bold text-[#203027]">
             {lineage.offspringCount} offspring
           </strong>
-          <span className="text-[11px] text-[#526a57] block mt-0.5">
+          <span className="text-[11px] text-[#68766C] block mt-0.5">
             {lineage.parentNickname ? `Propagated from ${lineage.parentNickname}` : 'Primary seed/specimen'}
           </span>
         </div>
@@ -264,13 +264,13 @@ export function PlantProductionTab({
 
       {/* Active Propagations Card */}
       {activeProps.length > 0 && (
-        <div className="bg-[#fbf9f4] border border-[#ded5c5] rounded-3xl p-5 sm:p-6 shadow-xs space-y-3.5">
-          <div className="flex items-center justify-between pb-2 border-b border-[#ded5c5]/60">
-            <h4 className="font-serif font-bold text-sm sm:text-base text-[#0c2417] flex items-center gap-2">
-              <Scissors size={18} className="text-[#144229]" />
+        <div className="bg-[#F8F6EE] border border-[#E3DFD2] rounded-3xl p-5 sm:p-6 shadow-xs space-y-3.5">
+          <div className="flex items-center justify-between pb-2 border-b border-[#E3DFD2]/60">
+            <h4 className="font-serif font-bold text-sm sm:text-base text-[#203027] flex items-center gap-2">
+              <Scissors size={18} className="text-[#174C35]" />
               <span>Propagations In Progress ({activeProps.length})</span>
             </h4>
-            <span className="text-xs bg-[#eef5ee] text-[#144229] px-2.5 py-0.5 rounded-full border border-[#cfe0cf] font-semibold">
+            <span className="text-xs bg-[#EAF1E4] text-[#174C35] px-2.5 py-0.5 rounded-full border border-[#E3DFD2] font-semibold">
               Rooting / Callusing
             </span>
           </div>
@@ -279,34 +279,34 @@ export function PlantProductionTab({
             {activeProps.map((prop) => (
               <div
                 key={prop.id}
-                className="p-4 rounded-2xl bg-white border border-[#ded5c5] flex flex-col sm:flex-row sm:items-center justify-between gap-3"
+                className="p-4 rounded-2xl bg-white border border-[#E3DFD2] flex flex-col sm:flex-row sm:items-center justify-between gap-3"
               >
                 <div>
                   <div className="flex items-center gap-2">
-                    <strong className="text-sm text-[#0c2417] capitalize">
+                    <strong className="text-sm text-[#203027] capitalize">
                       {prop.propagationMethod} Cutting
                     </strong>
-                    <span className="text-xs text-[#526a57]">in {prop.medium || 'water'}</span>
+                    <span className="text-xs text-[#68766C]">in {prop.medium || 'water'}</span>
                   </div>
-                  <p className="text-xs text-[#6d8573] mt-1">
+                  <p className="text-xs text-[#68766C] mt-1">
                     Started: {prop.startedDate} • Next check: {prop.expectedFollowupDate || 'Pending'}
                   </p>
-                  {prop.notes && <p className="text-xs text-[#526a57] mt-1 italic">{prop.notes}</p>}
+                  {prop.notes && <p className="text-xs text-[#68766C] mt-1 italic">{prop.notes}</p>}
                 </div>
 
                 <div className="flex items-center gap-2 shrink-0">
                   <button
                     type="button"
                     onClick={() => handleMarkPropagationOutcome(prop.id, 'success')}
-                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#eef5ee] text-[#144229] border border-[#cfe0cf] text-xs font-semibold hover:bg-[#d8ebd8] cursor-pointer"
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#EAF1E4] text-[#174C35] border border-[#E3DFD2] text-xs font-semibold hover:bg-[#EAF1E4] cursor-pointer"
                   >
-                    <CheckCircle2 size={14} className="text-[#257a4d]" />
+                    <CheckCircle2 size={14} className="text-[#174C35]" />
                     <span>Rooted (Success)</span>
                   </button>
                   <button
                     type="button"
                     onClick={() => handleMarkPropagationOutcome(prop.id, 'failure')}
-                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white text-[#9a3412] border border-[#fed7aa] text-xs font-semibold hover:bg-orange-50 cursor-pointer"
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white text-[#963A23] border border-[#F0C04D/30] text-xs font-semibold hover:bg-orange-50 cursor-pointer"
                   >
                     <XCircle size={14} />
                     <span>Failed</span>
@@ -319,27 +319,27 @@ export function PlantProductionTab({
       )}
 
       {/* Harvest History Log */}
-      <div className="bg-white rounded-3xl border border-[#ded5c5] p-5 sm:p-6 shadow-xs space-y-4">
-        <div className="flex items-center justify-between pb-3 border-b border-[#f0ebe0]">
-          <h4 className="font-serif font-bold text-sm sm:text-base text-[#0c2417] flex items-center gap-2">
-            <Scale size={18} className="text-[#144229]" />
+      <div className="bg-white rounded-3xl border border-[#E3DFD2] p-5 sm:p-6 shadow-xs space-y-4">
+        <div className="flex items-center justify-between pb-3 border-b border-[#E3DFD2]">
+          <h4 className="font-serif font-bold text-sm sm:text-base text-[#203027] flex items-center gap-2">
+            <Scale size={18} className="text-[#174C35]" />
             <span>Harvest History Log</span>
           </h4>
-          <span className="text-xs font-semibold text-[#144229] bg-[#eef5ee] px-2.5 py-0.5 rounded-full">
+          <span className="text-xs font-semibold text-[#174C35] bg-[#EAF1E4] px-2.5 py-0.5 rounded-full">
             {plantHarvests.length} entries
           </span>
         </div>
 
         {plantHarvests.length > 0 ? (
-          <div className="divide-y divide-[#f0ebe0]">
+          <div className="divide-y divide-[#E3DFD2]">
             {plantHarvests.map((h) => (
               <div key={h.id} className="py-3.5 first:pt-0 last:pb-0 space-y-1">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
-                    <span className="font-bold text-sm text-[#0c2417]">
+                    <span className="font-bold text-sm text-[#203027]">
                       {h.quantity} {h.unit}
                     </span>
-                    <span className="text-xs px-2 py-0.5 rounded-md bg-[#eef5ee] text-[#144229] font-medium border border-[#cfe0cf]">
+                    <span className="text-xs px-2 py-0.5 rounded-md bg-[#EAF1E4] text-[#174C35] font-medium border border-[#E3DFD2]">
                       {h.harvestType === 'cut_and_come_again' ? 'Cut & Come Again' : 'Full Harvest'}
                     </span>
                     {h.qualityObservation && (
@@ -348,7 +348,7 @@ export function PlantProductionTab({
                       </span>
                     )}
                   </div>
-                  <span className="text-xs text-[#6d8573]">
+                  <span className="text-xs text-[#68766C]">
                     {new Date(h.harvestDate).toLocaleDateString('en-US', {
                       day: 'numeric',
                       month: 'short',
@@ -356,12 +356,12 @@ export function PlantProductionTab({
                     })}
                   </span>
                 </div>
-                {h.notes && <p className="text-xs text-[#526a57] italic">{h.notes}</p>}
+                {h.notes && <p className="text-xs text-[#68766C] italic">{h.notes}</p>}
               </div>
             ))}
           </div>
         ) : (
-          <div className="p-6 text-center text-xs sm:text-sm text-[#526a57] italic">
+          <div className="p-6 text-center text-xs sm:text-sm text-[#68766C] italic">
             No harvests recorded for this plant yet. Log your first harvest or pruning yield above.
           </div>
         )}
@@ -370,16 +370,16 @@ export function PlantProductionTab({
       {/* Propagate Modal */}
       {showPropModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-xs">
-          <div className="bg-white rounded-3xl border border-[#ded5c5] max-w-lg w-full p-6 shadow-xl space-y-4 max-h-[90vh] overflow-y-auto">
-            <div className="flex items-center justify-between pb-3 border-b border-[#f0ebe0]">
-              <h3 className="font-serif font-bold text-lg text-[#0c2417] flex items-center gap-2">
-                <Scissors size={20} className="text-[#144229]" />
+          <div className="bg-white rounded-3xl border border-[#E3DFD2] max-w-lg w-full p-6 shadow-xl space-y-4 max-h-[90vh] overflow-y-auto">
+            <div className="flex items-center justify-between pb-3 border-b border-[#E3DFD2]">
+              <h3 className="font-serif font-bold text-lg text-[#203027] flex items-center gap-2">
+                <Scissors size={20} className="text-[#174C35]" />
                 <span>Propagate {plant.nickname}</span>
               </h3>
               <button
                 type="button"
                 onClick={() => setShowPropModal(false)}
-                className="p-2 text-[#526a57] hover:text-[#0c2417] rounded-lg cursor-pointer"
+                className="p-2 text-[#68766C] hover:text-[#203027] rounded-lg cursor-pointer"
               >
                 <X size={18} />
               </button>
@@ -394,13 +394,13 @@ export function PlantProductionTab({
             <form onSubmit={handleCreatePropagation} className="space-y-4">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
                 <div>
-                  <label className="block text-xs font-semibold text-[#0c2417] mb-1">
+                  <label className="block text-xs font-semibold text-[#203027] mb-1">
                     Propagation Method
                   </label>
                   <select
                     value={propMethod}
                     onChange={(e) => setPropMethod(e.target.value as PropagationMethod)}
-                    className="w-full px-3.5 py-2 text-xs sm:text-sm rounded-xl border border-[#ded5c5] bg-[#fbf9f4] text-[#0c2417] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#144229] min-h-[44px]"
+                    className="w-full px-3.5 py-2 text-xs sm:text-sm rounded-xl border border-[#E3DFD2] bg-[#F8F6EE] text-[#203027] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#174C35] min-h-[44px]"
                   >
                     <option value="cutting">Stem / Leaf Cutting</option>
                     <option value="division">Root Division</option>
@@ -412,7 +412,7 @@ export function PlantProductionTab({
                 </div>
 
                 <div>
-                  <label className="block text-xs font-semibold text-[#0c2417] mb-1">
+                  <label className="block text-xs font-semibold text-[#203027] mb-1">
                     Medium
                   </label>
                   <input
@@ -420,19 +420,19 @@ export function PlantProductionTab({
                     placeholder="e.g. Water, Perlite, Seed Starting Mix"
                     value={propMedium}
                     onChange={(e) => setPropMedium(e.target.value)}
-                    className="w-full px-3.5 py-2 text-xs sm:text-sm rounded-xl border border-[#ded5c5] bg-[#fbf9f4] text-[#0c2417] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#144229] min-h-[44px]"
+                    className="w-full px-3.5 py-2 text-xs sm:text-sm rounded-xl border border-[#E3DFD2] bg-[#F8F6EE] text-[#203027] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#174C35] min-h-[44px]"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-[#0c2417] mb-1">
+                <label className="block text-xs font-semibold text-[#203027] mb-1">
                   Follow-up Check (Days from now)
                 </label>
                 <select
                   value={propFollowupDays}
                   onChange={(e) => setPropFollowupDays(e.target.value)}
-                  className="w-full px-3.5 py-2 text-xs sm:text-sm rounded-xl border border-[#ded5c5] bg-[#fbf9f4] text-[#0c2417] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#144229] min-h-[44px]"
+                  className="w-full px-3.5 py-2 text-xs sm:text-sm rounded-xl border border-[#E3DFD2] bg-[#F8F6EE] text-[#203027] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#174C35] min-h-[44px]"
                 >
                   <option value="3">In 3 days (Check water / mist)</option>
                   <option value="5">In 5 days</option>
@@ -442,7 +442,7 @@ export function PlantProductionTab({
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-[#0c2417] mb-1">
+                <label className="block text-xs font-semibold text-[#203027] mb-1">
                   Notes
                 </label>
                 <textarea
@@ -450,7 +450,7 @@ export function PlantProductionTab({
                   placeholder="e.g. 4-inch node cut below third leaf set; lower leaves stripped."
                   value={propNotes}
                   onChange={(e) => setPropNotes(e.target.value)}
-                  className="w-full px-3.5 py-2 text-xs sm:text-sm rounded-xl border border-[#ded5c5] bg-[#fbf9f4] text-[#0c2417] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#144229]"
+                  className="w-full px-3.5 py-2 text-xs sm:text-sm rounded-xl border border-[#E3DFD2] bg-[#F8F6EE] text-[#203027] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#174C35]"
                 />
               </div>
 
@@ -458,14 +458,14 @@ export function PlantProductionTab({
                 <button
                   type="button"
                   onClick={() => setShowPropModal(false)}
-                  className="px-4 py-2.5 rounded-xl border border-[#ded5c5] text-xs font-semibold text-[#526a57] hover:bg-[#fbf9f4] cursor-pointer min-h-[44px]"
+                  className="px-4 py-2.5 rounded-xl border border-[#E3DFD2] text-xs font-semibold text-[#68766C] hover:bg-[#F8F6EE] cursor-pointer min-h-[44px]"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
                   disabled={submitting}
-                  className="px-5 py-2.5 rounded-xl bg-[#144229] text-white text-xs font-semibold hover:bg-[#1b5535] disabled:opacity-50 transition-colors flex items-center gap-2 cursor-pointer min-h-[44px]"
+                  className="px-5 py-2.5 rounded-xl bg-[#174C35] text-white text-xs font-semibold hover:bg-[#174C35] disabled:opacity-50 transition-colors flex items-center gap-2 cursor-pointer min-h-[44px]"
                 >
                   {submitting && <Loader2 size={14} className="animate-spin" />}
                   <span>Start Propagation</span>
@@ -479,16 +479,16 @@ export function PlantProductionTab({
       {/* Harvest Modal */}
       {showHarvestModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-xs">
-          <div className="bg-white rounded-3xl border border-[#ded5c5] max-w-lg w-full p-6 shadow-xl space-y-4 max-h-[90vh] overflow-y-auto">
-            <div className="flex items-center justify-between pb-3 border-b border-[#f0ebe0]">
-              <h3 className="font-serif font-bold text-lg text-[#0c2417] flex items-center gap-2">
-                <ShoppingBag size={20} className="text-[#144229]" />
+          <div className="bg-white rounded-3xl border border-[#E3DFD2] max-w-lg w-full p-6 shadow-xl space-y-4 max-h-[90vh] overflow-y-auto">
+            <div className="flex items-center justify-between pb-3 border-b border-[#E3DFD2]">
+              <h3 className="font-serif font-bold text-lg text-[#203027] flex items-center gap-2">
+                <ShoppingBag size={20} className="text-[#174C35]" />
                 <span>Log Harvest for {plant.nickname}</span>
               </h3>
               <button
                 type="button"
                 onClick={() => setShowHarvestModal(false)}
-                className="p-2 text-[#526a57] hover:text-[#0c2417] rounded-lg cursor-pointer"
+                className="p-2 text-[#68766C] hover:text-[#203027] rounded-lg cursor-pointer"
               >
                 <X size={18} />
               </button>
@@ -503,7 +503,7 @@ export function PlantProductionTab({
             <form onSubmit={handleCreateHarvest} className="space-y-4">
               <div className="grid grid-cols-2 gap-3.5">
                 <div>
-                  <label className="block text-xs font-semibold text-[#0c2417] mb-1">
+                  <label className="block text-xs font-semibold text-[#203027] mb-1">
                     Quantity *
                   </label>
                   <input
@@ -513,18 +513,18 @@ export function PlantProductionTab({
                     placeholder="e.g. 150"
                     value={harvestQty}
                     onChange={(e) => setHarvestQty(e.target.value)}
-                    className="w-full px-3.5 py-2 text-xs sm:text-sm rounded-xl border border-[#ded5c5] bg-[#fbf9f4] text-[#0c2417] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#144229] min-h-[44px]"
+                    className="w-full px-3.5 py-2 text-xs sm:text-sm rounded-xl border border-[#E3DFD2] bg-[#F8F6EE] text-[#203027] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#174C35] min-h-[44px]"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs font-semibold text-[#0c2417] mb-1">
+                  <label className="block text-xs font-semibold text-[#203027] mb-1">
                     Unit
                   </label>
                   <select
                     value={harvestUnit}
                     onChange={(e) => setHarvestUnit(e.target.value as HarvestUnit)}
-                    className="w-full px-3.5 py-2 text-xs sm:text-sm rounded-xl border border-[#ded5c5] bg-[#fbf9f4] text-[#0c2417] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#144229] min-h-[44px]"
+                    className="w-full px-3.5 py-2 text-xs sm:text-sm rounded-xl border border-[#E3DFD2] bg-[#F8F6EE] text-[#203027] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#174C35] min-h-[44px]"
                   >
                     <option value="g">grams (g)</option>
                     <option value="kg">kilograms (kg)</option>
@@ -539,13 +539,13 @@ export function PlantProductionTab({
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
                 <div>
-                  <label className="block text-xs font-semibold text-[#0c2417] mb-1">
+                  <label className="block text-xs font-semibold text-[#203027] mb-1">
                     Harvest Type
                   </label>
                   <select
                     value={harvestType}
                     onChange={(e) => setHarvestType(e.target.value as HarvestType)}
-                    className="w-full px-3.5 py-2 text-xs sm:text-sm rounded-xl border border-[#ded5c5] bg-[#fbf9f4] text-[#0c2417] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#144229] min-h-[44px]"
+                    className="w-full px-3.5 py-2 text-xs sm:text-sm rounded-xl border border-[#E3DFD2] bg-[#F8F6EE] text-[#203027] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#174C35] min-h-[44px]"
                   >
                     <option value="cut_and_come_again">Cut and Come Again</option>
                     <option value="full_harvest">Full Final Harvest</option>
@@ -555,13 +555,13 @@ export function PlantProductionTab({
                 </div>
 
                 <div>
-                  <label className="block text-xs font-semibold text-[#0c2417] mb-1">
+                  <label className="block text-xs font-semibold text-[#203027] mb-1">
                     Quality Observation
                   </label>
                   <select
                     value={harvestQuality}
                     onChange={(e) => setHarvestQuality(e.target.value as HarvestQualityObservation)}
-                    className="w-full px-3.5 py-2 text-xs sm:text-sm rounded-xl border border-[#ded5c5] bg-[#fbf9f4] text-[#0c2417] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#144229] min-h-[44px]"
+                    className="w-full px-3.5 py-2 text-xs sm:text-sm rounded-xl border border-[#E3DFD2] bg-[#F8F6EE] text-[#203027] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#174C35] min-h-[44px]"
                   >
                     <option value="prime">Prime (Excellent flavor & color)</option>
                     <option value="good">Good standard</option>
@@ -573,7 +573,7 @@ export function PlantProductionTab({
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-[#0c2417] mb-1">
+                <label className="block text-xs font-semibold text-[#203027] mb-1">
                   Notes (Flavor, aroma, maturity)
                 </label>
                 <textarea
@@ -581,7 +581,7 @@ export function PlantProductionTab({
                   placeholder="e.g. Crisp leaves, highly fragrant, harvested in early morning."
                   value={harvestNotes}
                   onChange={(e) => setHarvestNotes(e.target.value)}
-                  className="w-full px-3.5 py-2 text-xs sm:text-sm rounded-xl border border-[#ded5c5] bg-[#fbf9f4] text-[#0c2417] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#144229]"
+                  className="w-full px-3.5 py-2 text-xs sm:text-sm rounded-xl border border-[#E3DFD2] bg-[#F8F6EE] text-[#203027] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#174C35]"
                 />
               </div>
 
@@ -589,14 +589,14 @@ export function PlantProductionTab({
                 <button
                   type="button"
                   onClick={() => setShowHarvestModal(false)}
-                  className="px-4 py-2.5 rounded-xl border border-[#ded5c5] text-xs font-semibold text-[#526a57] hover:bg-[#fbf9f4] cursor-pointer min-h-[44px]"
+                  className="px-4 py-2.5 rounded-xl border border-[#E3DFD2] text-xs font-semibold text-[#68766C] hover:bg-[#F8F6EE] cursor-pointer min-h-[44px]"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
                   disabled={submitting}
-                  className="px-5 py-2.5 rounded-xl bg-[#144229] text-white text-xs font-semibold hover:bg-[#1b5535] disabled:opacity-50 transition-colors flex items-center gap-2 cursor-pointer min-h-[44px]"
+                  className="px-5 py-2.5 rounded-xl bg-[#174C35] text-white text-xs font-semibold hover:bg-[#174C35] disabled:opacity-50 transition-colors flex items-center gap-2 cursor-pointer min-h-[44px]"
                 >
                   {submitting && <Loader2 size={14} className="animate-spin" />}
                   <span>Save Harvest</span>

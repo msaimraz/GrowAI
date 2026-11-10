@@ -71,16 +71,16 @@ export function AppSidebar() {
   ];
 
   return (
-    <aside className="hidden lg:flex lg:flex-col w-64 bg-[#174C35] text-[#FBF9F4] border-r border-[#123E2A] h-[100dvh] max-h-[100dvh] sticky top-0 shrink-0 select-none z-30 p-4 overflow-hidden">
+    <aside className="hidden lg:flex lg:flex-col w-64 bg-[#174C35] text-[#F8F6EE] border-r border-[#123E2A] h-[100dvh] max-h-[100dvh] sticky top-0 shrink-0 select-none z-30 p-4 overflow-hidden">
       {/* Brand Header */}
       <div className="pb-4 border-b border-[#235F44] shrink-0">
-        <Link href="/app" className="inline-block focus:outline-hidden focus:ring-2 focus:ring-[#86efac] rounded-xl">
+        <Link href="/app" className="inline-block focus:outline-hidden focus:ring-2 focus:ring-[#78A95A] rounded-xl">
           <div className="flex items-center gap-2.5">
             <span className="flex items-center justify-center w-8 h-8 rounded-xl bg-white text-[#174C35] shadow-xs font-bold text-base select-none">
               🌱
             </span>
             <span className="font-serif font-bold text-xl tracking-tight text-white">
-              Grow<span className="text-[#86efac] font-sans font-semibold">AI</span>
+              Grow<span className="text-[#78A95A] font-sans font-semibold">AI</span>
             </span>
           </div>
         </Link>
@@ -114,7 +114,7 @@ export function AppSidebar() {
                   }`}
                 >
                   <div className="flex items-center gap-2.5 min-w-0">
-                    <Icon size={18} className={isActive ? 'text-[#86efac]' : 'text-[#A7C8B6]'} />
+                    <Icon size={18} className={isActive ? 'text-[#78A95A]' : 'text-[#A7C8B6]'} />
                     <span className="truncate">{item.label}</span>
                   </div>
                   {item.badge && (
@@ -151,11 +151,11 @@ export function AppSidebar() {
                   }`}
                 >
                   <div className="flex items-center gap-2.5 min-w-0">
-                    <Icon size={18} className={isActive ? 'text-[#86efac]' : 'text-[#A7C8B6]'} />
+                    <Icon size={18} className={isActive ? 'text-[#78A95A]' : 'text-[#A7C8B6]'} />
                     <span className="truncate">{item.label}</span>
                   </div>
                   {item.badge && (
-                    <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-[#123E2A] text-[#86efac] font-normal">
+                    <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-[#123E2A] text-[#78A95A] font-normal">
                       {item.badge}
                     </span>
                   )}

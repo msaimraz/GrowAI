@@ -108,13 +108,13 @@ export function PlantConditionsTab({
   return (
     <div className="space-y-6">
       {/* Header & Log Action */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white p-5 sm:p-6 rounded-3xl border border-[#ded5c5] shadow-xs">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white p-5 sm:p-6 rounded-3xl border border-[#E3DFD2] shadow-xs">
         <div>
-          <h3 className="font-serif font-bold text-lg text-[#0c2417] flex items-center gap-2">
-            <Thermometer size={20} className="text-[#144229]" />
+          <h3 className="font-serif font-bold text-lg text-[#203027] flex items-center gap-2">
+            <Thermometer size={20} className="text-[#174C35]" />
             <span>Environmental Growing Conditions</span>
           </h3>
-          <p className="text-xs sm:text-sm text-[#526a57] mt-0.5">
+          <p className="text-xs sm:text-sm text-[#68766C] mt-0.5">
             Log temperature, ambient humidity, light exposure, and soil moisture observations.
           </p>
         </div>
@@ -122,7 +122,7 @@ export function PlantConditionsTab({
         <button
           type="button"
           onClick={() => setShowLogModal(true)}
-          className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#144229] text-white text-xs sm:text-sm font-semibold hover:bg-[#1b5535] transition-colors cursor-pointer min-h-[44px] shrink-0"
+          className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#174C35] text-white text-xs sm:text-sm font-semibold hover:bg-[#174C35] transition-colors cursor-pointer min-h-[44px] shrink-0"
         >
           <Plus size={16} />
           <span>Log Observation</span>
@@ -131,12 +131,12 @@ export function PlantConditionsTab({
 
       {/* Latest Condition Assessment Summary */}
       {latest ? (
-        <div className="bg-[#fbf9f4] border border-[#ded5c5] rounded-3xl p-5 sm:p-6 shadow-xs space-y-4">
-          <div className="flex items-center justify-between pb-3 border-b border-[#ded5c5]/60">
-            <span className="text-xs font-semibold text-[#526a57]">
+        <div className="bg-[#F8F6EE] border border-[#E3DFD2] rounded-3xl p-5 sm:p-6 shadow-xs space-y-4">
+          <div className="flex items-center justify-between pb-3 border-b border-[#E3DFD2]/60">
+            <span className="text-xs font-semibold text-[#68766C]">
               Latest Observation: {new Date(latest.observationTime).toLocaleString('en-US', { dateStyle: 'medium', timeStyle: 'short' })}
             </span>
-            <span className="text-xs font-medium bg-[#eef5ee] text-[#144229] px-2.5 py-0.5 rounded-full border border-[#cfe0cf]">
+            <span className="text-xs font-medium bg-[#EAF1E4] text-[#174C35] px-2.5 py-0.5 rounded-full border border-[#E3DFD2]">
               {plantConditions.length} total entries
             </span>
           </div>
@@ -153,22 +153,22 @@ export function PlantConditionsTab({
               return (
                 <div
                   key={idx}
-                  className="p-4 rounded-2xl bg-white border border-[#ded5c5] space-y-1.5"
+                  className="p-4 rounded-2xl bg-white border border-[#E3DFD2] space-y-1.5"
                 >
                   <div className="flex items-center justify-between">
-                    <span className="text-xs font-bold uppercase tracking-wider text-[#6d8573]">
+                    <span className="text-xs font-bold uppercase tracking-wider text-[#68766C]">
                       {a.metricName.replace('_', ' ')}
                     </span>
                     <span className={`text-[10px] font-semibold px-2 py-0.5 rounded-md border ${statusColor}`}>
                       {a.status.replace(/_/g, ' ')}
                     </span>
                   </div>
-                  <div className="text-base font-bold text-[#0c2417]">
+                  <div className="text-base font-bold text-[#203027]">
                     {a.observedValue !== null && a.observedValue !== undefined
                       ? `${a.observedValue}${a.metricName === 'temperature' ? '°C' : a.metricName === 'humidity' ? '%' : ''}`
                       : 'Unknown'}
                   </div>
-                  <p className="text-[11px] text-[#526a57] leading-tight">{a.explanation}</p>
+                  <p className="text-[11px] text-[#68766C] leading-tight">{a.explanation}</p>
                 </div>
               );
             })}
@@ -176,8 +176,8 @@ export function PlantConditionsTab({
 
           {/* Unrecorded parameters notice */}
           {assessment.unrecordedParameters.length > 0 && (
-            <div className="text-xs text-[#526a57] flex items-center gap-1.5 pt-1">
-              <HelpCircle size={14} className="text-[#6d8573]" />
+            <div className="text-xs text-[#68766C] flex items-center gap-1.5 pt-1">
+              <HelpCircle size={14} className="text-[#68766C]" />
               <span>
                 Not recorded in this entry: {assessment.unrecordedParameters.join(', ')}.
               </span>
@@ -185,17 +185,17 @@ export function PlantConditionsTab({
           )}
         </div>
       ) : (
-        <div className="p-8 text-center bg-white rounded-3xl border border-[#ded5c5] space-y-3">
-          <Thermometer size={32} className="mx-auto text-[#8ba391]" />
-          <h4 className="font-serif font-bold text-[#0c2417]">No Growing Conditions Logged Yet</h4>
-          <p className="text-xs sm:text-sm text-[#526a57] max-w-md mx-auto">
+        <div className="p-8 text-center bg-white rounded-3xl border border-[#E3DFD2] space-y-3">
+          <Thermometer size={32} className="mx-auto text-[#68766C]" />
+          <h4 className="font-serif font-bold text-[#203027]">No Growing Conditions Logged Yet</h4>
+          <p className="text-xs sm:text-sm text-[#68766C] max-w-md mx-auto">
             Recording ambient temperature, humidity, and soil moisture allows GrowAI to assess
             whether conditions fall within standard botanical comfort ranges.
           </p>
           <button
             type="button"
             onClick={() => setShowLogModal(true)}
-            className="mt-2 inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#144229] text-white text-xs sm:text-sm font-semibold hover:bg-[#1b5535] transition-colors cursor-pointer min-h-[44px]"
+            className="mt-2 inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#174C35] text-white text-xs sm:text-sm font-semibold hover:bg-[#174C35] transition-colors cursor-pointer min-h-[44px]"
           >
             <Plus size={16} />
             <span>Record First Observation</span>
@@ -205,16 +205,16 @@ export function PlantConditionsTab({
 
       {/* Observation History Log */}
       {plantConditions.length > 0 && (
-        <div className="bg-white rounded-3xl border border-[#ded5c5] p-5 sm:p-6 shadow-xs space-y-4">
-          <h4 className="font-serif font-bold text-sm sm:text-base text-[#0c2417] pb-2 border-b border-[#f0ebe0]">
+        <div className="bg-white rounded-3xl border border-[#E3DFD2] p-5 sm:p-6 shadow-xs space-y-4">
+          <h4 className="font-serif font-bold text-sm sm:text-base text-[#203027] pb-2 border-b border-[#E3DFD2]">
             Environmental Observation History
           </h4>
 
-          <div className="divide-y divide-[#f0ebe0]">
+          <div className="divide-y divide-[#E3DFD2]">
             {plantConditions.map((cond) => (
               <div key={cond.id} className="py-3.5 first:pt-0 last:pb-0 space-y-1.5">
                 <div className="flex flex-wrap items-center justify-between gap-2">
-                  <span className="text-xs font-semibold text-[#0c2417]">
+                  <span className="text-xs font-semibold text-[#203027]">
                     {new Date(cond.observationTime).toLocaleString('en-US', {
                       dateStyle: 'medium',
                       timeStyle: 'short',
@@ -222,19 +222,19 @@ export function PlantConditionsTab({
                   </span>
                   <div className="flex items-center gap-2">
                     {cond.temperatureCelsius !== null && (
-                      <span className="text-xs bg-[#fbf9f4] border border-[#ded5c5] px-2 py-0.5 rounded-md font-mono text-[#144229]">
+                      <span className="text-xs bg-[#F8F6EE] border border-[#E3DFD2] px-2 py-0.5 rounded-md font-mono text-[#174C35]">
                         {cond.temperatureCelsius}°C
                       </span>
                     )}
                     {cond.relativeHumidityPercent !== null && (
-                      <span className="text-xs bg-[#fbf9f4] border border-[#ded5c5] px-2 py-0.5 rounded-md font-mono text-[#1e40af]">
+                      <span className="text-xs bg-[#F8F6EE] border border-[#E3DFD2] px-2 py-0.5 rounded-md font-mono text-[#1B5D88]">
                         {cond.relativeHumidityPercent}% RH
                       </span>
                     )}
                   </div>
                 </div>
 
-                <div className="flex flex-wrap items-center gap-2 text-xs text-[#526a57]">
+                <div className="flex flex-wrap items-center gap-2 text-xs text-[#68766C]">
                   {cond.soilMoisture && (
                     <span>Soil: <strong>{cond.soilMoisture.replace('_', ' ')}</strong></span>
                   )}
@@ -250,7 +250,7 @@ export function PlantConditionsTab({
                 </div>
 
                 {cond.notes && (
-                  <p className="text-xs text-[#6d8573] italic pt-0.5">{cond.notes}</p>
+                  <p className="text-xs text-[#68766C] italic pt-0.5">{cond.notes}</p>
                 )}
               </div>
             ))}
@@ -261,16 +261,16 @@ export function PlantConditionsTab({
       {/* Log Condition Modal */}
       {showLogModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-xs">
-          <div className="bg-white rounded-3xl border border-[#ded5c5] max-w-lg w-full p-6 shadow-xl space-y-4 max-h-[90vh] overflow-y-auto">
-            <div className="flex items-center justify-between pb-3 border-b border-[#f0ebe0]">
-              <h3 className="font-serif font-bold text-lg text-[#0c2417] flex items-center gap-2">
-                <Thermometer size={20} className="text-[#144229]" />
+          <div className="bg-white rounded-3xl border border-[#E3DFD2] max-w-lg w-full p-6 shadow-xl space-y-4 max-h-[90vh] overflow-y-auto">
+            <div className="flex items-center justify-between pb-3 border-b border-[#E3DFD2]">
+              <h3 className="font-serif font-bold text-lg text-[#203027] flex items-center gap-2">
+                <Thermometer size={20} className="text-[#174C35]" />
                 <span>Log Environmental Conditions</span>
               </h3>
               <button
                 type="button"
                 onClick={() => setShowLogModal(false)}
-                className="p-2 text-[#526a57] hover:text-[#0c2417] rounded-lg cursor-pointer"
+                className="p-2 text-[#68766C] hover:text-[#203027] rounded-lg cursor-pointer"
               >
                 <X size={18} />
               </button>
@@ -285,7 +285,7 @@ export function PlantConditionsTab({
             <form onSubmit={handleSubmit} className="space-y-4">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
                 <div>
-                  <label className="block text-xs font-semibold text-[#0c2417] mb-1">
+                  <label className="block text-xs font-semibold text-[#203027] mb-1">
                     Temperature (°C)
                   </label>
                   <input
@@ -294,12 +294,12 @@ export function PlantConditionsTab({
                     placeholder="e.g. 22"
                     value={temperature}
                     onChange={(e) => setTemperature(e.target.value)}
-                    className="w-full px-3.5 py-2 text-xs sm:text-sm rounded-xl border border-[#ded5c5] bg-[#fbf9f4] text-[#0c2417] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#144229] min-h-[44px]"
+                    className="w-full px-3.5 py-2 text-xs sm:text-sm rounded-xl border border-[#E3DFD2] bg-[#F8F6EE] text-[#203027] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#174C35] min-h-[44px]"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs font-semibold text-[#0c2417] mb-1">
+                  <label className="block text-xs font-semibold text-[#203027] mb-1">
                     Relative Humidity (%)
                   </label>
                   <input
@@ -310,20 +310,20 @@ export function PlantConditionsTab({
                     placeholder="e.g. 55"
                     value={humidity}
                     onChange={(e) => setHumidity(e.target.value)}
-                    className="w-full px-3.5 py-2 text-xs sm:text-sm rounded-xl border border-[#ded5c5] bg-[#fbf9f4] text-[#0c2417] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#144229] min-h-[44px]"
+                    className="w-full px-3.5 py-2 text-xs sm:text-sm rounded-xl border border-[#E3DFD2] bg-[#F8F6EE] text-[#203027] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#174C35] min-h-[44px]"
                   />
                 </div>
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
                 <div>
-                  <label className="block text-xs font-semibold text-[#0c2417] mb-1">
+                  <label className="block text-xs font-semibold text-[#203027] mb-1">
                     Light Level
                   </label>
                   <select
                     value={lightLevel}
                     onChange={(e) => setLightLevel(e.target.value as LightLevel)}
-                    className="w-full px-3.5 py-2 text-xs sm:text-sm rounded-xl border border-[#ded5c5] bg-[#fbf9f4] text-[#0c2417] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#144229] min-h-[44px]"
+                    className="w-full px-3.5 py-2 text-xs sm:text-sm rounded-xl border border-[#E3DFD2] bg-[#F8F6EE] text-[#203027] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#174C35] min-h-[44px]"
                   >
                     <option value="low">Low Light</option>
                     <option value="medium">Medium Light</option>
@@ -334,13 +334,13 @@ export function PlantConditionsTab({
                 </div>
 
                 <div>
-                  <label className="block text-xs font-semibold text-[#0c2417] mb-1">
+                  <label className="block text-xs font-semibold text-[#203027] mb-1">
                     Light Source
                   </label>
                   <select
                     value={lightSource}
                     onChange={(e) => setLightSource(e.target.value as LightSource)}
-                    className="w-full px-3.5 py-2 text-xs sm:text-sm rounded-xl border border-[#ded5c5] bg-[#fbf9f4] text-[#0c2417] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#144229] min-h-[44px]"
+                    className="w-full px-3.5 py-2 text-xs sm:text-sm rounded-xl border border-[#E3DFD2] bg-[#F8F6EE] text-[#203027] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#174C35] min-h-[44px]"
                   >
                     <option value="natural">Natural Sun</option>
                     <option value="grow_light">Dedicated Grow Light</option>
@@ -351,13 +351,13 @@ export function PlantConditionsTab({
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
                 <div>
-                  <label className="block text-xs font-semibold text-[#0c2417] mb-1">
+                  <label className="block text-xs font-semibold text-[#203027] mb-1">
                     Soil Moisture Observation
                   </label>
                   <select
                     value={soilMoisture}
                     onChange={(e) => setSoilMoisture(e.target.value as SoilMoistureObservation)}
-                    className="w-full px-3.5 py-2 text-xs sm:text-sm rounded-xl border border-[#ded5c5] bg-[#fbf9f4] text-[#0c2417] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#144229] min-h-[44px]"
+                    className="w-full px-3.5 py-2 text-xs sm:text-sm rounded-xl border border-[#E3DFD2] bg-[#F8F6EE] text-[#203027] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#174C35] min-h-[44px]"
                   >
                     <option value="dry">Dry</option>
                     <option value="slightly_moist">Slightly Moist</option>
@@ -367,13 +367,13 @@ export function PlantConditionsTab({
                 </div>
 
                 <div>
-                  <label className="block text-xs font-semibold text-[#0c2417] mb-1">
+                  <label className="block text-xs font-semibold text-[#203027] mb-1">
                     Airflow Quality
                   </label>
                   <select
                     value={airflow}
                     onChange={(e) => setAirflow(e.target.value as AirflowQuality)}
-                    className="w-full px-3.5 py-2 text-xs sm:text-sm rounded-xl border border-[#ded5c5] bg-[#fbf9f4] text-[#0c2417] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#144229] min-h-[44px]"
+                    className="w-full px-3.5 py-2 text-xs sm:text-sm rounded-xl border border-[#E3DFD2] bg-[#F8F6EE] text-[#203027] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#174C35] min-h-[44px]"
                   >
                     <option value="stagnant">Stagnant</option>
                     <option value="gentle">Gentle Breeze</option>
@@ -384,7 +384,7 @@ export function PlantConditionsTab({
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-[#0c2417] mb-1">
+                <label className="block text-xs font-semibold text-[#203027] mb-1">
                   Observational Notes (Optional)
                 </label>
                 <textarea
@@ -392,7 +392,7 @@ export function PlantConditionsTab({
                   placeholder="e.g. Afternoon sun was particularly intense today; soil dried fast."
                   value={notes}
                   onChange={(e) => setNotes(e.target.value)}
-                  className="w-full px-3.5 py-2 text-xs sm:text-sm rounded-xl border border-[#ded5c5] bg-[#fbf9f4] text-[#0c2417] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#144229]"
+                  className="w-full px-3.5 py-2 text-xs sm:text-sm rounded-xl border border-[#E3DFD2] bg-[#F8F6EE] text-[#203027] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#174C35]"
                 />
               </div>
 
@@ -400,14 +400,14 @@ export function PlantConditionsTab({
                 <button
                   type="button"
                   onClick={() => setShowLogModal(false)}
-                  className="px-4 py-2.5 rounded-xl border border-[#ded5c5] text-xs font-semibold text-[#526a57] hover:bg-[#fbf9f4] cursor-pointer min-h-[44px]"
+                  className="px-4 py-2.5 rounded-xl border border-[#E3DFD2] text-xs font-semibold text-[#68766C] hover:bg-[#F8F6EE] cursor-pointer min-h-[44px]"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
                   disabled={submitting}
-                  className="px-5 py-2.5 rounded-xl bg-[#144229] text-white text-xs font-semibold hover:bg-[#1b5535] disabled:opacity-50 transition-colors flex items-center gap-2 cursor-pointer min-h-[44px]"
+                  className="px-5 py-2.5 rounded-xl bg-[#174C35] text-white text-xs font-semibold hover:bg-[#174C35] disabled:opacity-50 transition-colors flex items-center gap-2 cursor-pointer min-h-[44px]"
                 >
                   {submitting && <Loader2 size={14} className="animate-spin" />}
                   <span>Save Observation</span>

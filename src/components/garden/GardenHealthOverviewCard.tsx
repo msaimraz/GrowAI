@@ -41,17 +41,17 @@ export function GardenHealthOverviewCard({
   );
 
   return (
-    <div className="bg-white rounded-3xl border border-[#ded5c5] p-4 sm:p-6 shadow-xs space-y-3 sm:space-y-4">
-      <div className="flex items-center justify-between pb-2.5 sm:pb-3 border-b border-[#f0ebe0]">
+    <div className="bg-white rounded-3xl border border-[#E3DFD2] p-4 sm:p-6 shadow-xs space-y-3 sm:space-y-4">
+      <div className="flex items-center justify-between pb-2.5 sm:pb-3 border-b border-[#E3DFD2]">
         <div className="flex items-center gap-2.5">
-          <div className="w-8 h-8 rounded-xl bg-[#eef5ee] text-[#144229] flex items-center justify-center shrink-0">
+          <div className="w-8 h-8 rounded-xl bg-[#EAF1E4] text-[#174C35] flex items-center justify-center shrink-0">
             <Activity size={18} />
           </div>
           <div>
-            <h4 className="font-serif font-bold text-sm sm:text-base text-[#0c2417]">
+            <h4 className="font-serif font-bold text-sm sm:text-base text-[#203027]">
               Plant Health Overview
             </h4>
-            <p className="text-[11px] text-[#526a57]">
+            <p className="text-[11px] text-[#68766C]">
               {hasAssessments
                 ? `${overview.assessedPlants} of ${overview.totalPlants} specimen(s) monitored`
                 : 'No diagnostic assessments recorded yet'}
@@ -61,7 +61,7 @@ export function GardenHealthOverviewCard({
 
         <Link
           href="/app/ai-doctor"
-          className="text-xs font-semibold text-[#144229] hover:underline flex items-center gap-1 min-h-[36px]"
+          className="text-xs font-semibold text-[#174C35] hover:underline flex items-center gap-1 min-h-[36px]"
         >
           <Stethoscope size={13} />
           <span>AI Doctor</span>
@@ -69,13 +69,13 @@ export function GardenHealthOverviewCard({
       </div>
 
       {!hasAssessments ? (
-        <div className="p-4 rounded-2xl bg-[#fbf9f4] border border-dashed border-[#ded5c5] text-center space-y-2">
-          <p className="text-xs text-[#526a57] leading-relaxed">
+        <div className="p-4 rounded-2xl bg-[#F8F6EE] border border-dashed border-[#E3DFD2] text-center space-y-2">
+          <p className="text-xs text-[#68766C] leading-relaxed">
             No health assessments yet. Diagnose chlorosis, spots, or pests with the AI Doctor to start monitoring.
           </p>
           <Link
             href="/app/ai-doctor"
-            className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#144229] hover:underline pt-1"
+            className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#174C35] hover:underline pt-1"
           >
             <span>Scan your first plant</span>
             <ChevronRight size={14} />
@@ -88,8 +88,8 @@ export function GardenHealthOverviewCard({
             <div
               className={`p-2 sm:p-2.5 rounded-xl border ${
                 overview.needsAttentionCount > 0
-                  ? 'bg-[#fef2f2] border-[#fecaca] text-[#991b1b]'
-                  : 'bg-[#fbf9f4] border-[#ded5c5] text-[#526a57]'
+                  ? 'bg-[#FBE9E2] border-[#E4775D/30] text-[#963A23]'
+                  : 'bg-[#F8F6EE] border-[#E3DFD2] text-[#68766C]'
               }`}
             >
               <strong className="block text-base sm:text-lg font-bold font-serif">
@@ -103,8 +103,8 @@ export function GardenHealthOverviewCard({
             <div
               className={`p-2 sm:p-2.5 rounded-xl border ${
                 overview.monitoringCount > 0
-                  ? 'bg-[#fffbeb] border-[#fde68a] text-[#92400e]'
-                  : 'bg-[#fbf9f4] border-[#ded5c5] text-[#526a57]'
+                  ? 'bg-[#FFF3D7] border-[#F0C04D/30] text-[#8A6400]'
+                  : 'bg-[#F8F6EE] border-[#E3DFD2] text-[#68766C]'
               }`}
             >
               <strong className="block text-base sm:text-lg font-bold font-serif">
@@ -118,8 +118,8 @@ export function GardenHealthOverviewCard({
             <div
               className={`p-2 sm:p-2.5 rounded-xl border ${
                 overview.followUpsDueCount > 0
-                  ? 'bg-[#fef2f2] border-[#fecaca] text-[#991b1b] animate-pulse'
-                  : 'bg-[#fbf9f4] border-[#ded5c5] text-[#526a57]'
+                  ? 'bg-[#FBE9E2] border-[#E4775D/30] text-[#963A23] animate-pulse'
+                  : 'bg-[#F8F6EE] border-[#E3DFD2] text-[#68766C]'
               }`}
             >
               <strong className="block text-base sm:text-lg font-bold font-serif">
@@ -134,7 +134,7 @@ export function GardenHealthOverviewCard({
           {/* Quick links to plants needing action */}
           {(attentionPlants.length > 0 || followUpDuePlants.length > 0) && (
             <div className="space-y-1.5 pt-1">
-              <span className="text-[10px] font-bold uppercase tracking-wider text-[#526a57] block">
+              <span className="text-[10px] font-bold uppercase tracking-wider text-[#68766C] block">
                 Action Required:
               </span>
               <div className="space-y-1">
@@ -142,7 +142,7 @@ export function GardenHealthOverviewCard({
                   <div
                     key={p.id}
                     onClick={() => onSelectPlant?.(p.id)}
-                    className="p-2 rounded-xl bg-[#fef2f2] border border-[#fecaca] text-[11px] text-[#991b1b] flex items-center justify-between cursor-pointer hover:bg-[#fee2e2] transition-colors"
+                    className="p-2 rounded-xl bg-[#FBE9E2] border border-[#E4775D/30] text-[11px] text-[#963A23] flex items-center justify-between cursor-pointer hover:bg-[#FBE9E2] transition-colors"
                   >
                     <span className="font-semibold truncate">
                       {p.nickname}: {plantHealthMap[p.id]?.activeIssue || 'Foliar issue'}
@@ -155,7 +155,7 @@ export function GardenHealthOverviewCard({
                   <div
                     key={p.id}
                     onClick={() => onSelectPlant?.(p.id)}
-                    className="p-2 rounded-xl bg-[#fffbeb] border border-[#fde68a] text-[11px] text-[#92400e] flex items-center justify-between cursor-pointer hover:bg-[#fef3c7] transition-colors"
+                    className="p-2 rounded-xl bg-[#FFF3D7] border border-[#F0C04D/30] text-[11px] text-[#8A6400] flex items-center justify-between cursor-pointer hover:bg-[#FFF3D7] transition-colors"
                   >
                     <span className="font-semibold truncate">
                       {p.nickname}: Follow-up check overdue

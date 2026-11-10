@@ -36,9 +36,9 @@ export function CopilotInput({
           disabled={disabled || isLoading}
           onChange={(e) => setText(e.target.value)}
           placeholder={placeholder}
-          className="w-full pl-4 pr-10 py-3 text-xs sm:text-sm rounded-2xl border border-[#ded5c5] bg-[#fbf9f4] text-[#0c2417] placeholder:text-[#8aa390] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#144229] transition-all disabled:opacity-60 min-h-[48px]"
+          className="w-full pl-4 pr-10 py-3 text-xs sm:text-sm rounded-2xl border border-[#E3DFD2] bg-[#F8F6EE] text-[#203027] placeholder:text-[#68766C] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#174C35] transition-all disabled:opacity-60 min-h-[48px]"
         />
-        <div className="absolute right-3.5 top-3.5 hidden sm:flex items-center text-[10px] text-[#8aa390] pointer-events-none">
+        <div className="absolute right-3.5 top-3.5 hidden sm:flex items-center text-[10px] text-[#68766C] pointer-events-none">
           <CornerDownLeft size={13} />
         </div>
       </div>
@@ -46,7 +46,7 @@ export function CopilotInput({
       <button
         type="submit"
         disabled={!text.trim() || isLoading || disabled}
-        className="px-5 py-3 rounded-2xl bg-[#144229] text-white text-xs sm:text-sm font-semibold hover:bg-[#1b5535] disabled:opacity-40 disabled:hover:bg-[#144229] transition-all flex items-center justify-center shrink-0 cursor-pointer min-h-[48px] shadow-xs"
+        className="px-5 py-3 rounded-2xl bg-[#174C35] text-white text-xs sm:text-sm font-semibold hover:bg-[#174C35] disabled:opacity-40 disabled:hover:bg-[#174C35] transition-all flex items-center justify-center shrink-0 cursor-pointer min-h-[48px] shadow-xs"
         title="Send inquiry"
       >
         <Send size={15} />

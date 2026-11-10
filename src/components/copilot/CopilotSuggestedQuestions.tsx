@@ -18,8 +18,8 @@ export function CopilotSuggestedQuestions({
 
   return (
     <div className="space-y-1.5">
-      <span className="text-[11px] font-semibold text-[#6d8573] flex items-center gap-1">
-        <Sparkles size={12} className="text-[#144229]" />
+      <span className="text-[11px] font-semibold text-[#68766C] flex items-center gap-1">
+        <Sparkles size={12} className="text-[#174C35]" />
         <span>Suggested Inquiries:</span>
       </span>
       <div className="flex items-center gap-1.5 flex-wrap">
@@ -29,7 +29,7 @@ export function CopilotSuggestedQuestions({
             type="button"
             disabled={disabled}
             onClick={() => onSelectQuestion(q)}
-            className="text-left px-3 py-1.5 rounded-full bg-[#fbf9f4] hover:bg-[#eef5ee] border border-[#ded5c5] hover:border-[#144229]/40 text-[#144229] text-xs font-medium transition-all disabled:opacity-50 cursor-pointer min-h-[32px]"
+            className="text-left px-3 py-1.5 rounded-full bg-[#F8F6EE] hover:bg-[#EAF1E4] border border-[#E3DFD2] hover:border-[#174C35]/40 text-[#174C35] text-xs font-medium transition-all disabled:opacity-50 cursor-pointer min-h-[32px]"
           >
             {q}
           </button>

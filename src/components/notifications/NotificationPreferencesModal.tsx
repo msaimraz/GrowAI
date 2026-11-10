@@ -107,14 +107,14 @@ export function NotificationPreferencesModal({
 
   return (
     <div className="fixed inset-0 z-60 flex items-center justify-center p-3 sm:p-4 bg-black/50 backdrop-blur-xs animate-in fade-in duration-200">
-      <div className="w-full max-w-[calc(100vw-24px)] sm:max-w-lg bg-[#fbf9f4] rounded-3xl border border-[#ded5c5] shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
+      <div className="w-full max-w-[calc(100vw-24px)] sm:max-w-lg bg-[#F8F6EE] rounded-3xl border border-[#E3DFD2] shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
         {/* Header */}
-        <div className="flex items-center justify-between p-5 border-b border-[#ded5c5] bg-white">
+        <div className="flex items-center justify-between p-5 border-b border-[#E3DFD2] bg-white">
           <div className="flex items-center gap-2">
-            <span className="w-7 h-7 rounded-lg bg-[#eef5ee] text-[#144229] flex items-center justify-center">
+            <span className="w-7 h-7 rounded-lg bg-[#EAF1E4] text-[#174C35] flex items-center justify-center">
               <Sliders size={16} />
             </span>
-            <h3 className="font-serif text-lg font-bold text-[#0c2417]">
+            <h3 className="font-serif text-lg font-bold text-[#203027]">
               Notification Preferences
             </h3>
           </div>
@@ -122,7 +122,7 @@ export function NotificationPreferencesModal({
           <button
             type="button"
             onClick={onClose}
-            className="p-1.5 rounded-xl text-[#526a57] hover:bg-[#eef5ee] hover:text-[#144229] transition-colors cursor-pointer"
+            className="p-1.5 rounded-xl text-[#68766C] hover:bg-[#EAF1E4] hover:text-[#174C35] transition-colors cursor-pointer"
             aria-label="Close preferences"
           >
             <X size={18} />
@@ -140,18 +140,18 @@ export function NotificationPreferencesModal({
 
           {/* Delivery Channels */}
           <div>
-            <h4 className="font-serif font-bold text-sm text-[#0c2417] mb-2 flex items-center gap-1.5">
-              <Bell size={15} className="text-[#144229]" />
+            <h4 className="font-serif font-bold text-sm text-[#203027] mb-2 flex items-center gap-1.5">
+              <Bell size={15} className="text-[#174C35]" />
               <span>Delivery Channels</span>
             </h4>
-            <div className="space-y-2 bg-white p-3.5 rounded-2xl border border-[#ded5c5]">
+            <div className="space-y-2 bg-white p-3.5 rounded-2xl border border-[#E3DFD2]">
               {/* In-App */}
-              <label className="flex items-center justify-between cursor-pointer p-1.5 rounded-xl hover:bg-[#fbf9f4]">
+              <label className="flex items-center justify-between cursor-pointer p-1.5 rounded-xl hover:bg-[#F8F6EE]">
                 <div>
-                  <span className="font-semibold text-xs text-[#0c2417] block">
+                  <span className="font-semibold text-xs text-[#203027] block">
                     In-App Notification Center
                   </span>
-                  <span className="text-[11px] text-[#6d8573]">
+                  <span className="text-[11px] text-[#68766C]">
                     Display reminders in the GrowAI app navigation bell.
                   </span>
                 </div>
@@ -161,17 +161,17 @@ export function NotificationPreferencesModal({
                   onChange={(e) =>
                     setChannels((prev) => ({ ...prev, inApp: e.target.checked }))
                   }
-                  className="w-4 h-4 rounded text-[#144229] accent-[#144229] cursor-pointer"
+                  className="w-4 h-4 rounded text-[#174C35] accent-[#174C35] cursor-pointer"
                 />
               </label>
 
               {/* Browser / PWA */}
-              <div className="flex items-center justify-between p-1.5 rounded-xl hover:bg-[#fbf9f4] border-t border-[#f0ece1]">
+              <div className="flex items-center justify-between p-1.5 rounded-xl hover:bg-[#F8F6EE] border-t border-[#E3DFD2]">
                 <div>
-                  <span className="font-semibold text-xs text-[#0c2417] block">
+                  <span className="font-semibold text-xs text-[#203027] block">
                     Browser & Device Notifications
                   </span>
-                  <span className="text-[11px] text-[#6d8573]">
+                  <span className="text-[11px] text-[#68766C]">
                     Receive system notifications on desktop or mobile device.
                   </span>
                   {browserPerm === 'denied' && (
@@ -185,8 +185,8 @@ export function NotificationPreferencesModal({
                   onClick={handleToggleBrowser}
                   className={`px-3 py-1 rounded-xl text-xs font-semibold border transition-all cursor-pointer ${
                     channels.browser
-                      ? 'bg-[#144229] text-white border-[#144229]'
-                      : 'bg-white text-[#526a57] border-[#ded5c5] hover:bg-[#eef5ee]'
+                      ? 'bg-[#174C35] text-white border-[#174C35]'
+                      : 'bg-white text-[#68766C] border-[#E3DFD2] hover:bg-[#EAF1E4]'
                   }`}
                 >
                   {channels.browser ? 'Enabled' : 'Enable'}
@@ -197,11 +197,11 @@ export function NotificationPreferencesModal({
 
           {/* Reminder Categories */}
           <div>
-            <h4 className="font-serif font-bold text-sm text-[#0c2417] mb-2 flex items-center gap-1.5">
-              <ShieldCheck size={15} className="text-[#144229]" />
+            <h4 className="font-serif font-bold text-sm text-[#203027] mb-2 flex items-center gap-1.5">
+              <ShieldCheck size={15} className="text-[#174C35]" />
               <span>Reminder Categories</span>
             </h4>
-            <div className="space-y-2 bg-white p-3.5 rounded-2xl border border-[#ded5c5]">
+            <div className="space-y-2 bg-white p-3.5 rounded-2xl border border-[#E3DFD2]">
               {[
                 { key: 'care', label: 'Care Tasks', desc: 'Watering, fertilizing, pruning, and inspection reminders' },
                 { key: 'healthFollowUp', label: 'Health Follow-ups', desc: 'Evaluations of ongoing plant health observations' },
@@ -212,13 +212,13 @@ export function NotificationPreferencesModal({
               ].map((item) => (
                 <label
                   key={item.key}
-                  className="flex items-center justify-between cursor-pointer p-1.5 rounded-xl hover:bg-[#fbf9f4]"
+                  className="flex items-center justify-between cursor-pointer p-1.5 rounded-xl hover:bg-[#F8F6EE]"
                 >
                   <div>
-                    <span className="font-semibold text-xs text-[#0c2417] block">
+                    <span className="font-semibold text-xs text-[#203027] block">
                       {item.label}
                     </span>
-                    <span className="text-[11px] text-[#6d8573] block">
+                    <span className="text-[11px] text-[#68766C] block">
                       {item.desc}
                     </span>
                   </div>
@@ -231,7 +231,7 @@ export function NotificationPreferencesModal({
                         [item.key]: e.target.checked,
                       }))
                     }
-                    className="w-4 h-4 rounded text-[#144229] accent-[#144229] cursor-pointer"
+                    className="w-4 h-4 rounded text-[#174C35] accent-[#174C35] cursor-pointer"
                   />
                 </label>
               ))}
@@ -240,25 +240,25 @@ export function NotificationPreferencesModal({
 
           {/* Timezone */}
           <div>
-            <h4 className="font-serif font-bold text-sm text-[#0c2417] mb-2 flex items-center gap-1.5">
-              <Globe size={15} className="text-[#144229]" />
+            <h4 className="font-serif font-bold text-sm text-[#203027] mb-2 flex items-center gap-1.5">
+              <Globe size={15} className="text-[#174C35]" />
               <span>Timezone</span>
             </h4>
-            <div className="bg-white p-3.5 rounded-2xl border border-[#ded5c5]">
-              <div className="flex items-center justify-between text-xs text-[#526a57]">
+            <div className="bg-white p-3.5 rounded-2xl border border-[#E3DFD2]">
+              <div className="flex items-center justify-between text-xs text-[#68766C]">
                 <span>Active Notification Timezone:</span>
-                <strong className="text-[#0c2417]">{timezone}</strong>
+                <strong className="text-[#203027]">{timezone}</strong>
               </div>
             </div>
           </div>
         </div>
 
         {/* Footer */}
-        <div className="p-4 sm:p-5 border-t border-[#ded5c5] bg-white flex items-center justify-end gap-2">
+        <div className="p-4 sm:p-5 border-t border-[#E3DFD2] bg-white flex items-center justify-end gap-2">
           <button
             type="button"
             onClick={onClose}
-            className="px-4 py-2 text-xs font-semibold rounded-xl bg-white border border-[#ded5c5] text-[#526a57] hover:bg-[#eef5ee] transition-all cursor-pointer min-h-[40px]"
+            className="px-4 py-2 text-xs font-semibold rounded-xl bg-white border border-[#E3DFD2] text-[#68766C] hover:bg-[#EAF1E4] transition-all cursor-pointer min-h-[40px]"
           >
             Cancel
           </button>
@@ -266,7 +266,7 @@ export function NotificationPreferencesModal({
             type="button"
             onClick={handleSave}
             disabled={saving}
-            className="inline-flex items-center gap-1.5 px-4 py-2 text-xs font-semibold rounded-xl bg-[#144229] text-white hover:bg-[#0c2417] transition-all cursor-pointer min-h-[40px]"
+            className="inline-flex items-center gap-1.5 px-4 py-2 text-xs font-semibold rounded-xl bg-[#174C35] text-white hover:bg-[#203027] transition-all cursor-pointer min-h-[40px]"
           >
             {saving ? (
               <>

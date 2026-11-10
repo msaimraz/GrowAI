@@ -391,50 +391,53 @@ export function getHealthStatusBadgeConfig(status: PlantHealthStatus): {
       return {
         label: 'Needs Attention',
         variant: 'crimson',
-        bgClass: 'bg-[#fef2f2]',
-        textClass: 'text-[#991b1b]',
-        borderClass: 'border-[#fecaca]',
-        dotClass: 'bg-[#dc2626]',
+        bgClass: 'bg-[#FBE9E2]',
+        textClass: 'text-[#963A23]',
+        borderClass: 'border-[#E4775D]/35',
+        dotClass: 'bg-[#E4775D]',
+
+
+
         description: 'Unresolved issue or worsening symptoms detected.',
       };
     case 'monitoring':
       return {
         label: 'Monitoring',
         variant: 'amber',
-        bgClass: 'bg-[#fffbeb]',
-        textClass: 'text-[#92400e]',
-        borderClass: 'border-[#fde68a]',
-        dotClass: 'bg-[#d97706]',
+        bgClass: 'bg-[#FFF3D7]',
+        textClass: 'text-[#8A6400]',
+        borderClass: 'border-[#F0C04D]/35',
+        dotClass: 'bg-[#F0C04D]',
         description: 'Observing foliage progression and cultural adjustments.',
       };
     case 'improving':
       return {
         label: 'Improving',
         variant: 'sky',
-        bgClass: 'bg-[#f0f9ff]',
-        textClass: 'text-[#0369a1]',
-        borderClass: 'border-[#bae6fd]',
-        dotClass: 'bg-[#0284c7]',
+        bgClass: 'bg-[#E7F2F9]',
+        textClass: 'text-[#1B5D88]',
+        borderClass: 'border-[#65A8D0]/35',
+        dotClass: 'bg-[#65A8D0]',
         description: 'Positive recovery signs observed following care.',
       };
     case 'resolved':
       return {
         label: 'Resolved',
         variant: 'emerald',
-        bgClass: 'bg-[#ecfdf5]',
-        textClass: 'text-[#065f46]',
-        borderClass: 'border-[#a7f3d0]',
-        dotClass: 'bg-[#059669]',
+        bgClass: 'bg-[#EAF1E4]',
+        textClass: 'text-[#174C35]',
+        borderClass: 'border-[#78A95A]/35',
+        dotClass: 'bg-[#78A95A]',
         description: 'Health issue addressed and cleared.',
       };
     case 'healthy':
       return {
         label: 'Healthy',
         variant: 'emerald',
-        bgClass: 'bg-[#eef5ee]',
-        textClass: 'text-[#144229]',
-        borderClass: 'border-[#cfe0cf]',
-        dotClass: 'bg-[#257a4d]',
+        bgClass: 'bg-[#EAF1E4]',
+        textClass: 'text-[#174C35]',
+        borderClass: 'border-[#78A95A]/35',
+        dotClass: 'bg-[#174C35]',
         description: 'Vigorous specimen with no active stressors.',
       };
     case 'unknown':
@@ -442,10 +445,10 @@ export function getHealthStatusBadgeConfig(status: PlantHealthStatus): {
       return {
         label: 'No Assessment',
         variant: 'slate',
-        bgClass: 'bg-[#f8fafc]',
-        textClass: 'text-[#64748b]',
-        borderClass: 'border-[#e2e8f0]',
-        dotClass: 'bg-[#94a3b8]',
+        bgClass: 'bg-[#F8F6EE]',
+        textClass: 'text-[#68766C]',
+        borderClass: 'border-[#E3DFD2]',
+        dotClass: 'bg-[#68766C]',
         description: 'No diagnostic assessments recorded yet.',
       };
   }

@@ -12,20 +12,20 @@ interface CopilotEvidenceCardProps {
 
 export function CopilotEvidenceCard({ evidence }: CopilotEvidenceCardProps) {
   const CardContent = (
-    <div className="p-3 rounded-2xl border border-[#ded5c5] bg-[#fbf9f4] hover:bg-white hover:border-[#144229]/40 transition-all text-xs space-y-1.5 group">
+    <div className="p-3 rounded-2xl border border-[#E3DFD2] bg-[#F8F6EE] hover:bg-white hover:border-[#174C35]/40 transition-all text-xs space-y-1.5 group">
       <div className="flex items-center justify-between gap-2">
         <CopilotSourceChip provenance={evidence.provenance} />
         {evidence.recordedAt && (
-          <span className="text-[10px] text-[#6d8573]">
+          <span className="text-[10px] text-[#68766C]">
             {evidence.recordedAt.split('T')[0]}
           </span>
         )}
       </div>
-      <p className="text-[#0c2417] font-medium leading-relaxed">
+      <p className="text-[#203027] font-medium leading-relaxed">
         {evidence.description}
       </p>
       {evidence.route && (
-        <div className="flex items-center gap-1 text-[11px] font-semibold text-[#144229] pt-0.5 group-hover:underline">
+        <div className="flex items-center gap-1 text-[11px] font-semibold text-[#174C35] pt-0.5 group-hover:underline">
           <span>View Record</span>
           <ExternalLink size={11} />
         </div>

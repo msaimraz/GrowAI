@@ -149,12 +149,12 @@ export function SaveDiagnosisModal({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/50 backdrop-blur-xs animate-in fade-in duration-200">
-      <div className="bg-white rounded-3xl border border-[#ded5c5] max-w-[calc(100vw-24px)] sm:max-w-lg w-full p-5 sm:p-8 shadow-xl space-y-6 relative max-h-[90vh] overflow-y-auto">
+      <div className="bg-white rounded-3xl border border-[#E3DFD2] max-w-[calc(100vw-24px)] sm:max-w-lg w-full p-5 sm:p-8 shadow-xl space-y-6 relative max-h-[90vh] overflow-y-auto">
         {/* Close Button */}
         <button
           type="button"
           onClick={onClose}
-          className="absolute top-5 right-5 p-2 rounded-full text-[#526a57] hover:bg-[#fbf9f4] hover:text-[#0c2417] transition-colors cursor-pointer"
+          className="absolute top-5 right-5 p-2 rounded-full text-[#68766C] hover:bg-[#F8F6EE] hover:text-[#203027] transition-colors cursor-pointer"
           aria-label="Close modal"
         >
           <X size={20} />
@@ -162,14 +162,14 @@ export function SaveDiagnosisModal({
 
         {/* Modal Header */}
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-2xl bg-[#eef5ee] text-[#144229] flex items-center justify-center shrink-0">
+          <div className="w-10 h-10 rounded-2xl bg-[#EAF1E4] text-[#174C35] flex items-center justify-center shrink-0">
             <BookmarkCheck size={22} />
           </div>
           <div>
-            <h3 className="text-xl font-serif font-bold text-[#0c2417]">
+            <h3 className="text-xl font-serif font-bold text-[#203027]">
               Save Diagnosis to History
             </h3>
-            <p className="text-xs text-[#526a57]">
+            <p className="text-xs text-[#68766C]">
               Keep a permanent record to monitor plant recovery and log treatments
             </p>
           </div>
@@ -178,13 +178,13 @@ export function SaveDiagnosisModal({
         {/* Success State */}
         {savedDiagnosisId ? (
           <div className="space-y-4 py-3">
-            <div className="p-4 rounded-2xl bg-[#eef5ee] border border-[#cfe0cf] flex items-start gap-3">
-              <CheckCircle2 size={22} className="text-[#144229] shrink-0 mt-0.5" />
+            <div className="p-4 rounded-2xl bg-[#EAF1E4] border border-[#E3DFD2] flex items-start gap-3">
+              <CheckCircle2 size={22} className="text-[#174C35] shrink-0 mt-0.5" />
               <div className="space-y-1">
-                <h4 className="font-bold text-sm text-[#0c2417]">
+                <h4 className="font-bold text-sm text-[#203027]">
                   Diagnosis Saved Successfully!
                 </h4>
-                <p className="text-xs text-[#2e4435] leading-relaxed">
+                <p className="text-xs text-[#203027] leading-relaxed">
                   Your diagnostic assessment and differential candidates are now securely stored. You can track actions taken and record follow-up recovery notes.
                 </p>
               </div>
@@ -193,7 +193,7 @@ export function SaveDiagnosisModal({
             <div className="flex flex-col sm:flex-row gap-3 pt-2">
               <Link
                 href={`/app/ai-doctor/history/${savedDiagnosisId}`}
-                className="flex-1 py-3 px-4 rounded-xl bg-[#144229] hover:bg-[#0c2417] text-white text-xs sm:text-sm font-semibold flex items-center justify-center gap-2 transition-colors"
+                className="flex-1 py-3 px-4 rounded-xl bg-[#174C35] hover:bg-[#203027] text-white text-xs sm:text-sm font-semibold flex items-center justify-center gap-2 transition-colors"
                 onClick={onClose}
               >
                 <span>View Historical Record & Treatments</span>
@@ -202,7 +202,7 @@ export function SaveDiagnosisModal({
               <button
                 type="button"
                 onClick={onClose}
-                className="py-3 px-4 rounded-xl border border-[#ded5c5] bg-white hover:bg-[#fbf9f4] text-xs sm:text-sm font-semibold text-[#0c2417] transition-colors cursor-pointer"
+                className="py-3 px-4 rounded-xl border border-[#E3DFD2] bg-white hover:bg-[#F8F6EE] text-xs sm:text-sm font-semibold text-[#203027] transition-colors cursor-pointer"
               >
                 Done
               </button>
@@ -213,8 +213,8 @@ export function SaveDiagnosisModal({
           <div className="space-y-5">
             {/* Offline Advisory */}
             {isOffline && (
-              <div className="p-3.5 rounded-xl bg-[#fff8e6] border border-[#fde68a] text-xs text-[#92400e] flex items-center gap-2.5">
-                <WifiOff size={18} className="shrink-0 text-[#b45309]" />
+              <div className="p-3.5 rounded-xl bg-[#FFF3D7] border border-[#F0C04D/30] text-xs text-[#8A6400] flex items-center gap-2.5">
+                <WifiOff size={18} className="shrink-0 text-[#8A6400]" />
                 <span>
                   You are offline. Cloud diagnosis persistence requires an active network connection.
                 </span>
@@ -223,12 +223,12 @@ export function SaveDiagnosisModal({
 
             {/* Friendly Error Message with Try Again */}
             {error && (
-              <div className="p-4 rounded-2xl bg-[#fee2e2] border border-[#fca5a5] space-y-2 text-xs text-[#991b1b]">
+              <div className="p-4 rounded-2xl bg-[#FBE9E2] border border-[#E4775D/30] space-y-2 text-xs text-[#963A23]">
                 <div className="flex items-center gap-2 font-bold">
                   <AlertCircle size={18} className="shrink-0" />
                   <span>We couldn’t save this plant check.</span>
                 </div>
-                <p className="text-[11px] leading-relaxed text-[#7f1d1d]">
+                <p className="text-[11px] leading-relaxed text-[#963A23]">
                   Please try again.
                 </p>
                 <div className="pt-1">
@@ -236,7 +236,7 @@ export function SaveDiagnosisModal({
                     type="button"
                     onClick={handleSave}
                     disabled={saving}
-                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#991b1b] hover:bg-[#7f1d1d] text-white text-xs font-semibold cursor-pointer transition-colors shadow-2xs"
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#963A23] hover:bg-[#963A23] text-white text-xs font-semibold cursor-pointer transition-colors shadow-2xs"
                   >
                     <span>Try Again</span>
                   </button>
@@ -245,20 +245,20 @@ export function SaveDiagnosisModal({
             )}
 
             {/* Diagnosis Summary Preview */}
-            <div className="p-4 rounded-2xl bg-[#fbf9f4] border border-[#ded5c5] space-y-2 text-xs">
-              <div className="flex justify-between items-center text-[#526a57]">
-                <span className="font-semibold uppercase tracking-wider text-[11px] text-[#0c2417]">
+            <div className="p-4 rounded-2xl bg-[#F8F6EE] border border-[#E3DFD2] space-y-2 text-xs">
+              <div className="flex justify-between items-center text-[#68766C]">
+                <span className="font-semibold uppercase tracking-wider text-[11px] text-[#203027]">
                   Assessment Snapshot
                 </span>
-                <span className="capitalize px-2 py-0.5 rounded-full bg-white border border-[#ded5c5] text-[11px] text-[#144229] font-medium">
+                <span className="capitalize px-2 py-0.5 rounded-full bg-white border border-[#E3DFD2] text-[11px] text-[#174C35] font-medium">
                   {diagnosis.primaryClassification || 'Biotic/Abiotic'}
                 </span>
               </div>
-              <p className="font-medium text-[#0c2417] text-sm">
+              <p className="font-medium text-[#203027] text-sm">
                 {diagnosis.plantIdentification}
               </p>
               {diagnosis.possibleConditions?.[0] && (
-                <p className="text-[#2e4435]">
+                <p className="text-[#203027]">
                   <span className="font-semibold">Top Candidate:</span>{' '}
                   {diagnosis.possibleConditions[0].name} (
                   {diagnosis.possibleConditions[0].confidenceCategory} confidence)
@@ -270,15 +270,15 @@ export function SaveDiagnosisModal({
             <div className="space-y-2">
               <label
                 htmlFor="user-plant-select"
-                className="text-xs font-bold uppercase tracking-wider text-[#0c2417] flex items-center gap-1.5"
+                className="text-xs font-bold uppercase tracking-wider text-[#203027] flex items-center gap-1.5"
               >
-                <Sprout size={16} className="text-[#144229]" />
+                <Sprout size={16} className="text-[#174C35]" />
                 Link to Garden Plant (Optional)
               </label>
 
               {loadingPlants ? (
-                <div className="flex items-center gap-2 text-xs text-[#526a57] py-2">
-                  <Loader2 size={16} className="animate-spin text-[#144229]" />
+                <div className="flex items-center gap-2 text-xs text-[#68766C] py-2">
+                  <Loader2 size={16} className="animate-spin text-[#174C35]" />
                   <span>Loading your garden plants...</span>
                 </div>
               ) : plants.length > 0 ? (
@@ -286,7 +286,7 @@ export function SaveDiagnosisModal({
                   id="user-plant-select"
                   value={selectedPlantId}
                   onChange={(e) => setSelectedPlantId(e.target.value)}
-                  className="w-full px-3.5 py-2.5 rounded-xl border border-[#ded5c5] bg-white text-xs sm:text-sm text-[#0c2417] focus:outline-none focus:ring-2 focus:ring-[#144229]"
+                  className="w-full px-3.5 py-2.5 rounded-xl border border-[#E3DFD2] bg-white text-xs sm:text-sm text-[#203027] focus:outline-none focus:ring-2 focus:ring-[#174C35]"
                 >
                   <option value="">Standalone / Unlinked Assessment</option>
                   {plants.map((plant) => (
@@ -296,7 +296,7 @@ export function SaveDiagnosisModal({
                   ))}
                 </select>
               ) : (
-                <p className="text-xs text-[#526a57] italic">
+                <p className="text-xs text-[#68766C] italic">
                   No garden plants found. Diagnosis will be saved as a standalone assessment.
                 </p>
               )}
@@ -307,16 +307,16 @@ export function SaveDiagnosisModal({
               <div className="space-y-2">
                 <label
                   htmlFor="plant-photo-select"
-                  className="text-xs font-bold uppercase tracking-wider text-[#0c2417] flex items-center gap-1.5"
+                  className="text-xs font-bold uppercase tracking-wider text-[#203027] flex items-center gap-1.5"
                 >
-                  <Camera size={16} className="text-[#144229]" />
+                  <Camera size={16} className="text-[#174C35]" />
                   Link Existing Plant Photo (Optional)
                 </label>
                 <select
                   id="plant-photo-select"
                   value={selectedPhotoId}
                   onChange={(e) => setSelectedPhotoId(e.target.value)}
-                  className="w-full px-3.5 py-2.5 rounded-xl border border-[#ded5c5] bg-white text-xs sm:text-sm text-[#0c2417] focus:outline-none focus:ring-2 focus:ring-[#144229]"
+                  className="w-full px-3.5 py-2.5 rounded-xl border border-[#E3DFD2] bg-white text-xs sm:text-sm text-[#203027] focus:outline-none focus:ring-2 focus:ring-[#174C35]"
                 >
                   <option value="">No linked gallery photo</option>
                   {plantPhotos.map((photo) => (
@@ -330,12 +330,12 @@ export function SaveDiagnosisModal({
             )}
 
             {/* Footer Buttons */}
-            <div className="flex items-center justify-end gap-3 pt-3 border-t border-[#f0ebe0]">
+            <div className="flex items-center justify-end gap-3 pt-3 border-t border-[#E3DFD2]">
               <button
                 type="button"
                 onClick={onClose}
                 disabled={saving}
-                className="px-4 py-2.5 rounded-xl border border-[#ded5c5] bg-white hover:bg-[#fbf9f4] text-xs sm:text-sm font-semibold text-[#0c2417] transition-colors cursor-pointer min-h-[44px]"
+                className="px-4 py-2.5 rounded-xl border border-[#E3DFD2] bg-white hover:bg-[#F8F6EE] text-xs sm:text-sm font-semibold text-[#203027] transition-colors cursor-pointer min-h-[44px]"
               >
                 Cancel
               </button>
@@ -343,7 +343,7 @@ export function SaveDiagnosisModal({
                 type="button"
                 onClick={handleSave}
                 disabled={saving || isOffline}
-                className="px-6 py-2.5 rounded-xl bg-[#144229] hover:bg-[#0c2417] text-white text-xs sm:text-sm font-semibold transition-colors flex items-center justify-center gap-2 cursor-pointer shadow-xs min-h-[44px] disabled:opacity-50 disabled:cursor-not-allowed"
+                className="px-6 py-2.5 rounded-xl bg-[#174C35] hover:bg-[#203027] text-white text-xs sm:text-sm font-semibold transition-colors flex items-center justify-center gap-2 cursor-pointer shadow-xs min-h-[44px] disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {saving ? (
                   <>

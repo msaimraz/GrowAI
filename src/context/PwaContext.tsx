@@ -278,18 +278,18 @@ export function PwaProvider({ children }: { children: React.ReactNode }) {
         <aside
           role="status"
           aria-live="polite"
-          className="bg-[#2a1b14] text-[#fed7aa] border-b border-[#7c2d12] px-4 py-2.5 text-xs sm:text-sm font-medium sticky top-0 z-50 shadow-sm"
+          className="bg-[#2a1b14] text-[#F0C04D/30] border-b border-[#8A6400] px-4 py-2.5 text-xs sm:text-sm font-medium sticky top-0 z-50 shadow-sm"
         >
           <div className="max-w-7xl mx-auto flex items-center justify-between gap-3">
             <div className="flex items-center gap-2.5">
-              <span className="p-1 rounded-md bg-[#7c2d12] text-white shrink-0">
+              <span className="p-1 rounded-md bg-[#8A6400] text-white shrink-0">
                 <WifiOff size={16} />
               </span>
               <span>
                 <strong>Offline Mode:</strong> Plant library & guides remain accessible from cache. Gemini AI Doctor & Cloud sync will resume when connection returns.
               </span>
             </div>
-            <span className="hidden sm:inline-block text-[11px] px-2 py-0.5 rounded bg-[#431407] text-[#fdba74] font-semibold uppercase tracking-wider shrink-0">
+            <span className="hidden sm:inline-block text-[11px] px-2 py-0.5 rounded bg-[#431407] text-[#F0C04D/30] font-semibold uppercase tracking-wider shrink-0">
               Offline
             </span>
           </div>
@@ -301,14 +301,14 @@ export function PwaProvider({ children }: { children: React.ReactNode }) {
         <aside
           role="status"
           aria-live="polite"
-          className="fixed bottom-20 sm:bottom-6 right-4 sm:right-6 z-50 bg-[#144229] text-white px-4 py-3 rounded-xl shadow-lg border border-[#257a4d] flex items-center gap-3 text-xs sm:text-sm font-semibold animate-in slide-in-from-bottom-5 duration-200"
+          className="fixed bottom-20 sm:bottom-6 right-4 sm:right-6 z-50 bg-[#174C35] text-white px-4 py-3 rounded-xl shadow-lg border border-[#174C35] flex items-center gap-3 text-xs sm:text-sm font-semibold animate-in slide-in-from-bottom-5 duration-200"
         >
-          <CheckCircle2 size={18} className="text-[#64b584] shrink-0" />
+          <CheckCircle2 size={18} className="text-[#78A95A] shrink-0" />
           <span>Connection restored. GrowAI is back online.</span>
           <button
             type="button"
             onClick={() => setShowOnlineToast(false)}
-            className="text-[#9dc2a8] hover:text-white ml-2 p-0.5"
+            className="text-[#78A95A] hover:text-white ml-2 p-0.5"
             aria-label="Dismiss notification"
           >
             <X size={14} />
@@ -321,30 +321,30 @@ export function PwaProvider({ children }: { children: React.ReactNode }) {
         <aside
           role="status"
           aria-live="polite"
-          className="fixed top-16 right-4 sm:right-6 z-50 max-w-sm bg-white text-[#0c2417] p-4 rounded-2xl shadow-xl border border-[#ded5c5] flex items-start gap-3 animate-in fade-in duration-200"
+          className="fixed top-16 right-4 sm:right-6 z-50 max-w-sm bg-white text-[#203027] p-4 rounded-2xl shadow-xl border border-[#E3DFD2] flex items-start gap-3 animate-in fade-in duration-200"
         >
-          <span className="p-2 rounded-xl bg-[#eef5ee] text-[#144229] shrink-0">
-            <RefreshCw size={18} className="animate-spin text-[#1e613b]" />
+          <span className="p-2 rounded-xl bg-[#EAF1E4] text-[#174C35] shrink-0">
+            <RefreshCw size={18} className="animate-spin text-[#174C35]" />
           </span>
           <div className="space-y-1.5 flex-1">
-            <h4 className="font-serif font-bold text-sm text-[#0c2417]">
+            <h4 className="font-serif font-bold text-sm text-[#203027]">
               GrowAI Update Ready
             </h4>
-            <p className="text-xs text-[#3a4e40] leading-relaxed">
+            <p className="text-xs text-[#203027] leading-relaxed">
               A fresh botanical build is ready with improved features and performance.
             </p>
             <div className="flex items-center gap-2 pt-1">
               <button
                 type="button"
                 onClick={applyUpdate}
-                className="px-3 py-1.5 rounded-lg text-xs font-semibold bg-[#144229] hover:bg-[#0c2417] text-white shadow-2xs cursor-pointer"
+                className="px-3 py-1.5 rounded-lg text-xs font-semibold bg-[#174C35] hover:bg-[#203027] text-white shadow-2xs cursor-pointer"
               >
                 Reload & Update
               </button>
               <button
                 type="button"
                 onClick={() => setHasUpdate(false)}
-                className="px-2.5 py-1.5 rounded-lg text-xs font-medium text-[#526a57] hover:text-[#0c2417] cursor-pointer"
+                className="px-2.5 py-1.5 rounded-lg text-xs font-medium text-[#68766C] hover:text-[#203027] cursor-pointer"
               >
                 Later
               </button>
@@ -353,7 +353,7 @@ export function PwaProvider({ children }: { children: React.ReactNode }) {
           <button
             type="button"
             onClick={() => setHasUpdate(false)}
-            className="text-[#7e9985] hover:text-[#0c2417] p-1"
+            className="text-[#68766C] hover:text-[#203027] p-1"
             aria-label="Dismiss update notification"
           >
             <X size={16} />
@@ -366,17 +366,17 @@ export function PwaProvider({ children }: { children: React.ReactNode }) {
         <aside
           role="dialog"
           aria-label="Install GrowAI Application"
-          className="fixed bottom-20 sm:bottom-6 left-4 sm:left-6 z-50 max-w-md bg-white border border-[#ded5c5] p-4 rounded-2xl shadow-xl flex items-center justify-between gap-4 animate-in slide-in-from-bottom-5 duration-200"
+          className="fixed bottom-20 sm:bottom-6 left-4 sm:left-6 z-50 max-w-md bg-white border border-[#E3DFD2] p-4 rounded-2xl shadow-xl flex items-center justify-between gap-4 animate-in slide-in-from-bottom-5 duration-200"
         >
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-[#0e2a1b] text-white flex items-center justify-center shrink-0 shadow-sm">
-              <Download size={20} className="text-[#64b584]" />
+            <div className="w-10 h-10 rounded-xl bg-[#203027] text-white flex items-center justify-center shrink-0 shadow-sm">
+              <Download size={20} className="text-[#78A95A]" />
             </div>
             <div>
-              <h4 className="font-serif font-bold text-sm text-[#0c2417]">
+              <h4 className="font-serif font-bold text-sm text-[#203027]">
                 Install GrowAI App
               </h4>
-              <p className="text-xs text-[#4b6351]">
+              <p className="text-xs text-[#68766C]">
                 Quick launch from home screen with offline botanical access.
               </p>
             </div>
@@ -385,14 +385,14 @@ export function PwaProvider({ children }: { children: React.ReactNode }) {
             <button
               type="button"
               onClick={promptInstall}
-              className="px-3 py-1.5 rounded-xl text-xs font-semibold bg-[#144229] hover:bg-[#0c2417] text-white shadow-2xs cursor-pointer"
+              className="px-3 py-1.5 rounded-xl text-xs font-semibold bg-[#174C35] hover:bg-[#203027] text-white shadow-2xs cursor-pointer"
             >
               Install
             </button>
             <button
               type="button"
               onClick={dismissInstall}
-              className="p-1.5 text-[#7e9985] hover:text-[#0c2417] rounded-lg"
+              className="p-1.5 text-[#68766C] hover:text-[#203027] rounded-lg"
               aria-label="Dismiss install banner"
             >
               <X size={16} />
@@ -409,25 +409,25 @@ export function PwaProvider({ children }: { children: React.ReactNode }) {
           aria-label="Add GrowAI to Home Screen on iOS"
           className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-xs"
         >
-          <div className="bg-white rounded-2xl border border-[#ded5c5] max-w-sm w-full p-6 shadow-2xl space-y-4 animate-in zoom-in-95 duration-150">
-            <div className="flex items-center justify-between pb-3 border-b border-[#f0ebe0]">
+          <div className="bg-white rounded-2xl border border-[#E3DFD2] max-w-sm w-full p-6 shadow-2xl space-y-4 animate-in zoom-in-95 duration-150">
+            <div className="flex items-center justify-between pb-3 border-b border-[#E3DFD2]">
               <div className="flex items-center gap-2">
-                <Apple size={22} className="text-[#0c2417]" />
-                <h3 className="font-serif font-bold text-base text-[#0c2417]">
+                <Apple size={22} className="text-[#203027]" />
+                <h3 className="font-serif font-bold text-base text-[#203027]">
                   Install on iOS Safari
                 </h3>
               </div>
               <button
                 type="button"
                 onClick={() => setShowIosInstructions(false)}
-                className="text-[#698570] hover:text-[#0c2417] p-1"
+                className="text-[#68766C] hover:text-[#203027] p-1"
                 aria-label="Close dialog"
               >
                 <X size={18} />
               </button>
             </div>
 
-            <ol className="text-xs text-[#2b4131] space-y-3 pl-4 list-decimal leading-relaxed">
+            <ol className="text-xs text-[#203027] space-y-3 pl-4 list-decimal leading-relaxed">
               <li>
                 Tap the <strong>Share button</strong> (square with arrow pointing up) at the bottom of Safari.
               </li>
@@ -442,7 +442,7 @@ export function PwaProvider({ children }: { children: React.ReactNode }) {
             <button
               type="button"
               onClick={() => setShowIosInstructions(false)}
-              className="w-full py-2.5 rounded-xl text-xs font-semibold bg-[#144229] text-white hover:bg-[#0c2417] transition-colors"
+              className="w-full py-2.5 rounded-xl text-xs font-semibold bg-[#174C35] text-white hover:bg-[#203027] transition-colors"
             >
               Got It
             </button>

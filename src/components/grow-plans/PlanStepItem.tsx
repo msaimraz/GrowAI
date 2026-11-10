@@ -97,22 +97,22 @@ export function PlanStepItem({
     <div
       className={`p-4 sm:p-5 rounded-3xl border transition-all ${
         isCompleted
-          ? 'bg-[#f4f7f4] border-[#c2d9c6] opacity-90'
+          ? 'bg-[#EAF1E4] border-[#E3DFD2] opacity-90'
           : isBlocked
-          ? 'bg-[#faf7f2] border-[#ded5c5]'
+          ? 'bg-[#F8F6EE] border-[#E3DFD2]'
           : isInProgress
-          ? 'bg-[#eef5ee] border-[#144229]/40 shadow-xs ring-1 ring-[#144229]/20'
-          : 'bg-white border-[#ded5c5] shadow-xs'
+          ? 'bg-[#EAF1E4] border-[#174C35]/40 shadow-xs ring-1 ring-[#174C35]/20'
+          : 'bg-white border-[#E3DFD2] shadow-xs'
       }`}
     >
       <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4">
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 flex-wrap mb-1.5">
-            <span className="text-xs font-mono font-semibold px-2 py-0.5 rounded-lg bg-[#f4efe6] text-[#526a57] border border-[#ded5c5]/50">
+            <span className="text-xs font-mono font-semibold px-2 py-0.5 rounded-lg bg-[#F8F6EE] text-[#68766C] border border-[#E3DFD2]/50">
               Step {step.stepOrder || 1}
             </span>
             <PlanStatusBadge stepStatus={step.status} />
-            <span className="text-xs px-2 py-0.5 rounded-lg capitalize bg-[#f4efe6] text-[#526a57] font-medium border border-[#ded5c5]/50">
+            <span className="text-xs px-2 py-0.5 rounded-lg capitalize bg-[#F8F6EE] text-[#68766C] font-medium border border-[#E3DFD2]/50">
               {step.category.replace(/_/g, ' ')}
             </span>
             {step.priority === 'critical' && (
@@ -123,23 +123,23 @@ export function PlanStepItem({
           </div>
 
           <h4
-            className={`text-sm sm:text-base font-serif font-bold text-[#0c2417] leading-snug ${
-              isCompleted ? 'line-through text-[#6d8573]' : ''
+            className={`text-sm sm:text-base font-serif font-bold text-[#203027] leading-snug ${
+              isCompleted ? 'line-through text-[#68766C]' : ''
             }`}
           >
             {step.title}
           </h4>
 
           {step.description && (
-            <p className="text-xs sm:text-sm text-[#526a57] mt-1 leading-relaxed">
+            <p className="text-xs sm:text-sm text-[#68766C] mt-1 leading-relaxed">
               {step.description}
             </p>
           )}
 
           {/* Blocked by dependencies */}
           {isBlocked && (
-            <div className="mt-3 text-xs text-[#8c501e] bg-[#fbf4eb] border border-[#f0d8c2] p-3 rounded-2xl flex items-start gap-2">
-              <Clock className="w-4 h-4 text-[#8c501e] shrink-0 mt-0.5" />
+            <div className="mt-3 text-xs text-[#8A6400] bg-[#FFF3D7] border border-[#F0C04D/30] p-3 rounded-2xl flex items-start gap-2">
+              <Clock className="w-4 h-4 text-[#8A6400] shrink-0 mt-0.5" />
               <div>
                 <strong className="block font-semibold">Prerequisite steps required:</strong>
                 <span>
@@ -156,8 +156,8 @@ export function PlanStepItem({
             <div
               className={`mt-3 text-xs p-3 rounded-2xl flex items-start justify-between gap-2 border ${
                 hasRecordedObservation
-                  ? 'bg-[#eef5ee] text-[#144229] border-[#c2d9c6]'
-                  : 'bg-[#edf4fb] text-[#1e4d75] border-[#cbe1f5]'
+                  ? 'bg-[#EAF1E4] text-[#174C35] border-[#E3DFD2]'
+                  : 'bg-[#E7F2F9] text-[#1B5D88] border-[#65A8D0/30]'
               }`}
             >
               <div className="flex items-start gap-2">
@@ -177,7 +177,7 @@ export function PlanStepItem({
                 <button
                   type="button"
                   onClick={handleOpenObserve}
-                  className="px-3 py-1.5 rounded-xl bg-white text-[#1e4d75] border border-[#cbe1f5] hover:bg-[#edf4fb] font-semibold text-xs shrink-0 transition active:scale-95 cursor-pointer shadow-2xs"
+                  className="px-3 py-1.5 rounded-xl bg-white text-[#1B5D88] border border-[#65A8D0/30] hover:bg-[#E7F2F9] font-semibold text-xs shrink-0 transition active:scale-95 cursor-pointer shadow-2xs"
                 >
                   Record Observation
                 </button>
@@ -187,23 +187,23 @@ export function PlanStepItem({
 
           {/* Grower notes recorded */}
           {step.notes && (
-            <p className="text-xs italic text-[#526a57] mt-2.5 bg-[#fbf9f4] border border-[#ded5c5]/70 p-2.5 rounded-xl leading-relaxed">
+            <p className="text-xs italic text-[#68766C] mt-2.5 bg-[#F8F6EE] border border-[#E3DFD2]/70 p-2.5 rounded-xl leading-relaxed">
               <strong>Grower Notes:</strong> &ldquo;{step.notes}&rdquo;
             </p>
           )}
 
           {/* Timestamps */}
-          <div className="flex items-center gap-3 text-[11px] text-[#6d8573] mt-2.5 flex-wrap">
+          <div className="flex items-center gap-3 text-[11px] text-[#68766C] mt-2.5 flex-wrap">
             {step.dueAt && (
               <span>Target date: {new Date(step.dueAt).toLocaleDateString()}</span>
             )}
             {step.completedAt && (
-              <span className="text-[#144229] font-medium flex items-center gap-1">
+              <span className="text-[#174C35] font-medium flex items-center gap-1">
                 <CheckCircle2 className="w-3.5 h-3.5" /> Completed on {new Date(step.completedAt).toLocaleDateString()}
               </span>
             )}
             {step.status === 'skipped' && (
-              <span className="text-[#8c7e6c] font-medium">
+              <span className="text-[#68766C] font-medium">
                 Skipped by grower
               </span>
             )}
@@ -212,13 +212,13 @@ export function PlanStepItem({
 
         {/* Step Action Buttons */}
         {!disabled && !isCompleted && !isSkipped && (
-          <div className="flex sm:flex-col items-center sm:items-end justify-end gap-2 shrink-0 pt-2 sm:pt-0 border-t sm:border-t-0 border-[#ded5c5]/50">
+          <div className="flex sm:flex-col items-center sm:items-end justify-end gap-2 shrink-0 pt-2 sm:pt-0 border-t sm:border-t-0 border-[#E3DFD2]/50">
             {isReady && onStart && (
               <button
                 type="button"
                 onClick={() => onStart(step.id)}
                 disabled={isExecuting}
-                className="px-4 py-2 min-h-[44px] text-xs sm:text-sm font-semibold rounded-xl bg-white border border-[#144229]/30 text-[#144229] hover:bg-[#eef5ee] transition active:scale-95 select-none touch-manipulation cursor-pointer disabled:opacity-50 flex items-center justify-center gap-1.5"
+                className="px-4 py-2 min-h-[44px] text-xs sm:text-sm font-semibold rounded-xl bg-white border border-[#174C35]/30 text-[#174C35] hover:bg-[#EAF1E4] transition active:scale-95 select-none touch-manipulation cursor-pointer disabled:opacity-50 flex items-center justify-center gap-1.5"
               >
                 Start
               </button>
@@ -229,7 +229,7 @@ export function PlanStepItem({
                 type="button"
                 onClick={handleOpenComplete}
                 disabled={isExecuting}
-                className="px-4 py-2 min-h-[44px] text-xs sm:text-sm font-semibold rounded-xl bg-[#144229] hover:bg-[#0c2417] text-white shadow-xs transition active:scale-95 select-none touch-manipulation cursor-pointer disabled:opacity-50 flex items-center justify-center gap-1.5"
+                className="px-4 py-2 min-h-[44px] text-xs sm:text-sm font-semibold rounded-xl bg-[#174C35] hover:bg-[#203027] text-white shadow-xs transition active:scale-95 select-none touch-manipulation cursor-pointer disabled:opacity-50 flex items-center justify-center gap-1.5"
               >
                 {isExecuting ? (
                   <>
@@ -250,7 +250,7 @@ export function PlanStepItem({
                 type="button"
                 onClick={handleOpenSkip}
                 disabled={isExecuting}
-                className="px-3 py-2 min-h-[44px] text-xs font-medium rounded-xl text-[#526a57] hover:text-[#0c2417] hover:bg-[#f4efe6] transition active:scale-95 select-none touch-manipulation cursor-pointer disabled:opacity-50 flex items-center justify-center gap-1"
+                className="px-3 py-2 min-h-[44px] text-xs font-medium rounded-xl text-[#68766C] hover:text-[#203027] hover:bg-[#F8F6EE] transition active:scale-95 select-none touch-manipulation cursor-pointer disabled:opacity-50 flex items-center justify-center gap-1"
               >
                 <FastForward className="w-3.5 h-3.5" />
                 <span>Skip</span>
@@ -262,9 +262,9 @@ export function PlanStepItem({
 
       {/* Observation / Notes Input Form Inline */}
       {showNotesInput && (
-        <div className="mt-4 pt-3.5 border-t border-[#ded5c5] bg-[#fbf9f4] p-3.5 rounded-2xl space-y-3">
+        <div className="mt-4 pt-3.5 border-t border-[#E3DFD2] bg-[#F8F6EE] p-3.5 rounded-2xl space-y-3">
           <div className="flex items-center justify-between">
-            <label className="block text-xs font-semibold text-[#0c2417] uppercase tracking-wider">
+            <label className="block text-xs font-semibold text-[#203027] uppercase tracking-wider">
               {actionType === 'observe'
                 ? 'Record Visual / Growth Observation'
                 : actionType === 'complete'
@@ -273,7 +273,7 @@ export function PlanStepItem({
                   : 'Completion Notes (Optional)'
                 : 'Reason for Skipping Step'}
             </label>
-            <span className="text-[11px] text-[#526a57]">
+            <span className="text-[11px] text-[#68766C]">
               {actionType === 'complete' && step.requiresObservation && !hasRecordedObservation
                 ? 'Evidence Grounded'
                 : 'Saved to Plan History'}
@@ -288,7 +288,7 @@ export function PlanStepItem({
                   key={idx}
                   type="button"
                   onClick={() => setNotes(chip)}
-                  className="text-[11px] px-2.5 py-1 rounded-lg bg-white border border-[#ded5c5] text-[#526a57] hover:text-[#144229] hover:border-[#144229]/40 hover:bg-[#eef5ee] transition cursor-pointer"
+                  className="text-[11px] px-2.5 py-1 rounded-lg bg-white border border-[#E3DFD2] text-[#68766C] hover:text-[#174C35] hover:border-[#174C35]/40 hover:bg-[#EAF1E4] transition cursor-pointer"
                 >
                   + {chip}
                 </button>
@@ -309,7 +309,7 @@ export function PlanStepItem({
                 : 'e.g. Step skipped due to weather, container size, or prior pruning.'
             }
             rows={2}
-            className="w-full text-xs sm:text-sm p-3 rounded-xl border border-[#ded5c5] bg-white text-[#0c2417] placeholder:text-[#8c7e6c] focus:outline-none focus:ring-2 focus:ring-[#144229]/20 focus:border-[#144229] transition"
+            className="w-full text-xs sm:text-sm p-3 rounded-xl border border-[#E3DFD2] bg-white text-[#203027] placeholder:text-[#68766C] focus:outline-none focus:ring-2 focus:ring-[#174C35]/20 focus:border-[#174C35] transition"
           />
 
           <div className="flex justify-end gap-2.5 pt-1">
@@ -320,7 +320,7 @@ export function PlanStepItem({
                 setActionType(null);
                 setNotes('');
               }}
-              className="px-3.5 py-2 min-h-[40px] text-xs font-semibold rounded-xl border border-[#ded5c5] text-[#526a57] hover:text-[#0c2417] hover:bg-white transition cursor-pointer"
+              className="px-3.5 py-2 min-h-[40px] text-xs font-semibold rounded-xl border border-[#E3DFD2] text-[#68766C] hover:text-[#203027] hover:bg-white transition cursor-pointer"
             >
               Cancel
             </button>
@@ -330,10 +330,10 @@ export function PlanStepItem({
               disabled={isExecuting}
               className={`px-4 py-2 min-h-[40px] text-xs sm:text-sm font-semibold rounded-xl text-white transition active:scale-95 cursor-pointer flex items-center gap-1.5 shadow-xs ${
                 actionType === 'complete'
-                  ? 'bg-[#144229] hover:bg-[#0c2417]'
+                  ? 'bg-[#174C35] hover:bg-[#203027]'
                   : actionType === 'observe'
-                  ? 'bg-[#1e4d75] hover:bg-[#153754]'
-                  : 'bg-[#8c501e] hover:bg-[#6e3e15]'
+                  ? 'bg-[#1B5D88] hover:bg-[#1B5D88]'
+                  : 'bg-[#8A6400] hover:bg-[#8A6400]'
               }`}
             >
               {isExecuting ? (

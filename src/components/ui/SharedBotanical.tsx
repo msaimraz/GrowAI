@@ -36,25 +36,25 @@ export function SectionHeader({
   actionLabel,
 }: SectionHeaderProps) {
   return (
-    <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-3 pb-3 border-b border-[#ded5c5]">
+    <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-3 pb-3 border-b border-[#E3DFD2]">
       <div className="space-y-1">
         {category && (
-          <span className="text-xs font-mono uppercase tracking-widest font-bold text-[#144229] block">
+          <span className="text-xs font-mono uppercase tracking-widest font-bold text-[#174C35] block">
             {category}
           </span>
         )}
         <div className="flex flex-wrap items-center gap-2.5 sm:gap-3">
-          <h2 className="text-2xl sm:text-3xl font-serif font-bold text-[#071c11] tracking-tight">
+          <h2 className="text-2xl sm:text-3xl font-serif font-bold text-[#203027] tracking-tight">
             {title}
           </h2>
           {badge && (
-            <span className="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-[#eef5ee] border border-[#cfe0cf] text-[#144229] shrink-0">
+            <span className="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-[#EAF1E4] border border-[#E3DFD2] text-[#174C35] shrink-0">
               {badge}
             </span>
           )}
         </div>
         {description && (
-          <p className="text-sm sm:text-base text-[#2e4435] leading-relaxed max-w-3xl">
+          <p className="text-sm sm:text-base text-[#203027] leading-relaxed max-w-3xl">
             {description}
           </p>
         )}
@@ -63,7 +63,7 @@ export function SectionHeader({
       {actionHref && actionLabel && (
         <Link
           href={actionHref}
-          className="inline-flex items-center gap-1.5 text-sm font-semibold text-[#144229] hover:underline shrink-0 min-h-[44px]"
+          className="inline-flex items-center gap-1.5 text-sm font-semibold text-[#174C35] hover:underline shrink-0 min-h-[44px]"
         >
           <span>{actionLabel}</span>
           <ArrowRight size={15} />
@@ -89,8 +89,8 @@ export function InformationCard({
 }: InformationCardProps) {
   return (
     <div
-      className={`bg-white rounded-3xl border border-[#ded5c5] p-5 sm:p-7 shadow-xs ${
-        hoverEffect ? 'hover:border-[#144229]/40 hover:shadow-sm transition-all' : ''
+      className={`bg-white rounded-3xl border border-[#E3DFD2] p-5 sm:p-7 shadow-xs ${
+        hoverEffect ? 'hover:border-[#174C35]/40 hover:shadow-sm transition-all' : ''
       } ${className}`}
     >
       {children}
@@ -124,7 +124,7 @@ export function PrimaryButton({
   return (
     <button
       {...props}
-      className={`inline-flex items-center justify-center gap-2 rounded-xl font-semibold bg-[#144229] text-white hover:bg-[#071c11] shadow-xs hover:shadow transition-all active:scale-[0.98] cursor-pointer disabled:opacity-50 disabled:pointer-events-none ${sizeClasses} ${className}`}
+      className={`inline-flex items-center justify-center gap-2 rounded-xl font-semibold bg-[#174C35] text-white hover:bg-[#203027] shadow-xs hover:shadow transition-all active:scale-[0.98] cursor-pointer disabled:opacity-50 disabled:pointer-events-none ${sizeClasses} ${className}`}
     >
       {icon}
       <span>{children}</span>
@@ -149,7 +149,7 @@ export function SecondaryButton({
   return (
     <button
       {...props}
-      className={`inline-flex items-center justify-center gap-2 rounded-xl font-semibold bg-white text-[#144229] border border-[#ded5c5] hover:bg-[#f7f5ed] hover:border-[#144229]/40 transition-all active:scale-[0.98] cursor-pointer disabled:opacity-50 disabled:pointer-events-none ${sizeClasses} ${className}`}
+      className={`inline-flex items-center justify-center gap-2 rounded-xl font-semibold bg-white text-[#174C35] border border-[#E3DFD2] hover:bg-[#F8F6EE] hover:border-[#174C35]/40 transition-all active:scale-[0.98] cursor-pointer disabled:opacity-50 disabled:pointer-events-none ${sizeClasses} ${className}`}
     >
       {icon}
       <span>{children}</span>
@@ -178,13 +178,13 @@ export function EmptyState({
   onAction,
 }: EmptyStateProps) {
   return (
-    <div className="bg-white rounded-3xl border border-[#ded5c5] p-8 sm:p-12 text-center space-y-4 shadow-xs">
-      <div className="w-16 h-16 rounded-2xl bg-[#eef5ee] border border-[#cfe0cf] flex items-center justify-center mx-auto text-[#144229] shadow-2xs">
+    <div className="bg-white rounded-3xl border border-[#E3DFD2] p-8 sm:p-12 text-center space-y-4 shadow-xs">
+      <div className="w-16 h-16 rounded-2xl bg-[#EAF1E4] border border-[#E3DFD2] flex items-center justify-center mx-auto text-[#174C35] shadow-2xs">
         {icon || <Sprout size={32} />}
       </div>
       <div className="space-y-1.5 max-w-md mx-auto">
-        <h3 className="font-serif font-bold text-xl text-[#071c11]">{title}</h3>
-        <p className="text-sm sm:text-base text-[#2e4435] leading-relaxed">
+        <h3 className="font-serif font-bold text-xl text-[#203027]">{title}</h3>
+        <p className="text-sm sm:text-base text-[#203027] leading-relaxed">
           {description}
         </p>
       </div>
@@ -194,7 +194,7 @@ export function EmptyState({
           {actionHref ? (
             <Link
               href={actionHref}
-              className="inline-flex items-center gap-2 font-semibold bg-[#144229] text-white px-5 py-2.5 rounded-xl min-h-[44px] shadow-xs hover:bg-[#071c11] transition-colors"
+              className="inline-flex items-center gap-2 font-semibold bg-[#174C35] text-white px-5 py-2.5 rounded-xl min-h-[44px] shadow-xs hover:bg-[#203027] transition-colors"
             >
               <span>{actionLabel}</span>
               <ArrowRight size={16} />
@@ -221,10 +221,10 @@ export function LoadingState({
   description = 'Connecting to GrowAI agronomic records...',
 }: LoadingStateProps) {
   return (
-    <div className="bg-white rounded-3xl border border-[#ded5c5] p-10 text-center space-y-3 shadow-xs">
-      <Loader2 size={32} className="animate-spin text-[#144229] mx-auto" />
-      <h4 className="font-serif font-bold text-lg text-[#071c11]">{message}</h4>
-      <p className="text-sm text-[#5a7662]">{description}</p>
+    <div className="bg-white rounded-3xl border border-[#E3DFD2] p-10 text-center space-y-3 shadow-xs">
+      <Loader2 size={32} className="animate-spin text-[#174C35] mx-auto" />
+      <h4 className="font-serif font-bold text-lg text-[#203027]">{message}</h4>
+      <p className="text-sm text-[#68766C]">{description}</p>
     </div>
   );
 }
@@ -241,12 +241,12 @@ export function ErrorState({
   onRetry,
 }: ErrorStateProps) {
   return (
-    <div className="bg-[#fff5f5] rounded-3xl border border-[#fca5a5] p-6 sm:p-8 space-y-3.5 text-[#991b1b] shadow-xs">
+    <div className="bg-[#FBE9E2] rounded-3xl border border-[#E4775D/30] p-6 sm:p-8 space-y-3.5 text-[#963A23] shadow-xs">
       <div className="flex items-center gap-2.5">
-        <AlertTriangle size={22} className="text-[#b91c1c] shrink-0" />
-        <h4 className="font-bold text-lg text-[#7f1d1d]">{title}</h4>
+        <AlertTriangle size={22} className="text-[#963A23] shrink-0" />
+        <h4 className="font-bold text-lg text-[#963A23]">{title}</h4>
       </div>
-      <p className="text-sm sm:text-base leading-relaxed text-[#7f1d1d]">
+      <p className="text-sm sm:text-base leading-relaxed text-[#963A23]">
         {message}
       </p>
       {onRetry && (
@@ -254,7 +254,7 @@ export function ErrorState({
           <button
             type="button"
             onClick={onRetry}
-            className="px-4 py-2 rounded-xl bg-[#fee2e2] text-[#991b1b] font-semibold text-xs border border-[#fca5a5] hover:bg-white transition-colors cursor-pointer min-h-[40px]"
+            className="px-4 py-2 rounded-xl bg-[#FBE9E2] text-[#963A23] font-semibold text-xs border border-[#E4775D/30] hover:bg-white transition-colors cursor-pointer min-h-[40px]"
           >
             Try Again
           </button>
@@ -281,20 +281,20 @@ export function EducationalCallout({
   tip,
 }: EducationalCalloutProps) {
   return (
-    <div className="bg-[#f7f5ed] rounded-3xl border border-[#ded5c5] p-5 sm:p-6 space-y-3 shadow-xs">
+    <div className="bg-[#F8F6EE] rounded-3xl border border-[#E3DFD2] p-5 sm:p-6 space-y-3 shadow-xs">
       <div className="flex items-center gap-2.5">
-        <span className="w-8 h-8 rounded-xl bg-white border border-[#ded5c5] flex items-center justify-center text-[#144229] shrink-0">
-          {icon || <Lightbulb size={18} className="text-[#c77712]" />}
+        <span className="w-8 h-8 rounded-xl bg-white border border-[#E3DFD2] flex items-center justify-center text-[#174C35] shrink-0">
+          {icon || <Lightbulb size={18} className="text-[#F0C04D]" />}
         </span>
-        <h4 className="font-serif font-bold text-base sm:text-lg text-[#071c11]">
+        <h4 className="font-serif font-bold text-base sm:text-lg text-[#203027]">
           {title}
         </h4>
       </div>
-      <div className="text-sm sm:text-base text-[#1c261e] leading-relaxed">
+      <div className="text-sm sm:text-base text-[#203027] leading-relaxed">
         {children}
       </div>
       {tip && (
-        <p className="text-xs sm:text-sm text-[#5a7662] bg-white p-3 rounded-xl border border-[#ded5c5]">
+        <p className="text-xs sm:text-sm text-[#68766C] bg-white p-3 rounded-xl border border-[#E3DFD2]">
           💡 <strong>Grower Note:</strong> {tip}
         </p>
       )}
@@ -318,12 +318,12 @@ export function SafetyWarningCard({
     <div
       className={`rounded-3xl border p-5 sm:p-6 space-y-2.5 shadow-xs ${
         isDanger
-          ? 'bg-[#fee2e2]/60 border-[#ef4444] text-[#991b1b]'
-          : 'bg-[#fef3c7]/60 border-[#f59e0b] text-[#92400e]'
+          ? 'bg-[#FBE9E2]/60 border-[#E4775D] text-[#963A23]'
+          : 'bg-[#FFF3D7]/60 border-[#F0C04D] text-[#8A6400]'
       }`}
     >
       <div className="flex items-center gap-2.5">
-        <ShieldAlert size={22} className={isDanger ? 'text-[#b91c1c]' : 'text-[#b45309]'} />
+        <ShieldAlert size={22} className={isDanger ? 'text-[#963A23]' : 'text-[#8A6400]'} />
         <h4 className="font-bold text-base sm:text-lg">
           {title}
         </h4>

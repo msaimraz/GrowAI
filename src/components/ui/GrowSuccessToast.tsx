@@ -39,24 +39,24 @@ function GrowSuccessToastItem({
   // Variant styling accents
   const variantStyles = {
     success: {
-      iconBg: 'bg-[#E6F0E3]',
+      iconBg: 'bg-[#EAF1E4]',
       titleColor: 'text-[#174C35]',
-      border: 'border-[#E8E4DA]',
+      border: 'border-[#E3DFD2]',
     },
     info: {
-      iconBg: 'bg-[#E1F0F5]',
-      titleColor: 'text-[#1B576B]',
-      border: 'border-[#CFE4EC]',
+      iconBg: 'bg-[#E7F2F9]',
+      titleColor: 'text-[#1B5D88]',
+      border: 'border-[#65A8D0/30]',
     },
     warning: {
-      iconBg: 'bg-[#FFF0D8]',
-      titleColor: 'text-[#9A5B00]',
-      border: 'border-[#FDE3B8]',
+      iconBg: 'bg-[#FFF3D7]',
+      titleColor: 'text-[#8A6400]',
+      border: 'border-[#F0C04D/30]',
     },
     error: {
-      iconBg: 'bg-[#FBE4DC]',
-      titleColor: 'text-[#9A3412]',
-      border: 'border-[#F8CFC0]',
+      iconBg: 'bg-[#FBE9E2]',
+      titleColor: 'text-[#963A23]',
+      border: 'border-[#E4775D/30]',
     },
   }[variant];
 
@@ -82,7 +82,7 @@ function GrowSuccessToastItem({
         <h4 className={`font-serif font-bold text-sm sm:text-base leading-snug ${variantStyles.titleColor}`}>
           {title}
         </h4>
-        <p className="text-xs text-[#526357] leading-relaxed mt-0.5 break-words">
+        <p className="text-xs text-[#68766C] leading-relaxed mt-0.5 break-words">
           {message}
         </p>
       </div>
@@ -92,7 +92,7 @@ function GrowSuccessToastItem({
         type="button"
         onClick={onDismiss}
         aria-label="Dismiss notification"
-        className="w-11 h-11 -mr-1.5 -mt-1 rounded-xl flex items-center justify-center text-[#8A958D] hover:text-[#174C35] hover:bg-[#F3F6EC] transition-colors cursor-pointer shrink-0"
+        className="w-11 h-11 -mr-1.5 -mt-1 rounded-xl flex items-center justify-center text-[#68766C] hover:text-[#174C35] hover:bg-[#EAF1E4] transition-colors cursor-pointer shrink-0"
       >
         <X size={16} strokeWidth={2.25} />
       </button>

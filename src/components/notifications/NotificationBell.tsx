@@ -58,14 +58,14 @@ export function NotificationBell({ plants = [] }: NotificationBellProps) {
       <button
         type="button"
         onClick={() => setIsOpen(true)}
-        className="relative p-2 rounded-xl text-[#144229] hover:bg-[#ede7da] active:scale-90 focus:outline-none focus:ring-2 focus:ring-[#144229] min-h-[40px] min-w-[40px] flex items-center justify-center cursor-pointer transition-all duration-75 select-none touch-manipulation shrink-0"
+        className="relative p-2 rounded-xl text-[#174C35] hover:bg-[#E3DFD2] active:scale-90 focus:outline-none focus:ring-2 focus:ring-[#174C35] min-h-[40px] min-w-[40px] flex items-center justify-center cursor-pointer transition-all duration-75 select-none touch-manipulation shrink-0"
         title="Garden Reminders & Notifications"
         aria-label={`Garden Reminders: ${unreadCount} unread`}
       >
         <Bell size={20} className="stroke-[2.2]" />
 
         {unreadCount > 0 && (
-          <span className="absolute top-1.5 right-1.5 min-w-[18px] h-[18px] px-1 rounded-full bg-[#144229] text-white text-[10px] font-bold flex items-center justify-center shadow-xs border-2 border-[#fbf9f4]">
+          <span className="absolute top-1.5 right-1.5 min-w-[18px] h-[18px] px-1 rounded-full bg-[#174C35] text-white text-[10px] font-bold flex items-center justify-center shadow-xs border-2 border-[#F8F6EE]">
             {unreadCount > 99 ? '99+' : unreadCount}
           </span>
         )}

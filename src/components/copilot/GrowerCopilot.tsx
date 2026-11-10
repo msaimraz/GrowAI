@@ -214,28 +214,28 @@ export function GrowerCopilot({
 
   return (
     <div
-      className={`bg-white border border-[#ded5c5] rounded-3xl shadow-xs flex flex-col ${
+      className={`bg-white border border-[#E3DFD2] rounded-3xl shadow-xs flex flex-col ${
         compactMode ? 'p-4 sm:p-5' : 'p-6 sm:p-8'
       }`}
     >
       {/* Workspace Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-[#f0ebe0]">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-[#E3DFD2]">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-2xl bg-[#eef5ee] text-[#144229] flex items-center justify-center shrink-0 border border-[#cfe0cf]">
+          <div className="w-10 h-10 rounded-2xl bg-[#EAF1E4] text-[#174C35] flex items-center justify-center shrink-0 border border-[#E3DFD2]">
             <Compass size={20} />
           </div>
           <div>
             <div className="flex items-center gap-2">
-              <h3 className="font-serif font-bold text-base sm:text-lg text-[#0c2417]">
+              <h3 className="font-serif font-bold text-base sm:text-lg text-[#203027]">
                 Grower Copilot
               </h3>
               {activePlantNickname && (
-                <span className="text-[11px] font-semibold text-[#144229] bg-[#eef5ee] px-2.5 py-0.5 rounded-full border border-[#cfe0cf]">
+                <span className="text-[11px] font-semibold text-[#174C35] bg-[#EAF1E4] px-2.5 py-0.5 rounded-full border border-[#E3DFD2]">
                   Scoped to {activePlantNickname}
                 </span>
               )}
             </div>
-            <p className="text-xs text-[#526a57] mt-0.5">
+            <p className="text-xs text-[#68766C] mt-0.5">
               Grounded conversational assistant answering strictly from your recorded garden data.
             </p>
           </div>
@@ -243,7 +243,7 @@ export function GrowerCopilot({
 
         <div className="flex items-center gap-2 self-start sm:self-center">
           {isOffline && (
-            <span className="text-[11px] font-semibold text-[#92400e] bg-[#fffbeb] px-2.5 py-1 rounded-full border border-[#fde68a] flex items-center gap-1">
+            <span className="text-[11px] font-semibold text-[#8A6400] bg-[#FFF3D7] px-2.5 py-1 rounded-full border border-[#F0C04D/30] flex items-center gap-1">
               <WifiOff size={12} />
               <span>Offline (Deterministic)</span>
             </span>
@@ -253,7 +253,7 @@ export function GrowerCopilot({
             <button
               type="button"
               onClick={handleResetConversation}
-              className="p-2 rounded-xl text-[#526a57] hover:bg-[#fbf9f4] hover:text-[#144229] border border-[#ded5c5] transition-colors cursor-pointer text-xs flex items-center gap-1 min-h-[36px]"
+              className="p-2 rounded-xl text-[#68766C] hover:bg-[#F8F6EE] hover:text-[#174C35] border border-[#E3DFD2] transition-colors cursor-pointer text-xs flex items-center gap-1 min-h-[36px]"
               title="Reset conversation"
             >
               <RotateCcw size={13} />
@@ -289,7 +289,7 @@ export function GrowerCopilot({
       </div>
 
       {/* Suggested Questions & Input Bar */}
-      <div className="space-y-3 pt-3 border-t border-[#f0ebe0]">
+      <div className="space-y-3 pt-3 border-t border-[#E3DFD2]">
         <CopilotSuggestedQuestions
           questions={
             messages.length > 0 &&

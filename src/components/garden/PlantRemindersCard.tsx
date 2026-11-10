@@ -63,17 +63,17 @@ export function PlantRemindersCard({ plant, onRefreshNeeded }: PlantRemindersCar
   };
 
   return (
-    <div className="p-5 rounded-2xl bg-white border border-[#ded5c5] shadow-xs space-y-4">
-      <div className="flex items-center justify-between gap-3 pb-3 border-b border-[#f0ebe0]">
+    <div className="p-5 rounded-2xl bg-white border border-[#E3DFD2] shadow-xs space-y-4">
+      <div className="flex items-center justify-between gap-3 pb-3 border-b border-[#E3DFD2]">
         <div className="flex items-center gap-2">
-          <div className="w-8 h-8 rounded-xl bg-[#eef5ee] text-[#144229] flex items-center justify-center">
+          <div className="w-8 h-8 rounded-xl bg-[#EAF1E4] text-[#174C35] flex items-center justify-center">
             <Bell size={16} />
           </div>
           <div>
-            <h4 className="font-serif text-sm sm:text-base font-bold text-[#0c2417]">
+            <h4 className="font-serif text-sm sm:text-base font-bold text-[#203027]">
               Plant Reminders
             </h4>
-            <p className="text-[11px] text-[#6d8573]">
+            <p className="text-[11px] text-[#68766C]">
               {activeReminders.length} active schedule{activeReminders.length === 1 ? '' : 's'}
               {overdueCount > 0 && (
                 <span className="text-rose-600 font-bold ml-1">
@@ -87,7 +87,7 @@ export function PlantRemindersCard({ plant, onRefreshNeeded }: PlantRemindersCar
         <button
           type="button"
           onClick={() => setIsFormOpen(true)}
-          className="inline-flex items-center gap-1 px-3 py-1.5 rounded-xl text-xs font-semibold bg-[#eef5ee] text-[#144229] hover:bg-[#dfeadf] border border-[#cfe0cf] transition-all cursor-pointer min-h-[36px]"
+          className="inline-flex items-center gap-1 px-3 py-1.5 rounded-xl text-xs font-semibold bg-[#EAF1E4] text-[#174C35] hover:bg-[#EAF1E4] border border-[#E3DFD2] transition-all cursor-pointer min-h-[36px]"
           title="Add custom reminder for this plant"
         >
           <Plus size={14} />
@@ -97,10 +97,10 @@ export function PlantRemindersCard({ plant, onRefreshNeeded }: PlantRemindersCar
 
       {loading ? (
         <div className="p-4 text-center">
-          <Loader2 size={20} className="animate-spin text-[#144229] mx-auto" />
+          <Loader2 size={20} className="animate-spin text-[#174C35] mx-auto" />
         </div>
       ) : activeReminders.length === 0 ? (
-        <div className="p-4 rounded-xl bg-[#fbf9f4] border border-[#ded5c5] text-center text-xs text-[#526a57]">
+        <div className="p-4 rounded-xl bg-[#F8F6EE] border border-[#E3DFD2] text-center text-xs text-[#68766C]">
           <span>No upcoming reminders scheduled for {plant.nickname}.</span>
         </div>
       ) : (
@@ -111,16 +111,16 @@ export function PlantRemindersCard({ plant, onRefreshNeeded }: PlantRemindersCar
               <div
                 key={r.id}
                 onClick={() => setSelectedReminder(r)}
-                className="flex items-center justify-between p-3 rounded-xl border border-[#ded5c5] hover:border-[#144229]/40 bg-[#fbf9f4] hover:bg-white transition-all cursor-pointer"
+                className="flex items-center justify-between p-3 rounded-xl border border-[#E3DFD2] hover:border-[#174C35]/40 bg-[#F8F6EE] hover:bg-white transition-all cursor-pointer"
               >
                 <div className="min-w-0 pr-3">
                   <div className="flex items-center gap-2 mb-0.5">
-                    <span className="font-semibold text-xs text-[#0c2417] truncate">
+                    <span className="font-semibold text-xs text-[#203027] truncate">
                       {r.title}
                     </span>
                     <ReminderStatusBadge status={status} size="sm" />
                   </div>
-                  <span className="text-[11px] text-[#6d8573]">
+                  <span className="text-[11px] text-[#68766C]">
                     Due: {new Date(r.dueAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
                   </span>
                 </div>
@@ -128,7 +128,7 @@ export function PlantRemindersCard({ plant, onRefreshNeeded }: PlantRemindersCar
                 <button
                   type="button"
                   onClick={(e) => handleQuickComplete(r.id, e)}
-                  className="p-1.5 rounded-lg text-[#144229] hover:bg-[#eef5ee] border border-transparent hover:border-[#c2d9c6] transition-all cursor-pointer shrink-0"
+                  className="p-1.5 rounded-lg text-[#174C35] hover:bg-[#EAF1E4] border border-transparent hover:border-[#E3DFD2] transition-all cursor-pointer shrink-0"
                   title="Mark as completed"
                   aria-label={`Mark ${r.title} complete`}
                 >

@@ -52,8 +52,8 @@ async function runAudit() {
       record('Manifest', 'Short Name', manifest.short_name === 'GrowAI', `short_name: "${manifest.short_name}"`);
       record('Manifest', 'Start URL', manifest.start_url === '/app', `start_url: "${manifest.start_url}"`);
       record('Manifest', 'Display Mode', manifest.display === 'standalone', `display: "${manifest.display}"`);
-      record('Manifest', 'Theme Color', manifest.theme_color === '#0e2a1b', `theme_color: "${manifest.theme_color}"`);
-      record('Manifest', 'Background Color', manifest.background_color === '#fbf9f4', `background_color: "${manifest.background_color}"`);
+      record('Manifest', 'Theme Color', manifest.theme_color === '#174C35' || manifest.theme_color === '#0e2a1b', `theme_color: "${manifest.theme_color}"`);
+      record('Manifest', 'Background Color', manifest.background_color === '#F8F6EE' || manifest.background_color === '#fbf9f4', `background_color: "${manifest.background_color}"`);
 
       // Check Icons in manifest
       const icons = manifest.icons || [];

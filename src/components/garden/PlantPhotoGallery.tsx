@@ -161,11 +161,11 @@ export function PlantPhotoGallery({
       {/* Header Bar */}
       <div className="flex flex-wrap items-center justify-between gap-2">
         <div>
-          <h3 className="font-serif font-bold text-base text-[#071c11] flex items-center gap-2">
-            <Camera size={18} className="text-[#1e663f]" />
+          <h3 className="font-serif font-bold text-base text-[#203027] flex items-center gap-2">
+            <Camera size={18} className="text-[#174C35]" />
             <span>Chronological Visual Photo Journal</span>
           </h3>
-          <p className="text-xs text-[#526a57]">
+          <p className="text-xs text-[#68766C]">
             {isCloud ? 'Encrypted & securely stored in private cloud vault.' : 'Stored locally on this device via browser IndexedDB.'}
           </p>
         </div>
@@ -173,7 +173,7 @@ export function PlantPhotoGallery({
         <button
           type="button"
           onClick={() => setShowUploadModal(true)}
-          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#144229] hover:bg-[#1e663f] text-white font-semibold text-xs shadow-xs transition-colors cursor-pointer min-h-[36px]"
+          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#174C35] hover:bg-[#174C35] text-white font-semibold text-xs shadow-xs transition-colors cursor-pointer min-h-[36px]"
         >
           <Plus size={14} />
           <span>Add Photo Observation</span>
@@ -181,7 +181,7 @@ export function PlantPhotoGallery({
       </div>
 
       {errorMessage && (
-        <div className="p-3 rounded-xl bg-[#fbeee9] border border-[#f5c7b8] text-xs text-[#9a3412] font-medium flex items-center gap-2">
+        <div className="p-3 rounded-xl bg-[#FBE9E2] border border-[#E4775D/30] text-xs text-[#963A23] font-medium flex items-center gap-2">
           <AlertCircle size={14} className="shrink-0" />
           <span>{errorMessage}</span>
         </div>
@@ -189,30 +189,30 @@ export function PlantPhotoGallery({
 
       {/* Loading State */}
       {loading && (
-        <div className="py-12 flex flex-col items-center justify-center text-xs text-[#526a57] gap-2">
-          <Loader2 size={20} className="animate-spin text-[#1e663f]" />
+        <div className="py-12 flex flex-col items-center justify-center text-xs text-[#68766C] gap-2">
+          <Loader2 size={20} className="animate-spin text-[#174C35]" />
           <span>Loading visual observations...</span>
         </div>
       )}
 
       {/* Empty State */}
       {!loading && photos.length === 0 && (
-        <div className="py-10 px-4 rounded-2xl bg-white border border-dashed border-[#ded5c5] text-center space-y-3">
-          <div className="w-12 h-12 rounded-full bg-[#eef5ee] text-[#1e663f] flex items-center justify-center mx-auto">
+        <div className="py-10 px-4 rounded-2xl bg-white border border-dashed border-[#E3DFD2] text-center space-y-3">
+          <div className="w-12 h-12 rounded-full bg-[#EAF1E4] text-[#174C35] flex items-center justify-center mx-auto">
             <ImageIcon size={22} />
           </div>
           <div className="max-w-sm mx-auto">
-            <p className="font-serif font-bold text-sm text-[#071c11]">
+            <p className="font-serif font-bold text-sm text-[#203027]">
               No Visual Observations Yet
             </p>
-            <p className="text-xs text-[#526a57] mt-1 leading-relaxed">
+            <p className="text-xs text-[#68766C] mt-1 leading-relaxed">
               Capture your first seedling photo to start tracking visual foliage changes, node expansion, and milestones over time.
             </p>
           </div>
           <button
             type="button"
             onClick={() => setShowUploadModal(true)}
-            className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-[#1e663f] hover:bg-[#257a4d] text-white font-semibold text-xs shadow-xs transition-colors cursor-pointer"
+            className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-[#174C35] hover:bg-[#174C35] text-white font-semibold text-xs shadow-xs transition-colors cursor-pointer"
           >
             <Camera size={13} />
             <span>Upload First Photo</span>
@@ -232,11 +232,11 @@ export function PlantPhotoGallery({
             return (
               <div
                 key={photo.id}
-                className="group relative rounded-xl bg-white border border-[#ded5c5] overflow-hidden shadow-2xs hover:shadow-md transition-all flex flex-col"
+                className="group relative rounded-xl bg-white border border-[#E3DFD2] overflow-hidden shadow-2xs hover:shadow-md transition-all flex flex-col"
               >
                 {/* Photo Thumbnail */}
                 <div
-                  className="aspect-square bg-[#ede7da] relative cursor-pointer overflow-hidden"
+                  className="aspect-square bg-[#E3DFD2] relative cursor-pointer overflow-hidden"
                   onClick={() => setSelectedPhotoForView(photo)}
                 >
                   {photo.signedUrl ? (
@@ -247,14 +247,14 @@ export function PlantPhotoGallery({
                       loading="lazy"
                     />
                   ) : (
-                    <div className="w-full h-full flex items-center justify-center text-xs text-[#86aa91]">
+                    <div className="w-full h-full flex items-center justify-center text-xs text-[#68766C]">
                       Loading...
                     </div>
                   )}
 
                   {/* Stage Tag Overlay */}
                   {photo.growthStage && (
-                    <span className="absolute top-1.5 left-1.5 px-1.5 py-0.5 rounded-md bg-[#071c11]/80 backdrop-blur-xs text-white text-[10px] font-semibold">
+                    <span className="absolute top-1.5 left-1.5 px-1.5 py-0.5 rounded-md bg-[#203027]/80 backdrop-blur-xs text-white text-[10px] font-semibold">
                       {photo.growthStage}
                     </span>
                   )}
@@ -263,28 +263,28 @@ export function PlantPhotoGallery({
                 {/* Metadata Card Footer */}
                 <div className="p-2 text-xs flex-1 flex flex-col justify-between">
                   <div className="min-w-0">
-                    <p className="text-[11px] font-bold text-[#144229] flex items-center gap-1">
-                      <Calendar size={11} className="text-[#257a4d]" />
+                    <p className="text-[11px] font-bold text-[#174C35] flex items-center gap-1">
+                      <Calendar size={11} className="text-[#174C35]" />
                       <span>{dateStr}</span>
                       {photo.heightCm && (
-                        <span className="ml-auto text-[#526a57] font-medium flex items-center gap-0.5">
+                        <span className="ml-auto text-[#68766C] font-medium flex items-center gap-0.5">
                           <Ruler size={10} />
                           {photo.heightCm} cm
                         </span>
                       )}
                     </p>
                     {photo.caption && (
-                      <p className="text-[11px] text-[#334638] mt-0.5 line-clamp-2 leading-tight">
+                      <p className="text-[11px] text-[#203027] mt-0.5 line-clamp-2 leading-tight">
                         {photo.caption}
                       </p>
                     )}
                   </div>
 
-                  <div className="pt-1.5 mt-1 border-t border-[#f0ebe0] flex items-center justify-between">
+                  <div className="pt-1.5 mt-1 border-t border-[#E3DFD2] flex items-center justify-between">
                     <button
                       type="button"
                       onClick={() => setSelectedPhotoForView(photo)}
-                      className="text-[10px] font-semibold text-[#1e663f] hover:underline flex items-center gap-0.5 cursor-pointer"
+                      className="text-[10px] font-semibold text-[#174C35] hover:underline flex items-center gap-0.5 cursor-pointer"
                     >
                       <Eye size={11} />
                       <span>View</span>
@@ -292,7 +292,7 @@ export function PlantPhotoGallery({
                     <button
                       type="button"
                       onClick={() => handleDeletePhoto(photo)}
-                      className="text-[10px] text-[#9a3412] hover:text-[#dc2626] p-0.5 rounded transition-colors cursor-pointer"
+                      className="text-[10px] text-[#963A23] hover:text-[#963A23] p-0.5 rounded transition-colors cursor-pointer"
                       title="Delete photo"
                     >
                       <Trash2 size={12} />
@@ -307,17 +307,17 @@ export function PlantPhotoGallery({
 
       {/* Upload Modal */}
       {showUploadModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-[#071c11]/70 backdrop-blur-sm animate-fade-in">
-          <div className="relative w-full max-w-md bg-[#fbf9f4] rounded-2xl border border-[#ded5c5] shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
-            <div className="px-5 py-4 border-b border-[#ded5c5] bg-white flex items-center justify-between">
-              <h4 className="font-serif font-bold text-base text-[#071c11] flex items-center gap-2">
-                <Camera size={16} className="text-[#1e663f]" />
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-[#203027]/70 backdrop-blur-sm animate-fade-in">
+          <div className="relative w-full max-w-md bg-[#F8F6EE] rounded-2xl border border-[#E3DFD2] shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
+            <div className="px-5 py-4 border-b border-[#E3DFD2] bg-white flex items-center justify-between">
+              <h4 className="font-serif font-bold text-base text-[#203027] flex items-center gap-2">
+                <Camera size={16} className="text-[#174C35]" />
                 <span>Upload Observation Photo</span>
               </h4>
               <button
                 type="button"
                 onClick={closeUploadModal}
-                className="p-1.5 rounded-lg text-[#526a57] hover:bg-[#ede7da] transition-colors cursor-pointer"
+                className="p-1.5 rounded-lg text-[#68766C] hover:bg-[#E3DFD2] transition-colors cursor-pointer"
               >
                 <X size={16} />
               </button>
@@ -326,7 +326,7 @@ export function PlantPhotoGallery({
             <form onSubmit={handleUploadSubmit} className="p-5 space-y-4 overflow-y-auto">
               {/* File Selector */}
               <div>
-                <label className="block text-xs font-bold text-[#144229] uppercase tracking-wider mb-1.5">
+                <label className="block text-xs font-bold text-[#174C35] uppercase tracking-wider mb-1.5">
                   1. Choose Photo (JPEG, PNG, WebP)
                 </label>
                 <input
@@ -335,13 +335,13 @@ export function PlantPhotoGallery({
                   ref={fileInputRef}
                   onChange={handleFileChange}
                   required
-                  className="w-full text-xs text-[#526a57] file:mr-3 file:py-2 file:px-3 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-[#144229] file:text-white hover:file:bg-[#1e663f] file:cursor-pointer"
+                  className="w-full text-xs text-[#68766C] file:mr-3 file:py-2 file:px-3 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-[#174C35] file:text-white hover:file:bg-[#174C35] file:cursor-pointer"
                 />
               </div>
 
               {/* Preview */}
               {previewUrl && (
-                <div className="relative aspect-video rounded-xl overflow-hidden bg-black/5 border border-[#ded5c5]">
+                <div className="relative aspect-video rounded-xl overflow-hidden bg-black/5 border border-[#E3DFD2]">
                   <img
                     src={previewUrl}
                     alt="Preview"
@@ -356,13 +356,13 @@ export function PlantPhotoGallery({
               {/* Stage & Height */}
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-xs font-semibold text-[#2e4435] mb-1">
+                  <label className="block text-xs font-semibold text-[#203027] mb-1">
                     Growth Stage
                   </label>
                   <select
                     value={photoStage}
                     onChange={(e) => setPhotoStage(e.target.value as GrowthStage)}
-                    className="w-full px-3 py-2 rounded-xl bg-white border border-[#ded5c5] text-xs text-[#071c11]"
+                    className="w-full px-3 py-2 rounded-xl bg-white border border-[#E3DFD2] text-xs text-[#203027]"
                   >
                     <option value="Seed">Seed</option>
                     <option value="Germination">Germination</option>
@@ -374,7 +374,7 @@ export function PlantPhotoGallery({
                 </div>
 
                 <div>
-                  <label className="block text-xs font-semibold text-[#2e4435] mb-1">
+                  <label className="block text-xs font-semibold text-[#203027] mb-1">
                     Measured Height (cm)
                   </label>
                   <input
@@ -385,14 +385,14 @@ export function PlantPhotoGallery({
                     placeholder="e.g. 14.5"
                     value={heightCm}
                     onChange={(e) => setHeightCm(e.target.value)}
-                    className="w-full px-3 py-2 rounded-xl bg-white border border-[#ded5c5] text-xs text-[#071c11]"
+                    className="w-full px-3 py-2 rounded-xl bg-white border border-[#E3DFD2] text-xs text-[#203027]"
                   />
                 </div>
               </div>
 
               {/* Caption */}
               <div>
-                <label className="block text-xs font-semibold text-[#2e4435] mb-1">
+                <label className="block text-xs font-semibold text-[#203027] mb-1">
                   Observation Note / Caption
                 </label>
                 <textarea
@@ -400,24 +400,24 @@ export function PlantPhotoGallery({
                   value={caption}
                   onChange={(e) => setCaption(e.target.value)}
                   placeholder="e.g. First flower bud forming at apex; foliage deep vibrant green."
-                  className="w-full px-3 py-2 rounded-xl bg-white border border-[#ded5c5] text-xs text-[#071c11] resize-none"
+                  className="w-full px-3 py-2 rounded-xl bg-white border border-[#E3DFD2] text-xs text-[#203027] resize-none"
                 />
               </div>
 
               {/* Actions */}
-              <div className="pt-2 border-t border-[#ded5c5] flex items-center justify-end gap-2.5">
+              <div className="pt-2 border-t border-[#E3DFD2] flex items-center justify-end gap-2.5">
                 <button
                   type="button"
                   onClick={closeUploadModal}
                   disabled={uploading}
-                  className="px-3.5 py-1.5 rounded-xl text-xs font-semibold text-[#526a57] hover:bg-[#ede7da]"
+                  className="px-3.5 py-1.5 rounded-xl text-xs font-semibold text-[#68766C] hover:bg-[#E3DFD2]"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
                   disabled={uploading || !fileToUpload}
-                  className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-[#144229] hover:bg-[#1e663f] text-white font-semibold text-xs shadow-xs transition-colors cursor-pointer disabled:opacity-50"
+                  className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-[#174C35] hover:bg-[#174C35] text-white font-semibold text-xs shadow-xs transition-colors cursor-pointer disabled:opacity-50"
                 >
                   {uploading ? (
                     <>
@@ -439,16 +439,16 @@ export function PlantPhotoGallery({
 
       {/* Full Size Preview Modal */}
       {selectedPhotoForView && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-[#071c11]/85 backdrop-blur-md animate-fade-in">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-[#203027]/85 backdrop-blur-md animate-fade-in">
           <div className="relative w-full max-w-2xl bg-white rounded-2xl overflow-hidden shadow-2xl flex flex-col max-h-[95vh]">
-            <div className="p-3 bg-[#071c11] text-white flex items-center justify-between">
+            <div className="p-3 bg-[#203027] text-white flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <Camera size={15} className="text-[#86efac]" />
+                <Camera size={15} className="text-[#78A95A]" />
                 <span className="text-xs font-semibold">
                   {plantNickname} — {new Date(selectedPhotoForView.takenAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
                 </span>
                 {selectedPhotoForView.growthStage && (
-                  <span className="text-[10px] bg-[#1e663f] px-2 py-0.5 rounded-full font-bold">
+                  <span className="text-[10px] bg-[#174C35] px-2 py-0.5 rounded-full font-bold">
                     {selectedPhotoForView.growthStage}
                   </span>
                 )}
@@ -456,7 +456,7 @@ export function PlantPhotoGallery({
               <button
                 type="button"
                 onClick={() => setSelectedPhotoForView(null)}
-                className="p-1 rounded-lg text-[#bed4c5] hover:text-white transition-colors cursor-pointer"
+                className="p-1 rounded-lg text-[#E3DFD2] hover:text-white transition-colors cursor-pointer"
               >
                 <X size={18} />
               </button>
@@ -471,11 +471,11 @@ export function PlantPhotoGallery({
             </div>
 
             {selectedPhotoForView.caption && (
-              <div className="p-4 bg-[#fbf9f4] border-t border-[#ded5c5] text-xs text-[#1c261e]">
-                <p className="font-semibold text-[#144229] mb-0.5">Observation Log:</p>
+              <div className="p-4 bg-[#F8F6EE] border-t border-[#E3DFD2] text-xs text-[#203027]">
+                <p className="font-semibold text-[#174C35] mb-0.5">Observation Log:</p>
                 <p className="leading-relaxed">{selectedPhotoForView.caption}</p>
                 {selectedPhotoForView.heightCm && (
-                  <p className="text-[11px] text-[#526a57] mt-1 font-medium">
+                  <p className="text-[11px] text-[#68766C] mt-1 font-medium">
                     Recorded Height: {selectedPhotoForView.heightCm} cm
                   </p>
                 )}

@@ -127,8 +127,8 @@ export function PlantHealthDetailClient({ plantId }: PlantHealthDetailClientProp
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-[#fbf9f4] flex flex-col items-center justify-center p-6 text-[#526a57] gap-3">
-        <Loader2 size={32} className="animate-spin text-[#144229]" />
+      <div className="min-h-screen bg-[#F8F6EE] flex flex-col items-center justify-center p-6 text-[#68766C] gap-3">
+        <Loader2 size={32} className="animate-spin text-[#174C35]" />
         <p className="text-sm font-medium">Loading plant health records...</p>
       </div>
     );
@@ -136,17 +136,17 @@ export function PlantHealthDetailClient({ plantId }: PlantHealthDetailClientProp
 
   if (!plant && !loading) {
     return (
-      <div className="min-h-screen bg-[#fbf9f4] p-6 sm:p-12">
-        <div className="max-w-xl mx-auto bg-white rounded-3xl border border-[#ded5c5] p-8 text-center space-y-4">
-          <Sprout size={36} className="text-[#8ba391] mx-auto" />
-          <h2 className="font-serif font-bold text-2xl text-[#0c2417]">Plant Specimen Not Found</h2>
-          <p className="text-sm text-[#526a57]">
+      <div className="min-h-screen bg-[#F8F6EE] p-6 sm:p-12">
+        <div className="max-w-xl mx-auto bg-white rounded-3xl border border-[#E3DFD2] p-8 text-center space-y-4">
+          <Sprout size={36} className="text-[#68766C] mx-auto" />
+          <h2 className="font-serif font-bold text-2xl text-[#203027]">Plant Specimen Not Found</h2>
+          <p className="text-sm text-[#68766C]">
             This specimen could not be found in your garden records. It may have been removed or migrated.
           </p>
           <div className="pt-2">
             <Link
               href="/app/my-garden"
-              className="inline-flex items-center gap-2 px-6 py-2.5 bg-[#144229] text-white rounded-xl text-xs font-semibold hover:bg-[#0c2417] transition-colors"
+              className="inline-flex items-center gap-2 px-6 py-2.5 bg-[#174C35] text-white rounded-xl text-xs font-semibold hover:bg-[#203027] transition-colors"
             >
               <ArrowLeft size={14} />
               <span>Return to My Garden</span>
@@ -160,7 +160,7 @@ export function PlantHealthDetailClient({ plantId }: PlantHealthDetailClientProp
   const latestDiagnosis = diagnoses[0] || null;
 
   return (
-    <div className="min-h-screen bg-[#fbf9f4] text-[#0c2417] pb-16">
+    <div className="min-h-screen bg-[#F8F6EE] text-[#203027] pb-16">
       <AppHeader />
 
       <div className="max-w-5xl mx-auto px-4 sm:px-6 pt-6 sm:pt-8 space-y-6">
@@ -168,23 +168,23 @@ export function PlantHealthDetailClient({ plantId }: PlantHealthDetailClientProp
         <div className="flex items-center justify-between">
           <Link
             href={`/app/my-garden?plantId=${plantId}`}
-            className="inline-flex items-center gap-2 text-xs font-semibold text-[#144229] hover:underline min-h-[44px] cursor-pointer"
+            className="inline-flex items-center gap-2 text-xs font-semibold text-[#174C35] hover:underline min-h-[44px] cursor-pointer"
           >
             <ArrowLeft size={16} />
             <span>Back to {plant?.nickname}&apos;s Garden Journal</span>
           </Link>
 
-          <span className="text-[11px] font-semibold text-[#526a57] bg-white px-3 py-1 rounded-full border border-[#ded5c5]">
+          <span className="text-[11px] font-semibold text-[#68766C] bg-white px-3 py-1 rounded-full border border-[#E3DFD2]">
             {isCloud ? 'Cloud Synced' : 'Local Demo Mode'}
           </span>
         </div>
 
         {error && (
-          <div className="p-4 bg-[#fef2f2] border border-[#fecaca] text-[#991b1b] rounded-2xl text-xs flex items-center justify-between gap-3">
+          <div className="p-4 bg-[#FBE9E2] border border-[#E4775D/30] text-[#963A23] rounded-2xl text-xs flex items-center justify-between gap-3">
             <span>{error}</span>
             <button
               onClick={() => setError(null)}
-              className="text-[#991b1b] font-bold hover:underline cursor-pointer"
+              className="text-[#963A23] font-bold hover:underline cursor-pointer"
             >
               Dismiss
             </button>
@@ -192,11 +192,11 @@ export function PlantHealthDetailClient({ plantId }: PlantHealthDetailClientProp
         )}
 
         {/* Specimen Health Header Card */}
-        <div className="bg-white rounded-3xl border border-[#ded5c5] p-6 sm:p-8 shadow-xs space-y-6">
-          <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-5 pb-6 border-b border-[#f0ebe0]">
+        <div className="bg-white rounded-3xl border border-[#E3DFD2] p-6 sm:p-8 shadow-xs space-y-6">
+          <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-5 pb-6 border-b border-[#E3DFD2]">
             <div>
               <div className="flex flex-wrap items-center gap-2.5 mb-2">
-                <span className="text-[11px] font-bold uppercase tracking-wider text-[#144229] bg-[#eef5ee] px-2.5 py-0.5 rounded-full inline-flex items-center gap-1.5">
+                <span className="text-[11px] font-bold uppercase tracking-wider text-[#174C35] bg-[#EAF1E4] px-2.5 py-0.5 rounded-full inline-flex items-center gap-1.5">
                   <Activity size={12} />
                   Health Profile
                 </span>
@@ -207,16 +207,16 @@ export function PlantHealthDetailClient({ plantId }: PlantHealthDetailClientProp
                   {badgeConfig.label}
                 </span>
                 {healthSummary.isFollowUpDue && (
-                  <span className="text-xs font-bold px-2.5 py-0.5 rounded-full bg-[#fef2f2] text-[#991b1b] border border-[#fecaca] animate-pulse">
+                  <span className="text-xs font-bold px-2.5 py-0.5 rounded-full bg-[#FBE9E2] text-[#963A23] border border-[#E4775D/30] animate-pulse">
                     Follow-Up Due
                   </span>
                 )}
               </div>
 
-              <h1 className="text-2xl sm:text-3xl font-serif font-bold text-[#0c2417]">
+              <h1 className="text-2xl sm:text-3xl font-serif font-bold text-[#203027]">
                 {plant?.nickname}
               </h1>
-              <p className="text-xs sm:text-sm text-[#526a57] mt-1">
+              <p className="text-xs sm:text-sm text-[#68766C] mt-1">
                 {botanical?.commonName} (<em>{botanical?.scientificName}</em>) • Planted on {plant?.plantedDate}
                 {plant?.location && ` • ${plant.location}`}
                 {plant?.tier && ` • ${plant.tier.toUpperCase()} Tier`}
@@ -229,7 +229,7 @@ export function PlantHealthDetailClient({ plantId }: PlantHealthDetailClientProp
                 <button
                   type="button"
                   onClick={() => setSelectedDiagnosisForFollowUp(latestDiagnosis)}
-                  className="inline-flex items-center gap-1.5 px-4 py-2.5 bg-[#144229] hover:bg-[#0c2417] text-white rounded-xl text-xs font-semibold shadow-xs transition-colors min-h-[44px] cursor-pointer"
+                  className="inline-flex items-center gap-1.5 px-4 py-2.5 bg-[#174C35] hover:bg-[#203027] text-white rounded-xl text-xs font-semibold shadow-xs transition-colors min-h-[44px] cursor-pointer"
                 >
                   <Plus size={15} />
                   <span>Record Follow-Up</span>
@@ -240,7 +240,7 @@ export function PlantHealthDetailClient({ plantId }: PlantHealthDetailClientProp
                 href={`/app/ai-doctor?plantId=${plant?.id}&plantSlug=${plant?.plantSlug}&plantName=${encodeURIComponent(
                   plant?.nickname || ''
                 )}`}
-                className="inline-flex items-center gap-1.5 px-4 py-2.5 bg-white hover:bg-[#f4efe6] text-[#144229] border border-[#cfdfcf] rounded-xl text-xs font-semibold transition-colors min-h-[44px]"
+                className="inline-flex items-center gap-1.5 px-4 py-2.5 bg-white hover:bg-[#F8F6EE] text-[#174C35] border border-[#E3DFD2] rounded-xl text-xs font-semibold transition-colors min-h-[44px]"
               >
                 <Stethoscope size={15} />
                 <span>New AI Diagnosis</span>
@@ -250,38 +250,38 @@ export function PlantHealthDetailClient({ plantId }: PlantHealthDetailClientProp
 
           {/* Metric Pills */}
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs">
-            <div className="p-3.5 rounded-2xl bg-[#fbf9f4] border border-[#ded5c5]">
-              <span className="text-[#647f6c] block text-[11px] mb-0.5">Total Assessments</span>
-              <strong className="text-[#0c2417] text-sm font-semibold">{diagnoses.length} logged</strong>
+            <div className="p-3.5 rounded-2xl bg-[#F8F6EE] border border-[#E3DFD2]">
+              <span className="text-[#68766C] block text-[11px] mb-0.5">Total Assessments</span>
+              <strong className="text-[#203027] text-sm font-semibold">{diagnoses.length} logged</strong>
             </div>
 
-            <div className="p-3.5 rounded-2xl bg-[#fbf9f4] border border-[#ded5c5]">
-              <span className="text-[#647f6c] block text-[11px] mb-0.5">Active Issue</span>
-              <strong className="text-[#0c2417] text-sm font-semibold truncate block">
+            <div className="p-3.5 rounded-2xl bg-[#F8F6EE] border border-[#E3DFD2]">
+              <span className="text-[#68766C] block text-[11px] mb-0.5">Active Issue</span>
+              <strong className="text-[#203027] text-sm font-semibold truncate block">
                 {healthSummary.activeIssue || 'None detected'}
               </strong>
             </div>
 
-            <div className="p-3.5 rounded-2xl bg-[#fbf9f4] border border-[#ded5c5]">
-              <span className="text-[#647f6c] block text-[11px] mb-0.5">Latest Outcome</span>
-              <strong className="text-[#0c2417] text-sm font-semibold capitalize">
+            <div className="p-3.5 rounded-2xl bg-[#F8F6EE] border border-[#E3DFD2]">
+              <span className="text-[#68766C] block text-[11px] mb-0.5">Latest Outcome</span>
+              <strong className="text-[#203027] text-sm font-semibold capitalize">
                 {healthSummary.latestFollowUpOutcome || 'Awaiting observation'}
               </strong>
             </div>
 
-            <div className="p-3.5 rounded-2xl bg-[#fbf9f4] border border-[#ded5c5]">
-              <span className="text-[#647f6c] block text-[11px] mb-0.5">Pending Treatments</span>
-              <strong className="text-[#0c2417] text-sm font-semibold">
+            <div className="p-3.5 rounded-2xl bg-[#F8F6EE] border border-[#E3DFD2]">
+              <span className="text-[#68766C] block text-[11px] mb-0.5">Pending Treatments</span>
+              <strong className="text-[#203027] text-sm font-semibold">
                 {healthSummary.pendingTreatmentsCount} action(s)
               </strong>
             </div>
           </div>
 
           {/* Grounded Next-Action Botanical Guidance */}
-          <div className="bg-[#eef5ee] border border-[#cfe0cf] p-4 sm:p-5 rounded-2xl flex items-start gap-3.5 text-xs sm:text-sm text-[#1e613b]">
-            <Sparkles size={20} className="text-[#144229] shrink-0 mt-0.5" />
+          <div className="bg-[#EAF1E4] border border-[#E3DFD2] p-4 sm:p-5 rounded-2xl flex items-start gap-3.5 text-xs sm:text-sm text-[#174C35]">
+            <Sparkles size={20} className="text-[#174C35] shrink-0 mt-0.5" />
             <div className="space-y-1">
-              <strong className="font-serif font-bold text-sm text-[#0c2417] block">
+              <strong className="font-serif font-bold text-sm text-[#203027] block">
                 Next-Action Guidance:
               </strong>
               <p className="leading-relaxed opacity-95">{healthSummary.nextActionGuidance}</p>
@@ -292,24 +292,24 @@ export function PlantHealthDetailClient({ plantId }: PlantHealthDetailClientProp
         {/* Chronological Health Timeline */}
         <div className="space-y-4">
           <div className="flex items-center justify-between">
-            <h2 className="text-lg font-serif font-bold text-[#0c2417] flex items-center gap-2">
-              <Clock size={18} className="text-[#144229]" />
+            <h2 className="text-lg font-serif font-bold text-[#203027] flex items-center gap-2">
+              <Clock size={18} className="text-[#174C35]" />
               <span>Health Timeline & Interventions</span>
             </h2>
-            <span className="text-xs text-[#526a57]">
+            <span className="text-xs text-[#68766C]">
               {diagnoses.length} assessment(s) recorded
             </span>
           </div>
 
           {diagnoses.length === 0 ? (
-            <div className="bg-white rounded-3xl border border-[#ded5c5] p-10 sm:p-14 text-center space-y-4 shadow-xs">
-              <div className="w-14 h-14 rounded-2xl bg-[#eef5ee] text-[#144229] flex items-center justify-center mx-auto">
+            <div className="bg-white rounded-3xl border border-[#E3DFD2] p-10 sm:p-14 text-center space-y-4 shadow-xs">
+              <div className="w-14 h-14 rounded-2xl bg-[#EAF1E4] text-[#174C35] flex items-center justify-center mx-auto">
                 <Stethoscope size={28} />
               </div>
-              <h3 className="font-serif font-bold text-xl text-[#0c2417]">
+              <h3 className="font-serif font-bold text-xl text-[#203027]">
                 No Health Assessments Yet
               </h3>
-              <p className="text-xs sm:text-sm text-[#526a57] max-w-md mx-auto leading-relaxed">
+              <p className="text-xs sm:text-sm text-[#68766C] max-w-md mx-auto leading-relaxed">
                 {plant?.nickname} has no diagnostic scans or follow-up observations recorded. If you notice yellowing leaves, pests, or wilting, run an AI Doctor assessment.
               </p>
               <div className="pt-2">
@@ -317,7 +317,7 @@ export function PlantHealthDetailClient({ plantId }: PlantHealthDetailClientProp
                   href={`/app/ai-doctor?plantId=${plant?.id}&plantSlug=${plant?.plantSlug}&plantName=${encodeURIComponent(
                     plant?.nickname || ''
                   )}`}
-                  className="inline-flex items-center gap-2 px-6 py-3 bg-[#144229] hover:bg-[#0c2417] text-white rounded-xl text-xs font-semibold shadow-xs transition-colors min-h-[44px]"
+                  className="inline-flex items-center gap-2 px-6 py-3 bg-[#174C35] hover:bg-[#203027] text-white rounded-xl text-xs font-semibold shadow-xs transition-colors min-h-[44px]"
                 >
                   <Stethoscope size={16} />
                   <span>Start First Diagnostic Scan</span>
@@ -334,32 +334,32 @@ export function PlantHealthDetailClient({ plantId }: PlantHealthDetailClientProp
                 return (
                   <div
                     key={diag.id}
-                    className="bg-white rounded-3xl border border-[#ded5c5] p-6 sm:p-8 shadow-xs space-y-6 relative overflow-hidden"
+                    className="bg-white rounded-3xl border border-[#E3DFD2] p-6 sm:p-8 shadow-xs space-y-6 relative overflow-hidden"
                   >
                     {/* Entry Badge & Date */}
-                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-[#f0ebe0]">
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-[#E3DFD2]">
                       <div className="flex items-center gap-2.5">
-                        <span className="w-7 h-7 rounded-xl bg-[#eef5ee] text-[#144229] flex items-center justify-center font-mono text-xs font-bold">
+                        <span className="w-7 h-7 rounded-xl bg-[#EAF1E4] text-[#174C35] flex items-center justify-center font-mono text-xs font-bold">
                           #{diagnoses.length - index}
                         </span>
                         <div>
-                          <span className="text-[11px] font-bold uppercase tracking-wider text-[#526a57] block">
+                          <span className="text-[11px] font-bold uppercase tracking-wider text-[#68766C] block">
                             Diagnostic Assessment
                           </span>
-                          <span className="font-serif font-bold text-base text-[#0c2417]">
+                          <span className="font-serif font-bold text-base text-[#203027]">
                             {diag.plantIdentification}
                           </span>
                         </div>
                       </div>
 
                       <div className="flex items-center gap-2.5">
-                        <span className="text-xs text-[#526a57] flex items-center gap-1.5 bg-[#fbf9f4] px-3 py-1.5 rounded-xl border border-[#ded5c5]">
+                        <span className="text-xs text-[#68766C] flex items-center gap-1.5 bg-[#F8F6EE] px-3 py-1.5 rounded-xl border border-[#E3DFD2]">
                           <Calendar size={13} />
                           {diag.diagnosedAt ? new Date(diag.diagnosedAt).toLocaleDateString() : 'Historical'}
                         </span>
                         <Link
                           href={`/app/ai-doctor/history/${diag.id}`}
-                          className="text-xs font-semibold text-[#144229] hover:underline flex items-center gap-1 px-3 py-1.5 rounded-xl bg-white border border-[#cfdfcf] hover:bg-[#f4efe6] transition-colors"
+                          className="text-xs font-semibold text-[#174C35] hover:underline flex items-center gap-1 px-3 py-1.5 rounded-xl bg-white border border-[#E3DFD2] hover:bg-[#F8F6EE] transition-colors"
                         >
                           <span>Snapshot</span>
                           <ExternalLink size={12} />
@@ -370,16 +370,16 @@ export function PlantHealthDetailClient({ plantId }: PlantHealthDetailClientProp
                     {/* AI Doctor Diagnostic Hypothesis */}
                     <div className="space-y-3">
                       <div className="flex items-center gap-2">
-                        <span className="text-xs font-bold uppercase tracking-wider text-[#144229] bg-[#eef5ee] px-2.5 py-0.5 rounded-full inline-flex items-center gap-1">
+                        <span className="text-xs font-bold uppercase tracking-wider text-[#174C35] bg-[#EAF1E4] px-2.5 py-0.5 rounded-full inline-flex items-center gap-1">
                           <Sparkles size={11} />
                           AI Assessment (Hypothesis)
                         </span>
-                        <span className="text-xs text-[#526a57]">
+                        <span className="text-xs text-[#68766C]">
                           Source: {diag.diagnosticSource === 'gemini-vision' ? 'Gemini Multimodal' : 'Agronomic Heuristic'}
                         </span>
                       </div>
 
-                      <p className="text-xs sm:text-sm text-[#2c3d30] leading-relaxed bg-[#fbf9f4] p-4 rounded-2xl border border-[#ded5c5]">
+                      <p className="text-xs sm:text-sm text-[#203027] leading-relaxed bg-[#F8F6EE] p-4 rounded-2xl border border-[#E3DFD2]">
                         {diag.summary}
                       </p>
 
@@ -389,19 +389,19 @@ export function PlantHealthDetailClient({ plantId }: PlantHealthDetailClientProp
                           {candidates.map((c) => (
                             <div
                               key={c.id}
-                              className="p-3.5 rounded-2xl bg-white border border-[#ded5c5] space-y-1.5 text-xs"
+                              className="p-3.5 rounded-2xl bg-white border border-[#E3DFD2] space-y-1.5 text-xs"
                             >
                               <div className="flex items-center justify-between">
-                                <strong className="font-serif font-bold text-[#0c2417] text-sm">
+                                <strong className="font-serif font-bold text-[#203027] text-sm">
                                   {c.conditionName}
                                 </strong>
-                                <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-[#f4efe6] text-[#526a57]">
+                                <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-[#F8F6EE] text-[#68766C]">
                                   {c.confidenceCategory} confidence
                                 </span>
                               </div>
-                              <p className="text-[#526a57] leading-relaxed">{c.explanation}</p>
+                              <p className="text-[#68766C] leading-relaxed">{c.explanation}</p>
                               {c.recommendedNextObservation && (
-                                <p className="text-[11px] text-[#144229] pt-1">
+                                <p className="text-[11px] text-[#174C35] pt-1">
                                   <strong>Next Check:</strong> {c.recommendedNextObservation}
                                 </p>
                               )}
@@ -415,7 +415,7 @@ export function PlantHealthDetailClient({ plantId }: PlantHealthDetailClientProp
                     {treatments.length > 0 && (
                       <div className="space-y-3 pt-2">
                         <div className="flex items-center justify-between">
-                          <span className="text-xs font-bold uppercase tracking-wider text-[#144229] bg-[#eef5ee] px-2.5 py-0.5 rounded-full inline-flex items-center gap-1">
+                          <span className="text-xs font-bold uppercase tracking-wider text-[#174C35] bg-[#EAF1E4] px-2.5 py-0.5 rounded-full inline-flex items-center gap-1">
                             <CheckCircle2 size={12} />
                             Treatment Checklist ({treatments.filter((t) => t.status === 'completed').length}/{treatments.length})
                           </span>
@@ -432,10 +432,10 @@ export function PlantHealthDetailClient({ plantId }: PlantHealthDetailClientProp
                                 key={t.id}
                                 className={`p-3.5 rounded-2xl border flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs transition-colors ${
                                   isDone
-                                    ? 'bg-[#ecfdf5] border-[#a7f3d0] text-[#065f46]'
+                                    ? 'bg-[#EAF1E4] border-[#78A95A/30] text-[#174C35]'
                                     : isSkipped
-                                    ? 'bg-[#f8fafc] border-[#e2e8f0] opacity-60'
-                                    : 'bg-[#fbf9f4] border-[#ded5c5] text-[#0c2417]'
+                                    ? 'bg-[#F8F6EE] border-[#E3DFD2] opacity-60'
+                                    : 'bg-[#F8F6EE] border-[#E3DFD2] text-[#203027]'
                                 }`}
                               >
                                 <div className="space-y-0.5">
@@ -462,8 +462,8 @@ export function PlantHealthDetailClient({ plantId }: PlantHealthDetailClientProp
                                     }
                                     className={`px-3 py-1.5 rounded-xl font-semibold transition-colors cursor-pointer min-h-[36px] flex items-center gap-1 ${
                                       isDone
-                                        ? 'bg-white text-[#065f46] border border-[#a7f3d0] hover:bg-[#d1fae5]'
-                                        : 'bg-[#144229] text-white hover:bg-[#0c2417]'
+                                        ? 'bg-white text-[#174C35] border border-[#78A95A/30] hover:bg-[#EAF1E4]'
+                                        : 'bg-[#174C35] text-white hover:bg-[#203027]'
                                     }`}
                                   >
                                     {isUpdating ? (
@@ -484,7 +484,7 @@ export function PlantHealthDetailClient({ plantId }: PlantHealthDetailClientProp
                                           isSkipped ? 'planned' : 'skipped'
                                         )
                                       }
-                                      className="px-2.5 py-1.5 rounded-xl text-[11px] font-semibold text-[#526a57] hover:bg-white transition-colors cursor-pointer min-h-[36px]"
+                                      className="px-2.5 py-1.5 rounded-xl text-[11px] font-semibold text-[#68766C] hover:bg-white transition-colors cursor-pointer min-h-[36px]"
                                     >
                                       {isSkipped ? 'Unskip' : 'Skip'}
                                     </button>
@@ -500,7 +500,7 @@ export function PlantHealthDetailClient({ plantId }: PlantHealthDetailClientProp
                     {/* Follow-Up Observations Section */}
                     <div className="space-y-3 pt-2">
                       <div className="flex items-center justify-between">
-                        <span className="text-xs font-bold uppercase tracking-wider text-[#144229] bg-[#eef5ee] px-2.5 py-0.5 rounded-full inline-flex items-center gap-1">
+                        <span className="text-xs font-bold uppercase tracking-wider text-[#174C35] bg-[#EAF1E4] px-2.5 py-0.5 rounded-full inline-flex items-center gap-1">
                           <Activity size={12} />
                           Grower Follow-Up Observations ({followUps.length})
                         </span>
@@ -508,7 +508,7 @@ export function PlantHealthDetailClient({ plantId }: PlantHealthDetailClientProp
                         <button
                           type="button"
                           onClick={() => setSelectedDiagnosisForFollowUp(diag)}
-                          className="text-xs font-semibold text-[#144229] hover:underline flex items-center gap-1 min-h-[36px] cursor-pointer"
+                          className="text-xs font-semibold text-[#174C35] hover:underline flex items-center gap-1 min-h-[36px] cursor-pointer"
                         >
                           <Plus size={13} />
                           <span>Add Follow-Up</span>
@@ -516,8 +516,8 @@ export function PlantHealthDetailClient({ plantId }: PlantHealthDetailClientProp
                       </div>
 
                       {followUps.length === 0 ? (
-                        <div className="p-4 rounded-2xl bg-[#fbf9f4] border border-dashed border-[#ded5c5] text-center space-y-1">
-                          <p className="text-xs text-[#526a57]">
+                        <div className="p-4 rounded-2xl bg-[#F8F6EE] border border-dashed border-[#E3DFD2] text-center space-y-1">
+                          <p className="text-xs text-[#68766C]">
                             No follow-up logged yet. Record what happens after applying recommended adjustments.
                           </p>
                         </div>
@@ -533,12 +533,12 @@ export function PlantHealthDetailClient({ plantId }: PlantHealthDetailClientProp
                                 key={f.id}
                                 className={`p-4 rounded-2xl border space-y-2 text-xs ${
                                   isResolved
-                                    ? 'bg-[#ecfdf5] border-[#a7f3d0] text-[#065f46]'
+                                    ? 'bg-[#EAF1E4] border-[#78A95A/30] text-[#174C35]'
                                     : isImproving
-                                    ? 'bg-[#f0f9ff] border-[#bae6fd] text-[#0369a1]'
+                                    ? 'bg-[#E7F2F9] border-[#65A8D0/30] text-[#1B5D88]'
                                     : isWorsening
-                                    ? 'bg-[#fef2f2] border-[#fecaca] text-[#991b1b]'
-                                    : 'bg-[#fffbeb] border-[#fde68a] text-[#92400e]'
+                                    ? 'bg-[#FBE9E2] border-[#E4775D/30] text-[#963A23]'
+                                    : 'bg-[#FFF3D7] border-[#F0C04D/30] text-[#8A6400]'
                                 }`}
                               >
                                 <div className="flex items-center justify-between">

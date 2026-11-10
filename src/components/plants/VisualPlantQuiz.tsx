@@ -128,25 +128,25 @@ export function VisualPlantQuiz({ plant, className = '' }: VisualPlantQuizProps)
 
   return (
     <div
-      className={`rounded-2xl border border-[#E8E4DA] bg-white p-5 sm:p-7 shadow-xs space-y-4 ${className}`}
+      className={`rounded-2xl border border-[#E3DFD2] bg-white p-5 sm:p-7 shadow-xs space-y-4 ${className}`}
     >
-      <div className="flex items-center justify-between pb-3 border-b border-[#F3F6EC]">
+      <div className="flex items-center justify-between pb-3 border-b border-[#EAF1E4]">
         <div className="flex items-center gap-2">
-          <span className="w-8 h-8 rounded-xl bg-[#FFF0D8] text-[#9A5B00] flex items-center justify-center text-base shadow-2xs">
+          <span className="w-8 h-8 rounded-xl bg-[#FFF3D7] text-[#8A6400] flex items-center justify-center text-base shadow-2xs">
             🏆
           </span>
           <div>
-            <span className="text-[11px] font-mono uppercase tracking-wider text-[#68736B] block">
+            <span className="text-[11px] font-mono uppercase tracking-wider text-[#68766C] block">
               Quick Knowledge Check
             </span>
-            <h4 className="font-serif font-bold text-base text-[#1F2A23] leading-tight">
+            <h4 className="font-serif font-bold text-base text-[#203027] leading-tight">
               Test your {plant.commonName} skills
             </h4>
           </div>
         </div>
 
         {!quizFinished && (
-          <span className="text-xs font-mono text-[#68736B]">
+          <span className="text-xs font-mono text-[#68766C]">
             {currentQuestionIndex + 1} of {questions.length}
           </span>
         )}
@@ -154,7 +154,7 @@ export function VisualPlantQuiz({ plant, className = '' }: VisualPlantQuizProps)
 
       {!quizFinished ? (
         <div className="space-y-4">
-          <h5 className="font-serif text-lg font-bold text-[#1F2A23]">
+          <h5 className="font-serif text-lg font-bold text-[#203027]">
             {currentQ.question}
           </h5>
 
@@ -164,14 +164,14 @@ export function VisualPlantQuiz({ plant, className = '' }: VisualPlantQuizProps)
               const isSelected = selectedOptionIndex === idx;
               const hasAnswered = selectedOptionIndex !== null;
 
-              let btnStyle = 'bg-[#FBF9F4] border-[#E8E4DA] text-[#1F2A23] hover:bg-[#F3F6EC]';
+              let btnStyle = 'bg-[#F8F6EE] border-[#E3DFD2] text-[#203027] hover:bg-[#EAF1E4]';
               if (hasAnswered) {
                 if (opt.isCorrect) {
-                  btnStyle = 'bg-[#E6F0E3] border-[#174C35] text-[#174C35] font-semibold ring-2 ring-[#174C35]/20';
+                  btnStyle = 'bg-[#EAF1E4] border-[#174C35] text-[#174C35] font-semibold ring-2 ring-[#174C35]/20';
                 } else if (isSelected) {
-                  btnStyle = 'bg-[#FBE4DC] border-[#A84A2A] text-[#A84A2A] opacity-80';
+                  btnStyle = 'bg-[#FBE9E2] border-[#963A23] text-[#963A23] opacity-80';
                 } else {
-                  btnStyle = 'bg-[#FBF9F4] border-[#E8E4DA] opacity-50';
+                  btnStyle = 'bg-[#F8F6EE] border-[#E3DFD2] opacity-50';
                 }
               }
 
@@ -192,8 +192,8 @@ export function VisualPlantQuiz({ plant, className = '' }: VisualPlantQuizProps)
 
           {/* Feedback & Advance Button */}
           {selectedOptionIndex !== null && (
-            <div className="p-3.5 rounded-xl bg-[#F3F6EC] border border-[#CEE4C9] flex items-center justify-between gap-3 animate-in fade-in duration-150">
-              <div className="text-xs text-[#1F2A23] space-y-0.5">
+            <div className="p-3.5 rounded-xl bg-[#EAF1E4] border border-[#E3DFD2] flex items-center justify-between gap-3 animate-in fade-in duration-150">
+              <div className="text-xs text-[#203027] space-y-0.5">
                 <span className="font-bold flex items-center gap-1 text-[#174C35]">
                   {currentQ.options[selectedOptionIndex].isCorrect ? (
                     <>
@@ -205,7 +205,7 @@ export function VisualPlantQuiz({ plant, className = '' }: VisualPlantQuizProps)
                     </>
                   )}
                 </span>
-                <p className="text-[#68736B] leading-relaxed">
+                <p className="text-[#68766C] leading-relaxed">
                   {currentQ.explanation}
                 </p>
               </div>
@@ -213,7 +213,7 @@ export function VisualPlantQuiz({ plant, className = '' }: VisualPlantQuizProps)
               <button
                 type="button"
                 onClick={handleNextQuestion}
-                className="inline-flex items-center gap-1 px-4 py-2 rounded-lg bg-[#174C35] hover:bg-[#0f3424] text-white text-xs font-semibold shrink-0 cursor-pointer shadow-2xs"
+                className="inline-flex items-center gap-1 px-4 py-2 rounded-lg bg-[#174C35] hover:bg-[#123C2A] text-white text-xs font-semibold shrink-0 cursor-pointer shadow-2xs"
               >
                 <span>{currentQuestionIndex + 1 < questions.length ? 'Next' : 'See Score'}</span>
                 <ArrowRight size={13} />
@@ -223,19 +223,19 @@ export function VisualPlantQuiz({ plant, className = '' }: VisualPlantQuizProps)
         </div>
       ) : (
         /* Results View */
-        <div className="p-6 text-center space-y-3 bg-[#F3F6EC] rounded-xl border border-[#CEE4C9]">
+        <div className="p-6 text-center space-y-3 bg-[#EAF1E4] rounded-xl border border-[#E3DFD2]">
           <span className="text-3xl select-none block">🎉</span>
-          <h5 className="font-serif text-xl font-bold text-[#1F2A23]">
+          <h5 className="font-serif text-xl font-bold text-[#203027]">
             {score === questions.length ? 'Botanical Master!' : 'Great Check-In!'}
           </h5>
-          <p className="text-xs text-[#68736B] max-w-xs mx-auto">
+          <p className="text-xs text-[#68766C] max-w-xs mx-auto">
             You scored {score} of {questions.length} on {plant.commonName}. You’re ready to grow!
           </p>
           <div className="pt-2">
             <button
               type="button"
               onClick={handleRestart}
-              className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-white border border-[#E8E4DA] text-xs font-medium text-[#174C35] hover:bg-[#E6F0E3] transition-colors cursor-pointer"
+              className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-white border border-[#E3DFD2] text-xs font-medium text-[#174C35] hover:bg-[#EAF1E4] transition-colors cursor-pointer"
             >
               <RotateCcw size={13} />
               <span>Try Again</span>

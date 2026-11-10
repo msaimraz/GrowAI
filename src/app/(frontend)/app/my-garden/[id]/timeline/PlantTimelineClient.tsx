@@ -89,33 +89,33 @@ export function PlantTimelineClient({ plantId }: PlantTimelineClientProps) {
     : null;
 
   return (
-    <div className="min-h-screen bg-[#fbf9f4] text-[#0c2417] flex flex-col">
+    <div className="min-h-screen bg-[#F8F6EE] text-[#203027] flex flex-col">
       <AppHeader />
 
       <main className="flex-1 max-w-4xl w-full mx-auto px-4 py-8 sm:px-6">
         {/* Navigation Breadcrumb */}
         <div className="flex items-center justify-between gap-4 mb-6">
-          <nav className="flex items-center gap-2 text-xs text-[#526a57]">
+          <nav className="flex items-center gap-2 text-xs text-[#68766C]">
             <Link
               href="/app/my-garden"
-              className="inline-flex items-center gap-1.5 hover:text-[#144229] transition-colors cursor-pointer"
+              className="inline-flex items-center gap-1.5 hover:text-[#174C35] transition-colors cursor-pointer"
             >
               <ArrowLeft size={14} />
               <span>My Garden</span>
             </Link>
-            <ChevronRight size={12} className="text-[#a89f91]" />
-            <span className="font-semibold text-[#0c2417]">
+            <ChevronRight size={12} className="text-[#68766C]" />
+            <span className="font-semibold text-[#203027]">
               {plant?.nickname || 'Plant Timeline'}
             </span>
-            <ChevronRight size={12} className="text-[#a89f91]" />
-            <span className="text-[#6d8573]">Growth Timeline</span>
+            <ChevronRight size={12} className="text-[#68766C]" />
+            <span className="text-[#68766C]">Growth Timeline</span>
           </nav>
 
           <button
             type="button"
             onClick={loadPlantData}
             disabled={loading}
-            className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-xl bg-white border border-[#ded5c5] hover:bg-[#eef5ee] text-[#144229] transition-all cursor-pointer min-h-[36px]"
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-xl bg-white border border-[#E3DFD2] hover:bg-[#EAF1E4] text-[#174C35] transition-all cursor-pointer min-h-[36px]"
           >
             <RefreshCw size={12} className={loading ? 'animate-spin' : ''} />
             <span>Refresh</span>
@@ -124,12 +124,12 @@ export function PlantTimelineClient({ plantId }: PlantTimelineClientProps) {
 
         {/* Loading State */}
         {loading && (
-          <div className="p-12 text-center bg-white rounded-2xl border border-[#ded5c5]">
-            <Loader2 size={32} className="animate-spin text-[#144229] mx-auto mb-3" />
-            <p className="text-sm font-semibold text-[#0c2417]">
+          <div className="p-12 text-center bg-white rounded-2xl border border-[#E3DFD2]">
+            <Loader2 size={32} className="animate-spin text-[#174C35] mx-auto mb-3" />
+            <p className="text-sm font-semibold text-[#203027]">
               Loading longitudinal timeline...
             </p>
-            <p className="text-xs text-[#526a57] mt-1">
+            <p className="text-xs text-[#68766C] mt-1">
               Aggregating lifecycle milestones, growth observations, care tasks, photos, and health events.
             </p>
           </div>
@@ -139,13 +139,13 @@ export function PlantTimelineClient({ plantId }: PlantTimelineClientProps) {
         {!loading && error && (
           <div className="p-8 text-center bg-white rounded-2xl border border-rose-200">
             <AlertCircle size={36} className="text-rose-600 mx-auto mb-3" />
-            <h3 className="font-serif text-lg font-bold text-[#0c2417] mb-1">
+            <h3 className="font-serif text-lg font-bold text-[#203027] mb-1">
               Timeline Unavailable
             </h3>
-            <p className="text-xs text-[#526a57] max-w-sm mx-auto mb-4">{error}</p>
+            <p className="text-xs text-[#68766C] max-w-sm mx-auto mb-4">{error}</p>
             <Link
               href="/app/my-garden"
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-semibold bg-[#144229] text-white hover:bg-[#0c2417] transition-all cursor-pointer"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-semibold bg-[#174C35] text-white hover:bg-[#203027] transition-all cursor-pointer"
             >
               <Home size={14} />
               <span>Return to My Garden</span>
@@ -157,7 +157,7 @@ export function PlantTimelineClient({ plantId }: PlantTimelineClientProps) {
         {!loading && !error && plant && (
           <div className="space-y-6">
             {/* Header Card */}
-            <div className="p-6 rounded-3xl bg-linear-to-br from-[#144229] to-[#0c2417] text-white shadow-md">
+            <div className="p-6 rounded-3xl bg-linear-to-br from-[#174C35] to-[#203027] text-white shadow-md">
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                 <div>
                   <div className="flex items-center gap-2 text-xs font-semibold text-emerald-200 mb-1">
@@ -183,7 +183,7 @@ export function PlantTimelineClient({ plantId }: PlantTimelineClientProps) {
                   </Link>
                   <Link
                     href={`/app/ai-doctor?plantId=${plant.id}`}
-                    className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-semibold bg-emerald-400 hover:bg-emerald-300 text-[#0c2417] font-bold transition-all cursor-pointer min-h-[40px]"
+                    className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-semibold bg-emerald-400 hover:bg-emerald-300 text-[#203027] font-bold transition-all cursor-pointer min-h-[40px]"
                   >
                     <Sparkles size={14} />
                     <span>Check Health</span>

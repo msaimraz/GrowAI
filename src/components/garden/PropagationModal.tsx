@@ -128,27 +128,27 @@ export function PropagationModal({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-[#071c11]/70 backdrop-blur-sm animate-fade-in">
-      <div className="relative w-full max-w-[calc(100vw-24px)] sm:max-w-lg bg-[#fbf9f4] rounded-2xl border border-[#ded5c5] shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-[#203027]/70 backdrop-blur-sm animate-fade-in">
+      <div className="relative w-full max-w-[calc(100vw-24px)] sm:max-w-lg bg-[#F8F6EE] rounded-2xl border border-[#E3DFD2] shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
         {/* Header */}
-        <div className="px-5 py-4 border-b border-[#ded5c5] bg-[#ffffff] flex items-center justify-between">
+        <div className="px-5 py-4 border-b border-[#E3DFD2] bg-[#ffffff] flex items-center justify-between">
           <div className="flex items-center gap-2.5">
-            <span className="p-2 rounded-xl bg-[#eef5ee] text-[#1e663f]">
+            <span className="p-2 rounded-xl bg-[#EAF1E4] text-[#174C35]">
               <Sparkles size={18} />
             </span>
             <div>
-              <h2 className="font-serif font-bold text-lg text-[#071c11]">
+              <h2 className="font-serif font-bold text-lg text-[#203027]">
                 Propagate Daughter Specimen
               </h2>
-              <p className="text-xs text-[#526a57]">
-                Cloning from mother: <strong className="font-semibold text-[#144229]">{parentPlant.nickname}</strong> ({botanical?.commonName || parentPlant.plantSlug})
+              <p className="text-xs text-[#68766C]">
+                Cloning from mother: <strong className="font-semibold text-[#174C35]">{parentPlant.nickname}</strong> ({botanical?.commonName || parentPlant.plantSlug})
               </p>
             </div>
           </div>
           <button
             type="button"
             onClick={onClose}
-            className="p-1.5 rounded-lg text-[#526a57] hover:bg-[#ede7da] transition-colors cursor-pointer"
+            className="p-1.5 rounded-lg text-[#68766C] hover:bg-[#E3DFD2] transition-colors cursor-pointer"
             aria-label="Close modal"
           >
             <X size={18} />
@@ -158,14 +158,14 @@ export function PropagationModal({
         {/* Scrollable Form Body */}
         <form onSubmit={handleSubmit} className="flex-1 overflow-y-auto p-5 space-y-4">
           {errorMsg && (
-            <div className="p-3 rounded-xl bg-[#fbeee9] border border-[#f5c7b8] text-xs text-[#9a3412] font-medium">
+            <div className="p-3 rounded-xl bg-[#FBE9E2] border border-[#E4775D/30] text-xs text-[#963A23] font-medium">
               {errorMsg}
             </div>
           )}
 
           {/* Step 1: Choose Propagation Method */}
           <div className="space-y-2">
-            <label className="block text-xs font-bold text-[#144229] uppercase tracking-wider">
+            <label className="block text-xs font-bold text-[#174C35] uppercase tracking-wider">
               1. Select Propagation Technique
             </label>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
@@ -182,16 +182,16 @@ export function PropagationModal({
                     }}
                     className={`flex items-start gap-2.5 p-3 rounded-xl border text-left transition-all cursor-pointer ${
                       isSelected
-                        ? 'bg-[#1b5837] text-white border-[#1b5837] shadow-xs'
-                        : 'bg-white text-[#1c261e] border-[#e4dcce] hover:border-[#257a4d]'
+                        ? 'bg-[#174C35] text-white border-[#174C35] shadow-xs'
+                        : 'bg-white text-[#203027] border-[#E3DFD2] hover:border-[#174C35]'
                     }`}
                   >
-                    <Icon size={16} className={`shrink-0 mt-0.5 ${isSelected ? 'text-[#86efac]' : 'text-[#257a4d]'}`} />
+                    <Icon size={16} className={`shrink-0 mt-0.5 ${isSelected ? 'text-[#78A95A]' : 'text-[#174C35]'}`} />
                     <div className="min-w-0">
-                      <p className={`text-xs font-semibold ${isSelected ? 'text-white' : 'text-[#071c11]'}`}>
+                      <p className={`text-xs font-semibold ${isSelected ? 'text-white' : 'text-[#203027]'}`}>
                         {m.name}
                       </p>
-                      <p className={`text-[11px] mt-0.5 leading-snug line-clamp-2 ${isSelected ? 'text-[#d2ebd7]' : 'text-[#526a57]'}`}>
+                      <p className={`text-[11px] mt-0.5 leading-snug line-clamp-2 ${isSelected ? 'text-[#EAF1E4]' : 'text-[#68766C]'}`}>
                         {m.summary}
                       </p>
                     </div>
@@ -202,8 +202,8 @@ export function PropagationModal({
           </div>
 
           {/* Botanical Species Integrity Notice */}
-          <div className="flex items-start gap-2 p-2.5 rounded-xl bg-[#eef5ee] border border-[#c4dec4] text-xs text-[#144229]">
-            <Info size={14} className="shrink-0 mt-0.5 text-[#257a4d]" />
+          <div className="flex items-start gap-2 p-2.5 rounded-xl bg-[#EAF1E4] border border-[#E3DFD2] text-xs text-[#174C35]">
+            <Info size={14} className="shrink-0 mt-0.5 text-[#174C35]" />
             <p>
               <strong>Species Continuity:</strong> The child plant automatically inherits botanical DNA from <em className="italic">{botanical?.scientificName || parentPlant.plantSlug}</em> to ensure verified care instructions.
             </p>
@@ -211,7 +211,7 @@ export function PropagationModal({
 
           {/* Step 2: Offspring Nickname */}
           <div className="space-y-1.5">
-            <label className="block text-xs font-bold text-[#144229] uppercase tracking-wider">
+            <label className="block text-xs font-bold text-[#174C35] uppercase tracking-wider">
               2. Daughter Plant Nickname
             </label>
             <input
@@ -220,20 +220,20 @@ export function PropagationModal({
               value={nickname}
               onChange={(e) => setNickname(e.target.value)}
               placeholder="e.g. Balcony Pesto King (Cutting 1)"
-              className="w-full px-3 py-2 rounded-xl bg-white border border-[#ded5c5] text-sm text-[#071c11] focus:outline-none focus:ring-2 focus:ring-[#144229]"
+              className="w-full px-3 py-2 rounded-xl bg-white border border-[#E3DFD2] text-sm text-[#203027] focus:outline-none focus:ring-2 focus:ring-[#174C35]"
             />
           </div>
 
           {/* Step 3: Location and Container */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div>
-              <label className="block text-xs font-semibold text-[#2e4435] mb-1">
+              <label className="block text-xs font-semibold text-[#203027] mb-1">
                 Garden Location
               </label>
               <select
                 value={location}
                 onChange={(e) => setLocation(e.target.value as any)}
-                className="w-full px-3 py-2 rounded-xl bg-white border border-[#ded5c5] text-xs text-[#071c11] focus:outline-none focus:ring-2 focus:ring-[#144229]"
+                className="w-full px-3 py-2 rounded-xl bg-white border border-[#E3DFD2] text-xs text-[#203027] focus:outline-none focus:ring-2 focus:ring-[#174C35]"
               >
                 <option value="Balcony Rack">Balcony Rack</option>
                 <option value="Window Sill">Window Sill</option>
@@ -244,13 +244,13 @@ export function PropagationModal({
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-[#2e4435] mb-1">
+              <label className="block text-xs font-semibold text-[#203027] mb-1">
                 Rack Tier Level
               </label>
               <select
                 value={tier}
                 onChange={(e) => setTier(e.target.value as any)}
-                className="w-full px-3 py-2 rounded-xl bg-white border border-[#ded5c5] text-xs text-[#071c11] focus:outline-none focus:ring-2 focus:ring-[#144229]"
+                className="w-full px-3 py-2 rounded-xl bg-white border border-[#E3DFD2] text-xs text-[#203027] focus:outline-none focus:ring-2 focus:ring-[#174C35]"
               >
                 <option value="top">Top Shelf (High Light)</option>
                 <option value="middle">Middle Shelf (Filtered)</option>
@@ -261,7 +261,7 @@ export function PropagationModal({
 
           {/* Pot Size */}
           <div>
-            <label className="block text-xs font-semibold text-[#2e4435] mb-1">
+            <label className="block text-xs font-semibold text-[#203027] mb-1">
               Starter Container Size
             </label>
             <input
@@ -269,24 +269,24 @@ export function PropagationModal({
               value={potSize}
               onChange={(e) => setPotSize(e.target.value)}
               placeholder="e.g. Starter 10 cm Pot, 1 Liter Tray"
-              className="w-full px-3 py-2 rounded-xl bg-white border border-[#ded5c5] text-xs text-[#071c11] focus:outline-none focus:ring-2 focus:ring-[#144229]"
+              className="w-full px-3 py-2 rounded-xl bg-white border border-[#E3DFD2] text-xs text-[#203027] focus:outline-none focus:ring-2 focus:ring-[#174C35]"
             />
           </div>
 
           {/* Modal Footer / Actions */}
-          <div className="pt-3 border-t border-[#ded5c5] flex items-center justify-end gap-2.5">
+          <div className="pt-3 border-t border-[#E3DFD2] flex items-center justify-end gap-2.5">
             <button
               type="button"
               onClick={onClose}
               disabled={isSubmitting}
-              className="px-4 py-2 rounded-xl text-xs font-semibold text-[#526a57] hover:bg-[#ede7da] transition-colors cursor-pointer"
+              className="px-4 py-2 rounded-xl text-xs font-semibold text-[#68766C] hover:bg-[#E3DFD2] transition-colors cursor-pointer"
             >
               Cancel
             </button>
             <button
               type="submit"
               disabled={isSubmitting}
-              className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-[#144229] hover:bg-[#1e663f] text-white font-semibold text-xs shadow-xs active:scale-[0.98] select-none touch-manipulation transition-colors cursor-pointer disabled:opacity-50"
+              className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-[#174C35] hover:bg-[#174C35] text-white font-semibold text-xs shadow-xs active:scale-[0.98] select-none touch-manipulation transition-colors cursor-pointer disabled:opacity-50"
             >
               {isSubmitting ? (
                 <>

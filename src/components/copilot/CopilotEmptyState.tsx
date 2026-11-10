@@ -24,15 +24,15 @@ export function CopilotEmptyState({ activePlantNickname, onSelectQuestion }: Cop
       ];
 
   return (
-    <div className="p-6 sm:p-8 text-center rounded-3xl bg-[#fbf9f4] border border-[#ded5c5] space-y-4">
-      <div className="w-14 h-14 rounded-3xl bg-[#eef5ee] text-[#144229] flex items-center justify-center mx-auto text-2xl shadow-xs">
+    <div className="p-6 sm:p-8 text-center rounded-3xl bg-[#F8F6EE] border border-[#E3DFD2] space-y-4">
+      <div className="w-14 h-14 rounded-3xl bg-[#EAF1E4] text-[#174C35] flex items-center justify-center mx-auto text-2xl shadow-xs">
         🌱
       </div>
       <div className="space-y-1">
-        <h3 className="font-serif font-bold text-lg sm:text-xl text-[#0c2417]">
+        <h3 className="font-serif font-bold text-lg sm:text-xl text-[#203027]">
           {activePlantNickname ? `Ask GrowAI about ${activePlantNickname}` : 'Ask GrowAI'}
         </h3>
-        <p className="text-xs sm:text-sm text-[#526a57] max-w-md mx-auto">
+        <p className="text-xs sm:text-sm text-[#68766C] max-w-md mx-auto">
           What would you like help with? Tap a quick question or type your own below.
         </p>
       </div>
@@ -44,7 +44,7 @@ export function CopilotEmptyState({ activePlantNickname, onSelectQuestion }: Cop
               key={idx}
               type="button"
               onClick={() => onSelectQuestion(opt.query)}
-              className="px-3.5 py-2 rounded-2xl bg-white hover:bg-[#eef5ee] border border-[#ded5c5] hover:border-[#144229] text-[#0c2417] text-xs font-semibold shadow-xs transition-all hover:scale-[1.02] cursor-pointer"
+              className="px-3.5 py-2 rounded-2xl bg-white hover:bg-[#EAF1E4] border border-[#E3DFD2] hover:border-[#174C35] text-[#203027] text-xs font-semibold shadow-xs transition-all hover:scale-[1.02] cursor-pointer"
             >
               {opt.label}
             </button>
@@ -52,13 +52,13 @@ export function CopilotEmptyState({ activePlantNickname, onSelectQuestion }: Cop
         </div>
       )}
 
-      <div className="flex items-center justify-center gap-4 text-[11px] text-[#6d8573] pt-2">
+      <div className="flex items-center justify-center gap-4 text-[11px] text-[#68766C] pt-2">
         <span className="flex items-center gap-1">
-          <ShieldCheck size={13} className="text-[#144229]" />
+          <ShieldCheck size={13} className="text-[#174C35]" />
           <span>Factual Grounding</span>
         </span>
         <span className="flex items-center gap-1">
-          <Sprout size={13} className="text-[#144229]" />
+          <Sprout size={13} className="text-[#174C35]" />
           <span>Zero Fabricated Dosages</span>
         </span>
       </div>

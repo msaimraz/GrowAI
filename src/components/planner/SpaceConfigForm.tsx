@@ -384,11 +384,11 @@ export function SpaceConfigForm({
   };
 
   return (
-    <div className="bg-white rounded-3xl border border-[#ded5c5] p-5 sm:p-7 shadow-xs space-y-6">
+    <div className="bg-white rounded-3xl border border-[#E3DFD2] p-5 sm:p-7 shadow-xs space-y-6">
       {/* Profile Selector & Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-[#f0ebe0]">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-[#E3DFD2]">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-2xl bg-[#eef5ee] text-[#144229] flex items-center justify-center shrink-0">
+          <div className="w-10 h-10 rounded-2xl bg-[#EAF1E4] text-[#174C35] flex items-center justify-center shrink-0">
             <Layers size={22} />
           </div>
           <div>
@@ -397,11 +397,11 @@ export function SpaceConfigForm({
                 type="text"
                 value={currentProfile.name}
                 onChange={(e) => onProfileChange({ ...currentProfile, name: e.target.value })}
-                className="font-serif font-bold text-lg sm:text-xl text-[#0c2417] bg-transparent border-b border-dashed border-[#ded5c5] hover:border-[#144229] focus:outline-none focus:border-[#144229] pb-0.5"
+                className="font-serif font-bold text-lg sm:text-xl text-[#203027] bg-transparent border-b border-dashed border-[#E3DFD2] hover:border-[#174C35] focus:outline-none focus:border-[#174C35] pb-0.5"
                 placeholder="Name your growing space..."
               />
             </div>
-            <p className="text-xs text-[#526a57] mt-0.5">
+            <p className="text-xs text-[#68766C] mt-0.5">
               {currentProfile.dimensions.width} × {currentProfile.dimensions.depth} × {currentProfile.dimensions.height} {activeUnit} • {currentProfile.tiers.length} Tiers
             </p>
           </div>
@@ -419,7 +419,7 @@ export function SpaceConfigForm({
                   setActiveSpaceConfigId(found.id);
                 }
               }}
-              className="text-xs font-semibold px-3 py-2 rounded-xl border border-[#ded5c5] bg-[#fbf9f4] text-[#0c2417] min-h-[44px]"
+              className="text-xs font-semibold px-3 py-2 rounded-xl border border-[#E3DFD2] bg-[#F8F6EE] text-[#203027] min-h-[44px]"
             >
               {savedProfiles.map((p) => (
                 <option key={p.id} value={p.id}>
@@ -432,7 +432,7 @@ export function SpaceConfigForm({
           <button
             type="button"
             onClick={handleCreateNewProfile}
-            className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl border border-[#ded5c5] bg-white hover:bg-[#eef5ee] text-xs font-semibold text-[#144229] min-h-[44px] cursor-pointer"
+            className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl border border-[#E3DFD2] bg-white hover:bg-[#EAF1E4] text-xs font-semibold text-[#174C35] min-h-[44px] cursor-pointer"
           >
             <Plus size={15} />
             <span>New Space</span>
@@ -441,7 +441,7 @@ export function SpaceConfigForm({
           <button
             type="button"
             onClick={handleSaveProfile}
-            className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-[#144229] hover:bg-[#0c2417] text-white text-xs font-semibold shadow-xs min-h-[44px] cursor-pointer"
+            className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-[#174C35] hover:bg-[#203027] text-white text-xs font-semibold shadow-xs min-h-[44px] cursor-pointer"
           >
             <Save size={15} />
             <span>Save Profile</span>
@@ -451,7 +451,7 @@ export function SpaceConfigForm({
             <button
               type="button"
               onClick={handleDeleteCurrent}
-              className="p-2.5 rounded-xl text-[#9a3412] hover:bg-[#fbeee9] min-h-[44px] min-w-[44px] flex items-center justify-center cursor-pointer"
+              className="p-2.5 rounded-xl text-[#963A23] hover:bg-[#FBE9E2] min-h-[44px] min-w-[44px] flex items-center justify-center cursor-pointer"
               title="Delete this space profile"
               aria-label="Delete this space profile"
             >
@@ -462,7 +462,7 @@ export function SpaceConfigForm({
           <button
             type="button"
             onClick={() => setIsExpanded(!isExpanded)}
-            className="p-2.5 rounded-xl text-[#526a57] hover:bg-[#f4f8f4] min-h-[44px] min-w-[44px] flex items-center justify-center cursor-pointer"
+            className="p-2.5 rounded-xl text-[#68766C] hover:bg-[#EAF1E4] min-h-[44px] min-w-[44px] flex items-center justify-center cursor-pointer"
             aria-label="Toggle configuration panel"
           >
             {isExpanded ? <ChevronUp size={18} /> : <ChevronDown size={18} />}
@@ -471,14 +471,14 @@ export function SpaceConfigForm({
       </div>
 
       {saveStatus && (
-        <div className="p-3 bg-[#eef5ee] border border-[#cfe0cf] text-[#1b5837] text-xs font-semibold rounded-xl flex items-center gap-2">
+        <div className="p-3 bg-[#EAF1E4] border border-[#E3DFD2] text-[#174C35] text-xs font-semibold rounded-xl flex items-center gap-2">
           <CheckCircle2 size={16} />
           <span>{saveStatus}</span>
         </div>
       )}
 
       {validationErrors.length > 0 && (
-        <div className="p-3 bg-[#fbeee9] border border-[#f8d7cb] text-[#9a3412] text-xs rounded-xl space-y-1">
+        <div className="p-3 bg-[#FBE9E2] border border-[#E4775D/30] text-[#963A23] text-xs rounded-xl space-y-1">
           <div className="flex items-center gap-1.5 font-bold">
             <AlertCircle size={15} />
             <span>Configuration Issues Detected</span>
@@ -496,7 +496,7 @@ export function SpaceConfigForm({
         <div className="space-y-6 pt-1">
           {/* Preset Selection */}
           <div>
-            <label className="block text-xs font-bold uppercase tracking-wider text-[#526a57] mb-2.5">
+            <label className="block text-xs font-bold uppercase tracking-wider text-[#68766C] mb-2.5">
               Select Growing Footprint Preset
             </label>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
@@ -508,15 +508,15 @@ export function SpaceConfigForm({
                     onClick={() => handleApplyPreset(p.id)}
                     className={`p-3.5 rounded-2xl border cursor-pointer transition-all min-h-[72px] flex flex-col justify-between ${
                       isSelected
-                        ? 'bg-[#eef5ee] border-[#144229] shadow-2xs'
-                        : 'bg-[#fbf9f4] border-[#ded5c5] hover:border-[#144229]'
+                        ? 'bg-[#EAF1E4] border-[#174C35] shadow-2xs'
+                        : 'bg-[#F8F6EE] border-[#E3DFD2] hover:border-[#174C35]'
                     }`}
                   >
                     <div className="flex items-center justify-between">
-                      <span className="font-serif font-bold text-sm text-[#0c2417]">{p.label}</span>
-                      {isSelected && <CheckCircle2 size={15} className="text-[#144229]" />}
+                      <span className="font-serif font-bold text-sm text-[#203027]">{p.label}</span>
+                      {isSelected && <CheckCircle2 size={15} className="text-[#174C35]" />}
                     </div>
-                    <p className="text-[11px] text-[#526a57] mt-1 leading-snug">{p.description}</p>
+                    <p className="text-[11px] text-[#68766C] mt-1 leading-snug">{p.description}</p>
                   </div>
                 );
               })}
@@ -524,20 +524,20 @@ export function SpaceConfigForm({
           </div>
 
           {/* Unit Switcher & Overall Space Dimensions */}
-          <div className="bg-[#fbf9f4] rounded-2xl border border-[#ded5c5] p-4 sm:p-5 space-y-4">
-            <div className="flex items-center justify-between flex-wrap gap-3 pb-3 border-b border-[#ede7da]">
+          <div className="bg-[#F8F6EE] rounded-2xl border border-[#E3DFD2] p-4 sm:p-5 space-y-4">
+            <div className="flex items-center justify-between flex-wrap gap-3 pb-3 border-b border-[#E3DFD2]">
               <div className="flex items-center gap-2">
-                <Ruler size={16} className="text-[#144229]" />
-                <span className="font-serif font-bold text-sm text-[#0c2417]">
+                <Ruler size={16} className="text-[#174C35]" />
+                <span className="font-serif font-bold text-sm text-[#203027]">
                   Overall Space Footprint
                 </span>
               </div>
-              <div className="inline-flex rounded-xl border border-[#ded5c5] p-0.5 bg-white">
+              <div className="inline-flex rounded-xl border border-[#E3DFD2] p-0.5 bg-white">
                 <button
                   type="button"
                   onClick={() => handleUnitToggle('cm')}
                   className={`px-3 py-1 text-xs font-semibold rounded-lg transition-colors cursor-pointer ${
-                    activeUnit === 'cm' ? 'bg-[#144229] text-white' : 'text-[#526a57]'
+                    activeUnit === 'cm' ? 'bg-[#174C35] text-white' : 'text-[#68766C]'
                   }`}
                 >
                   Metric (cm)
@@ -546,7 +546,7 @@ export function SpaceConfigForm({
                   type="button"
                   onClick={() => handleUnitToggle('in')}
                   className={`px-3 py-1 text-xs font-semibold rounded-lg transition-colors cursor-pointer ${
-                    activeUnit === 'in' ? 'bg-[#144229] text-white' : 'text-[#526a57]'
+                    activeUnit === 'in' ? 'bg-[#174C35] text-white' : 'text-[#68766C]'
                   }`}
                 >
                   Imperial (in)
@@ -556,7 +556,7 @@ export function SpaceConfigForm({
 
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
               <div>
-                <label className="block text-xs font-semibold text-[#0c2417] mb-1">
+                <label className="block text-xs font-semibold text-[#203027] mb-1">
                   Width ({activeUnit})
                 </label>
                 <input
@@ -570,12 +570,12 @@ export function SpaceConfigForm({
                       dimensions: { ...currentProfile.dimensions, width: parseFloat(e.target.value) || 0 },
                     })
                   }
-                  className="w-full px-3.5 py-2.5 rounded-xl border border-[#ded5c5] bg-white text-sm text-[#0c2417] min-h-[44px]"
+                  className="w-full px-3.5 py-2.5 rounded-xl border border-[#E3DFD2] bg-white text-sm text-[#203027] min-h-[44px]"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-[#0c2417] mb-1">
+                <label className="block text-xs font-semibold text-[#203027] mb-1">
                   Depth ({activeUnit})
                 </label>
                 <input
@@ -589,12 +589,12 @@ export function SpaceConfigForm({
                       dimensions: { ...currentProfile.dimensions, depth: parseFloat(e.target.value) || 0 },
                     })
                   }
-                  className="w-full px-3.5 py-2.5 rounded-xl border border-[#ded5c5] bg-white text-sm text-[#0c2417] min-h-[44px]"
+                  className="w-full px-3.5 py-2.5 rounded-xl border border-[#E3DFD2] bg-white text-sm text-[#203027] min-h-[44px]"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-[#0c2417] mb-1">
+                <label className="block text-xs font-semibold text-[#203027] mb-1">
                   Total Height ({activeUnit})
                 </label>
                 <input
@@ -608,16 +608,16 @@ export function SpaceConfigForm({
                       dimensions: { ...currentProfile.dimensions, height: parseFloat(e.target.value) || 0 },
                     })
                   }
-                  className="w-full px-3.5 py-2.5 rounded-xl border border-[#ded5c5] bg-white text-sm text-[#0c2417] min-h-[44px]"
+                  className="w-full px-3.5 py-2.5 rounded-xl border border-[#E3DFD2] bg-white text-sm text-[#203027] min-h-[44px]"
                 />
               </div>
             </div>
           </div>
 
           {/* Microclimate & Environment Parameters */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 bg-[#fbf9f4] rounded-2xl border border-[#ded5c5] p-4 sm:p-5">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 bg-[#F8F6EE] rounded-2xl border border-[#E3DFD2] p-4 sm:p-5">
             <div>
-              <label className="block text-xs font-semibold text-[#0c2417] mb-1">
+              <label className="block text-xs font-semibold text-[#203027] mb-1">
                 Growing Environment
               </label>
               <select
@@ -625,7 +625,7 @@ export function SpaceConfigForm({
                 onChange={(e) =>
                   onProfileChange({ ...currentProfile, environment: e.target.value as SpaceEnvironment })
                 }
-                className="w-full px-3.5 py-2.5 rounded-xl border border-[#ded5c5] bg-white text-sm text-[#0c2417] min-h-[44px]"
+                className="w-full px-3.5 py-2.5 rounded-xl border border-[#E3DFD2] bg-white text-sm text-[#203027] min-h-[44px]"
               >
                 <option value="outdoor_sheltered">Outdoor Sheltered (Balcony/Patio)</option>
                 <option value="outdoor_exposed">Outdoor Exposed (Rooftop/Yard)</option>
@@ -634,16 +634,16 @@ export function SpaceConfigForm({
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-[#0c2417] mb-1 flex items-center justify-between">
+              <label className="block text-xs font-semibold text-[#203027] mb-1 flex items-center justify-between">
                 <span>Cardinal Orientation</span>
-                <Compass size={14} className="text-[#526a57]" />
+                <Compass size={14} className="text-[#68766C]" />
               </label>
               <select
                 value={currentProfile.orientation || 'south'}
                 onChange={(e) =>
                   onProfileChange({ ...currentProfile, orientation: e.target.value as SpaceOrientation })
                 }
-                className="w-full px-3.5 py-2.5 rounded-xl border border-[#ded5c5] bg-white text-sm text-[#0c2417] min-h-[44px]"
+                className="w-full px-3.5 py-2.5 rounded-xl border border-[#E3DFD2] bg-white text-sm text-[#203027] min-h-[44px]"
               >
                 <option value="south">South Facing (Maximum Solar Hours)</option>
                 <option value="east">East Facing (Morning Sun & Gentle Heat)</option>
@@ -654,9 +654,9 @@ export function SpaceConfigForm({
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-[#0c2417] mb-1 flex items-center justify-between">
+              <label className="block text-xs font-semibold text-[#203027] mb-1 flex items-center justify-between">
                 <span>Direct Sunlight Hours</span>
-                <Sun size={14} className="text-[#b45309]" />
+                <Sun size={14} className="text-[#8A6400]" />
               </label>
               <input
                 type="number"
@@ -670,9 +670,9 @@ export function SpaceConfigForm({
                     sunlightHours: Math.min(24, Math.max(0, parseFloat(e.target.value) || 0)),
                   })
                 }
-                className="w-full px-3.5 py-2.5 rounded-xl border border-[#ded5c5] bg-white text-sm text-[#0c2417] min-h-[44px]"
+                className="w-full px-3.5 py-2.5 rounded-xl border border-[#E3DFD2] bg-white text-sm text-[#203027] min-h-[44px]"
               />
-              <p className="text-[10px] text-[#526a57] mt-1">
+              <p className="text-[10px] text-[#68766C] mt-1">
                 Ambient unobstructed daylight hours. Attenuation is simulated per tier.
               </p>
             </div>
@@ -682,17 +682,17 @@ export function SpaceConfigForm({
           <div className="space-y-3 pt-2">
             <div className="flex items-center justify-between">
               <div>
-                <h4 className="font-serif font-bold text-base text-[#0c2417]">
+                <h4 className="font-serif font-bold text-base text-[#203027]">
                   Rack Tiers ({currentProfile.tiers.length} Shelves)
                 </h4>
-                <p className="text-xs text-[#526a57]">
+                <p className="text-xs text-[#68766C]">
                   Configure per-shelf clearances, edge margins, and manufacturer load ratings.
                 </p>
               </div>
               <button
                 type="button"
                 onClick={handleAddTier}
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-[#ded5c5] bg-white hover:bg-[#eef5ee] text-xs font-semibold text-[#144229] min-h-[44px] cursor-pointer"
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-[#E3DFD2] bg-white hover:bg-[#EAF1E4] text-xs font-semibold text-[#174C35] min-h-[44px] cursor-pointer"
               >
                 <Plus size={15} />
                 <span>Add Tier</span>
@@ -703,10 +703,10 @@ export function SpaceConfigForm({
               {currentProfile.tiers.map((tier, idx) => (
                 <div
                   key={tier.tierIndex}
-                  className="p-4 rounded-2xl bg-[#fbf9f4] border border-[#ded5c5] flex flex-col md:flex-row md:items-center justify-between gap-4"
+                  className="p-4 rounded-2xl bg-[#F8F6EE] border border-[#E3DFD2] flex flex-col md:flex-row md:items-center justify-between gap-4"
                 >
                   <div className="flex items-center gap-3">
-                    <span className="w-8 h-8 rounded-full bg-[#eef5ee] text-[#144229] font-mono text-xs font-bold flex items-center justify-center shrink-0">
+                    <span className="w-8 h-8 rounded-full bg-[#EAF1E4] text-[#174C35] font-mono text-xs font-bold flex items-center justify-center shrink-0">
                       T{idx + 1}
                     </span>
                     <div>
@@ -718,9 +718,9 @@ export function SpaceConfigForm({
                           updated[idx] = { ...tier, tierName: e.target.value };
                           onProfileChange({ ...currentProfile, tiers: updated });
                         }}
-                        className="font-serif font-bold text-sm text-[#0c2417] bg-transparent border-b border-dashed border-[#ded5c5]"
+                        className="font-serif font-bold text-sm text-[#203027] bg-transparent border-b border-dashed border-[#E3DFD2]"
                       />
-                      <span className="block text-[11px] text-[#526a57] capitalize">
+                      <span className="block text-[11px] text-[#68766C] capitalize">
                         {tier.position} Shelf Position
                       </span>
                     </div>
@@ -728,7 +728,7 @@ export function SpaceConfigForm({
 
                   <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs flex-1 max-w-2xl">
                     <div>
-                      <label className="text-[11px] text-[#526a57] block mb-0.5">Shelf W ({activeUnit})</label>
+                      <label className="text-[11px] text-[#68766C] block mb-0.5">Shelf W ({activeUnit})</label>
                       <input
                         type="number"
                         step="0.5"
@@ -744,12 +744,12 @@ export function SpaceConfigForm({
                           };
                           onProfileChange({ ...currentProfile, tiers: updated });
                         }}
-                        className="w-full px-2.5 py-1.5 rounded-lg border border-[#ded5c5] bg-white min-h-[38px]"
+                        className="w-full px-2.5 py-1.5 rounded-lg border border-[#E3DFD2] bg-white min-h-[38px]"
                       />
                     </div>
 
                     <div>
-                      <label className="text-[11px] text-[#526a57] block mb-0.5">Shelf D ({activeUnit})</label>
+                      <label className="text-[11px] text-[#68766C] block mb-0.5">Shelf D ({activeUnit})</label>
                       <input
                         type="number"
                         step="0.5"
@@ -765,12 +765,12 @@ export function SpaceConfigForm({
                           };
                           onProfileChange({ ...currentProfile, tiers: updated });
                         }}
-                        className="w-full px-2.5 py-1.5 rounded-lg border border-[#ded5c5] bg-white min-h-[38px]"
+                        className="w-full px-2.5 py-1.5 rounded-lg border border-[#E3DFD2] bg-white min-h-[38px]"
                       />
                     </div>
 
                     <div>
-                      <label className="text-[11px] text-[#526a57] block mb-0.5">Headroom ({activeUnit})</label>
+                      <label className="text-[11px] text-[#68766C] block mb-0.5">Headroom ({activeUnit})</label>
                       <input
                         type="number"
                         step="0.5"
@@ -788,12 +788,12 @@ export function SpaceConfigForm({
                           };
                           onProfileChange({ ...currentProfile, tiers: updated });
                         }}
-                        className="w-full px-2.5 py-1.5 rounded-lg border border-[#ded5c5] bg-white min-h-[38px]"
+                        className="w-full px-2.5 py-1.5 rounded-lg border border-[#E3DFD2] bg-white min-h-[38px]"
                       />
                     </div>
 
                     <div>
-                      <label className="text-[11px] text-[#526a57] block mb-0.5" title="Leave blank if unconfirmed">
+                      <label className="text-[11px] text-[#68766C] block mb-0.5" title="Leave blank if unconfirmed">
                         SWL Rating (kg)
                       </label>
                       <input
@@ -810,7 +810,7 @@ export function SpaceConfigForm({
                           };
                           onProfileChange({ ...currentProfile, tiers: updated });
                         }}
-                        className="w-full px-2.5 py-1.5 rounded-lg border border-[#ded5c5] bg-white min-h-[38px]"
+                        className="w-full px-2.5 py-1.5 rounded-lg border border-[#E3DFD2] bg-white min-h-[38px]"
                       />
                     </div>
                   </div>
@@ -822,8 +822,8 @@ export function SpaceConfigForm({
                       onClick={() => handleMoveTier(tier.tierIndex, 'up')}
                       className={`p-2 rounded-xl min-h-[44px] min-w-[44px] flex items-center justify-center transition-colors ${
                         idx === 0
-                          ? 'text-[#c2baa9] cursor-not-allowed opacity-40'
-                          : 'text-[#144229] hover:bg-[#eef5ee] cursor-pointer'
+                          ? 'text-[#E3DFD2] cursor-not-allowed opacity-40'
+                          : 'text-[#174C35] hover:bg-[#EAF1E4] cursor-pointer'
                       }`}
                       title="Move tier up"
                       aria-label={`Move tier ${idx + 1} up`}
@@ -836,8 +836,8 @@ export function SpaceConfigForm({
                       onClick={() => handleMoveTier(tier.tierIndex, 'down')}
                       className={`p-2 rounded-xl min-h-[44px] min-w-[44px] flex items-center justify-center transition-colors ${
                         idx === currentProfile.tiers.length - 1
-                          ? 'text-[#c2baa9] cursor-not-allowed opacity-40'
-                          : 'text-[#144229] hover:bg-[#eef5ee] cursor-pointer'
+                          ? 'text-[#E3DFD2] cursor-not-allowed opacity-40'
+                          : 'text-[#174C35] hover:bg-[#EAF1E4] cursor-pointer'
                       }`}
                       title="Move tier down"
                       aria-label={`Move tier ${idx + 1} down`}
@@ -847,7 +847,7 @@ export function SpaceConfigForm({
                     <button
                       type="button"
                       onClick={() => handleRemoveTier(tier.tierIndex)}
-                      className="p-2 text-[#9a3412] hover:bg-[#fbeee9] rounded-xl min-h-[44px] min-w-[44px] flex items-center justify-center cursor-pointer"
+                      className="p-2 text-[#963A23] hover:bg-[#FBE9E2] rounded-xl min-h-[44px] min-w-[44px] flex items-center justify-center cursor-pointer"
                       title="Remove this tier"
                       aria-label={`Remove tier ${idx + 1}`}
                     >

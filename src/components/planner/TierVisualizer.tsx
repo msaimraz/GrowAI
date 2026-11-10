@@ -189,13 +189,13 @@ export function TierVisualizer({ profile, onProfileChange }: TierVisualizerProps
         return (
           <div
             key={tier.tierIndex}
-            className="bg-white rounded-3xl border border-[#ded5c5] p-5 sm:p-7 shadow-xs space-y-5"
+            className="bg-white rounded-3xl border border-[#E3DFD2] p-5 sm:p-7 shadow-xs space-y-5"
           >
             {/* Shelf Header */}
-            <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 pb-4 border-b border-[#f0ebe0]">
+            <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 pb-4 border-b border-[#E3DFD2]">
               <div className="space-y-1">
                 <div className="flex flex-wrap items-center gap-2.5">
-                  <span className="font-serif font-bold text-xl text-[#0c2417]">
+                  <span className="font-serif font-bold text-xl text-[#203027]">
                     {tier.tierName || `Tier ${idx + 1}`}
                   </span>
                   <Badge
@@ -204,11 +204,11 @@ export function TierVisualizer({ profile, onProfileChange }: TierVisualizerProps
                   >
                     ~{estimatedLightHours}h Daylight
                   </Badge>
-                  <span className="text-[11px] font-mono text-[#786b59] bg-[#fbf9f4] px-2.5 py-0.5 rounded-lg border border-[#e2dbce]">
+                  <span className="text-[11px] font-mono text-[#68766C] bg-[#F8F6EE] px-2.5 py-0.5 rounded-lg border border-[#E3DFD2]">
                     Clearance: {tier.shelfDimensions.verticalClearance ? `${tier.shelfDimensions.verticalClearance} cm` : 'Open'}
                   </span>
                 </div>
-                <p className="text-xs text-[#526a57]">
+                <p className="text-xs text-[#68766C]">
                   Shelf: {tier.shelfDimensions.width} × {tier.shelfDimensions.depth} cm • Usable Span:{' '}
                   {usable.isValid ? `${usable.usableWidthCm} cm` : 'Invalid'}
                   {tier.confirmedShelfLoadRatingKg
@@ -218,7 +218,7 @@ export function TierVisualizer({ profile, onProfileChange }: TierVisualizerProps
               </div>
 
               <div className="flex flex-wrap items-center gap-3">
-                <span className="text-xs font-mono font-semibold text-[#144229] bg-[#eef5ee] px-3 py-1.5 rounded-xl border border-[#cfe0cf]">
+                <span className="text-xs font-mono font-semibold text-[#174C35] bg-[#EAF1E4] px-3 py-1.5 rounded-xl border border-[#E3DFD2]">
                   {packing.occupiedWidthCm} / {usable.isValid ? usable.usableWidthCm : 0} cm ({tierPlacements.length} Pots)
                 </span>
 
@@ -228,7 +228,7 @@ export function TierVisualizer({ profile, onProfileChange }: TierVisualizerProps
                     setAddingToTierIndex(tier.tierIndex);
                     setSearchQuery('');
                   }}
-                  className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-[#144229] hover:bg-[#0c2417] text-white text-xs sm:text-sm font-semibold shadow-xs transition-colors cursor-pointer min-h-[44px]"
+                  className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-[#174C35] hover:bg-[#203027] text-white text-xs sm:text-sm font-semibold shadow-xs transition-colors cursor-pointer min-h-[44px]"
                 >
                   <Plus size={16} />
                   <span>Add Plant</span>
@@ -315,18 +315,18 @@ export function TierVisualizer({ profile, onProfileChange }: TierVisualizerProps
                 return (
                   <div
                     key={slot.id}
-                    className="p-5 rounded-2xl bg-[#fbf9f4] border border-[#ded5c5] flex flex-col justify-between space-y-4 hover:border-[#144229] transition-all min-h-[260px]"
+                    className="p-5 rounded-2xl bg-[#F8F6EE] border border-[#E3DFD2] flex flex-col justify-between space-y-4 hover:border-[#174C35] transition-all min-h-[260px]"
                   >
                     <div className="space-y-3">
                       <div className="flex items-center justify-between">
-                        <span className="text-[11px] font-semibold text-[#144229] bg-[#eef5ee] px-2.5 py-0.5 rounded-full capitalize">
+                        <span className="text-[11px] font-semibold text-[#174C35] bg-[#EAF1E4] px-2.5 py-0.5 rounded-full capitalize">
                           {catalogPlant?.category.replace('-', ' ') || 'Botanical'}
                         </span>
                         <div className="flex items-center gap-1">
                           <button
                             type="button"
                             onClick={() => setEditingSlot(slot)}
-                            className="text-[#526a57] hover:text-[#0c2417] p-2 rounded-xl transition-colors cursor-pointer min-h-[44px] min-w-[44px] flex items-center justify-center"
+                            className="text-[#68766C] hover:text-[#203027] p-2 rounded-xl transition-colors cursor-pointer min-h-[44px] min-w-[44px] flex items-center justify-center"
                             title="Edit container dimensions"
                             aria-label={`Edit container for ${catalogPlant?.commonName || slot.plantSlug}`}
                           >
@@ -335,7 +335,7 @@ export function TierVisualizer({ profile, onProfileChange }: TierVisualizerProps
                           <button
                             type="button"
                             onClick={() => handleRemoveSlot(slot.id)}
-                            className="text-[#9a3412] hover:bg-[#fbeee9] p-2 rounded-xl transition-colors cursor-pointer min-h-[44px] min-w-[44px] flex items-center justify-center"
+                            className="text-[#963A23] hover:bg-[#FBE9E2] p-2 rounded-xl transition-colors cursor-pointer min-h-[44px] min-w-[44px] flex items-center justify-center"
                             title="Remove from shelf"
                             aria-label={`Remove ${catalogPlant?.commonName || slot.plantSlug}`}
                           >
@@ -345,10 +345,10 @@ export function TierVisualizer({ profile, onProfileChange }: TierVisualizerProps
                       </div>
 
                       <div>
-                        <h4 className="font-serif font-bold text-lg text-[#0c2417]">
+                        <h4 className="font-serif font-bold text-lg text-[#203027]">
                           {catalogPlant?.commonName || slot.plantSlug}
                         </h4>
-                        <p className="text-xs text-[#526a57] italic">
+                        <p className="text-xs text-[#68766C] italic">
                           {catalogPlant?.scientificName || 'Botanical Species'}
                         </p>
                       </div>
@@ -357,9 +357,9 @@ export function TierVisualizer({ profile, onProfileChange }: TierVisualizerProps
                       <div>{statusBadge}</div>
 
                       {/* Container Metrics */}
-                      <div className="space-y-1.5 text-xs text-[#2e4435] pt-1 border-t border-[#ede7da]">
+                      <div className="space-y-1.5 text-xs text-[#203027] pt-1 border-t border-[#E3DFD2]">
                         <div className="flex items-center justify-between">
-                          <span className="text-[#647f6c] flex items-center gap-1">
+                          <span className="text-[#68766C] flex items-center gap-1">
                             {slot.container.shape === 'circular' ? (
                               <CircleDot size={12} />
                             ) : (
@@ -367,7 +367,7 @@ export function TierVisualizer({ profile, onProfileChange }: TierVisualizerProps
                             )}
                             Container:
                           </span>
-                          <strong className="text-[#0c2417] capitalize">
+                          <strong className="text-[#203027] capitalize">
                             {slot.container.shape === 'circular'
                               ? `Ø ${slot.container.topDiameter} × ${slot.container.height} cm`
                               : `${(slot.container as any).length}×${(slot.container as any).width}×${slot.container.height} cm`}
@@ -375,8 +375,8 @@ export function TierVisualizer({ profile, onProfileChange }: TierVisualizerProps
                         </div>
 
                         <div className="flex items-center justify-between">
-                          <span className="text-[#647f6c]">Soil Volume:</span>
-                          <strong className="text-[#0c2417]">
+                          <span className="text-[#68766C]">Soil Volume:</span>
+                          <strong className="text-[#203027]">
                             ~{containerMetrics.soilVolumeLiters.toFixed(1)} Liters
                           </strong>
                         </div>
@@ -384,15 +384,15 @@ export function TierVisualizer({ profile, onProfileChange }: TierVisualizerProps
                     </div>
 
                     {/* Change Tier Selector */}
-                    <div className="pt-2 border-t border-[#ede7da] flex items-center justify-between">
-                      <label className="text-[11px] text-[#526a57] flex items-center gap-1">
+                    <div className="pt-2 border-t border-[#E3DFD2] flex items-center justify-between">
+                      <label className="text-[11px] text-[#68766C] flex items-center gap-1">
                         <ArrowUpDown size={12} />
                         <span>Move Tier:</span>
                       </label>
                       <select
                         value={slot.tierIndex}
                         onChange={(e) => handleChangeTier(slot.id, parseInt(e.target.value, 10))}
-                        className="text-xs font-semibold px-2 py-1 rounded-lg border border-[#ded5c5] bg-white min-h-[36px]"
+                        className="text-xs font-semibold px-2 py-1 rounded-lg border border-[#E3DFD2] bg-white min-h-[36px]"
                         aria-label="Move plant to different tier"
                       >
                         {profile.tiers.map((t) => (
@@ -412,15 +412,15 @@ export function TierVisualizer({ profile, onProfileChange }: TierVisualizerProps
                   setAddingToTierIndex(tier.tierIndex);
                   setSearchQuery('');
                 }}
-                className="border-2 border-dashed border-[#ded5c5] hover:border-[#144229] rounded-2xl p-6 flex flex-col items-center justify-center text-center cursor-pointer transition-all bg-[#fdfcf9] hover:bg-[#eef5ee] min-h-[260px] group"
+                className="border-2 border-dashed border-[#E3DFD2] hover:border-[#174C35] rounded-2xl p-6 flex flex-col items-center justify-center text-center cursor-pointer transition-all bg-[#F8F6EE] hover:bg-[#EAF1E4] min-h-[260px] group"
               >
-                <div className="w-12 h-12 rounded-full bg-[#f4f2eb] group-hover:bg-white text-[#8ba391] group-hover:text-[#144229] flex items-center justify-center mb-2.5 transition-colors shadow-2xs">
+                <div className="w-12 h-12 rounded-full bg-[#F8F6EE] group-hover:bg-white text-[#68766C] group-hover:text-[#174C35] flex items-center justify-center mb-2.5 transition-colors shadow-2xs">
                   <Plus size={24} />
                 </div>
-                <span className="text-sm font-serif font-bold text-[#4b6351] group-hover:text-[#0c2417]">
+                <span className="text-sm font-serif font-bold text-[#68766C] group-hover:text-[#203027]">
                   Assign Plant
                 </span>
-                <span className="text-xs text-[#8ba391] mt-1 max-w-[200px]">
+                <span className="text-xs text-[#68766C] mt-1 max-w-[200px]">
                   {packing.remainingWidthCm > 0
                     ? `${packing.remainingWidthCm} cm free space available`
                     : 'Shelf at linear capacity'}
@@ -436,20 +436,20 @@ export function TierVisualizer({ profile, onProfileChange }: TierVisualizerProps
       ------------------------------------------------------------------------ */}
       {addingToTierIndex !== null && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs">
-          <div className="bg-white rounded-3xl border border-[#ded5c5] max-w-2xl w-full p-6 sm:p-8 shadow-2xl space-y-5 max-h-[90vh] flex flex-col">
-            <div className="flex items-center justify-between pb-4 border-b border-[#f0ebe0]">
+          <div className="bg-white rounded-3xl border border-[#E3DFD2] max-w-2xl w-full p-6 sm:p-8 shadow-2xl space-y-5 max-h-[90vh] flex flex-col">
+            <div className="flex items-center justify-between pb-4 border-b border-[#E3DFD2]">
               <div>
-                <h3 className="font-serif font-bold text-xl text-[#0c2417]">
+                <h3 className="font-serif font-bold text-xl text-[#203027]">
                   Assign Species to Tier {addingToTierIndex + 1}
                 </h3>
-                <p className="text-xs sm:text-sm text-[#526a57] mt-0.5">
+                <p className="text-xs sm:text-sm text-[#68766C] mt-0.5">
                   Select from our 19 verified botanical catalog profiles.
                 </p>
               </div>
               <button
                 type="button"
                 onClick={() => setAddingToTierIndex(null)}
-                className="p-2 rounded-xl text-[#647f6c] hover:text-[#0c2417] hover:bg-[#f4f8f4] min-h-[44px] min-w-[44px] flex items-center justify-center cursor-pointer"
+                className="p-2 rounded-xl text-[#68766C] hover:text-[#203027] hover:bg-[#EAF1E4] min-h-[44px] min-w-[44px] flex items-center justify-center cursor-pointer"
                 aria-label="Close dialog"
               >
                 <X size={20} />
@@ -457,17 +457,17 @@ export function TierVisualizer({ profile, onProfileChange }: TierVisualizerProps
             </div>
 
             {/* Container Geometry Preset */}
-            <div className="p-4 bg-[#fbf9f4] rounded-2xl border border-[#ded5c5] space-y-3">
-              <span className="text-xs font-bold uppercase tracking-wider text-[#526a57] block">
+            <div className="p-4 bg-[#F8F6EE] rounded-2xl border border-[#E3DFD2] space-y-3">
+              <span className="text-xs font-bold uppercase tracking-wider text-[#68766C] block">
                 Container Type & Dimensions
               </span>
               <div className="flex flex-wrap items-center gap-3">
-                <div className="inline-flex rounded-xl border border-[#ded5c5] p-0.5 bg-white">
+                <div className="inline-flex rounded-xl border border-[#E3DFD2] p-0.5 bg-white">
                   <button
                     type="button"
                     onClick={() => setAddShape('circular')}
                     className={`px-3 py-1.5 text-xs font-semibold rounded-lg cursor-pointer ${
-                      addShape === 'circular' ? 'bg-[#144229] text-white' : 'text-[#526a57]'
+                      addShape === 'circular' ? 'bg-[#174C35] text-white' : 'text-[#68766C]'
                     }`}
                   >
                     Circular Pot
@@ -476,7 +476,7 @@ export function TierVisualizer({ profile, onProfileChange }: TierVisualizerProps
                     type="button"
                     onClick={() => setAddShape('trough')}
                     className={`px-3 py-1.5 text-xs font-semibold rounded-lg cursor-pointer ${
-                      addShape === 'trough' ? 'bg-[#144229] text-white' : 'text-[#526a57]'
+                      addShape === 'trough' ? 'bg-[#174C35] text-white' : 'text-[#68766C]'
                     }`}
                   >
                     Planter Trough
@@ -490,7 +490,7 @@ export function TierVisualizer({ profile, onProfileChange }: TierVisualizerProps
                       type="number"
                       value={addDiameter}
                       onChange={(e) => setAddDiameter(parseInt(e.target.value, 10) || 20)}
-                      className="w-16 px-2 py-1 rounded-lg border border-[#ded5c5] bg-white text-center"
+                      className="w-16 px-2 py-1 rounded-lg border border-[#E3DFD2] bg-white text-center"
                     />
                     <span>cm</span>
                     <label className="ml-2">Depth:</label>
@@ -498,7 +498,7 @@ export function TierVisualizer({ profile, onProfileChange }: TierVisualizerProps
                       type="number"
                       value={addDepth}
                       onChange={(e) => setAddDepth(parseInt(e.target.value, 10) || 20)}
-                      className="w-16 px-2 py-1 rounded-lg border border-[#ded5c5] bg-white text-center"
+                      className="w-16 px-2 py-1 rounded-lg border border-[#E3DFD2] bg-white text-center"
                     />
                     <span>cm</span>
                   </div>
@@ -509,7 +509,7 @@ export function TierVisualizer({ profile, onProfileChange }: TierVisualizerProps
                       type="number"
                       value={addLength}
                       onChange={(e) => setAddLength(parseInt(e.target.value, 10) || 40)}
-                      className="w-16 px-2 py-1 rounded-lg border border-[#ded5c5] bg-white text-center"
+                      className="w-16 px-2 py-1 rounded-lg border border-[#E3DFD2] bg-white text-center"
                     />
                     <span>cm</span>
                     <label className="ml-2">Width:</label>
@@ -517,7 +517,7 @@ export function TierVisualizer({ profile, onProfileChange }: TierVisualizerProps
                       type="number"
                       value={addWidth}
                       onChange={(e) => setAddWidth(parseInt(e.target.value, 10) || 20)}
-                      className="w-16 px-2 py-1 rounded-lg border border-[#ded5c5] bg-white text-center"
+                      className="w-16 px-2 py-1 rounded-lg border border-[#E3DFD2] bg-white text-center"
                     />
                     <span>cm</span>
                   </div>
@@ -527,13 +527,13 @@ export function TierVisualizer({ profile, onProfileChange }: TierVisualizerProps
 
             {/* Search Bar */}
             <div className="relative">
-              <Search size={18} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[#8ba391]" />
+              <Search size={18} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[#68766C]" />
               <input
                 type="text"
                 placeholder="Search botanical catalog (e.g. Basil, Tomato, Spinach)..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-10 pr-4 py-3 rounded-xl border border-[#ded5c5] bg-[#fbf9f4] text-sm text-[#0c2417] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#144229] min-h-[44px]"
+                className="w-full pl-10 pr-4 py-3 rounded-xl border border-[#E3DFD2] bg-[#F8F6EE] text-sm text-[#203027] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#174C35] min-h-[44px]"
               />
             </div>
 
@@ -543,25 +543,25 @@ export function TierVisualizer({ profile, onProfileChange }: TierVisualizerProps
                 <div
                   key={plant.id}
                   onClick={() => handleConfirmAddPlant(plant)}
-                  className="p-4 rounded-2xl border border-[#ded5c5] hover:border-[#144229] hover:bg-[#eef5ee] bg-white flex items-center justify-between gap-4 cursor-pointer transition-all min-h-[64px]"
+                  className="p-4 rounded-2xl border border-[#E3DFD2] hover:border-[#174C35] hover:bg-[#EAF1E4] bg-white flex items-center justify-between gap-4 cursor-pointer transition-all min-h-[64px]"
                 >
                   <div className="min-w-0 flex-1">
                     <div className="flex items-center gap-2 flex-wrap">
-                      <h4 className="font-serif font-bold text-base text-[#0c2417]">
+                      <h4 className="font-serif font-bold text-base text-[#203027]">
                         {plant.commonName}
                       </h4>
-                      <span className="text-[11px] font-semibold text-[#1e613b] bg-[#eef5ee] px-2 py-0.5 rounded-full border border-[#cfe0cf]">
+                      <span className="text-[11px] font-semibold text-[#174C35] bg-[#EAF1E4] px-2 py-0.5 rounded-full border border-[#E3DFD2]">
                         {plant.sunlight}
                       </span>
                     </div>
-                    <p className="text-xs text-[#526a57] truncate mt-0.5">
+                    <p className="text-xs text-[#68766C] truncate mt-0.5">
                       <em>{plant.scientificName}</em> • Min Depth: {plant.potting.minDepthCm} cm • In-Row: {plant.potting.spacingCm} cm
                     </p>
                   </div>
 
                   <button
                     type="button"
-                    className="shrink-0 text-xs font-semibold text-white bg-[#144229] hover:bg-[#0c2417] px-4 py-2.5 rounded-xl shadow-xs min-h-[44px] flex items-center justify-center cursor-pointer"
+                    className="shrink-0 text-xs font-semibold text-white bg-[#174C35] hover:bg-[#203027] px-4 py-2.5 rounded-xl shadow-xs min-h-[44px] flex items-center justify-center cursor-pointer"
                   >
                     Place
                   </button>
@@ -569,11 +569,11 @@ export function TierVisualizer({ profile, onProfileChange }: TierVisualizerProps
               ))}
             </div>
 
-            <div className="pt-3 border-t border-[#f0ebe0] flex justify-end">
+            <div className="pt-3 border-t border-[#E3DFD2] flex justify-end">
               <button
                 type="button"
                 onClick={() => setAddingToTierIndex(null)}
-                className="px-5 py-2.5 text-xs sm:text-sm font-semibold text-[#526a57] hover:bg-[#f4f8f4] rounded-xl border border-[#ded5c5] min-h-[44px] cursor-pointer"
+                className="px-5 py-2.5 text-xs sm:text-sm font-semibold text-[#68766C] hover:bg-[#EAF1E4] rounded-xl border border-[#E3DFD2] min-h-[44px] cursor-pointer"
               >
                 Cancel
               </button>
@@ -587,15 +587,15 @@ export function TierVisualizer({ profile, onProfileChange }: TierVisualizerProps
       ------------------------------------------------------------------------ */}
       {editingSlot && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs">
-          <div className="bg-white rounded-3xl border border-[#ded5c5] max-w-md w-full p-6 shadow-2xl space-y-5">
-            <div className="flex items-center justify-between pb-3 border-b border-[#f0ebe0]">
-              <h3 className="font-serif font-bold text-lg text-[#0c2417]">
+          <div className="bg-white rounded-3xl border border-[#E3DFD2] max-w-md w-full p-6 shadow-2xl space-y-5">
+            <div className="flex items-center justify-between pb-3 border-b border-[#E3DFD2]">
+              <h3 className="font-serif font-bold text-lg text-[#203027]">
                 Edit Container Dimensions
               </h3>
               <button
                 type="button"
                 onClick={() => setEditingSlot(null)}
-                className="p-1.5 rounded-lg text-[#647f6c] hover:text-[#0c2417] min-h-[44px] min-w-[44px] flex items-center justify-center"
+                className="p-1.5 rounded-lg text-[#68766C] hover:text-[#203027] min-h-[44px] min-w-[44px] flex items-center justify-center"
               >
                 <X size={18} />
               </button>
@@ -603,7 +603,7 @@ export function TierVisualizer({ profile, onProfileChange }: TierVisualizerProps
 
             <form onSubmit={handleSaveContainerEdit} className="space-y-4">
               <div>
-                <label className="block text-xs font-semibold text-[#0c2417] mb-1">
+                <label className="block text-xs font-semibold text-[#203027] mb-1">
                   Container Shape
                 </label>
                 <select
@@ -622,7 +622,7 @@ export function TierVisualizer({ profile, onProfileChange }: TierVisualizerProps
                       });
                     }
                   }}
-                  className="w-full px-3 py-2 rounded-xl border border-[#ded5c5] bg-[#fbf9f4] text-sm text-[#0c2417] min-h-[44px]"
+                  className="w-full px-3 py-2 rounded-xl border border-[#E3DFD2] bg-[#F8F6EE] text-sm text-[#203027] min-h-[44px]"
                 >
                   <option value="circular">Circular Pot</option>
                   <option value="rectangular">Rectangular Planter</option>
@@ -633,7 +633,7 @@ export function TierVisualizer({ profile, onProfileChange }: TierVisualizerProps
               {editingSlot.container.shape === 'circular' ? (
                 <div className="grid grid-cols-2 gap-3">
                   <div>
-                    <label className="block text-xs font-semibold text-[#0c2417] mb-1">
+                    <label className="block text-xs font-semibold text-[#203027] mb-1">
                       Diameter (cm)
                     </label>
                     <input
@@ -650,11 +650,11 @@ export function TierVisualizer({ profile, onProfileChange }: TierVisualizerProps
                           },
                         })
                       }
-                      className="w-full px-3 py-2 rounded-xl border border-[#ded5c5] text-sm min-h-[44px]"
+                      className="w-full px-3 py-2 rounded-xl border border-[#E3DFD2] text-sm min-h-[44px]"
                     />
                   </div>
                   <div>
-                    <label className="block text-xs font-semibold text-[#0c2417] mb-1">
+                    <label className="block text-xs font-semibold text-[#203027] mb-1">
                       Depth (cm)
                     </label>
                     <input
@@ -670,14 +670,14 @@ export function TierVisualizer({ profile, onProfileChange }: TierVisualizerProps
                           } as ContainerInput,
                         })
                       }
-                      className="w-full px-3 py-2 rounded-xl border border-[#ded5c5] text-sm min-h-[44px]"
+                      className="w-full px-3 py-2 rounded-xl border border-[#E3DFD2] text-sm min-h-[44px]"
                     />
                   </div>
                 </div>
               ) : (
                 <div className="grid grid-cols-3 gap-2">
                   <div>
-                    <label className="block text-xs font-semibold text-[#0c2417] mb-1">
+                    <label className="block text-xs font-semibold text-[#203027] mb-1">
                       Length (cm)
                     </label>
                     <input
@@ -692,11 +692,11 @@ export function TierVisualizer({ profile, onProfileChange }: TierVisualizerProps
                           } as any,
                         })
                       }
-                      className="w-full px-2 py-2 rounded-xl border border-[#ded5c5] text-sm min-h-[44px]"
+                      className="w-full px-2 py-2 rounded-xl border border-[#E3DFD2] text-sm min-h-[44px]"
                     />
                   </div>
                   <div>
-                    <label className="block text-xs font-semibold text-[#0c2417] mb-1">
+                    <label className="block text-xs font-semibold text-[#203027] mb-1">
                       Width (cm)
                     </label>
                     <input
@@ -711,11 +711,11 @@ export function TierVisualizer({ profile, onProfileChange }: TierVisualizerProps
                           } as any,
                         })
                       }
-                      className="w-full px-2 py-2 rounded-xl border border-[#ded5c5] text-sm min-h-[44px]"
+                      className="w-full px-2 py-2 rounded-xl border border-[#E3DFD2] text-sm min-h-[44px]"
                     />
                   </div>
                   <div>
-                    <label className="block text-xs font-semibold text-[#0c2417] mb-1">
+                    <label className="block text-xs font-semibold text-[#203027] mb-1">
                       Height (cm)
                     </label>
                     <input
@@ -730,23 +730,23 @@ export function TierVisualizer({ profile, onProfileChange }: TierVisualizerProps
                           },
                         })
                       }
-                      className="w-full px-2 py-2 rounded-xl border border-[#ded5c5] text-sm min-h-[44px]"
+                      className="w-full px-2 py-2 rounded-xl border border-[#E3DFD2] text-sm min-h-[44px]"
                     />
                   </div>
                 </div>
               )}
 
-              <div className="pt-3 border-t border-[#f0ebe0] flex justify-end gap-2">
+              <div className="pt-3 border-t border-[#E3DFD2] flex justify-end gap-2">
                 <button
                   type="button"
                   onClick={() => setEditingSlot(null)}
-                  className="px-4 py-2 text-xs font-semibold text-[#526a57] hover:bg-[#f4f8f4] rounded-xl border border-[#ded5c5] min-h-[44px]"
+                  className="px-4 py-2 text-xs font-semibold text-[#68766C] hover:bg-[#EAF1E4] rounded-xl border border-[#E3DFD2] min-h-[44px]"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="px-5 py-2 text-xs font-semibold text-white bg-[#144229] hover:bg-[#0c2417] rounded-xl min-h-[44px]"
+                  className="px-5 py-2 text-xs font-semibold text-white bg-[#174C35] hover:bg-[#203027] rounded-xl min-h-[44px]"
                 >
                   Save Changes
                 </button>

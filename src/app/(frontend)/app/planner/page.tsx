@@ -256,7 +256,7 @@ export default function PlannerPage() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#fbf9f4]">
+    <div className="min-h-screen flex flex-col bg-[#F8F6EE]">
       {/* GrowAI Application Header */}
       <AppHeader
         title="Small-Space & Vertical Garden Optimizer"
@@ -265,11 +265,11 @@ export default function PlannerPage() {
 
       <main className="flex-1 p-3.5 sm:p-6 lg:p-8 max-w-7xl mx-auto w-full min-w-0 max-w-full space-y-6">
         {/* Conceptual Engineering & Photobiology Disclaimer Banner */}
-        <div className="bg-[#f7f5ed] border border-[#ded5c5] p-4 sm:p-5 rounded-2xl flex items-start gap-3.5 text-xs sm:text-sm text-[#2e4435] shadow-2xs">
-          <Info size={20} className="shrink-0 mt-0.5 text-[#144229]" />
+        <div className="bg-[#F8F6EE] border border-[#E3DFD2] p-4 sm:p-5 rounded-2xl flex items-start gap-3.5 text-xs sm:text-sm text-[#203027] shadow-2xs">
+          <Info size={20} className="shrink-0 mt-0.5 text-[#174C35]" />
           <div className="space-y-1">
             <p className="leading-relaxed">
-              <strong className="text-[#0c2417]">Deterministic Botanical Engineering:</strong> Container
+              <strong className="text-[#203027]">Deterministic Botanical Engineering:</strong> Container
               dimensions, saturated wet soil weights, and linear shelf spacings are evaluated against verified
               botanical metrics. Ambient direct sunlight hours and tier light attenuation are illustrative
               simulations. Always confirm shelf Safe Working Load (SWL) ratings with your rack manufacturer.
@@ -280,20 +280,20 @@ export default function PlannerPage() {
         {/* Top Control Bar: Profile Switcher, Presets, and Actions */}
         <section
           aria-label="Space Profile Controls"
-          className="bg-white rounded-3xl border border-[#ded5c5] p-4 sm:p-6 shadow-xs flex flex-col xl:flex-row xl:items-center justify-between gap-4"
+          className="bg-white rounded-3xl border border-[#E3DFD2] p-4 sm:p-6 shadow-xs flex flex-col xl:flex-row xl:items-center justify-between gap-4"
         >
           {/* Active Space Profile Selector */}
           <div className="flex items-center gap-3 min-w-0">
-            <div className="w-10 h-10 rounded-2xl bg-[#eef5ee] text-[#144229] flex items-center justify-center shrink-0">
+            <div className="w-10 h-10 rounded-2xl bg-[#EAF1E4] text-[#174C35] flex items-center justify-center shrink-0">
               <Layers size={22} />
             </div>
             <div className="min-w-0 flex-1">
               <div className="flex items-center gap-2 flex-wrap">
-                <span className="text-xs uppercase font-bold tracking-wider text-[#526a57]">
+                <span className="text-xs uppercase font-bold tracking-wider text-[#68766C]">
                   Active Growing Space:
                 </span>
                 {saveBanner && (
-                  <span className="text-[11px] font-medium text-[#1b5837] bg-[#f5fbf7] px-2 py-0.5 rounded-full border border-[#cfdfcf] animate-in fade-in duration-150">
+                  <span className="text-[11px] font-medium text-[#174C35] bg-[#F8F6EE] px-2 py-0.5 rounded-full border border-[#E3DFD2] animate-in fade-in duration-150">
                     {saveBanner}
                   </span>
                 )}
@@ -302,7 +302,7 @@ export default function PlannerPage() {
                 <select
                   value={activeProfile.id}
                   onChange={(e) => handleSwitchProfile(e.target.value)}
-                  className="font-serif font-bold text-lg sm:text-xl text-[#0c2417] bg-transparent border-b border-dashed border-[#ded5c5] focus:outline-hidden focus:border-[#144229] cursor-pointer max-w-full sm:max-w-md truncate"
+                  className="font-serif font-bold text-lg sm:text-xl text-[#203027] bg-transparent border-b border-dashed border-[#E3DFD2] focus:outline-hidden focus:border-[#174C35] cursor-pointer max-w-full sm:max-w-md truncate"
                   aria-label="Select saved growing space"
                 >
                   {profiles.map((p) => (
@@ -324,7 +324,7 @@ export default function PlannerPage() {
             <button
               type="button"
               onClick={() => setIsAutoLayoutOpen(true)}
-              className="inline-flex items-center justify-center gap-1.5 px-3.5 py-2 rounded-xl bg-[#eef5ee] hover:bg-[#dfeadf] text-[#144229] text-xs sm:text-sm font-semibold transition-colors cursor-pointer min-h-[44px] w-full sm:w-auto"
+              className="inline-flex items-center justify-center gap-1.5 px-3.5 py-2 rounded-xl bg-[#EAF1E4] hover:bg-[#EAF1E4] text-[#174C35] text-xs sm:text-sm font-semibold transition-colors cursor-pointer min-h-[44px] w-full sm:w-auto"
               title="Generate a suggested arrangement for herbs, salads, or microgreens"
             >
               <Sparkles size={16} />
@@ -335,7 +335,7 @@ export default function PlannerPage() {
             <button
               type="button"
               onClick={() => setIsSyncModalOpen(true)}
-              className="inline-flex items-center justify-center gap-1.5 px-4 py-2 rounded-xl bg-[#144229] hover:bg-[#0c2417] text-white text-xs sm:text-sm font-semibold shadow-xs transition-colors cursor-pointer min-h-[44px] w-full sm:w-auto"
+              className="inline-flex items-center justify-center gap-1.5 px-4 py-2 rounded-xl bg-[#174C35] hover:bg-[#203027] text-white text-xs sm:text-sm font-semibold shadow-xs transition-colors cursor-pointer min-h-[44px] w-full sm:w-auto"
               title="Create active tracking records in My Garden from this layout"
             >
               <Sprout size={16} />
@@ -348,8 +348,8 @@ export default function PlannerPage() {
               onClick={() => setIsConfigDrawerOpen((prev) => !prev)}
               className={`inline-flex items-center justify-center gap-1.5 px-3.5 py-2 rounded-xl border text-xs sm:text-sm font-semibold transition-colors cursor-pointer min-h-[44px] w-full sm:w-auto ${
                 isConfigDrawerOpen
-                  ? 'border-[#144229] bg-[#144229] text-white'
-                  : 'border-[#ded5c5] bg-white text-[#2e4435] hover:bg-[#f4f8f4]'
+                  ? 'border-[#174C35] bg-[#174C35] text-white'
+                  : 'border-[#E3DFD2] bg-white text-[#203027] hover:bg-[#EAF1E4]'
               }`}
               title="Configure physical space dimensions and shelf tiers"
               aria-expanded={isConfigDrawerOpen}
@@ -363,7 +363,7 @@ export default function PlannerPage() {
             <button
               type="button"
               onClick={handleResetToDefault}
-              className="p-2.5 rounded-xl border border-[#ded5c5] text-[#526a57] hover:text-[#9a3412] hover:bg-[#fbeee9] transition-colors cursor-pointer min-h-[44px] min-w-[44px] flex items-center justify-center shrink-0"
+              className="p-2.5 rounded-xl border border-[#E3DFD2] text-[#68766C] hover:text-[#963A23] hover:bg-[#FBE9E2] transition-colors cursor-pointer min-h-[44px] min-w-[44px] flex items-center justify-center shrink-0"
               title="Reset layout to standard defaults"
               aria-label="Reset layout to standard defaults"
             >
@@ -407,11 +407,11 @@ export default function PlannerPage() {
         </section>
 
         {/* Educational Botanical Reference Link Footer */}
-        <footer className="pt-4 pb-8 text-center text-xs text-[#526a57] space-y-1">
+        <footer className="pt-4 pb-8 text-center text-xs text-[#68766C] space-y-1">
           <p>
             GrowAI Small-Space Optimizer • Powered by peer-reviewed botanical photobiology and physical soil physics.
           </p>
-          <div className="flex items-center justify-center gap-3 text-[11px] text-[#144229]">
+          <div className="flex items-center justify-center gap-3 text-[11px] text-[#174C35]">
             <Link href="/app/my-garden" className="hover:underline">
               My Garden Dashboard
             </Link>

@@ -116,17 +116,17 @@ export function PlantLibraryClient({
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#FBF9F4] text-[#1F2A23]">
+    <div className="min-h-screen flex flex-col bg-[#F8F6EE] text-[#203027]">
       <div className="p-4 sm:p-6 lg:p-8 max-w-7xl mx-auto w-full space-y-6 sm:space-y-8">
         {/* Top Header */}
         <div className="space-y-1">
           <div className="flex items-center gap-2">
             <span className="text-xl sm:text-2xl">🌱</span>
-            <h1 className="font-serif text-2xl sm:text-3xl lg:text-4xl font-bold text-[#1F2A23] tracking-tight">
+            <h1 className="font-serif text-2xl sm:text-3xl lg:text-4xl font-bold text-[#203027] tracking-tight">
               Plant Library
             </h1>
           </div>
-          <p className="text-sm sm:text-base text-[#68736B]">
+          <p className="text-sm sm:text-base text-[#68766C]">
             Find your next plant 🌱 Explore container-friendly herbs, greens, and vegetables.
           </p>
         </div>
@@ -136,20 +136,20 @@ export function PlantLibraryClient({
           <div className="relative flex-1">
             <Search
               size={19}
-              className="absolute left-4 top-1/2 -translate-y-1/2 text-[#68736B]"
+              className="absolute left-4 top-1/2 -translate-y-1/2 text-[#68766C]"
             />
             <input
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Search tomato, basil, mint..."
-              className="w-full h-12 pl-11 pr-10 rounded-2xl border border-[#E8E4DA] bg-white text-sm sm:text-base text-[#1F2A23] placeholder:text-[#68736B]/70 shadow-xs focus:outline-hidden focus:border-[#174C35] focus:ring-2 focus:ring-[#174C35]/15 transition-all"
+              className="w-full h-12 pl-11 pr-10 rounded-2xl border border-[#E3DFD2] bg-white text-sm sm:text-base text-[#203027] placeholder:text-[#68766C]/70 shadow-xs focus:outline-hidden focus:border-[#174C35] focus:ring-2 focus:ring-[#174C35]/15 transition-all"
             />
             {searchQuery && (
               <button
                 type="button"
                 onClick={() => setSearchQuery('')}
-                className="absolute right-3.5 top-1/2 -translate-y-1/2 p-1 text-[#68736B] hover:text-[#1F2A23] cursor-pointer"
+                className="absolute right-3.5 top-1/2 -translate-y-1/2 p-1 text-[#68766C] hover:text-[#203027] cursor-pointer"
                 aria-label="Clear search"
               >
                 <X size={16} />
@@ -163,8 +163,8 @@ export function PlantLibraryClient({
             onClick={() => setShowAdvancedFilters((prev) => !prev)}
             className={`h-12 px-4 rounded-2xl border text-xs sm:text-sm font-medium transition-colors flex items-center gap-2 cursor-pointer shrink-0 ${
               hasAdvancedFilters || showAdvancedFilters
-                ? 'bg-[#E6F0E3] border-[#174C35] text-[#174C35]'
-                : 'bg-white border-[#E8E4DA] text-[#68736B] hover:text-[#1F2A23]'
+                ? 'bg-[#EAF1E4] border-[#174C35] text-[#174C35]'
+                : 'bg-white border-[#E3DFD2] text-[#68766C] hover:text-[#203027]'
             }`}
             aria-label="Toggle advanced filters"
           >
@@ -178,13 +178,13 @@ export function PlantLibraryClient({
 
         {/* Compact Advanced Filter Drawer */}
         {showAdvancedFilters && (
-          <div className="p-4 rounded-2xl bg-white border border-[#E8E4DA] shadow-xs flex flex-wrap items-center gap-3 animate-in fade-in duration-150">
-            <div className="flex items-center gap-2 text-xs font-medium text-[#68736B]">
+          <div className="p-4 rounded-2xl bg-white border border-[#E3DFD2] shadow-xs flex flex-wrap items-center gap-3 animate-in fade-in duration-150">
+            <div className="flex items-center gap-2 text-xs font-medium text-[#68766C]">
               <span>Space:</span>
               <select
                 value={selectedEnvironment}
                 onChange={(e) => setSelectedEnvironment(e.target.value)}
-                className="px-2.5 py-1.5 rounded-lg border border-[#E8E4DA] bg-[#FBF9F4] text-xs font-semibold text-[#1F2A23] cursor-pointer"
+                className="px-2.5 py-1.5 rounded-lg border border-[#E3DFD2] bg-[#F8F6EE] text-xs font-semibold text-[#203027] cursor-pointer"
               >
                 <option value="all">Any Space</option>
                 <option value="indoor">Indoor Friendly</option>
@@ -193,12 +193,12 @@ export function PlantLibraryClient({
               </select>
             </div>
 
-            <div className="flex items-center gap-2 text-xs font-medium text-[#68736B]">
+            <div className="flex items-center gap-2 text-xs font-medium text-[#68766C]">
               <span>Difficulty:</span>
               <select
                 value={selectedDifficulty}
                 onChange={(e) => setSelectedDifficulty(e.target.value)}
-                className="px-2.5 py-1.5 rounded-lg border border-[#E8E4DA] bg-[#FBF9F4] text-xs font-semibold text-[#1F2A23] cursor-pointer"
+                className="px-2.5 py-1.5 rounded-lg border border-[#E3DFD2] bg-[#F8F6EE] text-xs font-semibold text-[#203027] cursor-pointer"
               >
                 <option value="all">Any Difficulty</option>
                 <option value="beginner">Beginner</option>
@@ -214,7 +214,7 @@ export function PlantLibraryClient({
                   setSelectedEnvironment('all');
                   setSelectedDifficulty('all');
                 }}
-                className="text-xs text-[#A84A2A] hover:underline cursor-pointer ml-auto"
+                className="text-xs text-[#E4775D] hover:underline cursor-pointer ml-auto font-medium"
               >
                 Reset filters
               </button>
@@ -234,13 +234,13 @@ export function PlantLibraryClient({
                 className={`inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full text-xs sm:text-sm font-medium whitespace-nowrap transition-all duration-75 active:scale-95 cursor-pointer select-none touch-manipulation min-h-[38px] ${
                   isSelected
                     ? 'bg-[#174C35] text-white shadow-xs'
-                    : 'bg-white hover:bg-[#F3F6EC] text-[#1F2A23] border border-[#E8E4DA]'
+                    : 'bg-white hover:bg-[#EAF1E4] text-[#203027] border border-[#E3DFD2]'
                 }`}
               >
                 <PlantCategoryIcon
                   category={cat.id}
                   size={15}
-                  className={isSelected ? 'text-[#86efac]' : 'text-[#174C35]'}
+                  className={isSelected ? 'text-[#78A95A]' : 'text-[#174C35]'}
                 />
                 <span>{cat.label}</span>
               </button>
@@ -249,7 +249,7 @@ export function PlantLibraryClient({
         </div>
 
         {/* Result Count Status */}
-        <div className="flex items-center justify-between text-xs text-[#68736B] px-1 font-mono">
+        <div className="flex items-center justify-between text-xs text-[#68766C] px-1 font-mono">
           <span>
             {filteredPlants.length} {filteredPlants.length === 1 ? 'plant' : 'plants'} found
           </span>

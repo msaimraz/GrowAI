@@ -65,7 +65,7 @@ const GARDEN_GOALS: GoalDefinition[] = [
     title: 'Culinary Herb Garden',
     subtitle: 'Aromatic kitchen herbs for seasoning and teas',
     description: 'Fresh basil, cilantro, and mint with continuous harvesting potential.',
-    icon: <Coffee className="w-5 h-5 text-[#144229]" />,
+    icon: <Coffee className="w-5 h-5 text-[#174C35]" />,
     candidateSlugs: ['genovese-basil', 'coriander', 'spearmint', 'holy-basil-tulsi'],
   },
   {
@@ -73,7 +73,7 @@ const GARDEN_GOALS: GoalDefinition[] = [
     title: 'Small Salad Garden',
     subtitle: 'Continuous-harvest crisp greens & root radishes',
     description: 'Compact butterhead lettuce, spinach, and breakfast radishes.',
-    icon: <Salad className="w-5 h-5 text-[#144229]" />,
+    icon: <Salad className="w-5 h-5 text-[#174C35]" />,
     candidateSlugs: ['butterhead-lettuce', 'spinach', 'french-radish'],
   },
   {
@@ -81,7 +81,7 @@ const GARDEN_GOALS: GoalDefinition[] = [
     title: 'Microgreens & Sprouting',
     subtitle: 'Rapid nutrient-dense seedling trays',
     description: 'Fast-growing broccoli microgreens and tender sprouts for compact racks.',
-    icon: <Sprout className="w-5 h-5 text-[#144229]" />,
+    icon: <Sprout className="w-5 h-5 text-[#174C35]" />,
     candidateSlugs: ['broccoli-microgreens', 'alfalfa-sprouts', 'broccoli-sprouts', 'mung-bean-sprouts'],
   },
   {
@@ -89,7 +89,7 @@ const GARDEN_GOALS: GoalDefinition[] = [
     title: 'Indoor Low-Maintenance',
     subtitle: 'Resilient foliage tolerant of indoor natural light',
     description: 'Snake plant, pothos, and aloe vera adapted to moderate ambient light.',
-    icon: <Home className="w-5 h-5 text-[#144229]" />,
+    icon: <Home className="w-5 h-5 text-[#174C35]" />,
     candidateSlugs: ['snake-plant', 'golden-pothos', 'aloe-vera'],
   },
   {
@@ -97,7 +97,7 @@ const GARDEN_GOALS: GoalDefinition[] = [
     title: 'Mixed Balcony Garden',
     subtitle: 'Vertical ecosystem with fruiting canopy & ground herbs',
     description: 'Determinate bush tomato on top, aromatic herbs in the middle, and greens below.',
-    icon: <Flower2 className="w-5 h-5 text-[#144229]" />,
+    icon: <Flower2 className="w-5 h-5 text-[#174C35]" />,
     candidateSlugs: [
       'tomato-bush',
       'cherry-tomato',
@@ -338,18 +338,18 @@ export function AutoLayoutModal({
       aria-labelledby={modalTitleId}
       className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/60 backdrop-blur-sm overflow-y-auto animate-in fade-in duration-200"
     >
-      <div className="relative w-full max-w-[calc(100vw-24px)] sm:max-w-2xl bg-[#fbf9f4] border border-[#e2dcce] rounded-2xl shadow-xl overflow-hidden my-auto max-h-[90vh] flex flex-col">
+      <div className="relative w-full max-w-[calc(100vw-24px)] sm:max-w-2xl bg-[#F8F6EE] border border-[#E3DFD2] rounded-2xl shadow-xl overflow-hidden my-auto max-h-[90vh] flex flex-col">
         {/* Modal Header */}
-        <div className="flex items-center justify-between px-5 sm:px-6 py-4 border-b border-[#e2dcce] bg-white sticky top-0 z-10">
+        <div className="flex items-center justify-between px-5 sm:px-6 py-4 border-b border-[#E3DFD2] bg-white sticky top-0 z-10">
           <div className="flex items-center gap-2.5">
-            <span className="p-2 rounded-xl bg-[#e7efe7] text-[#144229]">
+            <span className="p-2 rounded-xl bg-[#EAF1E4] text-[#174C35]">
               <Sparkles className="w-5 h-5" />
             </span>
             <div>
-              <h2 id={modalTitleId} className="font-serif text-lg sm:text-xl font-bold text-[#144229]">
+              <h2 id={modalTitleId} className="font-serif text-lg sm:text-xl font-bold text-[#174C35]">
                 Generate Suggested Arrangement
               </h2>
-              <p className="text-xs text-[#526a57]">
+              <p className="text-xs text-[#68766C]">
                 Botanical heuristic placement based on shelf dimensions and lighting
               </p>
             </div>
@@ -357,7 +357,7 @@ export function AutoLayoutModal({
           <button
             type="button"
             onClick={onClose}
-            className="p-2 rounded-lg text-[#526a57] hover:text-[#144229] hover:bg-[#f2eee3] transition-colors"
+            className="p-2 rounded-lg text-[#68766C] hover:text-[#174C35] hover:bg-[#F8F6EE] transition-colors"
             aria-label="Close auto layout modal"
           >
             <X className="w-5 h-5" />
@@ -368,7 +368,7 @@ export function AutoLayoutModal({
         <div className="p-5 sm:p-6 overflow-y-auto space-y-6">
           {/* Step 1: Select Garden Goal */}
           <div>
-            <label className="text-xs font-bold uppercase tracking-wider text-[#526a57] block mb-2">
+            <label className="text-xs font-bold uppercase tracking-wider text-[#68766C] block mb-2">
               1. Select Growing Goal
             </label>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
@@ -381,19 +381,19 @@ export function AutoLayoutModal({
                     onClick={() => handleSelectGoal(goal.id)}
                     className={`text-left p-3.5 rounded-xl border transition-all flex items-start gap-3 ${
                       isSelected
-                        ? 'border-[#144229] bg-white shadow-sm ring-1 ring-[#144229]'
-                        : 'border-[#e2dcce] bg-[#faf8f2] hover:bg-white hover:border-[#cfdfcf]'
+                        ? 'border-[#174C35] bg-white shadow-sm ring-1 ring-[#174C35]'
+                        : 'border-[#E3DFD2] bg-[#F8F6EE] hover:bg-white hover:border-[#E3DFD2]'
                     }`}
                   >
-                    <div className="p-2 rounded-lg bg-[#e7efe7] shrink-0 mt-0.5">{goal.icon}</div>
+                    <div className="p-2 rounded-lg bg-[#EAF1E4] shrink-0 mt-0.5">{goal.icon}</div>
                     <div className="min-w-0">
                       <div className="flex items-center gap-1.5">
-                        <span className="font-serif font-semibold text-sm text-[#144229]">
+                        <span className="font-serif font-semibold text-sm text-[#174C35]">
                           {goal.title}
                         </span>
-                        {isSelected && <CheckCircle2 className="w-3.5 h-3.5 text-[#144229]" />}
+                        {isSelected && <CheckCircle2 className="w-3.5 h-3.5 text-[#174C35]" />}
                       </div>
-                      <p className="text-[11px] text-[#526a57] mt-0.5 leading-snug line-clamp-2">
+                      <p className="text-[11px] text-[#68766C] mt-0.5 leading-snug line-clamp-2">
                         {goal.description}
                       </p>
                     </div>
@@ -404,14 +404,14 @@ export function AutoLayoutModal({
           </div>
 
           {/* Step 2: Density Options */}
-          <div className="flex flex-wrap items-center justify-between gap-3 p-3.5 bg-white border border-[#e2dcce] rounded-xl text-xs">
+          <div className="flex flex-wrap items-center justify-between gap-3 p-3.5 bg-white border border-[#E3DFD2] rounded-xl text-xs">
             <div>
-              <span className="font-semibold text-[#144229] block">Spacing Density</span>
-              <span className="text-[11px] text-[#526a57]">
+              <span className="font-semibold text-[#174C35] block">Spacing Density</span>
+              <span className="text-[11px] text-[#68766C]">
                 Controls individual pot spacing and root zone allocation
               </span>
             </div>
-            <div className="inline-flex rounded-lg border border-[#cfdfcf] p-0.5 bg-[#fbf9f4]">
+            <div className="inline-flex rounded-lg border border-[#E3DFD2] p-0.5 bg-[#F8F6EE]">
               <button
                 type="button"
                 onClick={() => {
@@ -420,8 +420,8 @@ export function AutoLayoutModal({
                 }}
                 className={`px-3 py-1 rounded-md text-xs font-medium transition-colors ${
                   densityPreference === 'standard'
-                    ? 'bg-[#144229] text-white shadow-xs'
-                    : 'text-[#44403c] hover:text-[#144229]'
+                    ? 'bg-[#174C35] text-white shadow-xs'
+                    : 'text-[#203027] hover:text-[#174C35]'
                 }`}
               >
                 Standard (Optimal)
@@ -434,8 +434,8 @@ export function AutoLayoutModal({
                 }}
                 className={`px-3 py-1 rounded-md text-xs font-medium transition-colors ${
                   densityPreference === 'compact'
-                    ? 'bg-[#144229] text-white shadow-xs'
-                    : 'text-[#44403c] hover:text-[#144229]'
+                    ? 'bg-[#174C35] text-white shadow-xs'
+                    : 'text-[#203027] hover:text-[#174C35]'
                 }`}
               >
                 Compact (Higher Count)
@@ -449,7 +449,7 @@ export function AutoLayoutModal({
               <button
                 type="button"
                 onClick={() => setIsGenerated(true)}
-                className="w-full sm:w-auto px-6 py-2.5 rounded-xl bg-[#144229] hover:bg-[#0f2e1d] text-white font-medium text-sm transition-colors shadow-sm inline-flex items-center justify-center gap-2"
+                className="w-full sm:w-auto px-6 py-2.5 rounded-xl bg-[#174C35] hover:bg-[#123C2A] text-white font-medium text-sm transition-colors shadow-sm inline-flex items-center justify-center gap-2"
               >
                 <Sparkles className="w-4 h-4" />
                 Generate Suggested Arrangement
@@ -460,14 +460,14 @@ export function AutoLayoutModal({
           {/* Step 3: Layout Results */}
           {isGenerated && layoutResult && (
             <div className="space-y-4 pt-2">
-              <div className="flex items-center justify-between border-b border-[#e2dcce] pb-2">
-                <span className="text-xs font-bold uppercase tracking-wider text-[#526a57]">
+              <div className="flex items-center justify-between border-b border-[#E3DFD2] pb-2">
+                <span className="text-xs font-bold uppercase tracking-wider text-[#68766C]">
                   2. Suggested Arrangement Breakdown
                 </span>
                 <button
                   type="button"
                   onClick={() => setIsGenerated(false)}
-                  className="text-xs text-[#526a57] hover:text-[#144229] flex items-center gap-1 font-medium"
+                  className="text-xs text-[#68766C] hover:text-[#174C35] flex items-center gap-1 font-medium"
                 >
                   <RotateCcw className="w-3 h-3" />
                   Regenerate
@@ -475,32 +475,32 @@ export function AutoLayoutModal({
               </div>
 
               {/* Overview Metric Banner */}
-              <div className="grid grid-cols-3 gap-2 p-3 bg-white border border-[#cfdfcf] rounded-xl text-center">
+              <div className="grid grid-cols-3 gap-2 p-3 bg-white border border-[#E3DFD2] rounded-xl text-center">
                 <div>
-                  <span className="text-[10px] uppercase font-bold text-[#526a57] block">Placed</span>
-                  <span className="font-serif text-lg font-bold text-[#144229]">
+                  <span className="text-[10px] uppercase font-bold text-[#68766C] block">Placed</span>
+                  <span className="font-serif text-lg font-bold text-[#174C35]">
                     {layoutResult.placements.length}
                   </span>
-                  <span className="text-[10px] text-[#526a57] block">containers</span>
+                  <span className="text-[10px] text-[#68766C] block">containers</span>
                 </div>
                 <div>
-                  <span className="text-[10px] uppercase font-bold text-[#526a57] block">
+                  <span className="text-[10px] uppercase font-bold text-[#68766C] block">
                     Est. Wet Load
                   </span>
-                  <span className="font-serif text-lg font-bold text-[#144229]">
+                  <span className="font-serif text-lg font-bold text-[#174C35]">
                     ~
                     {layoutResult.placements
                       .reduce((acc, p) => acc + p.estimatedWetWeightKg, 0)
                       .toFixed(1)}
                   </span>
-                  <span className="text-[10px] text-[#526a57] block">kg total</span>
+                  <span className="text-[10px] text-[#68766C] block">kg total</span>
                 </div>
                 <div>
-                  <span className="text-[10px] uppercase font-bold text-[#526a57] block">Tiers Used</span>
-                  <span className="font-serif text-lg font-bold text-[#144229]">
+                  <span className="text-[10px] uppercase font-bold text-[#68766C] block">Tiers Used</span>
+                  <span className="font-serif text-lg font-bold text-[#174C35]">
                     {new Set(layoutResult.placements.map((p) => p.tierIndex)).size} / {profile.tiers.length}
                   </span>
-                  <span className="text-[10px] text-[#526a57] block">shelves</span>
+                  <span className="text-[10px] text-[#68766C] block">shelves</span>
                 </div>
               </div>
 
@@ -510,14 +510,14 @@ export function AutoLayoutModal({
                   {layoutResult.placements.map((item, idx) => (
                     <div
                       key={item.slot.id}
-                      className="p-3.5 bg-white border border-[#e2dcce] rounded-xl shadow-xs text-xs space-y-1.5"
+                      className="p-3.5 bg-white border border-[#E3DFD2] rounded-xl shadow-xs text-xs space-y-1.5"
                     >
                       <div className="flex items-center justify-between gap-2">
                         <div className="flex items-center gap-2">
-                          <span className="w-5 h-5 rounded-full bg-[#144229] text-white flex items-center justify-center text-[10px] font-bold">
+                          <span className="w-5 h-5 rounded-full bg-[#174C35] text-white flex items-center justify-center text-[10px] font-bold">
                             {idx + 1}
                           </span>
-                          <span className="font-serif font-bold text-sm text-[#144229]">
+                          <span className="font-serif font-bold text-sm text-[#174C35]">
                             {item.plant.commonName}
                           </span>
                           <Badge variant="outline" size="sm">
@@ -529,17 +529,17 @@ export function AutoLayoutModal({
                         </Badge>
                       </div>
 
-                      <p className="text-[11px] text-[#44403c] bg-[#faf8f2] p-2 rounded-lg border border-[#ede8dd] leading-relaxed">
+                      <p className="text-[11px] text-[#203027] bg-[#F8F6EE] p-2 rounded-lg border border-[#E3DFD2] leading-relaxed">
                         {item.rationale}
                       </p>
 
-                      <div className="flex flex-wrap items-center gap-3 text-[11px] text-[#526a57] pt-0.5">
+                      <div className="flex flex-wrap items-center gap-3 text-[11px] text-[#68766C] pt-0.5">
                         <span className="flex items-center gap-1">
-                          <Ruler className="w-3 h-3 text-[#526a57]" />
+                          <Ruler className="w-3 h-3 text-[#68766C]" />
                           Ø {item.slot.container.shape === 'circular' ? (item.slot.container as CircularContainerInput).topDiameter : 20}cm pot
                         </span>
                         <span className="flex items-center gap-1">
-                          <Sun className="w-3 h-3 text-[#526a57]" />
+                          <Sun className="w-3 h-3 text-[#68766C]" />
                           {item.plant.sunlight}
                         </span>
                       </div>
@@ -547,19 +547,19 @@ export function AutoLayoutModal({
                   ))}
                 </div>
               ) : (
-                <div className="p-4 bg-white border border-[#e2dcce] rounded-xl text-center text-xs text-[#78716c]">
+                <div className="p-4 bg-white border border-[#E3DFD2] rounded-xl text-center text-xs text-[#68766C]">
                   No species could fit into the current space profile. Check shelf dimensions or load limits.
                 </div>
               )}
 
               {/* Rejected Species Report */}
               {layoutResult.rejected.length > 0 && (
-                <div className="p-3.5 bg-[#fffcf5] border border-[#fde68a] rounded-xl space-y-2">
-                  <div className="flex items-center gap-1.5 text-xs font-bold text-[#92400e]">
+                <div className="p-3.5 bg-[#F8F6EE] border border-[#F0C04D/30] rounded-xl space-y-2">
+                  <div className="flex items-center gap-1.5 text-xs font-bold text-[#8A6400]">
                     <AlertTriangle className="w-3.5 h-3.5" />
                     Species Excluded from Arrangement ({layoutResult.rejected.length})
                   </div>
-                  <ul className="space-y-1 text-xs text-[#92400e]">
+                  <ul className="space-y-1 text-xs text-[#8A6400]">
                     {layoutResult.rejected.map((rej) => (
                       <li key={rej.plantSlug} className="text-[11px] leading-snug">
                         <strong>{rej.commonName}:</strong> {rej.reasons.join(' ')}
@@ -570,9 +570,9 @@ export function AutoLayoutModal({
               )}
 
               {/* Transparency & Mathematical Reality Disclosure */}
-              <div className="p-3 bg-[#faf8f2] border border-[#e2dcce] rounded-xl text-[11px] text-[#78716c] leading-relaxed space-y-1">
+              <div className="p-3 bg-[#F8F6EE] border border-[#E3DFD2] rounded-xl text-[11px] text-[#68766C] leading-relaxed space-y-1">
                 <p className="flex items-start gap-1.5">
-                  <Info className="w-3.5 h-3.5 text-[#526a57] shrink-0 mt-0.5" />
+                  <Info className="w-3.5 h-3.5 text-[#68766C] shrink-0 mt-0.5" />
                   <span>
                     <strong>Suggested Arrangement:</strong> This layout is generated by botanical rules and
                     linear geometric packing. It is not certified as mathematically optimal, and yields are
@@ -580,7 +580,7 @@ export function AutoLayoutModal({
                   </span>
                 </p>
                 <p className="flex items-start gap-1.5">
-                  <ShieldCheck className="w-3.5 h-3.5 text-[#526a57] shrink-0 mt-0.5" />
+                  <ShieldCheck className="w-3.5 h-3.5 text-[#68766C] shrink-0 mt-0.5" />
                   <span>
                     <strong>Structural Load Check:</strong> Ensure your rack manufacturer Safe Working Load
                     (SWL) is confirmed before applying soil and water.
@@ -592,11 +592,11 @@ export function AutoLayoutModal({
         </div>
 
         {/* Modal Footer Actions */}
-        <div className="flex flex-col-reverse sm:flex-row items-center justify-between gap-2.5 px-5 sm:px-6 py-4 border-t border-[#e2dcce] bg-white sticky bottom-0">
+        <div className="flex flex-col-reverse sm:flex-row items-center justify-between gap-2.5 px-5 sm:px-6 py-4 border-t border-[#E3DFD2] bg-white sticky bottom-0">
           <button
             type="button"
             onClick={onClose}
-            className="w-full sm:w-auto px-4 py-2 rounded-xl text-xs font-medium text-[#44403c] hover:bg-[#f2eee3] transition-colors"
+            className="w-full sm:w-auto px-4 py-2 rounded-xl text-xs font-medium text-[#203027] hover:bg-[#F8F6EE] transition-colors"
           >
             Cancel / Keep Existing
           </button>
@@ -605,7 +605,7 @@ export function AutoLayoutModal({
             <button
               type="button"
               onClick={handleApply}
-              className="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-[#144229] hover:bg-[#0f2e1d] text-white font-medium text-xs sm:text-sm transition-colors shadow-sm inline-flex items-center justify-center gap-1.5"
+              className="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-[#174C35] hover:bg-[#123C2A] text-white font-medium text-xs sm:text-sm transition-colors shadow-sm inline-flex items-center justify-center gap-1.5"
             >
               <CheckCircle2 className="w-4 h-4" />
               Apply Suggested Arrangement ({layoutResult.placements.length} containers)

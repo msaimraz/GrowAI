@@ -2,27 +2,88 @@
 
 :root {
   color-scheme: light;
-  --background: #fbf9f4;
-  --foreground: #1f2a23;
-  --card: #ffffff;
-  --card-foreground: #1f2a23;
-  --border: #e4ded3;
-  --input: #e4ded3;
-  --ring: #174c35;
+
+  /* =========================================================
+     GROWAI CENTRAL BOTANICAL COLOR SYSTEM
+     Warm, Fresh, Youthful, Friendly, Accessible
+  ========================================================= */
+
+  /* Central Warm Backgrounds, Surfaces & Text */
+  --growai-background: #f8f6ee;
+  --growai-surface: #ffffff;
+  --growai-surface-soft: #eaf1e4;
+  --growai-text: #203027;
+  --growai-muted: #68766c;
+  --growai-border: #e3dfd2;
+
+  /* Central Brand & Semantic Palette */
+  --growai-forest: #174c35;
+  --growai-forest-hover: #123e2a;
+  --growai-leaf: #78a95a;
+  --growai-leaf-surface: #eaf1e4;
+  --growai-sunshine: #f0c04d;
+  --growai-sunshine-surface: #fff3d7;
+  --growai-sunshine-text: #8a6400;
+  --growai-water: #65a8d0;
+  --growai-water-surface: #e7f2f9;
+  --growai-water-text: #1b5d88;
+  --growai-coral: #e4775d;
+  --growai-coral-surface: #fbe9e2;
+  --growai-coral-text: #963a23;
+  --growai-lavender: #9a83c5;
+  --growai-lavender-surface: #f0ecf7;
+  --growai-lavender-text: #594186;
+
+  /* Standard Application Semantic Variables */
+  --background: var(--growai-background);
+  --foreground: var(--growai-text);
+  --card: var(--growai-surface);
+  --card-foreground: var(--growai-text);
+  --border: var(--growai-border);
+  --input: var(--growai-border);
+  --ring: var(--growai-forest);
   --radius: 0.75rem;
 
-  /* Botanical Youthful Palette */
-  --bg-primary: #fbf9f4;
-  --bg-secondary: #f3f6ec;
-  --bg-soft-green: #e6f0e3;
-  --bg-warm-accent: #fff0d8;
-  --bg-soft-coral: #fbe4dc;
-  --bg-soft-lavender: #eee8f6;
-  --botanical-dark: #174c35;
-  --text-primary: #1f2a23;
-  --text-secondary: #68736b;
+  /* Semantic Care Task Component Tokens */
+  --care-water: #65a8d0;
+  --care-water-bg: #e7f2f9;
+  --care-sunlight: #f0c04d;
+  --care-sunlight-bg: #fff3d7;
+  --care-feeding: #78a95a;
+  --care-feeding-bg: #eaf1e4;
+  --care-inspection: #174c35;
+  --care-inspection-bg: #eaf1e4;
+  --care-harvest: #e4775d;
+  --care-harvest-bg: #fbe9e2;
+  --care-growth: #78a95a;
+  --care-growth-bg: #eaf1e4;
 
-  /* Botanical Brand Identity */
+  /* Growth Stage Badges */
+  --growth-seed: #f0c04d;
+  --growth-seed-bg: #fff3d7;
+  --growth-germination: #78a95a;
+  --growth-germination-bg: #eaf1e4;
+  --growth-seedling: #78a95a;
+  --growth-seedling-bg: #eaf1e4;
+  --growth-growing: #174c35;
+  --growth-growing-bg: #eaf1e4;
+  --growth-flowering: #e4775d;
+  --growth-flowering-bg: #fbe9e2;
+  --growth-harvested: #e4775d;
+  --growth-harvested-bg: #fbe9e2;
+
+  /* Backward Compatible Tokens */
+  --bg-primary: #f8f6ee;
+  --bg-secondary: #eaf1e4;
+  --bg-soft-green: #eaf1e4;
+  --bg-warm-accent: #fff3d7;
+  --bg-soft-coral: #fbe9e2;
+  --bg-soft-lavender: #f0ecf7;
+  --botanical-dark: #174c35;
+  --text-primary: #203027;
+  --text-secondary: #68766c;
+
+  /* Brand Forest & Sage Scale */
   --forest-950: #071c11;
   --forest-900: #0f2e1d;
   --forest-800: #144229;
@@ -31,23 +92,47 @@
   --forest-500: #349964;
 
   --sage-50: #f4f8f4;
-  --sage-100: #e6efe6;
+  --sage-100: #eaf1e4;
   --sage-200: #cfdfcf;
   --sage-300: #afc9af;
-  --sage-400: #88ad88;
+  --sage-400: #78a95a;
   --sage-600: #4a754b;
   --sage-800: #2a472b;
 
   --cream-50: #fcfbf7;
-  --cream-100: #f7f4ea;
+  --cream-100: #f8f6ee;
   --cream-200: #eee9dc;
-  --cream-300: #e2dcce;
+  --cream-300: #e3dfd2;
 
-  --terracotta: #b85c39;
-  --amber-harvest: #c77712;
+  --terracotta: #e4775d;
+  --amber-harvest: #f0c04d;
 }
 
 @theme {
+  --color-growai-forest: var(--growai-forest);
+  --color-growai-forest-hover: var(--growai-forest-hover);
+  --color-growai-leaf: var(--growai-leaf);
+  --color-growai-leaf-surface: var(--growai-leaf-surface);
+  --color-growai-sunshine: var(--growai-sunshine);
+  --color-growai-sunshine-surface: var(--growai-sunshine-surface);
+  --color-growai-sunshine-text: var(--growai-sunshine-text);
+  --color-growai-water: var(--growai-water);
+  --color-growai-water-surface: var(--growai-water-surface);
+  --color-growai-water-text: var(--growai-water-text);
+  --color-growai-coral: var(--growai-coral);
+  --color-growai-coral-surface: var(--growai-coral-surface);
+  --color-growai-coral-text: var(--growai-coral-text);
+  --color-growai-lavender: var(--growai-lavender);
+  --color-growai-lavender-surface: var(--growai-lavender-surface);
+  --color-growai-lavender-text: var(--growai-lavender-text);
+
+  --color-growai-bg: var(--growai-background);
+  --color-growai-surface: var(--growai-surface);
+  --color-growai-surface-soft: var(--growai-surface-soft);
+  --color-growai-text: var(--growai-text);
+  --color-growai-muted: var(--growai-muted);
+  --color-growai-border: var(--growai-border);
+
   --color-forest-950: var(--forest-950);
   --color-forest-900: var(--forest-900);
   --color-forest-800: var(--forest-800);
@@ -72,21 +157,31 @@
   --color-amber-harvest: var(--amber-harvest);
 }
 
+/* =========================================================
+   DARK MODE PROTECTION (SECTION 15)
+   Strict Light Botanical Theme Across All OS Modes
+========================================================= */
 html {
   color-scheme: light;
-  background-color: var(--background);
+  background-color: var(--growai-background);
+  color: var(--growai-text);
   font-size: 16px;
   -webkit-text-size-adjust: 100%;
 }
 
 body {
-  background-color: var(--background);
-  color: var(--foreground);
+  background-color: var(--growai-background);
+  color: var(--growai-text);
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-  font-size: 1rem; /* 16px base */
-  line-height: 1.6; /* 1.5 - 1.7 line height */
+  font-size: 1rem;
+  line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+/* Form controls, dialogs and drawers locked to light scheme */
+input, textarea, select, dialog, button {
+  color-scheme: light;
 }
 
 /* Custom scrollbar for plant lists and horizontal trays */
@@ -107,7 +202,7 @@ body {
 
 /* Accessible focus visible outlines with high contrast */
 :focus-visible {
-  outline: 2px solid var(--forest-700);
+  outline: 2px solid var(--growai-forest);
   outline-offset: 2px;
 }
 
@@ -132,7 +227,6 @@ body {
 
 /* Botanical subtle grid pattern */
 .bg-botanical-pattern {
-  background-image: radial-gradient(rgba(20, 66, 41, 0.05) 1px, transparent 1px);
+  background-image: radial-gradient(rgba(23, 76, 53, 0.05) 1px, transparent 1px);
   background-size: 24px 24px;
 }
-

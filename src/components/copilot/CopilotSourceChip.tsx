@@ -10,37 +10,37 @@ export function CopilotSourceChip({ provenance }: CopilotSourceChipProps) {
   switch (provenance) {
     case 'recorded':
       return (
-        <span className="text-[10px] font-semibold px-2 py-0.5 rounded-md border bg-[#eef5ee] text-[#144229] border-[#cfe0cf]">
+        <span className="text-[10px] font-semibold px-2 py-0.5 rounded-md border bg-[#EAF1E4] text-[#174C35] border-[#E3DFD2]">
           ● Recorded Fact
         </span>
       );
     case 'calculated':
       return (
-        <span className="text-[10px] font-semibold px-2 py-0.5 rounded-md border bg-[#eff6ff] text-[#1e40af] border-[#bfdbfe]">
+        <span className="text-[10px] font-semibold px-2 py-0.5 rounded-md border bg-[#E7F2F9] text-[#1B5D88] border-[#65A8D0/30]">
           ▲ Calculated
         </span>
       );
     case 'observed':
       return (
-        <span className="text-[10px] font-semibold px-2 py-0.5 rounded-md border bg-[#f5f3ff] text-[#5b21b6] border-[#ddd6fe]">
+        <span className="text-[10px] font-semibold px-2 py-0.5 rounded-md border bg-[#F0ECF7] text-[#594186] border-[#9A83C5/30]">
           ◈ Observed
         </span>
       );
     case 'inferred':
       return (
-        <span className="text-[10px] font-semibold px-2 py-0.5 rounded-md border bg-[#fffbeb] text-[#92400e] border-[#fde68a]">
+        <span className="text-[10px] font-semibold px-2 py-0.5 rounded-md border bg-[#FFF3D7] text-[#8A6400] border-[#F0C04D/30]">
           ◆ Inferred
         </span>
       );
     case 'recommended':
       return (
-        <span className="text-[10px] font-semibold px-2 py-0.5 rounded-md border bg-[#f0fdf4] text-[#166534] border-[#bbf7d0]">
+        <span className="text-[10px] font-semibold px-2 py-0.5 rounded-md border bg-[#EAF1E4] text-[#174C35] border-[#78A95A/30]">
           ✓ Recommended
         </span>
       );
     default:
       return (
-        <span className="text-[10px] font-semibold px-2 py-0.5 rounded-md border bg-[#f3f4f6] text-[#4b5563] border-[#e5e7eb]">
+        <span className="text-[10px] font-semibold px-2 py-0.5 rounded-md border bg-[#F8F6EE] text-[#68766C] border-[#E3DFD2]">
           ○ Unknown
         </span>
       );

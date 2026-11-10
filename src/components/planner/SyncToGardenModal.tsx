@@ -294,18 +294,18 @@ export function SyncToGardenModal({
       aria-labelledby={modalTitleId}
       className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/60 backdrop-blur-sm overflow-y-auto animate-in fade-in duration-200"
     >
-      <div className="relative w-full max-w-[calc(100vw-24px)] sm:max-w-2xl bg-[#fbf9f4] border border-[#e2dcce] rounded-2xl shadow-xl overflow-hidden my-auto max-h-[90vh] flex flex-col">
+      <div className="relative w-full max-w-[calc(100vw-24px)] sm:max-w-2xl bg-[#F8F6EE] border border-[#E3DFD2] rounded-2xl shadow-xl overflow-hidden my-auto max-h-[90vh] flex flex-col">
         {/* Header */}
-        <div className="flex items-center justify-between px-5 sm:px-6 py-4 border-b border-[#e2dcce] bg-white sticky top-0 z-10">
+        <div className="flex items-center justify-between px-5 sm:px-6 py-4 border-b border-[#E3DFD2] bg-white sticky top-0 z-10">
           <div className="flex items-center gap-2.5">
-            <span className="p-2 rounded-xl bg-[#e7efe7] text-[#144229]">
+            <span className="p-2 rounded-xl bg-[#EAF1E4] text-[#174C35]">
               <Sprout className="w-5 h-5" />
             </span>
             <div>
-              <h2 id={modalTitleId} className="font-serif text-lg sm:text-xl font-bold text-[#144229]">
+              <h2 id={modalTitleId} className="font-serif text-lg sm:text-xl font-bold text-[#174C35]">
                 Add Layout to My Garden
               </h2>
-              <p className="text-xs text-[#526a57]">
+              <p className="text-xs text-[#68766C]">
                 Create active plant tracking records from &quot;{profile.name}&quot;
               </p>
             </div>
@@ -314,7 +314,7 @@ export function SyncToGardenModal({
             type="button"
             disabled={isSubmitting}
             onClick={onClose}
-            className="p-2 rounded-lg text-[#526a57] hover:text-[#144229] hover:bg-[#f2eee3] transition-colors"
+            className="p-2 rounded-lg text-[#68766C] hover:text-[#174C35] hover:bg-[#F8F6EE] transition-colors"
             aria-label="Close sync modal"
           >
             <X className="w-5 h-5" />
@@ -328,16 +328,16 @@ export function SyncToGardenModal({
             <div
               className={`p-4 rounded-xl border flex items-start gap-3 ${
                 totalFailed === 0
-                  ? 'bg-[#f5fbf7] border-[#cfdfcf] text-[#144229]'
+                  ? 'bg-[#F8F6EE] border-[#E3DFD2] text-[#174C35]'
                   : totalSuccess > 0
-                    ? 'bg-[#fffcf5] border-[#fde68a] text-[#92400e]'
-                    : 'bg-[#fffaf8] border-[#f8d7cb] text-[#9a3412]'
+                    ? 'bg-[#F8F6EE] border-[#F0C04D/30] text-[#8A6400]'
+                    : 'bg-[#F8F6EE] border-[#E4775D/30] text-[#963A23]'
               }`}
             >
               {totalFailed === 0 ? (
-                <CheckCircle2 className="w-5 h-5 text-[#1b5837] shrink-0 mt-0.5" />
+                <CheckCircle2 className="w-5 h-5 text-[#174C35] shrink-0 mt-0.5" />
               ) : (
-                <AlertTriangle className="w-5 h-5 text-[#d97706] shrink-0 mt-0.5" />
+                <AlertTriangle className="w-5 h-5 text-[#F0C04D] shrink-0 mt-0.5" />
               )}
               <div className="space-y-1 text-xs sm:text-sm">
                 <h3 className="font-semibold text-base font-serif">
@@ -358,8 +358,8 @@ export function SyncToGardenModal({
 
           {/* Finding A: Multi-Tier Schema Disclosure (> 3 Tiers) */}
           {isMultiTier && (
-            <div className="p-3.5 bg-[#f5fbf7] border border-[#cfdfcf] rounded-xl text-xs text-[#144229] flex items-start gap-2.5 leading-relaxed">
-              <Info className="w-4 h-4 text-[#1b5837] shrink-0 mt-0.5" />
+            <div className="p-3.5 bg-[#F8F6EE] border border-[#E3DFD2] rounded-xl text-xs text-[#174C35] flex items-start gap-2.5 leading-relaxed">
+              <Info className="w-4 h-4 text-[#174C35] shrink-0 mt-0.5" />
               <div>
                 <strong>Multi-Tier Schema Mapping:</strong> Your space configuration contains{' '}
                 <strong>{profile.tiers.length} physical shelves</strong>. Because the garden database schema
@@ -371,12 +371,12 @@ export function SyncToGardenModal({
           )}
 
           {/* Finding C: Growth Stage Selection */}
-          <div className="p-4 bg-white border border-[#ded5c5] rounded-xl space-y-3">
+          <div className="p-4 bg-white border border-[#E3DFD2] rounded-xl space-y-3">
             <div>
-              <label className="text-xs font-bold uppercase tracking-wider text-[#526a57] block">
+              <label className="text-xs font-bold uppercase tracking-wider text-[#68766C] block">
                 Initial Growth Stage
               </label>
-              <p className="text-[11px] text-[#526a57] mt-0.5">
+              <p className="text-[11px] text-[#68766C] mt-0.5">
                 Set how your plants are entering the garden. Established plants are not forced to start as seeds.
               </p>
             </div>
@@ -391,15 +391,15 @@ export function SyncToGardenModal({
                     onClick={() => setDefaultStage(opt.stage)}
                     className={`p-2.5 rounded-lg border text-left transition-all ${
                       isSelected
-                        ? 'border-[#144229] bg-[#eef5ee] ring-1 ring-[#144229]'
-                        : 'border-[#ded5c5] bg-[#fbf9f4] hover:bg-white'
+                        ? 'border-[#174C35] bg-[#EAF1E4] ring-1 ring-[#174C35]'
+                        : 'border-[#E3DFD2] bg-[#F8F6EE] hover:bg-white'
                     }`}
                   >
                     <div className="flex items-center justify-between">
-                      <span className="font-serif font-bold text-xs text-[#0c2417]">{opt.label}</span>
-                      {isSelected && <Check className="w-3.5 h-3.5 text-[#144229]" />}
+                      <span className="font-serif font-bold text-xs text-[#203027]">{opt.label}</span>
+                      {isSelected && <Check className="w-3.5 h-3.5 text-[#174C35]" />}
                     </div>
-                    <p className="text-[10px] text-[#526a57] mt-1 leading-snug">{opt.description}</p>
+                    <p className="text-[10px] text-[#68766C] mt-1 leading-snug">{opt.description}</p>
                   </button>
                 );
               })}
@@ -409,10 +409,10 @@ export function SyncToGardenModal({
           {/* Plant Containers Checklist */}
           <div className="space-y-2.5">
             <div className="flex items-center justify-between">
-              <span className="text-xs font-bold uppercase tracking-wider text-[#526a57]">
+              <span className="text-xs font-bold uppercase tracking-wider text-[#68766C]">
                 Planned Containers ({itemsToCreate.length} of {plannedItems.length} selected)
               </span>
-              <div className="flex items-center gap-3 text-xs text-[#526a57]">
+              <div className="flex items-center gap-3 text-xs text-[#68766C]">
                 <button
                   type="button"
                   onClick={() => {
@@ -420,7 +420,7 @@ export function SyncToGardenModal({
                     plannedItems.forEach((i) => (all[i.id] = true));
                     setSelectedSlotIds(all);
                   }}
-                  className="hover:text-[#144229] font-medium"
+                  className="hover:text-[#174C35] font-medium"
                 >
                   Select All
                 </button>
@@ -428,7 +428,7 @@ export function SyncToGardenModal({
                 <button
                   type="button"
                   onClick={() => setSelectedSlotIds({})}
-                  className="hover:text-[#144229] font-medium"
+                  className="hover:text-[#174C35] font-medium"
                 >
                   Deselect All
                 </button>
@@ -436,7 +436,7 @@ export function SyncToGardenModal({
             </div>
 
             {plannedItems.length === 0 ? (
-              <div className="p-6 text-center bg-white border border-[#ded5c5] rounded-xl text-xs text-[#78716c]">
+              <div className="p-6 text-center bg-white border border-[#E3DFD2] rounded-xl text-xs text-[#68766C]">
                 No plant containers found in this space configuration. Assign plants in the visualizer before
                 synchronizing.
               </div>
@@ -453,12 +453,12 @@ export function SyncToGardenModal({
                       key={item.id}
                       className={`p-3.5 rounded-xl border text-xs transition-all ${
                         isDone
-                          ? 'bg-[#f5fbf7] border-[#cfdfcf]'
+                          ? 'bg-[#F8F6EE] border-[#E3DFD2]'
                           : errorMsg
-                            ? 'bg-[#fffaf8] border-[#f8d7cb]'
+                            ? 'bg-[#F8F6EE] border-[#E4775D/30]'
                             : isChecked
-                              ? 'bg-white border-[#ded5c5]'
-                              : 'bg-[#faf8f2] border-[#e7e1d3] opacity-60'
+                              ? 'bg-white border-[#E3DFD2]'
+                              : 'bg-[#F8F6EE] border-[#E3DFD2] opacity-60'
                       }`}
                     >
                       <div className="flex items-start justify-between gap-3">
@@ -469,11 +469,11 @@ export function SyncToGardenModal({
                             disabled={isDone || isSubmitting}
                             checked={isDone || isChecked}
                             onChange={() => handleToggleSlot(item.id)}
-                            className="mt-0.5 rounded border-[#ded5c5] text-[#144229] focus:ring-[#144229] cursor-pointer"
+                            className="mt-0.5 rounded border-[#E3DFD2] text-[#174C35] focus:ring-[#174C35] cursor-pointer"
                           />
                           <div className="min-w-0">
                             <div className="flex items-center gap-2 flex-wrap">
-                              <span className="font-serif font-bold text-sm text-[#0c2417] truncate">
+                              <span className="font-serif font-bold text-sm text-[#203027] truncate">
                                 {item.nickname}
                               </span>
                               {isDone && (
@@ -487,7 +487,7 @@ export function SyncToGardenModal({
                                 </Badge>
                               )}
                             </div>
-                            <span className="text-[11px] text-[#526a57] italic block truncate mt-0.5">
+                            <span className="text-[11px] text-[#68766C] italic block truncate mt-0.5">
                               {item.commonName} • {item.potSizeDescription}
                             </span>
                           </div>
@@ -496,7 +496,7 @@ export function SyncToGardenModal({
                         {/* Tier & Stage Controls */}
                         <div className="flex flex-col sm:flex-row items-end sm:items-center gap-1.5 shrink-0">
                           <Badge variant="outline" size="sm">
-                            <Layers className="w-3 h-3 text-[#144229]" />
+                            <Layers className="w-3 h-3 text-[#174C35]" />
                             {item.tierName} ({item.tierPosition})
                           </Badge>
 
@@ -505,7 +505,7 @@ export function SyncToGardenModal({
                             <select
                               value={currentStage}
                               onChange={(e) => handleSetPlantStage(item.id, e.target.value as GrowthStage)}
-                              className="text-[11px] bg-[#fbf9f4] border border-[#cfdfcf] text-[#144229] rounded-md px-1.5 py-0.5 focus:ring-1 focus:ring-[#144229]"
+                              className="text-[11px] bg-[#F8F6EE] border border-[#E3DFD2] text-[#174C35] rounded-md px-1.5 py-0.5 focus:ring-1 focus:ring-[#174C35]"
                               aria-label={`Select growth stage for ${item.nickname}`}
                             >
                               <option value="Seed">Seed</option>
@@ -519,7 +519,7 @@ export function SyncToGardenModal({
 
                       {/* Item-level error display */}
                       {errorMsg && (
-                        <div className="mt-2 text-[11px] text-[#9a3412] bg-[#fbeee9] p-2 rounded-lg flex items-center gap-1.5">
+                        <div className="mt-2 text-[11px] text-[#963A23] bg-[#FBE9E2] p-2 rounded-lg flex items-center gap-1.5">
                           <AlertTriangle className="w-3.5 h-3.5 shrink-0" />
                           <span>{errorMsg}</span>
                         </div>
@@ -532,21 +532,21 @@ export function SyncToGardenModal({
           </div>
 
           {/* Finding B: Preservation Disclosure */}
-          <div className="p-3 bg-[#faf8f2] border border-[#e2dcce] rounded-xl text-[11px] text-[#78716c] leading-relaxed">
+          <div className="p-3 bg-[#F8F6EE] border border-[#E3DFD2] rounded-xl text-[11px] text-[#68766C] leading-relaxed">
             <strong>Data Integrity Assurance:</strong> Records are saved to your current garden log with
             pure container dimensions. Editing or deleting this planner space profile will{' '}
-            <strong className="text-[#0c2417]">never delete or modify</strong> your created garden plants,
+            <strong className="text-[#203027]">never delete or modify</strong> your created garden plants,
             photos, or care tasks.
           </div>
         </div>
 
         {/* Footer Actions */}
-        <div className="flex flex-col-reverse sm:flex-row items-center justify-between gap-2.5 px-5 sm:px-6 py-4 border-t border-[#e2dcce] bg-white sticky bottom-0">
+        <div className="flex flex-col-reverse sm:flex-row items-center justify-between gap-2.5 px-5 sm:px-6 py-4 border-t border-[#E3DFD2] bg-white sticky bottom-0">
           <button
             type="button"
             disabled={isSubmitting}
             onClick={onClose}
-            className="w-full sm:w-auto px-4 py-2 rounded-xl text-xs font-medium text-[#44403c] hover:bg-[#f2eee3] transition-colors"
+            className="w-full sm:w-auto px-4 py-2 rounded-xl text-xs font-medium text-[#203027] hover:bg-[#F8F6EE] transition-colors"
           >
             {hasAttemptedSync && totalFailed === 0 ? 'Close' : 'Cancel'}
           </button>
@@ -555,7 +555,7 @@ export function SyncToGardenModal({
             {totalSuccess > 0 && (
               <Link
                 href="/app/my-garden"
-                className="w-full sm:w-auto px-4 py-2 rounded-xl border border-[#cfdfcf] text-xs font-semibold text-[#144229] hover:bg-[#eef5ee] transition-colors inline-flex items-center justify-center gap-1 min-h-[44px]"
+                className="w-full sm:w-auto px-4 py-2 rounded-xl border border-[#E3DFD2] text-xs font-semibold text-[#174C35] hover:bg-[#EAF1E4] transition-colors inline-flex items-center justify-center gap-1 min-h-[44px]"
               >
                 <span>View Garden</span>
                 <ArrowRight className="w-3.5 h-3.5" />
@@ -567,7 +567,7 @@ export function SyncToGardenModal({
                 type="button"
                 disabled={isSubmitting || isLoadingExisting}
                 onClick={handleConfirmSync}
-                className="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-[#144229] hover:bg-[#0f2e1d] disabled:bg-[#c2baa9] disabled:cursor-not-allowed text-white font-medium text-xs sm:text-sm transition-colors shadow-xs active:scale-[0.98] select-none touch-manipulation inline-flex items-center justify-center gap-2 cursor-pointer min-h-[44px]"
+                className="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-[#174C35] hover:bg-[#123C2A] disabled:bg-[#E3DFD2] disabled:cursor-not-allowed text-white font-medium text-xs sm:text-sm transition-colors shadow-xs active:scale-[0.98] select-none touch-manipulation inline-flex items-center justify-center gap-2 cursor-pointer min-h-[44px]"
               >
                 {isSubmitting ? (
                   <>

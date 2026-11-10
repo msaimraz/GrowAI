@@ -101,15 +101,15 @@ function GrowPlansContent() {
     // 1. Search with no matches
     if (searchQuery.trim()) {
       return (
-        <div className="text-center py-16 px-6 bg-white rounded-3xl border border-[#ded5c5] max-w-lg mx-auto shadow-xs space-y-4">
-          <div className="w-12 h-12 rounded-2xl bg-[#f4efe6] text-[#526a57] flex items-center justify-center mx-auto">
+        <div className="text-center py-16 px-6 bg-white rounded-3xl border border-[#E3DFD2] max-w-lg mx-auto shadow-xs space-y-4">
+          <div className="w-12 h-12 rounded-2xl bg-[#F8F6EE] text-[#68766C] flex items-center justify-center mx-auto">
             <Search className="w-6 h-6" />
           </div>
           <div>
-            <h3 className="font-serif text-lg font-bold text-[#0c2417]">
+            <h3 className="font-serif text-lg font-bold text-[#203027]">
               No Matching Plans Found
             </h3>
-            <p className="text-xs sm:text-sm text-[#526a57] max-w-sm mx-auto mt-1">
+            <p className="text-xs sm:text-sm text-[#68766C] max-w-sm mx-auto mt-1">
               No grow plans match &ldquo;{searchQuery}&rdquo;. Try another search term or clear your filters.
             </p>
           </div>
@@ -120,7 +120,7 @@ function GrowPlansContent() {
                 setSearchQuery('');
                 setStatusFilter('all');
               }}
-              className="px-4 py-2 text-xs sm:text-sm font-semibold rounded-xl bg-[#144229] text-white hover:bg-[#0c2417] transition cursor-pointer min-h-[40px]"
+              className="px-4 py-2 text-xs sm:text-sm font-semibold rounded-xl bg-[#174C35] text-white hover:bg-[#203027] transition cursor-pointer min-h-[40px]"
             >
               Clear Filters
             </button>
@@ -132,15 +132,15 @@ function GrowPlansContent() {
     // 2. Paused tab empty
     if (statusFilter === 'paused') {
       return (
-        <div className="text-center py-16 px-6 bg-white rounded-3xl border border-[#ded5c5] max-w-lg mx-auto shadow-xs space-y-4">
-          <div className="w-12 h-12 rounded-2xl bg-[#f4efe6] text-[#526a57] flex items-center justify-center mx-auto">
+        <div className="text-center py-16 px-6 bg-white rounded-3xl border border-[#E3DFD2] max-w-lg mx-auto shadow-xs space-y-4">
+          <div className="w-12 h-12 rounded-2xl bg-[#F8F6EE] text-[#68766C] flex items-center justify-center mx-auto">
             <span className="text-xl">⏸</span>
           </div>
           <div>
-            <h3 className="font-serif text-lg font-bold text-[#0c2417]">
+            <h3 className="font-serif text-lg font-bold text-[#203027]">
               No Paused Plans
             </h3>
-            <p className="text-xs sm:text-sm text-[#526a57] max-w-sm mx-auto mt-1">
+            <p className="text-xs sm:text-sm text-[#68766C] max-w-sm mx-auto mt-1">
               {counts.active > 0
                 ? `Your current plans are still moving forward. You have ${counts.active} active grow plan${counts.active === 1 ? '' : 's'}.`
                 : 'You don’t have any paused plans. All current journeys are active or completed.'}
@@ -151,7 +151,7 @@ function GrowPlansContent() {
               <button
                 type="button"
                 onClick={() => setStatusFilter('active')}
-                className="px-4 py-2 text-xs sm:text-sm font-semibold rounded-xl bg-[#144229] text-white hover:bg-[#0c2417] transition cursor-pointer min-h-[40px]"
+                className="px-4 py-2 text-xs sm:text-sm font-semibold rounded-xl bg-[#174C35] text-white hover:bg-[#203027] transition cursor-pointer min-h-[40px]"
               >
                 View Active Plans ({counts.active})
               </button>
@@ -159,7 +159,7 @@ function GrowPlansContent() {
             <button
               type="button"
               onClick={() => setStatusFilter('all')}
-              className="px-4 py-2 text-xs sm:text-sm font-semibold rounded-xl bg-[#fbf9f4] border border-[#ded5c5] text-[#0c2417] hover:bg-[#f4efe6] transition cursor-pointer min-h-[40px]"
+              className="px-4 py-2 text-xs sm:text-sm font-semibold rounded-xl bg-[#F8F6EE] border border-[#E3DFD2] text-[#203027] hover:bg-[#F8F6EE] transition cursor-pointer min-h-[40px]"
             >
               View All Plans
             </button>
@@ -171,15 +171,15 @@ function GrowPlansContent() {
     // 3. Completed tab empty
     if (statusFilter === 'completed') {
       return (
-        <div className="text-center py-16 px-6 bg-white rounded-3xl border border-[#ded5c5] max-w-lg mx-auto shadow-xs space-y-4">
-          <div className="w-12 h-12 rounded-2xl bg-[#eef5ee] text-[#144229] flex items-center justify-center mx-auto">
+        <div className="text-center py-16 px-6 bg-white rounded-3xl border border-[#E3DFD2] max-w-lg mx-auto shadow-xs space-y-4">
+          <div className="w-12 h-12 rounded-2xl bg-[#EAF1E4] text-[#174C35] flex items-center justify-center mx-auto">
             <span className="text-xl">🌿</span>
           </div>
           <div>
-            <h3 className="font-serif text-lg font-bold text-[#0c2417]">
+            <h3 className="font-serif text-lg font-bold text-[#203027]">
               No Completed Plans Yet
             </h3>
-            <p className="text-xs sm:text-sm text-[#526a57] max-w-sm mx-auto mt-1">
+            <p className="text-xs sm:text-sm text-[#68766C] max-w-sm mx-auto mt-1">
               Your finished growing journeys will appear here once all steps are completed.
             </p>
           </div>
@@ -188,7 +188,7 @@ function GrowPlansContent() {
               <button
                 type="button"
                 onClick={() => setStatusFilter('active')}
-                className="px-4 py-2 text-xs sm:text-sm font-semibold rounded-xl bg-[#144229] text-white hover:bg-[#0c2417] transition cursor-pointer min-h-[40px]"
+                className="px-4 py-2 text-xs sm:text-sm font-semibold rounded-xl bg-[#174C35] text-white hover:bg-[#203027] transition cursor-pointer min-h-[40px]"
               >
                 View Active Plans ({counts.active})
               </button>
@@ -196,7 +196,7 @@ function GrowPlansContent() {
             <button
               type="button"
               onClick={() => setStatusFilter('all')}
-              className="px-4 py-2 text-xs sm:text-sm font-semibold rounded-xl bg-[#fbf9f4] border border-[#ded5c5] text-[#0c2417] hover:bg-[#f4efe6] transition cursor-pointer min-h-[40px]"
+              className="px-4 py-2 text-xs sm:text-sm font-semibold rounded-xl bg-[#F8F6EE] border border-[#E3DFD2] text-[#203027] hover:bg-[#F8F6EE] transition cursor-pointer min-h-[40px]"
             >
               View All Plans
             </button>
@@ -208,15 +208,15 @@ function GrowPlansContent() {
     // 4. Needs Attention tab empty
     if (statusFilter === 'needs_attention') {
       return (
-        <div className="text-center py-16 px-6 bg-white rounded-3xl border border-[#ded5c5] max-w-lg mx-auto shadow-xs space-y-4">
-          <div className="w-12 h-12 rounded-2xl bg-[#eef5ee] text-[#144229] flex items-center justify-center mx-auto">
+        <div className="text-center py-16 px-6 bg-white rounded-3xl border border-[#E3DFD2] max-w-lg mx-auto shadow-xs space-y-4">
+          <div className="w-12 h-12 rounded-2xl bg-[#EAF1E4] text-[#174C35] flex items-center justify-center mx-auto">
             <span className="text-xl">🩺</span>
           </div>
           <div>
-            <h3 className="font-serif text-lg font-bold text-[#0c2417]">
+            <h3 className="font-serif text-lg font-bold text-[#203027]">
               All Plans Look Healthy
             </h3>
-            <p className="text-xs sm:text-sm text-[#526a57] max-w-sm mx-auto mt-1">
+            <p className="text-xs sm:text-sm text-[#68766C] max-w-sm mx-auto mt-1">
               No active issues need immediate attention. Your plants are on track!
             </p>
           </div>
@@ -224,7 +224,7 @@ function GrowPlansContent() {
             <button
               type="button"
               onClick={() => setStatusFilter('all')}
-              className="px-4 py-2 text-xs sm:text-sm font-semibold rounded-xl bg-[#144229] text-white hover:bg-[#0c2417] transition cursor-pointer min-h-[40px]"
+              className="px-4 py-2 text-xs sm:text-sm font-semibold rounded-xl bg-[#174C35] text-white hover:bg-[#203027] transition cursor-pointer min-h-[40px]"
             >
               View All Plans
             </button>
@@ -236,15 +236,15 @@ function GrowPlansContent() {
     // 5. Active tab empty but other plans exist
     if (statusFilter === 'active' && counts.all > 0) {
       return (
-        <div className="text-center py-16 px-6 bg-white rounded-3xl border border-[#ded5c5] max-w-lg mx-auto shadow-xs space-y-4">
-          <div className="w-12 h-12 rounded-2xl bg-[#eef5ee] text-[#144229] flex items-center justify-center mx-auto">
+        <div className="text-center py-16 px-6 bg-white rounded-3xl border border-[#E3DFD2] max-w-lg mx-auto shadow-xs space-y-4">
+          <div className="w-12 h-12 rounded-2xl bg-[#EAF1E4] text-[#174C35] flex items-center justify-center mx-auto">
             <span className="text-xl">🌱</span>
           </div>
           <div>
-            <h3 className="font-serif text-lg font-bold text-[#0c2417]">
+            <h3 className="font-serif text-lg font-bold text-[#203027]">
               No Active Plans
             </h3>
-            <p className="text-xs sm:text-sm text-[#526a57] max-w-sm mx-auto mt-1">
+            <p className="text-xs sm:text-sm text-[#68766C] max-w-sm mx-auto mt-1">
               All your plans are currently completed or paused.
             </p>
           </div>
@@ -252,14 +252,14 @@ function GrowPlansContent() {
             <button
               type="button"
               onClick={() => setIsCreateModalOpen(true)}
-              className="px-4 py-2 text-xs sm:text-sm font-semibold rounded-xl bg-[#144229] text-white hover:bg-[#0c2417] transition cursor-pointer min-h-[40px]"
+              className="px-4 py-2 text-xs sm:text-sm font-semibold rounded-xl bg-[#174C35] text-white hover:bg-[#203027] transition cursor-pointer min-h-[40px]"
             >
               Create Grow Plan
             </button>
             <button
               type="button"
               onClick={() => setStatusFilter('all')}
-              className="px-4 py-2 text-xs sm:text-sm font-semibold rounded-xl bg-[#fbf9f4] border border-[#ded5c5] text-[#0c2417] hover:bg-[#f4efe6] transition cursor-pointer min-h-[40px]"
+              className="px-4 py-2 text-xs sm:text-sm font-semibold rounded-xl bg-[#F8F6EE] border border-[#E3DFD2] text-[#203027] hover:bg-[#F8F6EE] transition cursor-pointer min-h-[40px]"
             >
               View All Plans
             </button>
@@ -270,15 +270,15 @@ function GrowPlansContent() {
 
     // 6. Default: All plans empty
     return (
-      <div className="text-center py-16 px-6 bg-white rounded-3xl border border-[#ded5c5] max-w-lg mx-auto shadow-xs space-y-4">
-        <div className="w-12 h-12 rounded-2xl bg-[#eef5ee] text-[#144229] flex items-center justify-center mx-auto">
+      <div className="text-center py-16 px-6 bg-white rounded-3xl border border-[#E3DFD2] max-w-lg mx-auto shadow-xs space-y-4">
+        <div className="w-12 h-12 rounded-2xl bg-[#EAF1E4] text-[#174C35] flex items-center justify-center mx-auto">
           <Sprout className="w-6 h-6" />
         </div>
         <div>
-          <h3 className="font-serif text-lg font-bold text-[#0c2417]">
+          <h3 className="font-serif text-lg font-bold text-[#203027]">
             No Grow Plans Yet
           </h3>
-          <p className="text-xs sm:text-sm text-[#526a57] max-w-sm mx-auto mt-1">
+          <p className="text-xs sm:text-sm text-[#68766C] max-w-sm mx-auto mt-1">
             Start a guided growing journey for one of your plants with step-by-step care milestones.
           </p>
         </div>
@@ -286,7 +286,7 @@ function GrowPlansContent() {
           <button
             type="button"
             onClick={() => setIsCreateModalOpen(true)}
-            className="px-4 py-2 text-xs sm:text-sm font-semibold rounded-xl bg-[#144229] text-white hover:bg-[#0c2417] transition cursor-pointer min-h-[40px]"
+            className="px-4 py-2 text-xs sm:text-sm font-semibold rounded-xl bg-[#174C35] text-white hover:bg-[#203027] transition cursor-pointer min-h-[40px]"
           >
             Create Grow Plan
           </button>
@@ -304,7 +304,7 @@ function GrowPlansContent() {
   ];
 
   return (
-    <div className="min-h-screen bg-[#FBF9F4] text-[#1F2A23] pb-24">
+    <div className="min-h-screen bg-[#F8F6EE] text-[#203027] pb-24">
       <AppHeader
         title="Grow Plans"
         subtitle="Step-by-step growing journeys from seed to harvest 🌱"
@@ -319,11 +319,11 @@ function GrowPlansContent() {
           <div>
             <div className="flex items-center gap-2">
               <span className="text-xl">📋</span>
-              <h1 className="font-serif text-2xl sm:text-3xl font-bold tracking-tight text-[#0c2417]">
+              <h1 className="font-serif text-2xl sm:text-3xl font-bold tracking-tight text-[#203027]">
                 Grow Plans
               </h1>
             </div>
-            <p className="text-xs sm:text-sm text-[#526a57] mt-1">
+            <p className="text-xs sm:text-sm text-[#68766C] mt-1">
               Structured developmental roadmaps with evidence-based milestones and reminders.
             </p>
           </div>
@@ -344,7 +344,7 @@ function GrowPlansContent() {
             <button
               type="button"
               onClick={() => setIsCreateModalOpen(true)}
-              className="flex items-center gap-2 px-4 py-2.5 text-xs sm:text-sm font-semibold rounded-xl bg-[#144229] hover:bg-[#0c2417] active:scale-95 text-white shadow-xs transition-all duration-75 cursor-pointer min-h-[44px] select-none touch-manipulation"
+              className="flex items-center gap-2 px-4 py-2.5 text-xs sm:text-sm font-semibold rounded-xl bg-[#174C35] hover:bg-[#203027] active:scale-95 text-white shadow-xs transition-all duration-75 cursor-pointer min-h-[44px] select-none touch-manipulation"
             >
               <Plus size={16} />
               <span>Create Plan</span>
@@ -353,7 +353,7 @@ function GrowPlansContent() {
         </div>
 
         {/* Filters & Search Toolbar */}
-        <div className="flex flex-col sm:flex-row gap-3 items-center justify-between bg-white p-3 rounded-2xl border border-[#ded5c5] shadow-xs">
+        <div className="flex flex-col sm:flex-row gap-3 items-center justify-between bg-white p-3 rounded-2xl border border-[#E3DFD2] shadow-xs">
           {/* Status Tabs */}
           <div className="flex items-center gap-1.5 overflow-x-auto w-full sm:w-auto pb-1 sm:pb-0 scrollbar-none min-w-0">
             {tabs.map((tab) => (
@@ -363,8 +363,8 @@ function GrowPlansContent() {
                 onClick={() => setStatusFilter(tab.id)}
                 className={`px-3 py-1.5 text-xs font-semibold rounded-xl whitespace-nowrap transition cursor-pointer flex items-center gap-1.5 ${
                   statusFilter === tab.id
-                    ? 'bg-[#144229] text-white shadow-xs'
-                    : 'text-[#526a57] hover:bg-[#f4efe6]'
+                    ? 'bg-[#174C35] text-white shadow-xs'
+                    : 'text-[#68766C] hover:bg-[#F8F6EE]'
                 }`}
               >
                 <span>{tab.label}</span>
@@ -372,7 +372,7 @@ function GrowPlansContent() {
                   className={`text-[10px] px-1.5 py-0.2 rounded-full font-bold ${
                     statusFilter === tab.id
                       ? 'bg-white/20 text-white'
-                      : 'bg-[#f4efe6] text-[#526a57]'
+                      : 'bg-[#F8F6EE] text-[#68766C]'
                   }`}
                 >
                   {tab.count}
@@ -384,19 +384,19 @@ function GrowPlansContent() {
           {/* Search Box & Clear Button */}
           <div className="flex items-center gap-2 w-full sm:w-auto">
             <div className="relative flex-1 sm:w-64">
-              <Search className="w-3.5 h-3.5 absolute left-3 top-2.5 text-[#526a57]" />
+              <Search className="w-3.5 h-3.5 absolute left-3 top-2.5 text-[#68766C]" />
               <input
                 type="text"
                 placeholder="Search plans..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-8 pr-7 py-1.5 text-xs rounded-xl border border-[#ded5c5] bg-[#fbf9f4] text-[#0c2417] focus:outline-none focus:ring-1 focus:ring-[#144229]"
+                className="w-full pl-8 pr-7 py-1.5 text-xs rounded-xl border border-[#E3DFD2] bg-[#F8F6EE] text-[#203027] focus:outline-none focus:ring-1 focus:ring-[#174C35]"
               />
               {searchQuery && (
                 <button
                   type="button"
                   onClick={() => setSearchQuery('')}
-                  className="absolute right-2 top-2 text-[#526a57] hover:text-[#0c2417]"
+                  className="absolute right-2 top-2 text-[#68766C] hover:text-[#203027]"
                   aria-label="Clear search"
                 >
                   <X size={14} />
@@ -411,7 +411,7 @@ function GrowPlansContent() {
                   setSearchQuery('');
                   setStatusFilter('all');
                 }}
-                className="px-2.5 py-1.5 text-xs font-semibold rounded-xl text-[#526a57] hover:bg-[#f4efe6] hover:text-[#0c2417] transition cursor-pointer whitespace-nowrap"
+                className="px-2.5 py-1.5 text-xs font-semibold rounded-xl text-[#68766C] hover:bg-[#F8F6EE] hover:text-[#203027] transition cursor-pointer whitespace-nowrap"
               >
                 Clear
               </button>
@@ -425,7 +425,7 @@ function GrowPlansContent() {
             {[1, 2, 3].map((n) => (
               <div
                 key={n}
-                className="h-48 rounded-2xl bg-white border border-[#ded5c5] animate-pulse p-5"
+                className="h-48 rounded-2xl bg-white border border-[#E3DFD2] animate-pulse p-5"
               />
             ))}
           </div>
@@ -460,7 +460,7 @@ function GrowPlansContent() {
 
 export default function GrowPlansPage() {
   return (
-    <Suspense fallback={<div className="p-8 text-center text-xs text-[#526a57]">Loading Grow Plans...</div>}>
+    <Suspense fallback={<div className="p-8 text-center text-xs text-[#68766C]">Loading Grow Plans...</div>}>
       <GrowPlansContent />
     </Suspense>
   );

@@ -222,7 +222,7 @@ export function LearnDiscoveryClient({ articles, plants }: LearnDiscoveryClientP
     <div className="space-y-10">
       {/* Category Filter Pills */}
       <div className="space-y-3">
-        <label className="text-xs font-bold uppercase tracking-wider text-[#144229] block">
+        <label className="text-xs font-bold uppercase tracking-wider text-[#174C35] block">
           Explore Botanical Discovery Categories:
         </label>
         <div className="flex flex-wrap gap-2.5">
@@ -237,8 +237,8 @@ export function LearnDiscoveryClient({ articles, plants }: LearnDiscoveryClientP
                 onClick={() => setSelectedCategory(cat.id)}
                 className={`inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold transition-all cursor-pointer min-h-[44px] ${
                   isSelected
-                    ? 'bg-[#144229] text-white shadow-xs ring-2 ring-[#144229]/20'
-                    : 'bg-white text-[#445b49] border border-[#ded5c5] hover:bg-[#eef5ee] hover:text-[#0c2417]'
+                    ? 'bg-[#174C35] text-white shadow-xs ring-2 ring-[#174C35]/20'
+                    : 'bg-white text-[#68766C] border border-[#E3DFD2] hover:bg-[#EAF1E4] hover:text-[#203027]'
                 }`}
               >
                 <Icon size={16} />
@@ -251,14 +251,14 @@ export function LearnDiscoveryClient({ articles, plants }: LearnDiscoveryClientP
 
       {/* Discovery Topic Cards */}
       <section className="space-y-6">
-        <div className="flex items-center justify-between pb-3 border-b border-[#f0ebe0]">
+        <div className="flex items-center justify-between pb-3 border-b border-[#E3DFD2]">
           <div>
-            <h3 className="font-serif font-bold text-xl sm:text-2xl text-[#0c2417]">
+            <h3 className="font-serif font-bold text-xl sm:text-2xl text-[#203027]">
               {selectedCategory === 'all'
                 ? 'Curated Horticultural Modules'
                 : CATEGORIES.find((c) => c.id === selectedCategory)?.label}
             </h3>
-            <p className="text-xs sm:text-sm text-[#526a57] mt-0.5">
+            <p className="text-xs sm:text-sm text-[#68766C] mt-0.5">
               Showing {filteredTopics.length} interactive learning module(s)
             </p>
           </div>
@@ -274,11 +274,11 @@ export function LearnDiscoveryClient({ articles, plants }: LearnDiscoveryClientP
             return (
               <div
                 key={topic.id}
-                className="bg-white rounded-3xl border border-[#ded5c5] p-6 sm:p-7 shadow-xs hover:shadow-md transition-all flex flex-col justify-between space-y-4"
+                className="bg-white rounded-3xl border border-[#E3DFD2] p-6 sm:p-7 shadow-xs hover:shadow-md transition-all flex flex-col justify-between space-y-4"
               >
                 <div className="space-y-3">
                   <div className="flex items-center justify-between gap-2 flex-wrap">
-                    <span className="text-xs font-semibold text-[#144229] bg-[#eef5ee] px-2.5 py-1 rounded-md">
+                    <span className="text-xs font-semibold text-[#174C35] bg-[#EAF1E4] px-2.5 py-1 rounded-md">
                       {topic.categoryLabel}
                     </span>
                     <Badge
@@ -295,31 +295,31 @@ export function LearnDiscoveryClient({ articles, plants }: LearnDiscoveryClientP
                     </Badge>
                   </div>
 
-                  <h4 className="font-serif font-bold text-lg sm:text-xl text-[#0c2417]">
+                  <h4 className="font-serif font-bold text-lg sm:text-xl text-[#203027]">
                     {topic.title}
                   </h4>
 
-                  <p className="text-sm text-[#2e4435] leading-relaxed">
+                  <p className="text-sm text-[#203027] leading-relaxed">
                     {topic.summary}
                   </p>
 
                   {/* Expandable Deeper Explanation */}
                   {isExpanded && (
-                    <div className="pt-3 border-t border-[#f0ebe0] space-y-3 animate-in fade-in duration-200">
-                      <div className="bg-[#fbf9f4] p-4 rounded-2xl border border-[#ded5c5] text-xs sm:text-sm text-[#2c3d30] leading-relaxed">
-                        <strong className="text-[#144229] block font-serif font-bold text-sm mb-1">
+                    <div className="pt-3 border-t border-[#E3DFD2] space-y-3 animate-in fade-in duration-200">
+                      <div className="bg-[#F8F6EE] p-4 rounded-2xl border border-[#E3DFD2] text-xs sm:text-sm text-[#203027] leading-relaxed">
+                        <strong className="text-[#174C35] block font-serif font-bold text-sm mb-1">
                           Botanical Mechanism & Science:
                         </strong>
                         {topic.deepExplanation}
                       </div>
 
                       <div className="space-y-2">
-                        <span className="text-xs font-bold uppercase tracking-wider text-[#144229] block">
+                        <span className="text-xs font-bold uppercase tracking-wider text-[#174C35] block">
                           Actionable Best Practices:
                         </span>
                         {topic.actionableTips.map((tip, idx) => (
-                          <div key={idx} className="flex items-start gap-2 text-xs sm:text-sm text-[#2e4435]">
-                            <CheckCircle2 size={16} className="text-[#144229] shrink-0 mt-0.5" />
+                          <div key={idx} className="flex items-start gap-2 text-xs sm:text-sm text-[#203027]">
+                            <CheckCircle2 size={16} className="text-[#174C35] shrink-0 mt-0.5" />
                             <span className="leading-relaxed">{tip}</span>
                           </div>
                         ))}
@@ -332,7 +332,7 @@ export function LearnDiscoveryClient({ articles, plants }: LearnDiscoveryClientP
                   <button
                     type="button"
                     onClick={() => toggleExpand(topic.id)}
-                    className="w-full inline-flex items-center justify-between px-4 py-2.5 rounded-xl border border-[#ded5c5] bg-[#fbf9f4] hover:bg-[#eef5ee] text-xs sm:text-sm font-semibold text-[#144229] transition-colors cursor-pointer min-h-[44px]"
+                    className="w-full inline-flex items-center justify-between px-4 py-2.5 rounded-xl border border-[#E3DFD2] bg-[#F8F6EE] hover:bg-[#EAF1E4] text-xs sm:text-sm font-semibold text-[#174C35] transition-colors cursor-pointer min-h-[44px]"
                   >
                     <span>{isExpanded ? 'Collapse Deeper Science' : 'Read Deeper Scientific Explanation'}</span>
                     {isExpanded ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
@@ -345,24 +345,24 @@ export function LearnDiscoveryClient({ articles, plants }: LearnDiscoveryClientP
       </section>
 
       {/* Interactive Educational Suite: Quiz, Did You Know, Challenge */}
-      <section className="bg-white rounded-3xl border border-[#ded5c5] p-6 sm:p-8 shadow-xs space-y-6">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-[#f0ebe0]">
+      <section className="bg-white rounded-3xl border border-[#E3DFD2] p-6 sm:p-8 shadow-xs space-y-6">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-[#E3DFD2]">
           <div>
-            <h3 className="font-serif font-bold text-xl sm:text-2xl text-[#0c2417] flex items-center gap-2.5">
-              <Sparkles size={22} className="text-[#144229]" />
+            <h3 className="font-serif font-bold text-xl sm:text-2xl text-[#203027] flex items-center gap-2.5">
+              <Sparkles size={22} className="text-[#174C35]" />
               <span>Interactive Knowledge Testing & Daily Challenge</span>
             </h3>
-            <p className="text-xs sm:text-sm text-[#526a57] mt-0.5">
+            <p className="text-xs sm:text-sm text-[#68766C] mt-0.5">
               Test your botanical memory and earn daily gardening badges
             </p>
           </div>
 
           <div className="flex items-center gap-2">
-            <label className="text-xs font-semibold text-[#0c2417]">Select Specimen:</label>
+            <label className="text-xs font-semibold text-[#203027]">Select Specimen:</label>
             <select
               value={selectedQuizSlug}
               onChange={(e) => setSelectedQuizSlug(e.target.value)}
-              className="px-3 py-1.5 rounded-xl border border-[#ded5c5] bg-[#fbf9f4] text-xs font-medium text-[#0c2417] focus:outline-none focus:ring-2 focus:ring-[#144229] min-h-[40px]"
+              className="px-3 py-1.5 rounded-xl border border-[#E3DFD2] bg-[#F8F6EE] text-xs font-medium text-[#203027] focus:outline-none focus:ring-2 focus:ring-[#174C35] min-h-[40px]"
             >
               {plants.map((p) => (
                 <option key={p.slug} value={p.slug}>
@@ -391,12 +391,12 @@ export function LearnDiscoveryClient({ articles, plants }: LearnDiscoveryClientP
       {/* Editorial Guides from Payload CMS */}
       {articles && articles.length > 0 && (
         <section className="space-y-6">
-          <div className="flex items-center justify-between pb-3 border-b border-[#f0ebe0]">
+          <div className="flex items-center justify-between pb-3 border-b border-[#E3DFD2]">
             <div>
-              <h3 className="font-serif font-bold text-xl sm:text-2xl text-[#0c2417]">
+              <h3 className="font-serif font-bold text-xl sm:text-2xl text-[#203027]">
                 Curated Agronomic & Vertical Farming Editorial Guides
               </h3>
-              <p className="text-xs sm:text-sm text-[#526a57] mt-0.5">
+              <p className="text-xs sm:text-sm text-[#68766C] mt-0.5">
                 Managed dynamically via Payload CMS with real botanical workflows
               </p>
             </div>
@@ -409,36 +409,36 @@ export function LearnDiscoveryClient({ articles, plants }: LearnDiscoveryClientP
             {articles.map((art) => (
               <div
                 key={art.id}
-                className="bg-white rounded-3xl p-6 sm:p-7 border border-[#ded5c5] shadow-xs hover:shadow-md transition-all flex flex-col justify-between space-y-4"
+                className="bg-white rounded-3xl p-6 sm:p-7 border border-[#E3DFD2] shadow-xs hover:shadow-md transition-all flex flex-col justify-between space-y-4"
               >
                 <div className="space-y-3">
                   <div className="flex items-center justify-between gap-2">
-                    <span className="text-xs font-bold uppercase tracking-wider text-[#144229] bg-[#eef5ee] px-2.5 py-1 rounded-md">
+                    <span className="text-xs font-bold uppercase tracking-wider text-[#174C35] bg-[#EAF1E4] px-2.5 py-1 rounded-md">
                       {art.categoryLabel || art.category}
                     </span>
                     {art.publishedAt && (
-                      <span className="text-xs font-mono text-[#526a57]">
+                      <span className="text-xs font-mono text-[#68766C]">
                         {art.publishedAt}
                       </span>
                     )}
                   </div>
 
-                  <h4 className="font-serif font-bold text-lg text-[#0c2417] leading-snug">
+                  <h4 className="font-serif font-bold text-lg text-[#203027] leading-snug">
                     {art.title}
                   </h4>
 
-                  <p className="text-sm text-[#2e4435] leading-relaxed">
+                  <p className="text-sm text-[#203027] leading-relaxed">
                     {art.summary}
                   </p>
 
                   {art.keyTakeaways && art.keyTakeaways.length > 0 && (
-                    <div className="pt-3 border-t border-[#f0ebe0] space-y-2">
-                      <span className="text-xs font-bold uppercase tracking-wider text-[#144229] block">
+                    <div className="pt-3 border-t border-[#E3DFD2] space-y-2">
+                      <span className="text-xs font-bold uppercase tracking-wider text-[#174C35] block">
                         Key Takeaways:
                       </span>
                       {art.keyTakeaways.map((takeaway, idx) => (
-                        <div key={idx} className="flex items-start gap-2 text-xs sm:text-sm text-[#2e4435]">
-                          <CheckCircle2 size={16} className="text-[#144229] shrink-0 mt-0.5" />
+                        <div key={idx} className="flex items-start gap-2 text-xs sm:text-sm text-[#203027]">
+                          <CheckCircle2 size={16} className="text-[#174C35] shrink-0 mt-0.5" />
                           <span className="leading-relaxed">{takeaway}</span>
                         </div>
                       ))}
@@ -452,27 +452,27 @@ export function LearnDiscoveryClient({ articles, plants }: LearnDiscoveryClientP
       )}
 
       {/* Bottom CTA Banner */}
-      <div className="p-6 sm:p-8 rounded-3xl bg-[#0e2a1b] text-white flex flex-col sm:flex-row items-center justify-between gap-6 shadow-sm">
+      <div className="p-6 sm:p-8 rounded-3xl bg-[#203027] text-white flex flex-col sm:flex-row items-center justify-between gap-6 shadow-sm">
         <div className="space-y-2 text-center sm:text-left">
           <Badge variant="forest" size="md">Put Knowledge Into Practice</Badge>
           <h4 className="font-serif font-bold text-xl sm:text-2xl text-white">
             Ready to test your botany in the real world?
           </h4>
-          <p className="text-xs sm:text-sm text-[#d1e6d7] max-w-lg">
+          <p className="text-xs sm:text-sm text-[#EAF1E4] max-w-lg">
             Track developmental milestones in My Garden Journal or configure light tiers in the Vertical Planner.
           </p>
         </div>
         <div className="flex flex-wrap items-center gap-3">
           <Link
             href="/app/my-garden"
-            className="inline-flex items-center gap-2 px-6 py-3 rounded-xl text-xs sm:text-sm font-semibold bg-[#257a4d] text-white hover:bg-[#1e613b] shadow-xs transition-colors min-h-[44px]"
+            className="inline-flex items-center gap-2 px-6 py-3 rounded-xl text-xs sm:text-sm font-semibold bg-[#174C35] text-white hover:bg-[#174C35] shadow-xs transition-colors min-h-[44px]"
           >
             <Sprout size={16} />
             <span>Open Garden Journal</span>
           </Link>
           <Link
             href="/app/planner"
-            className="inline-flex items-center gap-2 px-6 py-3 rounded-xl text-xs sm:text-sm font-semibold bg-white text-[#0e2a1b] hover:bg-[#fbf9f4] transition-colors min-h-[44px]"
+            className="inline-flex items-center gap-2 px-6 py-3 rounded-xl text-xs sm:text-sm font-semibold bg-white text-[#203027] hover:bg-[#F8F6EE] transition-colors min-h-[44px]"
           >
             <Layers size={16} />
             <span>Open Planner</span>

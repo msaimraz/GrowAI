@@ -40,36 +40,36 @@ const OUTCOME_OPTIONS: Array<{
     value: 'improving',
     label: 'Improving',
     description: 'Foliage is recovering, discoloration is subsiding, or new growth is healthy.',
-    badgeClass: 'bg-[#f0f9ff] text-[#0369a1] border-[#bae6fd]',
-    dotClass: 'bg-[#0284c7]',
+    badgeClass: 'bg-[#E7F2F9] text-[#1B5D88] border-[#65A8D0/30]',
+    dotClass: 'bg-[#1B5D88]',
   },
   {
     value: 'unchanged',
     label: 'Unchanged',
     description: 'Symptoms persist without obvious progression or regression.',
-    badgeClass: 'bg-[#fffbeb] text-[#92400e] border-[#fde68a]',
-    dotClass: 'bg-[#d97706]',
+    badgeClass: 'bg-[#FFF3D7] text-[#8A6400] border-[#F0C04D/30]',
+    dotClass: 'bg-[#F0C04D]',
   },
   {
     value: 'worsening',
     label: 'Worsening',
     description: 'Spots spreading, yellowing expanding, pests multiplying, or wilting deepening.',
-    badgeClass: 'bg-[#fef2f2] text-[#991b1b] border-[#fecaca]',
-    dotClass: 'bg-[#dc2626]',
+    badgeClass: 'bg-[#FBE9E2] text-[#963A23] border-[#E4775D/30]',
+    dotClass: 'bg-[#963A23]',
   },
   {
     value: 'resolved',
     label: 'Resolved',
     description: 'Condition is cleared, plant has stabilized, and normal growth has resumed.',
-    badgeClass: 'bg-[#ecfdf5] text-[#065f46] border-[#a7f3d0]',
-    dotClass: 'bg-[#059669]',
+    badgeClass: 'bg-[#EAF1E4] text-[#174C35] border-[#78A95A/30]',
+    dotClass: 'bg-[#174C35]',
   },
   {
     value: 'uncertain',
     label: 'Uncertain',
     description: 'Not enough clear visual evidence yet to confirm direction of recovery.',
-    badgeClass: 'bg-[#f8fafc] text-[#475569] border-[#e2e8f0]',
-    dotClass: 'bg-[#94a3b8]',
+    badgeClass: 'bg-[#F8F6EE] text-[#68766C] border-[#E3DFD2]',
+    dotClass: 'bg-[#68766C]',
   },
 ];
 
@@ -182,25 +182,25 @@ export function RecordFollowUpModal({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/50 backdrop-blur-xs overflow-y-auto">
-      <div className="bg-white rounded-3xl max-w-[calc(100vw-24px)] sm:max-w-lg w-full p-5 sm:p-8 shadow-xl border border-[#ded5c5] my-auto max-h-[90vh] overflow-y-auto animate-in fade-in zoom-in-95 duration-200">
+      <div className="bg-white rounded-3xl max-w-[calc(100vw-24px)] sm:max-w-lg w-full p-5 sm:p-8 shadow-xl border border-[#E3DFD2] my-auto max-h-[90vh] overflow-y-auto animate-in fade-in zoom-in-95 duration-200">
         {/* Header */}
-        <div className="flex items-start justify-between pb-4 border-b border-[#f0ebe0]">
+        <div className="flex items-start justify-between pb-4 border-b border-[#E3DFD2]">
           <div>
-            <span className="text-[11px] font-bold uppercase tracking-wider text-[#144229] bg-[#eef5ee] px-2.5 py-1 rounded-full inline-flex items-center gap-1.5 mb-1.5">
+            <span className="text-[11px] font-bold uppercase tracking-wider text-[#174C35] bg-[#EAF1E4] px-2.5 py-1 rounded-full inline-flex items-center gap-1.5 mb-1.5">
               <Activity size={12} />
               Health Monitoring
             </span>
-            <h3 className="font-serif font-bold text-xl text-[#0c2417]">
+            <h3 className="font-serif font-bold text-xl text-[#203027]">
               Record Follow-Up Observation
             </h3>
-            <p className="text-xs text-[#526a57] mt-1">
+            <p className="text-xs text-[#68766C] mt-1">
               Document how {diagnosis.plantIdentification} is responding to care and environmental adjustments.
             </p>
           </div>
           <button
             type="button"
             onClick={onClose}
-            className="p-2 text-[#526a57] hover:text-[#0c2417] hover:bg-[#f4efe6] rounded-xl transition-colors min-h-[44px] min-w-[44px] flex items-center justify-center cursor-pointer"
+            className="p-2 text-[#68766C] hover:text-[#203027] hover:bg-[#F8F6EE] rounded-xl transition-colors min-h-[44px] min-w-[44px] flex items-center justify-center cursor-pointer"
             aria-label="Close modal"
           >
             <X size={20} />
@@ -208,7 +208,7 @@ export function RecordFollowUpModal({
         </div>
 
         {error && (
-          <div className="mt-4 p-3.5 bg-[#fef2f2] border border-[#fecaca] text-[#991b1b] rounded-xl text-xs flex items-center gap-2">
+          <div className="mt-4 p-3.5 bg-[#FBE9E2] border border-[#E4775D/30] text-[#963A23] rounded-xl text-xs flex items-center gap-2">
             <AlertCircle size={16} className="shrink-0" />
             <span>{error}</span>
           </div>
@@ -217,7 +217,7 @@ export function RecordFollowUpModal({
         <form onSubmit={handleSubmit} className="space-y-5 mt-5">
           {/* 1. Outcome Selector */}
           <div>
-            <label className="block text-xs font-bold uppercase tracking-wider text-[#144229] mb-2.5">
+            <label className="block text-xs font-bold uppercase tracking-wider text-[#174C35] mb-2.5">
               Observed Direction of Health:
             </label>
             <div className="space-y-2">
@@ -229,19 +229,19 @@ export function RecordFollowUpModal({
                     onClick={() => setOutcome(opt.value)}
                     className={`p-3.5 rounded-2xl border text-xs cursor-pointer transition-all flex items-start gap-3 min-h-[52px] ${
                       isSelected
-                        ? `${opt.badgeClass} ring-2 ring-[#144229]/20 shadow-xs font-semibold`
-                        : 'bg-[#fbf9f4] border-[#ded5c5] hover:bg-white text-[#3d5242]'
+                        ? `${opt.badgeClass} ring-2 ring-[#174C35]/20 shadow-xs font-semibold`
+                        : 'bg-[#F8F6EE] border-[#E3DFD2] hover:bg-white text-[#203027]'
                     }`}
                   >
                     <span
                       className={`w-3.5 h-3.5 rounded-full shrink-0 mt-0.5 border ${
-                        isSelected ? `${opt.dotClass} border-transparent ring-2 ring-white` : 'border-[#9ab8a3] bg-white'
+                        isSelected ? `${opt.dotClass} border-transparent ring-2 ring-white` : 'border-[#78A95A] bg-white'
                       }`}
                     />
                     <div className="flex-1">
                       <div className="flex items-center justify-between">
-                        <strong className="text-xs text-[#0c2417] font-semibold">{opt.label}</strong>
-                        {isSelected && <CheckCircle2 size={15} className="shrink-0 text-[#144229]" />}
+                        <strong className="text-xs text-[#203027] font-semibold">{opt.label}</strong>
+                        {isSelected && <CheckCircle2 size={15} className="shrink-0 text-[#174C35]" />}
                       </div>
                       <p className="text-[11px] opacity-85 mt-0.5 leading-relaxed">{opt.description}</p>
                     </div>
@@ -253,16 +253,16 @@ export function RecordFollowUpModal({
 
           {/* 2. Observation Date */}
           <div>
-            <label className="block text-xs font-bold uppercase tracking-wider text-[#144229] mb-1.5">
+            <label className="block text-xs font-bold uppercase tracking-wider text-[#174C35] mb-1.5">
               Observation Date:
             </label>
             <div className="relative">
-              <Calendar size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[#526a57]" />
+              <Calendar size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[#68766C]" />
               <input
                 type="date"
                 value={followUpDate}
                 onChange={(e) => setFollowUpDate(e.target.value)}
-                className="w-full pl-10 pr-3.5 py-2.5 rounded-xl border border-[#ded5c5] bg-[#fbf9f4] focus:bg-white focus:outline-none focus:border-[#144229] text-xs sm:text-sm text-[#0c2417] min-h-[44px]"
+                className="w-full pl-10 pr-3.5 py-2.5 rounded-xl border border-[#E3DFD2] bg-[#F8F6EE] focus:bg-white focus:outline-none focus:border-[#174C35] text-xs sm:text-sm text-[#203027] min-h-[44px]"
                 required
               />
             </div>
@@ -270,7 +270,7 @@ export function RecordFollowUpModal({
 
           {/* 3. Observation Notes */}
           <div>
-            <label className="block text-xs font-bold uppercase tracking-wider text-[#144229] mb-1.5">
+            <label className="block text-xs font-bold uppercase tracking-wider text-[#174C35] mb-1.5">
               Foliage & Care Notes (Optional):
             </label>
             <textarea
@@ -278,13 +278,13 @@ export function RecordFollowUpModal({
               value={notes}
               onChange={(e) => setNotes(e.target.value)}
               placeholder="e.g. Watered deeply from bottom; leaf yellowing has stabilized. No new mite webbing spotted on leaf undersides."
-              className="w-full p-3 rounded-xl border border-[#ded5c5] bg-[#fbf9f4] focus:bg-white focus:outline-none focus:border-[#144229] text-xs sm:text-sm text-[#0c2417] resize-none"
+              className="w-full p-3 rounded-xl border border-[#E3DFD2] bg-[#F8F6EE] focus:bg-white focus:outline-none focus:border-[#174C35] text-xs sm:text-sm text-[#203027] resize-none"
             />
           </div>
 
           {/* 4. Optional Photo Attachment */}
           <div>
-            <label className="block text-xs font-bold uppercase tracking-wider text-[#144229] mb-1.5">
+            <label className="block text-xs font-bold uppercase tracking-wider text-[#174C35] mb-1.5">
               Attach Follow-Up Photo (Optional):
             </label>
             <input
@@ -296,22 +296,22 @@ export function RecordFollowUpModal({
             />
 
             {previewUrl ? (
-              <div className="relative rounded-2xl overflow-hidden border border-[#ded5c5] bg-[#fbf9f4] p-2 flex items-center gap-3">
+              <div className="relative rounded-2xl overflow-hidden border border-[#E3DFD2] bg-[#F8F6EE] p-2 flex items-center gap-3">
                 <img
                   src={previewUrl}
                   alt="Follow-up preview"
                   className="w-16 h-16 object-cover rounded-xl shrink-0"
                 />
                 <div className="flex-1 min-w-0 text-xs">
-                  <p className="font-semibold text-[#0c2417] truncate">{selectedFile?.name}</p>
-                  <p className="text-[11px] text-[#526a57]">
+                  <p className="font-semibold text-[#203027] truncate">{selectedFile?.name}</p>
+                  <p className="text-[11px] text-[#68766C]">
                     {((selectedFile?.size || 0) / 1024).toFixed(1)} KB • WebP compressed on save
                   </p>
                 </div>
                 <button
                   type="button"
                   onClick={handleRemovePhoto}
-                  className="p-2 text-[#b95835] hover:bg-[#fbeee9] rounded-xl transition-colors min-h-[44px] min-w-[44px] flex items-center justify-center cursor-pointer"
+                  className="p-2 text-[#963A23] hover:bg-[#FBE9E2] rounded-xl transition-colors min-h-[44px] min-w-[44px] flex items-center justify-center cursor-pointer"
                   title="Remove attached photo"
                 >
                   <Trash2 size={16} />
@@ -321,14 +321,14 @@ export function RecordFollowUpModal({
               <button
                 type="button"
                 onClick={() => fileInputRef.current?.click()}
-                className="w-full py-3 px-4 rounded-xl border border-dashed border-[#ded5c5] hover:border-[#144229] bg-[#fbf9f4] hover:bg-white text-xs text-[#526a57] hover:text-[#144229] transition-all flex items-center justify-center gap-2 cursor-pointer min-h-[48px]"
+                className="w-full py-3 px-4 rounded-xl border border-dashed border-[#E3DFD2] hover:border-[#174C35] bg-[#F8F6EE] hover:bg-white text-xs text-[#68766C] hover:text-[#174C35] transition-all flex items-center justify-center gap-2 cursor-pointer min-h-[48px]"
               >
                 <Camera size={16} />
                 <span>Snap or Upload Progress Photo</span>
               </button>
             )}
             {!diagnosis.userPlantId && selectedFile && (
-              <p className="text-[11px] text-[#92400e] mt-1.5 flex items-center gap-1">
+              <p className="text-[11px] text-[#8A6400] mt-1.5 flex items-center gap-1">
                 <AlertCircle size={12} className="shrink-0" />
                 <span>This diagnosis is not linked to a garden plant; photo will be linked to this diagnosis entry.</span>
               </p>
@@ -336,27 +336,27 @@ export function RecordFollowUpModal({
           </div>
 
           {/* Educational Disclaimer */}
-          <div className="p-3 bg-[#eef5ee] border border-[#cfe0cf] rounded-xl text-[11px] text-[#2c5237] leading-relaxed flex items-start gap-2">
-            <Sparkles size={14} className="shrink-0 mt-0.5 text-[#144229]" />
+          <div className="p-3 bg-[#EAF1E4] border border-[#E3DFD2] rounded-xl text-[11px] text-[#174C35] leading-relaxed flex items-start gap-2">
+            <Sparkles size={14} className="shrink-0 mt-0.5 text-[#174C35]" />
             <span>
               Follow-up tracking is observational. Recording recovery tracks symptom progression but does not guarantee complete botanical eradication.
             </span>
           </div>
 
           {/* Action Buttons */}
-          <div className="flex items-center justify-end gap-3 pt-3 border-t border-[#f0ebe0]">
+          <div className="flex items-center justify-end gap-3 pt-3 border-t border-[#E3DFD2]">
             <button
               type="button"
               onClick={onClose}
               disabled={saving}
-              className="px-4 py-2.5 rounded-xl border border-[#ded5c5] bg-white text-xs font-semibold text-[#526a57] hover:bg-[#f4efe6] transition-colors min-h-[44px] cursor-pointer"
+              className="px-4 py-2.5 rounded-xl border border-[#E3DFD2] bg-white text-xs font-semibold text-[#68766C] hover:bg-[#F8F6EE] transition-colors min-h-[44px] cursor-pointer"
             >
               Cancel
             </button>
             <button
               type="submit"
               disabled={saving}
-              className="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl bg-[#144229] hover:bg-[#0c2417] text-white text-xs font-semibold shadow-xs transition-colors disabled:opacity-50 min-h-[44px] cursor-pointer"
+              className="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl bg-[#174C35] hover:bg-[#203027] text-white text-xs font-semibold shadow-xs transition-colors disabled:opacity-50 min-h-[44px] cursor-pointer"
             >
               {saving ? (
                 <>

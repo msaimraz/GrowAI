@@ -1,5 +1,4 @@
 import React from 'react';
-import { Sun, Droplets, Sprout, Thermometer, Box } from 'lucide-react';
 
 interface CareBadgeProps {
   type: 'sun' | 'water' | 'difficulty' | 'temp' | 'container' | 'custom';
@@ -22,44 +21,44 @@ export function CareBadge({
     switch (type) {
       case 'sun':
         return {
-          bg: 'bg-[#FFF0D8]',
-          text: 'text-[#9A5B00]',
-          border: 'border-[#FDE3B8]',
+          bg: 'bg-[#FFF3D7]',
+          text: 'text-[#8A6400]',
+          border: 'border-[#F0C04D]/35',
           defaultIcon: '☀️',
         };
       case 'water':
         return {
-          bg: 'bg-[#E3EFFB]',
-          text: 'text-[#1D63A8]',
-          border: 'border-[#C8E1F8]',
+          bg: 'bg-[#E7F2F9]',
+          text: 'text-[#1B5D88]',
+          border: 'border-[#65A8D0]/35',
           defaultIcon: '💧',
         };
       case 'difficulty':
         return {
-          bg: 'bg-[#E6F0E3]',
-          text: 'text-[#1E6B3E]',
-          border: 'border-[#CEE4C9]',
+          bg: 'bg-[#EAF1E4]',
+          text: 'text-[#174C35]',
+          border: 'border-[#78A95A]/35',
           defaultIcon: '🌱',
         };
       case 'temp':
         return {
-          bg: 'bg-[#FBE4DC]',
-          text: 'text-[#A84A2A]',
-          border: 'border-[#F8CEC1]',
+          bg: 'bg-[#FBE9E2]',
+          text: 'text-[#963A23]',
+          border: 'border-[#E4775D]/35',
           defaultIcon: '🌡️',
         };
       case 'container':
         return {
-          bg: 'bg-[#EEE8F6]',
-          text: 'text-[#5C3FA3]',
-          border: 'border-[#DDD2EE]',
+          bg: 'bg-[#F0ECF7]',
+          text: 'text-[#594186]',
+          border: 'border-[#9A83C5]/35',
           defaultIcon: '🪴',
         };
       default:
         return {
-          bg: 'bg-[#F3F6EC]',
-          text: 'text-[#263E2E]',
-          border: 'border-[#DFE7D4]',
+          bg: 'bg-[#EAF1E4]',
+          text: 'text-[#203027]',
+          border: 'border-[#E3DFD2]',
           defaultIcon: '✨',
         };
     }
@@ -88,4 +87,3 @@ export function CareBadge({
     </span>
   );
 }
-

@@ -128,14 +128,14 @@ export function ReminderFormModal({
 
   return (
     <div className="fixed inset-0 z-60 flex items-center justify-center p-3 sm:p-4 bg-black/50 backdrop-blur-xs animate-in fade-in duration-200">
-      <div className="w-full max-w-[calc(100vw-24px)] sm:max-w-lg bg-[#fbf9f4] rounded-3xl border border-[#ded5c5] shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
+      <div className="w-full max-w-[calc(100vw-24px)] sm:max-w-lg bg-[#F8F6EE] rounded-3xl border border-[#E3DFD2] shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
         {/* Header */}
-        <div className="flex items-center justify-between p-5 border-b border-[#ded5c5] bg-white">
+        <div className="flex items-center justify-between p-5 border-b border-[#E3DFD2] bg-white">
           <div className="flex items-center gap-2">
-            <span className="w-7 h-7 rounded-lg bg-[#eef5ee] text-[#144229] flex items-center justify-center">
+            <span className="w-7 h-7 rounded-lg bg-[#EAF1E4] text-[#174C35] flex items-center justify-center">
               <Plus size={16} />
             </span>
-            <h3 className="font-serif text-lg font-bold text-[#0c2417]">
+            <h3 className="font-serif text-lg font-bold text-[#203027]">
               New Garden Reminder
             </h3>
           </div>
@@ -143,7 +143,7 @@ export function ReminderFormModal({
           <button
             type="button"
             onClick={onClose}
-            className="p-1.5 rounded-xl text-[#526a57] hover:bg-[#eef5ee] hover:text-[#144229] transition-colors cursor-pointer"
+            className="p-1.5 rounded-xl text-[#68766C] hover:bg-[#EAF1E4] hover:text-[#174C35] transition-colors cursor-pointer"
             aria-label="Close form"
           >
             <X size={18} />
@@ -161,7 +161,7 @@ export function ReminderFormModal({
 
           {/* Title */}
           <div>
-            <label className="block text-xs font-semibold text-[#0c2417] mb-1">
+            <label className="block text-xs font-semibold text-[#203027] mb-1">
               Reminder Title *
             </label>
             <input
@@ -170,20 +170,20 @@ export function ReminderFormModal({
               onChange={(e) => setTitle(e.target.value)}
               placeholder="e.g. Inspect balcony tomatoes for pests"
               required
-              className="w-full px-3.5 py-2.5 rounded-xl bg-white border border-[#ded5c5] text-xs sm:text-sm text-[#0c2417] placeholder:text-[#a89f91] focus:outline-none focus:ring-2 focus:ring-[#144229]"
+              className="w-full px-3.5 py-2.5 rounded-xl bg-white border border-[#E3DFD2] text-xs sm:text-sm text-[#203027] placeholder:text-[#68766C] focus:outline-none focus:ring-2 focus:ring-[#174C35]"
             />
           </div>
 
           {/* Associate Plant */}
           <div>
-            <label className="block text-xs font-semibold text-[#0c2417] mb-1 flex items-center gap-1">
-              <Sprout size={13} className="text-[#144229]" />
+            <label className="block text-xs font-semibold text-[#203027] mb-1 flex items-center gap-1">
+              <Sprout size={13} className="text-[#174C35]" />
               <span>Associated Plant (Optional)</span>
             </label>
             <select
               value={selectedPlantId}
               onChange={(e) => setSelectedPlantId(e.target.value)}
-              className="w-full px-3.5 py-2.5 rounded-xl bg-white border border-[#ded5c5] text-xs sm:text-sm text-[#0c2417] focus:outline-none focus:ring-2 focus:ring-[#144229]"
+              className="w-full px-3.5 py-2.5 rounded-xl bg-white border border-[#E3DFD2] text-xs sm:text-sm text-[#203027] focus:outline-none focus:ring-2 focus:ring-[#174C35]"
             >
               <option value="">None (General Garden Reminder)</option>
               {plants.map((p) => (
@@ -197,8 +197,8 @@ export function ReminderFormModal({
           {/* Date & Time */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div>
-              <label className="block text-xs font-semibold text-[#0c2417] mb-1 flex items-center gap-1">
-                <Calendar size={13} className="text-[#144229]" />
+              <label className="block text-xs font-semibold text-[#203027] mb-1 flex items-center gap-1">
+                <Calendar size={13} className="text-[#174C35]" />
                 <span>Due Date *</span>
               </label>
               <input
@@ -206,35 +206,35 @@ export function ReminderFormModal({
                 value={dueDate}
                 onChange={(e) => setDueDate(e.target.value)}
                 required
-                className="w-full px-3.5 py-2 rounded-xl bg-white border border-[#ded5c5] text-xs sm:text-sm text-[#0c2417] focus:outline-none focus:ring-2 focus:ring-[#144229]"
+                className="w-full px-3.5 py-2 rounded-xl bg-white border border-[#E3DFD2] text-xs sm:text-sm text-[#203027] focus:outline-none focus:ring-2 focus:ring-[#174C35]"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-[#0c2417] mb-1 flex items-center gap-1">
-                <Clock size={13} className="text-[#144229]" />
+              <label className="block text-xs font-semibold text-[#203027] mb-1 flex items-center gap-1">
+                <Clock size={13} className="text-[#174C35]" />
                 <span>Time</span>
               </label>
               <input
                 type="time"
                 value={dueTime}
                 onChange={(e) => setDueTime(e.target.value)}
-                className="w-full px-3.5 py-2 rounded-xl bg-white border border-[#ded5c5] text-xs sm:text-sm text-[#0c2417] focus:outline-none focus:ring-2 focus:ring-[#144229]"
+                className="w-full px-3.5 py-2 rounded-xl bg-white border border-[#E3DFD2] text-xs sm:text-sm text-[#203027] focus:outline-none focus:ring-2 focus:ring-[#174C35]"
               />
             </div>
           </div>
 
           {/* Recurrence */}
-          <div className="p-3.5 rounded-2xl bg-white border border-[#ded5c5] space-y-3">
+          <div className="p-3.5 rounded-2xl bg-white border border-[#E3DFD2] space-y-3">
             <div>
-              <label className="block text-xs font-semibold text-[#0c2417] mb-1 flex items-center gap-1">
-                <Repeat size={13} className="text-[#144229]" />
+              <label className="block text-xs font-semibold text-[#203027] mb-1 flex items-center gap-1">
+                <Repeat size={13} className="text-[#174C35]" />
                 <span>Repeat Schedule</span>
               </label>
               <select
                 value={recurrenceType}
                 onChange={(e) => setRecurrenceType(e.target.value as RecurrenceType)}
-                className="w-full px-3.5 py-2 rounded-xl bg-[#fbf9f4] border border-[#ded5c5] text-xs text-[#0c2417] focus:outline-none focus:ring-2 focus:ring-[#144229]"
+                className="w-full px-3.5 py-2 rounded-xl bg-[#F8F6EE] border border-[#E3DFD2] text-xs text-[#203027] focus:outline-none focus:ring-2 focus:ring-[#174C35]"
               >
                 <option value="none">Does not repeat (One-time)</option>
                 <option value="daily">Daily</option>
@@ -247,7 +247,7 @@ export function ReminderFormModal({
 
             {(recurrenceType === 'every_n_days' || recurrenceType === 'every_n_weeks') && (
               <div>
-                <label className="block text-[11px] font-semibold text-[#526a57] mb-1">
+                <label className="block text-[11px] font-semibold text-[#68766C] mb-1">
                   Interval ({recurrenceType === 'every_n_days' ? 'Days' : 'Weeks'})
                 </label>
                 <input
@@ -256,7 +256,7 @@ export function ReminderFormModal({
                   max="365"
                   value={interval}
                   onChange={(e) => setInterval(Math.max(1, parseInt(e.target.value, 10) || 1))}
-                  className="w-24 px-3 py-1.5 rounded-xl bg-white border border-[#ded5c5] text-xs text-[#0c2417]"
+                  className="w-24 px-3 py-1.5 rounded-xl bg-white border border-[#E3DFD2] text-xs text-[#203027]"
                 />
               </div>
             )}
@@ -264,7 +264,7 @@ export function ReminderFormModal({
 
           {/* Priority */}
           <div>
-            <label className="block text-xs font-semibold text-[#0c2417] mb-1">
+            <label className="block text-xs font-semibold text-[#203027] mb-1">
               Priority
             </label>
             <div className="grid grid-cols-4 gap-2">
@@ -275,8 +275,8 @@ export function ReminderFormModal({
                   onClick={() => setPriority(pr)}
                   className={`py-2 text-xs font-semibold rounded-xl border capitalize transition-all cursor-pointer ${
                     priority === pr
-                      ? 'bg-[#144229] text-white border-[#144229]'
-                      : 'bg-white text-[#526a57] border-[#ded5c5] hover:bg-[#eef5ee]'
+                      ? 'bg-[#174C35] text-white border-[#174C35]'
+                      : 'bg-white text-[#68766C] border-[#E3DFD2] hover:bg-[#EAF1E4]'
                   }`}
                 >
                   {pr}
@@ -287,7 +287,7 @@ export function ReminderFormModal({
 
           {/* Notes / Body */}
           <div>
-            <label className="block text-xs font-semibold text-[#0c2417] mb-1">
+            <label className="block text-xs font-semibold text-[#203027] mb-1">
               Observation Details or Notes
             </label>
             <textarea
@@ -295,23 +295,23 @@ export function ReminderFormModal({
               onChange={(e) => setBody(e.target.value)}
               rows={3}
               placeholder="Add optional notes, observations, or special instructions..."
-              className="w-full px-3.5 py-2.5 rounded-xl bg-white border border-[#ded5c5] text-xs sm:text-sm text-[#0c2417] placeholder:text-[#a89f91] focus:outline-none focus:ring-2 focus:ring-[#144229]"
+              className="w-full px-3.5 py-2.5 rounded-xl bg-white border border-[#E3DFD2] text-xs sm:text-sm text-[#203027] placeholder:text-[#68766C] focus:outline-none focus:ring-2 focus:ring-[#174C35]"
             />
           </div>
 
           {/* Submit Buttons */}
-          <div className="pt-2 flex items-center justify-end gap-2 border-t border-[#ded5c5]">
+          <div className="pt-2 flex items-center justify-end gap-2 border-t border-[#E3DFD2]">
             <button
               type="button"
               onClick={onClose}
-              className="px-4 py-2 text-xs font-semibold rounded-xl bg-white border border-[#ded5c5] text-[#526a57] hover:bg-[#eef5ee] transition-all cursor-pointer min-h-[40px]"
+              className="px-4 py-2 text-xs font-semibold rounded-xl bg-white border border-[#E3DFD2] text-[#68766C] hover:bg-[#EAF1E4] transition-all cursor-pointer min-h-[40px]"
             >
               Cancel
             </button>
             <button
               type="submit"
               disabled={submitting}
-              className="inline-flex items-center gap-1.5 px-4 py-2 text-xs font-semibold rounded-xl bg-[#144229] text-white hover:bg-[#0c2417] active:scale-[0.98] disabled:opacity-50 select-none touch-manipulation transition-all cursor-pointer min-h-[40px]"
+              className="inline-flex items-center gap-1.5 px-4 py-2 text-xs font-semibold rounded-xl bg-[#174C35] text-white hover:bg-[#203027] active:scale-[0.98] disabled:opacity-50 select-none touch-manipulation transition-all cursor-pointer min-h-[40px]"
             >
               {submitting ? (
                 <>

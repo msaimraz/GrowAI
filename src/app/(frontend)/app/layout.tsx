@@ -8,7 +8,7 @@ export default function AppLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="min-h-screen flex bg-[#fbf9f4] text-[#1c261e]">
+    <div className="min-h-screen flex bg-[#F8F6EE] text-[#203027]">
       {/* Desktop Sidebar */}
       <AppSidebar />
 

@@ -72,26 +72,26 @@ export function AppHeader({
 
   return (
     <>
-      <header className="sticky top-0 z-30 w-full bg-[#fbf9f4]/95 backdrop-blur-md border-b border-[#ded5c5] px-3 sm:px-6 lg:px-8 py-2.5 sm:py-3.5 shadow-2xs">
+      <header className="sticky top-0 z-30 w-full bg-[#F8F6EE]/95 backdrop-blur-md border-b border-[#E3DFD2] px-3 sm:px-6 lg:px-8 py-2.5 sm:py-3.5 shadow-2xs">
         <div className="flex items-center justify-between gap-2.5 sm:gap-4 max-w-7xl mx-auto">
           {/* Left: Hamburger menu toggle + Controlled Page Title */}
           <div className="flex items-center gap-2 sm:gap-3.5 min-w-0 flex-1">
             <button
               type="button"
               onClick={() => setMobileMenuOpen(true)}
-              className="lg:hidden p-2 rounded-xl text-[#144229] hover:bg-[#ede7da] active:scale-95 focus:outline-none focus:ring-2 focus:ring-[#144229] min-h-[44px] min-w-[44px] flex items-center justify-center cursor-pointer transition-all duration-75 select-none touch-manipulation shrink-0"
+              className="lg:hidden p-2 rounded-xl text-[#174C35] hover:bg-[#EAF1E4] active:scale-95 focus:outline-none focus:ring-2 focus:ring-[#174C35] min-h-[44px] min-w-[44px] flex items-center justify-center cursor-pointer transition-all duration-75 select-none touch-manipulation shrink-0"
               aria-label="Open navigation menu"
             >
               <Menu size={22} />
             </button>
             <div className="min-w-0 flex-1 pr-2 sm:pr-4">
               {title && (
-                <h1 className="text-lg sm:text-xl lg:text-2xl font-serif font-bold text-[#071c11] tracking-tight leading-snug sm:leading-tight">
+                <h1 className="text-lg sm:text-xl lg:text-2xl font-serif font-bold text-[#203027] tracking-tight leading-snug sm:leading-tight">
                   {title}
                 </h1>
               )}
               {subtitle && (
-                <p className="hidden md:block text-xs sm:text-sm text-[#2e4435] mt-0.5 font-medium leading-normal">
+                <p className="hidden md:block text-xs sm:text-sm text-[#68766C] mt-0.5 font-medium leading-normal">
                   {subtitle}
                 </p>
               )}
@@ -103,7 +103,7 @@ export function AppHeader({
             {/* Offline Status Indicator Pill */}
             {isOffline && (
               <span
-                className="inline-flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-full text-xs font-semibold bg-[#fff3cd] text-[#855302] border border-[#ffeeba] shadow-2xs shrink-0"
+                className="inline-flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-full text-xs font-semibold bg-[#FFF3D7] text-[#8A6400] border border-[#F0C04D]/35 shadow-2xs shrink-0"
                 role="status"
                 aria-live="polite"
               >
@@ -117,7 +117,7 @@ export function AppHeader({
               <button
                 type="button"
                 onClick={promptInstall}
-                className="hidden sm:inline-flex lg:hidden items-center gap-1.5 px-3 py-2 text-xs sm:text-sm font-semibold bg-[#eef5ee] text-[#144229] hover:bg-[#dfeadf] border border-[#cfe0cf] rounded-xl shadow-2xs transition-all cursor-pointer min-h-[40px]"
+                className="hidden sm:inline-flex lg:hidden items-center gap-1.5 px-3 py-2 text-xs sm:text-sm font-semibold bg-[#eef5ee] text-[#174C35] hover:bg-[#dfeadf] border border-[#cfe0cf] rounded-xl shadow-2xs transition-all cursor-pointer min-h-[40px]"
                 aria-label="Install GrowAI Progressive Web App"
               >
                 <DownloadCloud size={15} />
@@ -129,7 +129,7 @@ export function AppHeader({
               <button
                 type="button"
                 onClick={() => setShowIosInstructions(true)}
-                className="hidden sm:inline-flex lg:hidden items-center gap-1.5 px-3 py-2 text-xs sm:text-sm font-semibold bg-[#eef5ee] text-[#144229] hover:bg-[#dfeadf] border border-[#cfe0cf] rounded-xl shadow-2xs transition-all cursor-pointer min-h-[40px]"
+                className="hidden sm:inline-flex lg:hidden items-center gap-1.5 px-3 py-2 text-xs sm:text-sm font-semibold bg-[#eef5ee] text-[#174C35] hover:bg-[#dfeadf] border border-[#cfe0cf] rounded-xl shadow-2xs transition-all cursor-pointer min-h-[40px]"
                 aria-label="How to install GrowAI on iOS"
               >
                 <DownloadCloud size={15} />
@@ -149,7 +149,7 @@ export function AppHeader({
             {actionLabel && actionHref && (
               <Link
                 href={actionHref}
-                className="inline-flex items-center justify-center gap-1.5 px-3 sm:px-3.5 py-2 text-xs sm:text-sm font-semibold bg-[#144229] text-white hover:bg-[#071c11] active:scale-95 rounded-xl shadow-xs transition-all duration-75 select-none touch-manipulation hover:shadow focus:outline-none focus:ring-2 focus:ring-[#144229] min-h-[40px] shrink-0"
+                className="inline-flex items-center justify-center gap-1.5 px-3 sm:px-3.5 py-2 text-xs sm:text-sm font-semibold bg-[#174C35] text-white hover:bg-[#123E2A] active:scale-95 rounded-xl shadow-xs transition-all duration-75 select-none touch-manipulation hover:shadow focus:outline-none focus:ring-2 focus:ring-[#174C35] min-h-[40px] shrink-0"
                 aria-label={actionLabel}
               >
                 {actionIcon === 'plus' && <Plus size={15} className="shrink-0" />}

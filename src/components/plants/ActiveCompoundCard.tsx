@@ -47,25 +47,25 @@ export function ActiveCompoundCard({ compound }: ActiveCompoundCardProps) {
     COMPOUND_PLAIN_EXPLANATIONS[compound.name.split(' ')[0]];
 
   return (
-    <div className="bg-white rounded-3xl border border-[#ded5c5] p-5 sm:p-6 shadow-xs hover:border-[#144229]/40 transition-all space-y-4 flex flex-col justify-between">
+    <div className="bg-white rounded-3xl border border-[#E3DFD2] p-5 sm:p-6 shadow-xs hover:border-[#174C35]/40 transition-all space-y-4 flex flex-col justify-between">
       <div className="space-y-3.5">
         {/* Card Header: Compound name + Chemical Class */}
-        <div className="flex flex-wrap items-start justify-between gap-2.5 pb-2.5 border-b border-[#f0ebe0]">
+        <div className="flex flex-wrap items-start justify-between gap-2.5 pb-2.5 border-b border-[#E3DFD2]">
           <div className="space-y-1">
-            <h4 className="text-lg sm:text-xl font-serif font-bold text-[#071c11] flex items-center gap-2">
-              <Sparkles size={18} className="text-[#c77712] shrink-0" />
+            <h4 className="text-lg sm:text-xl font-serif font-bold text-[#203027] flex items-center gap-2">
+              <Sparkles size={18} className="text-[#F0C04D] shrink-0" />
               <span>{compound.name}</span>
             </h4>
             {compound.primaryLocation && (
-              <p className="text-xs sm:text-sm text-[#5a7662] font-medium flex items-center gap-1.5">
-                <MapPin size={14} className="text-[#144229] shrink-0" />
-                <span>Found in: <strong className="text-[#2e4435] font-semibold">{compound.primaryLocation}</strong></span>
+              <p className="text-xs sm:text-sm text-[#68766C] font-medium flex items-center gap-1.5">
+                <MapPin size={14} className="text-[#174C35] shrink-0" />
+                <span>Found in: <strong className="text-[#203027] font-semibold">{compound.primaryLocation}</strong></span>
               </p>
             )}
           </div>
 
           {compound.chemicalClass && (
-            <span className="text-xs font-mono px-3 py-1 rounded-full bg-[#f4f8f4] border border-[#cfdfcf] text-[#144229] font-medium self-start">
+            <span className="text-xs font-mono px-3 py-1 rounded-full bg-[#EAF1E4] border border-[#E3DFD2] text-[#174C35] font-medium self-start">
               {compound.chemicalClass}
             </span>
           )}
@@ -74,16 +74,16 @@ export function ActiveCompoundCard({ compound }: ActiveCompoundCardProps) {
         {/* Teen-Friendly / Beginner Plain-English Explanation */}
         {plainExplanation ? (
           <div className="space-y-2">
-            <div className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-[#144229]">
-              <Microscope size={14} className="text-[#144229]" />
+            <div className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-[#174C35]">
+              <Microscope size={14} className="text-[#174C35]" />
               <span>In Simple Terms:</span>
             </div>
-            <p className="text-base text-[#1c261e] leading-relaxed">
+            <p className="text-base text-[#203027] leading-relaxed">
               {plainExplanation}
             </p>
           </div>
         ) : (
-          <p className="text-base text-[#1c261e] leading-relaxed">
+          <p className="text-base text-[#203027] leading-relaxed">
             {compound.description}
           </p>
         )}
@@ -91,16 +91,16 @@ export function ActiveCompoundCard({ compound }: ActiveCompoundCardProps) {
         {/* Studied Bioactivities Cluster */}
         {compound.studiedProperties && compound.studiedProperties.length > 0 && (
           <div className="space-y-1.5 pt-1">
-            <span className="text-xs font-bold uppercase tracking-wider text-[#5a7662] block">
+            <span className="text-xs font-bold uppercase tracking-wider text-[#68766C] block">
               What Scientists Study It For:
             </span>
             <div className="flex flex-wrap gap-1.5">
               {compound.studiedProperties.map((prop) => (
                 <span
                   key={prop}
-                  className="inline-flex items-center gap-1.5 text-xs sm:text-sm px-2.5 py-1 rounded-lg bg-[#eef5ee] border border-[#cfe0cf] text-[#144229] font-medium"
+                  className="inline-flex items-center gap-1.5 text-xs sm:text-sm px-2.5 py-1 rounded-lg bg-[#EAF1E4] border border-[#E3DFD2] text-[#174C35] font-medium"
                 >
-                  <ShieldCheck size={13} className="text-[#144229] shrink-0" />
+                  <ShieldCheck size={13} className="text-[#174C35] shrink-0" />
                   <span>{prop}</span>
                 </span>
               ))}
@@ -110,36 +110,36 @@ export function ActiveCompoundCard({ compound }: ActiveCompoundCardProps) {
       </div>
 
       {/* Expandable "Explore the science" Section */}
-      <div className="pt-2.5 border-t border-[#f0ebe0]">
+      <div className="pt-2.5 border-t border-[#E3DFD2]">
         <button
           type="button"
           onClick={() => setIsExpanded(!isExpanded)}
           aria-expanded={isExpanded}
-          className="text-xs sm:text-sm font-semibold text-[#144229] hover:text-[#071c11] flex items-center justify-between w-full cursor-pointer py-1 px-2 -mx-2 rounded-lg hover:bg-[#f7f5ed] transition-colors"
+          className="text-xs sm:text-sm font-semibold text-[#174C35] hover:text-[#203027] flex items-center justify-between w-full cursor-pointer py-1 px-2 -mx-2 rounded-lg hover:bg-[#F8F6EE] transition-colors"
         >
           <span className="flex items-center gap-1.5">
-            <Atom size={16} className="text-[#144229]" />
+            <Atom size={16} className="text-[#174C35]" />
             <span>{isExpanded ? 'Hide scientific details' : 'Explore the science'}</span>
           </span>
           {isExpanded ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
         </button>
 
         {isExpanded && (
-          <div className="mt-3 p-4 bg-[#fbf9f4] rounded-2xl border border-[#ded5c5] text-xs sm:text-sm text-[#2e4435] leading-relaxed space-y-2.5 animate-fadeIn">
+          <div className="mt-3 p-4 bg-[#F8F6EE] rounded-2xl border border-[#E3DFD2] text-xs sm:text-sm text-[#203027] leading-relaxed space-y-2.5 animate-fadeIn">
             <div>
-              <span className="font-bold text-[#071c11] block mb-0.5">Scientific Biochemical Description:</span>
-              <p className="text-[#1c261e] leading-relaxed">
+              <span className="font-bold text-[#203027] block mb-0.5">Scientific Biochemical Description:</span>
+              <p className="text-[#203027] leading-relaxed">
                 {compound.description}
               </p>
             </div>
 
             {compound.chemicalClass && (
-              <p className="text-[#5a7662]">
-                <strong className="text-[#2e4435]">Chemical Family:</strong> {compound.chemicalClass}. Secondary plant metabolites synthesized for stress adaptation, pathogen defense, and cellular signaling.
+              <p className="text-[#68766C]">
+                <strong className="text-[#203027]">Chemical Family:</strong> {compound.chemicalClass}. Secondary plant metabolites synthesized for stress adaptation, pathogen defense, and cellular signaling.
               </p>
             )}
 
-            <p className="text-[#5a7662] pt-1 border-t border-[#ede7dc]">
+            <p className="text-[#68766C] pt-1 border-t border-[#E3DFD2]">
               <strong>Laboratory & Culinary Note:</strong> Natural concentrations of {compound.name} fluctuate with harvest timing, sunlight exposure, and temperature. For culinary species, food preparation methods like chopping, heat exposure, or steaming directly influence compound stability and systemic bioavailability.
             </p>
           </div>

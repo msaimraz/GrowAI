@@ -88,12 +88,12 @@ export function ReminderDetailModal({
 
   return (
     <div className="fixed inset-0 z-60 flex items-center justify-center p-3 sm:p-4 bg-black/50 backdrop-blur-xs animate-in fade-in duration-200">
-      <div className="w-full max-w-[calc(100vw-24px)] sm:max-w-lg bg-[#fbf9f4] rounded-3xl border border-[#ded5c5] shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
+      <div className="w-full max-w-[calc(100vw-24px)] sm:max-w-lg bg-[#F8F6EE] rounded-3xl border border-[#E3DFD2] shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
         {/* Modal Header */}
-        <div className="flex items-center justify-between p-5 border-b border-[#ded5c5] bg-white">
+        <div className="flex items-center justify-between p-5 border-b border-[#E3DFD2] bg-white">
           <div className="flex items-center gap-2">
             <ReminderStatusBadge status={currentStatus} size="md" />
-            <span className="text-xs uppercase tracking-wider font-semibold text-[#6d8573]">
+            <span className="text-xs uppercase tracking-wider font-semibold text-[#68766C]">
               {reminder.reminderType} reminder
             </span>
           </div>
@@ -101,7 +101,7 @@ export function ReminderDetailModal({
           <button
             type="button"
             onClick={onClose}
-            className="p-1.5 rounded-xl text-[#526a57] hover:bg-[#eef5ee] hover:text-[#144229] transition-colors cursor-pointer"
+            className="p-1.5 rounded-xl text-[#68766C] hover:bg-[#EAF1E4] hover:text-[#174C35] transition-colors cursor-pointer"
             aria-label="Close modal"
           >
             <X size={18} />
@@ -111,26 +111,26 @@ export function ReminderDetailModal({
         {/* Modal Body */}
         <div className="p-6 overflow-y-auto space-y-5 flex-1">
           <div>
-            <h3 className="font-serif text-xl sm:text-2xl font-bold text-[#0c2417] leading-tight mb-2">
+            <h3 className="font-serif text-xl sm:text-2xl font-bold text-[#203027] leading-tight mb-2">
               {reminder.title}
             </h3>
-            <p className="text-xs sm:text-sm text-[#526a57] leading-relaxed whitespace-pre-wrap">
+            <p className="text-xs sm:text-sm text-[#68766C] leading-relaxed whitespace-pre-wrap">
               {reminder.body}
             </p>
           </div>
 
           {/* Plant Card Link if attached */}
           {reminder.plantNickname && (
-            <div className="p-3.5 rounded-2xl bg-white border border-[#ded5c5] flex items-center justify-between gap-3">
+            <div className="p-3.5 rounded-2xl bg-white border border-[#E3DFD2] flex items-center justify-between gap-3">
               <div className="flex items-center gap-2.5">
-                <div className="w-8 h-8 rounded-xl bg-[#eef5ee] text-[#144229] flex items-center justify-center">
+                <div className="w-8 h-8 rounded-xl bg-[#EAF1E4] text-[#174C35] flex items-center justify-center">
                   <Sprout size={16} />
                 </div>
                 <div>
-                  <span className="text-[10px] uppercase font-semibold text-[#6d8573] block">
+                  <span className="text-[10px] uppercase font-semibold text-[#68766C] block">
                     Associated Garden Plant
                   </span>
-                  <span className="font-semibold text-xs text-[#0c2417]">
+                  <span className="font-semibold text-xs text-[#203027]">
                     {reminder.plantNickname}
                   </span>
                 </div>
@@ -140,7 +140,7 @@ export function ReminderDetailModal({
                 <Link
                   href={`/app/my-garden?plantId=${reminder.plantId}`}
                   onClick={handleNavigate}
-                  className="inline-flex items-center gap-1 text-xs font-semibold text-[#144229] hover:underline"
+                  className="inline-flex items-center gap-1 text-xs font-semibold text-[#174C35] hover:underline"
                 >
                   <span>View Plant</span>
                   <ExternalLink size={12} />
@@ -151,16 +151,16 @@ export function ReminderDetailModal({
 
           {/* Grow Plan Link if attached */}
           {reminder.metadata?.growPlanId && (
-            <div className="p-3.5 rounded-2xl bg-[#eef5ee] border border-[#c2d9c6] flex items-center justify-between gap-3">
+            <div className="p-3.5 rounded-2xl bg-[#EAF1E4] border border-[#E3DFD2] flex items-center justify-between gap-3">
               <div className="flex items-center gap-2.5">
-                <div className="w-8 h-8 rounded-xl bg-[#144229] text-white flex items-center justify-center">
+                <div className="w-8 h-8 rounded-xl bg-[#174C35] text-white flex items-center justify-center">
                   <Sprout size={16} />
                 </div>
                 <div>
-                  <span className="text-[10px] uppercase font-bold text-[#144229] block">
+                  <span className="text-[10px] uppercase font-bold text-[#174C35] block">
                     Associated Grow Plan
                   </span>
-                  <span className="font-semibold text-xs text-[#0c2417]">
+                  <span className="font-semibold text-xs text-[#203027]">
                     {reminder.body?.split('—')[0]?.trim() || 'Active Grow Plan'}
                   </span>
                 </div>
@@ -169,7 +169,7 @@ export function ReminderDetailModal({
               <Link
                 href={reminder.metadata?.actionUrl || `/app/grow-plans/${reminder.metadata.growPlanId}`}
                 onClick={handleNavigate}
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#144229] text-white text-xs font-semibold hover:bg-[#0c2417] transition"
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#174C35] text-white text-xs font-semibold hover:bg-[#203027] transition"
               >
                 <span>Open Plan</span>
                 <ExternalLink size={12} />
@@ -179,36 +179,36 @@ export function ReminderDetailModal({
 
           {/* Metadata Grid */}
           <div className="grid grid-cols-2 gap-3 text-xs">
-            <div className="p-3 rounded-xl bg-white border border-[#ded5c5]">
-              <span className="text-[#6d8573] block text-[11px] mb-0.5 flex items-center gap-1">
+            <div className="p-3 rounded-xl bg-white border border-[#E3DFD2]">
+              <span className="text-[#68766C] block text-[11px] mb-0.5 flex items-center gap-1">
                 <Clock size={12} /> Due Date & Time
               </span>
-              <strong className="text-[#0c2417] font-semibold">
+              <strong className="text-[#203027] font-semibold">
                 {formatDateTime(reminder.dueAt)}
               </strong>
             </div>
 
-            <div className="p-3 rounded-xl bg-white border border-[#ded5c5]">
-              <span className="text-[#6d8573] block text-[11px] mb-0.5 flex items-center gap-1">
+            <div className="p-3 rounded-xl bg-white border border-[#E3DFD2]">
+              <span className="text-[#68766C] block text-[11px] mb-0.5 flex items-center gap-1">
                 <Repeat size={12} /> Recurrence
               </span>
-              <strong className="text-[#0c2417] font-semibold capitalize">
+              <strong className="text-[#203027] font-semibold capitalize">
                 {reminder.recurrence && reminder.recurrence.type !== 'none'
                   ? reminder.recurrence.type.replace(/_/g, ' ')
                   : 'One-time reminder'}
               </strong>
             </div>
 
-            <div className="p-3 rounded-xl bg-white border border-[#ded5c5]">
-              <span className="text-[#6d8573] block text-[11px] mb-0.5">Priority</span>
-              <strong className="text-[#0c2417] font-semibold capitalize">
+            <div className="p-3 rounded-xl bg-white border border-[#E3DFD2]">
+              <span className="text-[#68766C] block text-[11px] mb-0.5">Priority</span>
+              <strong className="text-[#203027] font-semibold capitalize">
                 {reminder.priority}
               </strong>
             </div>
 
-            <div className="p-3 rounded-xl bg-white border border-[#ded5c5]">
-              <span className="text-[#6d8573] block text-[11px] mb-0.5">Source</span>
-              <strong className="text-[#0c2417] font-semibold capitalize">
+            <div className="p-3 rounded-xl bg-white border border-[#E3DFD2]">
+              <span className="text-[#68766C] block text-[11px] mb-0.5">Source</span>
+              <strong className="text-[#203027] font-semibold capitalize">
                 {reminder.sourceType.replace(/_/g, ' ')}
               </strong>
             </div>
@@ -231,8 +231,8 @@ export function ReminderDetailModal({
             </div>
           )}
           {reminder.dismissedAt && (
-            <div className="p-3 rounded-xl bg-[#f0ece1] border border-[#ded5c5] text-xs text-[#78716c] flex items-center gap-2">
-              <XCircle size={15} className="text-[#a8a29e] shrink-0" />
+            <div className="p-3 rounded-xl bg-[#E3DFD2] border border-[#E3DFD2] text-xs text-[#68766C] flex items-center gap-2">
+              <XCircle size={15} className="text-[#68766C] shrink-0" />
               <span>Dismissed on {formatDateTime(reminder.dismissedAt)}</span>
             </div>
           )}
@@ -243,7 +243,7 @@ export function ReminderDetailModal({
               <Link
                 href={reminder.metadata.actionUrl}
                 onClick={onClose}
-                className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#144229] hover:underline"
+                className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#174C35] hover:underline"
               >
                 <span>Navigate to source record</span>
                 <ExternalLink size={13} />
@@ -273,7 +273,7 @@ export function ReminderDetailModal({
                 <button
                   type="button"
                   onClick={() => setConfirmDelete(false)}
-                  className="px-3 py-1.5 rounded-xl bg-white border border-[#ded5c5] text-[#526a57] hover:bg-[#eef5ee] font-semibold text-xs cursor-pointer"
+                  className="px-3 py-1.5 rounded-xl bg-white border border-[#E3DFD2] text-[#68766C] hover:bg-[#EAF1E4] font-semibold text-xs cursor-pointer"
                 >
                   Cancel
                 </button>
@@ -283,7 +283,7 @@ export function ReminderDetailModal({
         </div>
 
         {/* Modal Footer Actions */}
-        <div className="p-4 sm:p-5 border-t border-[#ded5c5] bg-white flex flex-wrap items-center justify-between gap-3">
+        <div className="p-4 sm:p-5 border-t border-[#E3DFD2] bg-white flex flex-wrap items-center justify-between gap-3">
           <div>
             {!confirmDelete && (
               <button
@@ -305,7 +305,7 @@ export function ReminderDetailModal({
                   type="button"
                   onClick={() => handleAction('dismiss')}
                   disabled={isProcessing}
-                  className="px-3.5 py-2 text-xs font-semibold rounded-xl bg-white border border-[#ded5c5] text-[#526a57] hover:bg-[#eef5ee] transition-all cursor-pointer min-h-[38px]"
+                  className="px-3.5 py-2 text-xs font-semibold rounded-xl bg-white border border-[#E3DFD2] text-[#68766C] hover:bg-[#EAF1E4] transition-all cursor-pointer min-h-[38px]"
                 >
                   Dismiss
                 </button>
@@ -313,7 +313,7 @@ export function ReminderDetailModal({
                   type="button"
                   onClick={() => handleAction('complete')}
                   disabled={isProcessing}
-                  className="inline-flex items-center gap-1.5 px-4 py-2 text-xs font-semibold rounded-xl bg-[#144229] text-white hover:bg-[#0c2417] shadow-xs transition-all cursor-pointer min-h-[38px]"
+                  className="inline-flex items-center gap-1.5 px-4 py-2 text-xs font-semibold rounded-xl bg-[#174C35] text-white hover:bg-[#203027] shadow-xs transition-all cursor-pointer min-h-[38px]"
                 >
                   <CheckCircle2 size={14} />
                   <span>Mark Complete</span>
@@ -324,7 +324,7 @@ export function ReminderDetailModal({
               <button
                 type="button"
                 onClick={onClose}
-                className="px-4 py-2 text-xs font-semibold rounded-xl bg-[#144229] text-white hover:bg-[#0c2417] transition-all cursor-pointer min-h-[38px]"
+                className="px-4 py-2 text-xs font-semibold rounded-xl bg-[#174C35] text-white hover:bg-[#203027] transition-all cursor-pointer min-h-[38px]"
               >
                 Close
               </button>

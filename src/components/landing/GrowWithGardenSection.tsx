@@ -37,21 +37,21 @@ export function GrowWithGardenSection() {
   ];
 
   return (
-    <section className="py-16 sm:py-20 lg:py-24 bg-[#fbf9f4] border-b border-[#ded5c5]">
+    <section className="py-16 sm:py-20 lg:py-24 bg-[#F8F6EE] border-b border-[#E3DFD2]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12 sm:space-y-16">
         {/* Editorial Heading */}
         <div className="max-w-2xl mx-auto text-center space-y-3">
-          <span className="text-[11px] font-mono tracking-widest text-[#526a57] uppercase font-bold block">
+          <span className="text-[11px] font-mono tracking-widest text-[#68766C] uppercase font-bold block">
             ADAPTIVE INTELLIGENCE
           </span>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-serif font-bold text-[#0c2417] tracking-tight leading-tight">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-serif font-bold text-[#203027] tracking-tight leading-tight">
             Your Garden Changes.
             <br />
             <span className="italic font-normal text-[#174c35]">
               GrowAI Changes With It.
             </span>
           </h2>
-          <p className="text-base sm:text-lg text-[#526a57] leading-relaxed pt-1">
+          <p className="text-base sm:text-lg text-[#68766C] leading-relaxed pt-1">
             Every garden starts differently. GrowAI keeps your growing information connected so your next decision is based on what is actually happening in your garden.
           </p>
         </div>
@@ -61,7 +61,7 @@ export function GrowWithGardenSection() {
           {/* Desktop Connected Line */}
           <div className="hidden md:block relative">
             {/* Thin Connecting Line */}
-            <div className="absolute top-6 left-12 right-12 h-px bg-[#ded5c5] z-0" />
+            <div className="absolute top-6 left-12 right-12 h-px bg-[#E3DFD2] z-0" />
 
             <div className="grid grid-cols-5 gap-4 relative z-10">
               {steps.map((st) => {
@@ -72,21 +72,21 @@ export function GrowWithGardenSection() {
                       <div
                         className={`w-12 h-12 rounded-2xl flex items-center justify-center transition-all ${
                           st.highlight
-                            ? 'bg-[#144229] text-white shadow-xs ring-4 ring-[#eef5ee]'
-                            : 'bg-white text-[#144229] border border-[#ded5c5] shadow-2xs'
+                            ? 'bg-[#174C35] text-white shadow-xs ring-4 ring-[#EAF1E4]'
+                            : 'bg-white text-[#174C35] border border-[#E3DFD2] shadow-2xs'
                         }`}
                       >
                         <Icon size={20} className="stroke-[2.2]" />
                       </div>
                     </div>
                     <div className="space-y-1">
-                      <span className="text-[10px] font-mono text-[#6d8573] uppercase block">
+                      <span className="text-[10px] font-mono text-[#68766C] uppercase block">
                         Step {st.num}
                       </span>
-                      <h3 className="font-serif font-bold text-base text-[#0c2417]">
+                      <h3 className="font-serif font-bold text-base text-[#203027]">
                         {st.title}
                       </h3>
-                      <p className="text-xs text-[#526a57] leading-relaxed max-w-[140px] mx-auto">
+                      <p className="text-xs text-[#68766C] leading-relaxed max-w-[140px] mx-auto">
                         {st.subtitle}
                       </p>
                     </div>
@@ -97,7 +97,7 @@ export function GrowWithGardenSection() {
           </div>
 
           {/* Mobile Vertical Flow */}
-          <div className="md:hidden space-y-4 pl-4 border-l-2 border-[#cfe0cf] ml-4">
+          <div className="md:hidden space-y-4 pl-4 border-l-2 border-[#E3DFD2] ml-4">
             {steps.map((st) => {
               const Icon = st.icon;
               return (
@@ -105,22 +105,22 @@ export function GrowWithGardenSection() {
                   <div
                     className={`w-9 h-9 rounded-xl flex items-center justify-center shrink-0 -ml-[23px] ${
                       st.highlight
-                        ? 'bg-[#144229] text-white shadow-xs'
-                        : 'bg-white text-[#144229] border border-[#ded5c5]'
+                        ? 'bg-[#174C35] text-white shadow-xs'
+                        : 'bg-white text-[#174C35] border border-[#E3DFD2]'
                     }`}
                   >
                     <Icon size={16} />
                   </div>
                   <div className="space-y-0.5 pt-0.5 min-w-0">
                     <div className="flex items-center gap-2">
-                      <span className="text-[10px] font-mono text-[#6d8573]">
+                      <span className="text-[10px] font-mono text-[#68766C]">
                         {st.num}
                       </span>
-                      <h3 className="font-serif font-bold text-sm text-[#0c2417]">
+                      <h3 className="font-serif font-bold text-sm text-[#203027]">
                         {st.title}
                       </h3>
                     </div>
-                    <p className="text-xs text-[#526a57] leading-relaxed">
+                    <p className="text-xs text-[#68766C] leading-relaxed">
                       {st.subtitle}
                     </p>
                   </div>
