@@ -1,8 +1,10 @@
 'use client';
 
-import React from 'react';
+import * as React from 'react';
+import { useState } from 'react';
 import { Plant } from '@/types/plant';
-import { ShieldCheck, Compass, Layers, Ruler, Maximize2 } from 'lucide-react';
+import { ShieldCheck, Compass, Layers, Ruler, Maximize2, Camera, Sparkles } from 'lucide-react';
+import { PlantImage } from '@/components/plants/PlantImage';
 
 interface BotanicalPlateProps {
   plant: Plant;
@@ -153,6 +155,8 @@ const TAXONOMY_MAP: Record<string, BotanicalTaxonomy> = {
 };
 
 export function BotanicalPlate({ plant }: BotanicalPlateProps) {
+  const [viewMode, setViewMode] = useState<'photo' | 'plate'>(plant.imageUrl ? 'photo' : 'plate');
+
   const taxonomy = TAXONOMY_MAP[plant.slug] || {
     family: 'Plantae (Vascular Plant)',
     order: 'Magnoliophyta',
@@ -251,41 +255,91 @@ export function BotanicalPlate({ plant }: BotanicalPlateProps) {
   return (
     <div className="bg-[#f7f5ed] rounded-3xl border-2 border-[#ded5c5] p-6 sm:p-7 shadow-xs relative overflow-hidden flex flex-col justify-between space-y-6">
       {/* Editorial Plate Header */}
-      <div className="flex items-center justify-between pb-3.5 border-b border-[#e5dfd3]">
-        <div className="space-y-0.5">
+      <div className="flex items-center justify-between pb-3.5 border-b border-[#e5dfd3] gap-2">
+        <div className="space-y-0.5 min-w-0">
           <span className="text-[11px] font-mono tracking-widest uppercase font-bold text-[#144229] block">
             GrowAI Herbarium Archive
           </span>
-          <span className="text-xs font-mono text-[#5a7662]">
+          <span className="text-xs font-mono text-[#5a7662] truncate block">
             {taxonomy.specimenId} • {taxonomy.order.toUpperCase()}
           </span>
         </div>
-        <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white border border-[#cfdfcf] text-xs font-semibold text-[#144229] shadow-2xs">
-          <ShieldCheck size={14} className="text-[#144229]" />
-          Verified Specimen
-        </span>
+
+        {/* View Mode Switcher: Real Photo vs Botanical Plate */}
+        <div className="flex items-center gap-1 bg-[#eae4d5] p-1 rounded-xl shrink-0">
+          <button
+            type="button"
+            onClick={() => setViewMode('photo')}
+            className={`px-2.5 py-1 rounded-lg text-xs font-semibold flex items-center gap-1 transition-all cursor-pointer select-none ${
+              viewMode === 'photo'
+                ? 'bg-white text-[#144229] shadow-2xs'
+                : 'text-[#68736B] hover:text-[#144229]'
+            }`}
+            title="View Real Botanical Photograph"
+          >
+            <Camera size={13} />
+            <span className="hidden sm:inline">Photo</span>
+          </button>
+          <button
+            type="button"
+            onClick={() => setViewMode('plate')}
+            className={`px-2.5 py-1 rounded-lg text-xs font-semibold flex items-center gap-1 transition-all cursor-pointer select-none ${
+              viewMode === 'plate'
+                ? 'bg-white text-[#144229] shadow-2xs'
+                : 'text-[#68736B] hover:text-[#144229]'
+            }`}
+            title="View Botanical Engraving Plate"
+          >
+            <Sparkles size={13} />
+            <span className="hidden sm:inline">Plate</span>
+          </button>
+        </div>
       </div>
 
-      {/* Center Botanical Illustration Plate */}
-      <div className="relative py-3 sm:py-5 px-4 bg-white/70 rounded-2xl border border-[#e5dfd3] flex flex-col items-center justify-center text-center">
-        {/* Subtle background compass / grid lines for botanical plate look */}
-        <div className="absolute inset-0 opacity-15 pointer-events-none flex items-center justify-center">
-          <div className="w-48 h-48 border border-dashed border-[#144229] rounded-full" />
+      {/* Center Botanical Illustration / Real Photo Plate */}
+      {viewMode === 'photo' && (plant.imageUrl || `/plants/${plant.slug}.webp`) ? (
+        <div className="space-y-3">
+          <div className="relative rounded-2xl overflow-hidden border border-[#e5dfd3] bg-white shadow-xs">
+            <PlantImage
+              src={plant.imageUrl || `/plants/${plant.slug}.webp`}
+              alt={`${plant.commonName} real botanical photography`}
+              category={plant.category}
+              aspectRatio="4/3"
+              priority={true}
+              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 400px"
+              className="w-full"
+            />
+          </div>
+          <div className="text-center">
+            <p className="text-xs font-mono uppercase tracking-widest text-[#5a7662]">
+              Verified Botanical Photography · {taxonomy.specimenId}
+            </p>
+            <p className="text-sm font-serif italic text-[#144229] font-medium mt-0.5">
+              {plant.scientificName}
+            </p>
+          </div>
         </div>
+      ) : (
+        <div className="relative py-3 sm:py-5 px-4 bg-white/70 rounded-2xl border border-[#e5dfd3] flex flex-col items-center justify-center text-center">
+          {/* Subtle background compass / grid lines for botanical plate look */}
+          <div className="absolute inset-0 opacity-15 pointer-events-none flex items-center justify-center">
+            <div className="w-48 h-48 border border-dashed border-[#144229] rounded-full" />
+          </div>
 
-        <div className="relative z-10 transition-transform duration-300 hover:scale-105">
-          {getBotanicalIcon()}
-        </div>
+          <div className="relative z-10 transition-transform duration-300 hover:scale-105">
+            {getBotanicalIcon()}
+          </div>
 
-        <div className="mt-3 relative z-10">
-          <p className="text-xs font-mono uppercase tracking-widest text-[#5a7662]">
-            Botanical Plate No. {taxonomy.specimenId.replace('GA-BOT-', '')}
-          </p>
-          <p className="text-sm font-serif italic text-[#144229] font-medium mt-0.5">
-            {plant.scientificName}
-          </p>
+          <div className="mt-3 relative z-10">
+            <p className="text-xs font-mono uppercase tracking-widest text-[#5a7662]">
+              Botanical Plate No. {taxonomy.specimenId.replace('GA-BOT-', '')}
+            </p>
+            <p className="text-sm font-serif italic text-[#144229] font-medium mt-0.5">
+              {plant.scientificName}
+            </p>
+          </div>
         </div>
-      </div>
+      )}
 
       {/* Botanical Taxonomy Metadata & Vertical Rack Specs */}
       <div className="space-y-3 pt-1">

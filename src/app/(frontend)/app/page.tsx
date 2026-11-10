@@ -118,6 +118,7 @@ function AppDashboardContent() {
   const userName = user ? user.email?.split('@')[0] : 'Grower';
   const pendingTasks = careTasks.filter((t) => !t.completed);
   const completedTasks = careTasks.filter((t) => t.completed);
+  const [showCompleted, setShowCompleted] = useState(false);
   const plantNames = userPlants.map((p) => p.nickname || p.plantSlug);
 
   // Format task action so action is always clear without ugly truncation
@@ -138,14 +139,30 @@ function AppDashboardContent() {
     } else if (task.type === 'harvest') {
       action = `Harvest ${plant}`;
       subtitle = 'Snip outer leaves for kitchen use.';
+    } else if (task.type === 'inspect') {
+      action = `Inspect ${plant}`;
+      subtitle = 'Look for pests or leaf discoloration.';
+    } else if (task.type === 'repot') {
+      action = `Repot ${plant}`;
+      subtitle = 'Check container volume and soil aeration.';
     }
     return { action, subtitle };
   };
 
-  // Map user plants to catalog definitions for display
+  // Map user plants to catalog definitions and real recorded observations for display
   const plantsWithData = userPlants.map((up) => {
     const catalog = PLANTS_DATA.find((p) => p.slug === up.plantSlug);
-    return { up, catalog };
+    const latestNote = up.notes && up.notes.length > 0 ? up.notes[up.notes.length - 1] : null;
+    const latestObservation = latestNote ? latestNote.text : undefined;
+
+    const timelineMarkers: string[] = [];
+    if (up.plantedDate) timelineMarkers.push('🌱 Added');
+    if (up.currentStage) timelineMarkers.push(`🌿 ${up.currentStage}`);
+    if (up.notes && up.notes.length > 0) {
+      timelineMarkers.push(`📷 ${up.notes.length} note${up.notes.length === 1 ? '' : 's'}`);
+    }
+
+    return { up, catalog, latestObservation, timelineMarkers };
   });
 
   return (
@@ -225,7 +242,11 @@ function AppDashboardContent() {
             2. DAILY QUESTION HABIT CARD
         ========================================================= */}
         <section>
-          <DailyCheckCard userPlantNames={plantNames} />
+          <DailyCheckCard
+            userPlants={userPlants}
+            userPlantNames={plantNames}
+            onCheckCompleted={loadDashboardData}
+          />
         </section>
 
         {/* =========================================================
@@ -247,14 +268,14 @@ function AppDashboardContent() {
           </div>
 
           {loading ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
               {[1, 2, 3].map((i) => (
                 <div
                   key={i}
-                  className="h-20 rounded-2xl bg-white border border-[#E8E4DA] animate-pulse p-4 space-y-2"
+                  className="h-24 rounded-2xl bg-white border border-[#E8E4DA] animate-pulse p-4 space-y-2"
                 >
-                  <div className="h-4 w-28 bg-[#E8E4DA] rounded-md" />
-                  <div className="h-3 w-40 bg-[#EFEAE0] rounded-md" />
+                  <div className="h-4 w-32 bg-[#E8E4DA] rounded-md" />
+                  <div className="h-3 w-48 bg-[#EFEAE0] rounded-md" />
                 </div>
               ))}
             </div>
@@ -266,16 +287,16 @@ function AppDashboardContent() {
             </div>
           ) : (
             <div className="space-y-3">
-              {/* Active Pending Tasks */}
+              {/* Active Pending Tasks — Single column on narrow mobile, multi-column on tablet/desktop */}
               {pendingTasks.length > 0 ? (
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
                   {pendingTasks.map((task) => {
                     const { action, subtitle } = formatTaskAction(task);
                     return (
                       <ActionCard
                         key={task.id}
                         id={task.id}
-                        icon={task.type === 'water' ? '💧' : task.type === 'fertilize' ? '🌱' : '✂️'}
+                        icon={task.type === 'water' ? '💧' : task.type === 'fertilize' ? '🌱' : task.type === 'harvest' ? '✂️' : '🌿'}
                         title={action}
                         subtitle={subtitle}
                         tag={task.dueDate || 'Today'}
@@ -292,29 +313,43 @@ function AppDashboardContent() {
                 </div>
               )}
 
-              {/* Completed Tasks (Kept quiet & muted at bottom) */}
+              {/* Completed Tasks (Quiet, muted, collapsible when multiple) */}
               {completedTasks.length > 0 && (
                 <div className="pt-2">
-                  <span className="text-[11px] font-mono uppercase tracking-wider text-[#8A958D] block mb-2">
-                    Completed Today ({completedTasks.length})
-                  </span>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
-                    {completedTasks.map((task) => {
-                      const { action } = formatTaskAction(task);
-                      return (
-                        <ActionCard
-                          key={task.id}
-                          id={task.id}
-                          icon="✓"
-                          title={action}
-                          subtitle="Completed"
-                          completed={true}
-                          onToggle={() => handleTaskToggle(task)}
-                          className="opacity-60 bg-[#F9F8F5]"
-                        />
-                      );
-                    })}
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-[11px] font-mono uppercase tracking-wider text-[#8A958D] font-bold">
+                      Completed Today ({completedTasks.length})
+                    </span>
+                    {completedTasks.length > 2 && (
+                      <button
+                        type="button"
+                        onClick={() => setShowCompleted(!showCompleted)}
+                        className="text-xs font-semibold text-[#174C35] hover:underline cursor-pointer select-none"
+                      >
+                        {showCompleted ? 'Hide completed' : 'Show completed'}
+                      </button>
+                    )}
                   </div>
+
+                  {(showCompleted || completedTasks.length <= 2) && (
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
+                      {completedTasks.map((task) => {
+                        const { action } = formatTaskAction(task);
+                        return (
+                          <ActionCard
+                            key={task.id}
+                            id={task.id}
+                            icon="✓"
+                            title={action}
+                            subtitle="Completed"
+                            completed={true}
+                            onToggle={() => handleTaskToggle(task)}
+                            className="opacity-60 bg-[#F9F8F5]"
+                          />
+                        );
+                      })}
+                    </div>
+                  )}
                 </div>
               )}
             </div>
@@ -369,7 +404,7 @@ function AppDashboardContent() {
             />
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6">
-              {plantsWithData.slice(0, 4).map(({ up, catalog }) => {
+              {plantsWithData.slice(0, 4).map(({ up, catalog, latestObservation, timelineMarkers }) => {
                 if (catalog) {
                   return (
                     <PlantCard
@@ -378,6 +413,8 @@ function AppDashboardContent() {
                       nickname={up.nickname}
                       stage={up.currentStage}
                       nextAction="Water today"
+                      latestObservation={latestObservation}
+                      timelinePreview={timelineMarkers}
                       hideScientific={true}
                     />
                   );
@@ -426,7 +463,7 @@ function AppDashboardContent() {
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
             <Link
               href="/app/ai-doctor"
-              className="p-4 rounded-2xl bg-white hover:bg-[#F3F6EC] border border-[#E8E4DA] hover:border-[#174C35]/30 transition-all flex items-center gap-3.5 shadow-2xs group"
+              className="p-4 rounded-2xl bg-white hover:bg-[#F3F6EC] border border-[#E8E4DA] hover:border-[#174C35]/30 transition-all flex items-center gap-3.5 shadow-2xs group active:scale-95 touch-manipulation min-h-[56px] select-none"
             >
               <span className="w-10 h-10 rounded-xl bg-[#FFF0D8] text-xl flex items-center justify-center shrink-0">
                 📷
@@ -435,7 +472,7 @@ function AppDashboardContent() {
                 <h4 className="font-serif font-bold text-sm text-[#1F2A23] group-hover:text-[#174C35]">
                   Plant Check
                 </h4>
-                <p className="text-xs text-[#68736B] truncate">
+                <p className="text-xs text-[#68736B] whitespace-normal leading-normal">
                   Check a plant
                 </p>
               </div>
@@ -443,7 +480,7 @@ function AppDashboardContent() {
 
             <Link
               href="/app/planner"
-              className="p-4 rounded-2xl bg-white hover:bg-[#F3F6EC] border border-[#E8E4DA] hover:border-[#174C35]/30 transition-all flex items-center gap-3.5 shadow-2xs group"
+              className="p-4 rounded-2xl bg-white hover:bg-[#F3F6EC] border border-[#E8E4DA] hover:border-[#174C35]/30 transition-all flex items-center gap-3.5 shadow-2xs group active:scale-95 touch-manipulation min-h-[56px] select-none"
             >
               <span className="w-10 h-10 rounded-xl bg-[#E6F0E3] text-xl flex items-center justify-center shrink-0">
                 🪴
@@ -452,7 +489,7 @@ function AppDashboardContent() {
                 <h4 className="font-serif font-bold text-sm text-[#1F2A23] group-hover:text-[#174C35]">
                   Space Planner
                 </h4>
-                <p className="text-xs text-[#68736B] truncate">
+                <p className="text-xs text-[#68736B] whitespace-normal leading-normal">
                   Plan your space
                 </p>
               </div>
@@ -460,7 +497,7 @@ function AppDashboardContent() {
 
             <Link
               href="/app/grow-plans"
-              className="p-4 rounded-2xl bg-white hover:bg-[#F3F6EC] border border-[#E8E4DA] hover:border-[#174C35]/30 transition-all flex items-center gap-3.5 shadow-2xs group"
+              className="p-4 rounded-2xl bg-white hover:bg-[#F3F6EC] border border-[#E8E4DA] hover:border-[#174C35]/30 transition-all flex items-center gap-3.5 shadow-2xs group active:scale-95 touch-manipulation min-h-[56px] select-none"
             >
               <span className="w-10 h-10 rounded-xl bg-[#EEE8F6] text-xl flex items-center justify-center shrink-0">
                 📋
@@ -469,7 +506,7 @@ function AppDashboardContent() {
                 <h4 className="font-serif font-bold text-sm text-[#1F2A23] group-hover:text-[#174C35]">
                   Grow Plans
                 </h4>
-                <p className="text-xs text-[#68736B] truncate">
+                <p className="text-xs text-[#68736B] whitespace-normal leading-normal">
                   Follow a growing journey
                 </p>
               </div>

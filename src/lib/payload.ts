@@ -85,6 +85,11 @@ function mapPayloadDocToPlant(doc: Record<string, any>): Plant | null {
       commonName: String(doc.commonName),
       scientificName: String(doc.scientificName),
       category: (doc.categorySlug || 'herbs-greens') as PlantCategory,
+      imageUrl:
+        (typeof doc.imageUrl === 'string' && doc.imageUrl) ||
+        (typeof doc.image?.url === 'string' && doc.image.url) ||
+        PLANTS_DATA.find((p) => p.slug === doc.slug)?.imageUrl ||
+        `/plants/${doc.slug}.webp`,
       summary: String(doc.summary || ''),
       environments: Array.isArray(doc.environments) && doc.environments.length > 0
         ? doc.environments

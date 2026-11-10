@@ -456,18 +456,39 @@ export function addPlantGrowthNote(
   noteData: { stage: GrowthStage; text: string; heightCm?: number; date?: string }
 ): void {
   const current = getSavedUserPlants();
+  const noteDate = noteData.date || new Date().toISOString().split('T')[0];
+  const isDailyCheck = noteData.text.startsWith('Daily check');
+
   const updated = current.map((p) => {
     if (p.id !== plantId) return p;
-    const note: GrowthNote = {
-      id: generateStorageId('note'),
-      date: noteData.date || new Date().toISOString().split('T')[0],
-      stage: noteData.stage,
-      text: noteData.text,
-      heightCm: noteData.heightCm,
-    };
+
+    let updatedNotes: GrowthNote[];
+    const existingIndex = isDailyCheck
+      ? p.notes.findIndex((n) => n.date === noteDate && n.text.startsWith('Daily check'))
+      : -1;
+
+    if (existingIndex >= 0) {
+      updatedNotes = [...p.notes];
+      updatedNotes[existingIndex] = {
+        ...updatedNotes[existingIndex],
+        stage: noteData.stage,
+        text: noteData.text,
+        heightCm: noteData.heightCm,
+      };
+    } else {
+      const note: GrowthNote = {
+        id: generateStorageId('note'),
+        date: noteDate,
+        stage: noteData.stage,
+        text: noteData.text,
+        heightCm: noteData.heightCm,
+      };
+      updatedNotes = [...p.notes, note];
+    }
+
     return {
       ...p,
-      notes: [...p.notes, note],
+      notes: updatedNotes,
     };
   });
   saveUserPlants(updated);
@@ -841,31 +862,65 @@ export async function createGrowthNote(
 
     if (user) {
       const obsDate = noteData.date || new Date().toISOString().split('T')[0];
+      const isDailyCheck = noteData.text.startsWith('Daily check');
 
-      const { data, error } = await supabase
-        .from('growth_notes')
-        .insert({
-          user_id: user.id,
-          user_plant_id: plantId,
-          observation_date: obsDate,
-          stage: noteData.stage,
-          text: noteData.text,
-          height_cm: noteData.heightCm || null,
-        })
-        .select()
-        .single();
+      let noteResultData: any = null;
 
-      if (error || !data) {
-        return { isCloud: true, error: error?.message || 'Failed to save note to cloud.' };
+      if (isDailyCheck) {
+        const { data: existingNotes } = await supabase
+          .from('growth_notes')
+          .select('id')
+          .eq('user_plant_id', plantId)
+          .eq('observation_date', obsDate)
+          .ilike('text', 'Daily check%')
+          .limit(1);
+
+        if (existingNotes && existingNotes.length > 0) {
+          const { data: updatedData, error: updateError } = await supabase
+            .from('growth_notes')
+            .update({
+              stage: noteData.stage,
+              text: noteData.text,
+              height_cm: noteData.heightCm || null,
+            })
+            .eq('id', existingNotes[0].id)
+            .select()
+            .single();
+
+          if (updateError || !updatedData) {
+            return { isCloud: true, error: updateError?.message || 'Failed to update note in cloud.' };
+          }
+          noteResultData = updatedData;
+        }
+      }
+
+      if (!noteResultData) {
+        const { data, error } = await supabase
+          .from('growth_notes')
+          .insert({
+            user_id: user.id,
+            user_plant_id: plantId,
+            observation_date: obsDate,
+            stage: noteData.stage,
+            text: noteData.text,
+            height_cm: noteData.heightCm || null,
+          })
+          .select()
+          .single();
+
+        if (error || !data) {
+          return { isCloud: true, error: error?.message || 'Failed to save note to cloud.' };
+        }
+        noteResultData = data;
       }
 
       return {
         note: {
-          id: data.id,
-          date: data.observation_date,
-          stage: data.stage as GrowthStage,
-          text: data.text,
-          heightCm: data.height_cm !== null && data.height_cm !== undefined ? Number(data.height_cm) : undefined,
+          id: noteResultData.id,
+          date: noteResultData.observation_date,
+          stage: noteResultData.stage as GrowthStage,
+          text: noteResultData.text,
+          heightCm: noteResultData.height_cm !== null && noteResultData.height_cm !== undefined ? Number(noteResultData.height_cm) : undefined,
         },
         isCloud: true,
       };

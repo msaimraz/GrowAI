@@ -7,6 +7,7 @@ import { createGardenPlant } from '@/lib/storage';
 import { GrowthStage } from '@/types/garden';
 import { useGrowToast } from '@/components/ui/GrowSuccessToast';
 import { Sprout, X, Check, Calendar, MapPin, Layers, Loader2, AlertCircle } from 'lucide-react';
+import { PlantImage } from '@/components/plants/PlantImage';
 
 interface AddToGardenModalProps {
   plant: Plant;
@@ -78,15 +79,21 @@ export function AddToGardenModal({ plant, isOpen, onClose }: AddToGardenModalPro
     <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/50 backdrop-blur-xs">
       <div className="bg-white rounded-3xl border border-[#ded5c5] max-w-[calc(100vw-24px)] sm:max-w-lg w-full p-5 sm:p-6 shadow-2xl space-y-5 animate-in fade-in zoom-in-95 duration-150 max-h-[90vh] overflow-y-auto">
         <div className="flex items-center justify-between pb-3 border-b border-[#f0ebe0]">
-          <div className="flex items-center gap-2.5">
-            <span className="p-2 rounded-xl bg-[#e7efe7] text-[#144229]">
-              <Sprout size={20} />
-            </span>
-            <div>
-              <h3 className="font-serif font-bold text-lg text-[#0c2417]">
+          <div className="flex items-center gap-3 min-w-0">
+            <div className="w-12 h-12 rounded-2xl overflow-hidden shrink-0 border border-[#ded5c5] shadow-xs relative">
+              <PlantImage
+                src={plant.imageUrl || `/plants/${plant.slug}.webp`}
+                alt={plant.commonName}
+                category={plant.category}
+                aspectRatio="square"
+                sizes="48px"
+              />
+            </div>
+            <div className="min-w-0">
+              <h3 className="font-serif font-bold text-lg text-[#0c2417] truncate">
                 Add to My Garden Log
               </h3>
-              <p className="text-xs text-[#526a57]">
+              <p className="text-xs text-[#526a57] truncate">
                 {plant.commonName} ({plant.scientificName})
               </p>
             </div>

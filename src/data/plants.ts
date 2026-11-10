@@ -9,6 +9,7 @@ export const PLANTS_DATA: Plant[] = [
     scientificName: 'Solanum lycopersicum',
     category: 'vegetables-fruits',
     summary: 'A compact determinate variety bred for patio containers and vertical rack top-shelves, producing plum tomatoes.',
+    imageUrl: '/plants/tomato-bush.webp',
     environments: ['balcony', 'patio', 'vertical-rack'],
     temperatureRange: {
       min: 18,
@@ -153,6 +154,7 @@ export const PLANTS_DATA: Plant[] = [
     scientificName: 'Solanum lycopersicum var. cerasiforme',
     category: 'vegetables-fruits',
     summary: 'Prolific mini tomatoes with sweet flavor, ideal for hanging vertical planters and sunny apartment balconies.',
+    imageUrl: '/plants/cherry-tomato.webp',
     environments: ['balcony', 'patio', 'vertical-rack'],
     temperatureRange: {
       min: 19,
@@ -285,6 +287,7 @@ export const PLANTS_DATA: Plant[] = [
     scientificName: 'Spinacia oleracea',
     category: 'herbs-greens',
     summary: 'Crinkled dark-green savoy leaves packed with iron, folate, and carotenoids. Thrives in cool shoulder seasons.',
+    imageUrl: '/plants/spinach.webp',
     environments: ['indoor', 'balcony', 'patio', 'vertical-rack'],
     temperatureRange: {
       min: 7,
@@ -419,6 +422,7 @@ export const PLANTS_DATA: Plant[] = [
     scientificName: 'Lactuca sativa',
     category: 'herbs-greens',
     summary: 'Tender, delicate green rosettes that develop sweet leaves; thrives in compact balcony planters and hydroponic tiers.',
+    imageUrl: '/plants/butterhead-lettuce.webp',
     environments: ['indoor', 'balcony', 'patio', 'vertical-rack'],
     temperatureRange: {
       min: 12,
@@ -568,6 +572,7 @@ export const PLANTS_DATA: Plant[] = [
     scientificName: 'Raphanus sativus',
     category: 'vegetables-fruits',
     summary: 'Elongated crisp bicolor radishes with a mild peppery bite. Among the fastest vegetable crops for container growers.',
+    imageUrl: '/plants/french-radish.webp',
     environments: ['balcony', 'patio', 'vertical-rack'],
     temperatureRange: {
       min: 10,
@@ -720,6 +725,7 @@ export const PLANTS_DATA: Plant[] = [
     scientificName: 'Mentha spicata',
     category: 'herbs-greens',
     summary: 'Aromatic, vigorous perennial herb with sweet mint flavor. Highly productive in vertical planters; requires container containment.',
+    imageUrl: '/plants/spearmint.webp',
     environments: ['indoor', 'balcony', 'patio', 'vertical-rack'],
     temperatureRange: {
       min: 10,
@@ -852,6 +858,7 @@ export const PLANTS_DATA: Plant[] = [
     scientificName: 'Ocimum basilicum',
     category: 'herbs-greens',
     summary: 'The quintessential Italian sweet culinary basil with glossy cupped leaves and an intoxicating sweet-clove aroma.',
+    imageUrl: '/plants/genovese-basil.webp',
     environments: ['indoor', 'balcony', 'patio', 'vertical-rack'],
     temperatureRange: {
       min: 16,
@@ -984,6 +991,7 @@ export const PLANTS_DATA: Plant[] = [
     scientificName: 'Coriandrum sativum',
     category: 'herbs-greens',
     summary: 'Dual-purpose annual herb providing zesty fresh leaves (cilantro) and warm citrusy aromatic seeds (coriander).',
+    imageUrl: '/plants/coriander.webp',
     environments: ['indoor', 'balcony', 'patio', 'vertical-rack'],
     temperatureRange: {
       min: 10,
@@ -1116,6 +1124,7 @@ export const PLANTS_DATA: Plant[] = [
     scientificName: 'Epipremnum aureum',
     category: 'indoor-decorative',
     summary: 'Heart-shaped variegated green-and-gold foliage that cascades gracefully. Legendary for tolerance in low-light home interiors.',
+    imageUrl: '/plants/golden-pothos.webp',
     environments: ['indoor', 'balcony', 'vertical-rack'],
     temperatureRange: {
       min: 16,
@@ -1263,6 +1272,7 @@ export const PLANTS_DATA: Plant[] = [
     scientificName: 'Dracaena trifasciata (syn. Sansevieria trifasciata)',
     category: 'indoor-decorative',
     summary: 'Architectural upright sword-like leaves with yellow borders. Tolerates profound neglect, drought, and dim lighting conditions.',
+    imageUrl: '/plants/snake-plant.webp',
     environments: ['indoor', 'patio', 'vertical-rack'],
     temperatureRange: {
       min: 15,
@@ -1411,6 +1421,7 @@ export const PLANTS_DATA: Plant[] = [
     scientificName: 'Aloe barbadensis miller',
     category: 'medicinal-aromatic',
     summary: 'Thick succulent rosettes filled with soothing mucilaginous gel. Celebrated worldwide for burn care and skin hydration.',
+    imageUrl: '/plants/aloe-vera.webp',
     environments: ['indoor', 'balcony', 'patio', 'vertical-rack'],
     temperatureRange: {
       min: 12,
@@ -1555,6 +1566,7 @@ export const PLANTS_DATA: Plant[] = [
     scientificName: 'Ocimum tenuiflorum (syn. Ocimum sanctum)',
     category: 'medicinal-aromatic',
     summary: 'Sacred aromatic herb in Ayurvedic tradition. Distinct clove-and-pepper aroma; celebrated for adaptogenic wellness and stress resilience.',
+    imageUrl: '/plants/holy-basil-tulsi.webp',
     environments: ['indoor', 'balcony', 'patio', 'vertical-rack'],
     temperatureRange: {
       min: 18,
@@ -1687,6 +1699,7 @@ export const PLANTS_DATA: Plant[] = [
     scientificName: 'Tagetes patula',
     category: 'flowering',
     summary: 'Vibrant golden-orange blossoms that flower continuously. Renowned organic companion plant whose roots deter parasitic nematodes.',
+    imageUrl: '/plants/french-marigold.webp',
     environments: ['balcony', 'patio', 'vertical-rack'],
     temperatureRange: {
       min: 15,
@@ -1819,6 +1832,7 @@ export const PLANTS_DATA: Plant[] = [
     scientificName: 'Zinnia elegans',
     category: 'flowering',
     summary: 'Compact mound-forming annual bursting with double daisy-like blossoms in dazzling primary colors. Superb pollinator draw.',
+    imageUrl: '/plants/dwarf-zinnia.webp',
     environments: ['balcony', 'patio', 'vertical-rack'],
     temperatureRange: {
       min: 18,
@@ -1943,6 +1957,7 @@ export const PLANTS_DATA: Plant[] = [
     scientificName: 'Cymbopogon citratus',
     category: 'medicinal-aromatic',
     summary: 'Tall, fragrant tropical grass with bulbous aromatic stalks releasing an intense lemon aroma. Highly prized in Southeast Asian cuisine and herbal teas.',
+    imageUrl: '/plants/lemongrass.webp',
     environments: ['indoor', 'balcony', 'patio', 'vertical-rack'],
     temperatureRange: {
       min: 15,
@@ -2076,6 +2091,7 @@ export const PLANTS_DATA: Plant[] = [
     scientificName: 'Brassica oleracea var. italica (Microgreens)',
     category: 'microgreens',
     summary: 'Nutrient-dense young broccoli greens harvested at 10–14 days when cotyledons and first true leaves develop in light. Distinct from 3-day dark-germinated sprouts.',
+    imageUrl: '/plants/broccoli-microgreens.webp',
     environments: ['indoor', 'balcony', 'vertical-rack'],
     temperatureRange: {
       min: 15,
@@ -2209,6 +2225,7 @@ export const PLANTS_DATA: Plant[] = [
     scientificName: 'Vigna radiata',
     category: 'microgreens',
     summary: 'Crisp, succulent young sprouts germinated from dry mung beans over 3–5 days. A staple in Asian stir-fries and soups with high water content, dietary fiber, and concentrated amino acids.',
+    imageUrl: '/plants/mung-bean-sprouts.webp',
     environments: ['indoor'],
     temperatureRange: {
       min: 18,
@@ -2359,6 +2376,7 @@ export const PLANTS_DATA: Plant[] = [
     scientificName: 'Brassica oleracea var. italica',
     category: 'microgreens',
     summary: '3- to 5-day-old germinated seedlings of broccoli, harvested before true leaves develop. Renowned as the richest dietary source of glucoraphanin (sulforaphane precursor).',
+    imageUrl: '/plants/broccoli-sprouts.webp',
     environments: ['indoor'],
     temperatureRange: {
       min: 16,
@@ -2520,6 +2538,7 @@ export const PLANTS_DATA: Plant[] = [
     scientificName: 'Medicago sativa',
     category: 'microgreens',
     summary: 'Thread-like, delicate sprouted seedlings of Medicago sativa (Alfalfa/Lucerne), harvested at 4–6 days with pale green cotyledons. Prized for their mild crispness, chlorophyll, and high nutrient density.',
+    imageUrl: '/plants/alfalfa-sprouts.webp',
     environments: ['indoor'],
     temperatureRange: {
       min: 16,

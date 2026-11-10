@@ -34,8 +34,15 @@ export function PlantLibraryClient({
   const [showAdvancedFilters, setShowAdvancedFilters] = useState(false);
   const [plantToAddToGarden, setPlantToAddToGarden] = useState<Plant | null>(null);
 
+  const normalizedPlants = useMemo(() => {
+    return initialPlants.map((plant) => ({
+      ...plant,
+      imageUrl: plant.imageUrl || `/plants/${plant.slug}.webp`,
+    }));
+  }, [initialPlants]);
+
   const filteredPlants = useMemo(() => {
-    return initialPlants.filter((plant) => {
+    return normalizedPlants.filter((plant) => {
       // 1. Text Search Filter
       const q = searchQuery.toLowerCase().trim();
       const matchesSearch =
@@ -97,7 +104,7 @@ export function PlantLibraryClient({
 
       return matchesSearch && matchesCategory && matchesEnvironment && matchesDifficulty;
     });
-  }, [initialPlants, searchQuery, selectedCategory, selectedEnvironment, selectedDifficulty]);
+  }, [normalizedPlants, searchQuery, selectedCategory, selectedEnvironment, selectedDifficulty]);
 
   const hasAdvancedFilters = selectedEnvironment !== 'all' || selectedDifficulty !== 'all';
 

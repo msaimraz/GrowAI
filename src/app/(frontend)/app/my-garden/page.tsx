@@ -1,6 +1,7 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import * as React from 'react';
+import { useState, useEffect, type FormEvent } from 'react';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import { AppHeader } from '@/components/navigation/AppHeader';
@@ -24,6 +25,7 @@ import {
 } from '@/lib/storage';
 import { UserPlant, GrowthStage, CareTask } from '@/types/garden';
 import { PlantPhotoGallery } from '@/components/garden/PlantPhotoGallery';
+import { PlantImage } from '@/components/plants/PlantImage';
 import { PropagationModal } from '@/components/garden/PropagationModal';
 import { PlantLineageBadge } from '@/components/garden/PlantLineageBadge';
 import { PlantHealthBadge } from '@/components/garden/PlantHealthBadge';
@@ -171,7 +173,7 @@ function MyGardenContent() {
       }
 
       if (tasksRes.error) {
-        setErrorBanner((prev) => prev || `Failed to load care tasks: ${tasksRes.error}`);
+        setErrorBanner((prev: string | null) => prev || `Failed to load care tasks: ${tasksRes.error}`);
       } else {
         setCareTasks(tasksRes.tasks);
       }
@@ -224,18 +226,18 @@ function MyGardenContent() {
     loadGardenData();
   }, [user, highlightPlantId, searchParams]);
 
-  const activePlant = userPlants.find((p) => p.id === selectedPlantId) || userPlants[0];
+  const activePlant = userPlants.find((p: UserPlant) => p.id === selectedPlantId) || userPlants[0];
   const activeBotanical = activePlant
     ? PLANTS_DATA.find((p) => p.slug === activePlant.plantSlug)
     : null;
   const plantAge = activePlant ? calculatePlantAge(activePlant.plantedDate) : null;
   const harvestWindow = activePlant
     ? calculateHarvestWindow(
-        activePlant.plantedDate,
-        activePlant.plantSlug,
-        activePlant.currentStage,
-        activePlant.actualHarvestDate
-      )
+      activePlant.plantedDate,
+      activePlant.plantSlug,
+      activePlant.currentStage,
+      activePlant.actualHarvestDate
+    )
     : null;
 
   // Health calculations
@@ -269,7 +271,7 @@ function MyGardenContent() {
     showSuccess('🌱 Milestone updated!', `${activePlant?.nickname || 'Your plant'} moved to the ${newStage} stage.`, '🌱');
   };
 
-  const handleAddNote = async (e: React.FormEvent) => {
+  const handleAddNote = async (e: FormEvent) => {
     e.preventDefault();
     if (!activePlant || !noteText.trim()) return;
 
@@ -554,35 +556,27 @@ function MyGardenContent() {
                       key={plant.id}
                       type="button"
                       onClick={() => setSelectedPlantId(plant.id)}
-                      className={`flex items-center gap-2.5 p-2 rounded-2xl border transition-all cursor-pointer shrink-0 min-h-[52px] text-left select-none ${
-                        isSelected
+                      className={`flex items-center gap-2.5 p-2 rounded-2xl border transition-all cursor-pointer shrink-0 min-h-[52px] text-left select-none ${isSelected
                           ? 'bg-[#174C35] text-white border-[#174C35] shadow-sm ring-2 ring-[#174C35]/20'
                           : 'bg-white text-[#1F2A23] border-[#E8E4DA] hover:bg-[#F3F6EC]'
-                      }`}
+                        }`}
                     >
-                      {botanical?.imageUrl ? (
-                        <img
-                          src={botanical.imageUrl}
+                      <div className="w-10 h-10 rounded-xl overflow-hidden shrink-0 border border-black/5 relative">
+                        <PlantImage
+                          src={botanical?.imageUrl}
                           alt={plant.nickname}
-                          className="w-9 h-9 rounded-xl object-cover shrink-0 border border-black/5"
+                          category={botanical?.category || 'herbs-greens'}
+                          aspectRatio="square"
+                          sizes="40px"
                         />
-                      ) : (
-                        <div
-                          className={`w-9 h-9 rounded-xl flex items-center justify-center shrink-0 text-base ${
-                            isSelected ? 'bg-white/20' : 'bg-[#E6F0E3]'
-                          }`}
-                        >
-                          🌱
-                        </div>
-                      )}
+                      </div>
                       <div className="pr-1.5 max-w-[140px]">
                         <p className="font-serif font-bold text-xs truncate">
                           {plant.nickname}
                         </p>
                         <p
-                          className={`text-[10px] truncate ${
-                            isSelected ? 'text-[#C5D8C9]' : 'text-[#68736B]'
-                          }`}
+                          className={`text-[10px] truncate ${isSelected ? 'text-[#C5D8C9]' : 'text-[#68736B]'
+                            }`}
                         >
                           {plant.currentStage}
                         </p>
@@ -621,48 +615,39 @@ function MyGardenContent() {
                     <div
                       key={plant.id}
                       onClick={() => setSelectedPlantId(plant.id)}
-                      className={`p-3 rounded-2xl border transition-all cursor-pointer flex items-center justify-between min-h-[56px] ${
-                        isSelected
+                      className={`p-3 rounded-2xl border transition-all cursor-pointer flex items-center justify-between min-h-[56px] ${isSelected
                           ? 'bg-[#174C35] text-white border-[#174C35] shadow-sm ring-2 ring-[#174C35]/20'
                           : 'bg-white text-[#1F2A23] border-[#E8E4DA] hover:bg-[#F3F6EC] hover:border-[#174C35]'
-                      }`}
+                        }`}
                     >
                       <div className="flex items-center gap-3 min-w-0 pr-2">
-                        {botanical?.imageUrl ? (
-                          <img
-                            src={botanical.imageUrl}
+                        <div className="w-11 h-11 rounded-xl overflow-hidden shrink-0 border border-black/5 relative">
+                          <PlantImage
+                            src={botanical?.imageUrl}
                             alt={plant.nickname}
-                            className="w-11 h-11 rounded-xl object-cover shrink-0 border border-black/5"
+                            category={botanical?.category || 'herbs-greens'}
+                            aspectRatio="square"
+                            sizes="44px"
                           />
-                        ) : (
-                          <div
-                            className={`w-11 h-11 rounded-xl flex items-center justify-center shrink-0 text-xl ${
-                              isSelected ? 'bg-white/20' : 'bg-[#E6F0E3]'
-                            }`}
-                          >
-                            🌱
-                          </div>
-                        )}
+                        </div>
                         <div className="min-w-0">
                           <div className="flex items-center gap-1.5">
                             <h4 className="font-serif font-bold text-sm sm:text-base truncate">
                               {plant.nickname}
                             </h4>
                             <span
-                              className={`text-[10px] px-2 py-0.5 rounded-full font-semibold shrink-0 ${
-                                isSelected
+                              className={`text-[10px] px-2 py-0.5 rounded-full font-semibold shrink-0 ${isSelected
                                   ? 'bg-white/25 text-white'
                                   : 'bg-[#E6F0E3] text-[#174C35]'
-                              }`}
+                                }`}
                             >
                               {plant.currentStage}
                             </span>
                           </div>
                           <div className="flex flex-wrap items-center gap-1.5 mt-0.5">
                             <p
-                              className={`text-xs truncate ${
-                                isSelected ? 'text-[#C5D8C9]' : 'text-[#68736B]'
-                              }`}
+                              className={`text-xs truncate ${isSelected ? 'text-[#C5D8C9]' : 'text-[#68736B]'
+                                }`}
                             >
                               {botanical?.commonName} • {plant.notes?.length || 0} note(s)
                             </p>
@@ -713,11 +698,10 @@ function MyGardenContent() {
                     <div
                       key={task.id}
                       onClick={() => handleTaskToggle(task)}
-                      className={`p-3 rounded-xl border text-xs sm:text-sm cursor-pointer flex items-start gap-3 transition-colors min-h-[48px] ${
-                        task.completed
+                      className={`p-3 rounded-xl border text-xs sm:text-sm cursor-pointer flex items-start gap-3 transition-colors min-h-[48px] ${task.completed
                           ? 'bg-[#f7f5ed] border-[#e2dbce] opacity-60'
                           : 'bg-[#fbf9f4] border-[#ded5c5] hover:border-[#144229] hover:bg-white'
-                      }`}
+                        }`}
                     >
                       <button
                         type="button"
@@ -732,9 +716,8 @@ function MyGardenContent() {
                       </button>
                       <div className="flex-1 min-w-0">
                         <p
-                          className={`font-medium ${
-                            task.completed ? 'line-through text-[#6d8573]' : 'text-[#0c2417]'
-                          }`}
+                          className={`font-medium ${task.completed ? 'line-through text-[#6d8573]' : 'text-[#0c2417]'
+                            }`}
                         >
                           {task.title}
                         </p>
@@ -753,52 +736,65 @@ function MyGardenContent() {
               <div className="lg:col-span-8 space-y-6 min-w-0 max-w-full">
                 {/* Active Plant Banner Card */}
                 <div className="bg-white rounded-3xl border border-[#ded5c5] p-4 sm:p-6 lg:p-8 shadow-xs space-y-4 sm:space-y-6 min-w-0 max-w-full overflow-hidden">
-                  <div className="flex flex-col gap-3 sm:gap-4 pb-3.5 sm:pb-5 border-b border-[#f0ebe0]">
-                    <div className="min-w-0">
-                      <div className="flex flex-wrap items-center gap-2 sm:gap-3">
-                        <h2 className="text-lg sm:text-2xl lg:text-3xl font-serif font-bold text-[#0c2417] truncate max-w-full">
-                          {activePlant.nickname}
-                        </h2>
-                        <Badge variant="sage" size="md">{activePlant.currentStage}</Badge>
-                        <PlantHealthBadge status={activePlantHealthSummary.status} size="sm" />
-                        {activePlantHealthSummary.activeIssue && (
-                          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-[#fffbeb] text-[#92400e] border border-[#fde68a]">
-                            <AlertCircle size={13} />
-                            Issue: {activePlantHealthSummary.activeIssue}
-                          </span>
-                        )}
-                        {plantAge && (
-                          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-[#eef5ee] text-[#144229] border border-[#cfe0cf]">
-                            <Sprout size={13} className="text-[#257a4d]" />
-                            Day {plantAge.daysSincePlanting} ({plantAge.formattedPlantedDate})
-                          </span>
-                        )}
-                        {harvestWindow && (
-                          <span
-                            className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold border ${
-                              harvestWindow.status === 'in_window'
-                                ? 'bg-[#ecfdf5] text-[#065f46] border-[#a7f3d0] animate-pulse'
-                                : harvestWindow.status === 'harvested'
-                                ? 'bg-[#fef3c7] text-[#92400e] border-[#fde68a]'
-                                : harvestWindow.status === 'past_window'
-                                ? 'bg-[#fff7ed] text-[#c2410c] border-[#ffedd5]'
-                                : 'bg-[#f8fafc] text-[#475569] border-[#e2e8f0]'
-                            }`}
-                          >
-                            <Calendar size={13} />
-                            {harvestWindow.headline}
-                          </span>
-                        )}
+                  <div className="flex flex-col sm:items-center justify-between gap-3 sm:gap-4 pb-3.5 sm:pb-5 border-b border-[#f0ebe0]">
+                    <div className="flex items-center gap-3.5 sm:gap-4 min-w-0">
+                      {activeBotanical?.imageUrl && (
+                        <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl overflow-hidden shrink-0 border border-[#ded5c5] shadow-xs relative">
+                          <PlantImage
+                            src={activeBotanical.imageUrl}
+                            alt={activePlant.nickname}
+                            category={activeBotanical.category}
+                            aspectRatio="square"
+                            sizes="64px"
+                            priority={true}
+                          />
+                        </div>
+                      )}
+                      <div className="min-w-0">
+                        <div className="flex flex-wrap items-center gap-2 sm:gap-3">
+                          <h2 className="text-lg sm:text-2xl lg:text-3xl font-serif font-bold text-[#0c2417] truncate max-w-full">
+                            {activePlant.nickname}
+                          </h2>
+                          <Badge variant="sage" size="md">{activePlant.currentStage}</Badge>
+                          <PlantHealthBadge status={activePlantHealthSummary.status} size="sm" />
+                          {activePlantHealthSummary.activeIssue && (
+                            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-[#fffbeb] text-[#92400e] border border-[#fde68a]">
+                              <AlertCircle size={13} />
+                              Issue: {activePlantHealthSummary.activeIssue}
+                            </span>
+                          )}
+                          {plantAge && (
+                            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-[#eef5ee] text-[#144229] border border-[#cfe0cf]">
+                              <Sprout size={13} className="text-[#257a4d]" />
+                              Day {plantAge.daysSincePlanting} ({plantAge.formattedPlantedDate})
+                            </span>
+                          )}
+                          {harvestWindow && (
+                            <span
+                              className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold border ${harvestWindow.status === 'in_window'
+                                  ? 'bg-[#ecfdf5] text-[#065f46] border-[#a7f3d0] animate-pulse'
+                                  : harvestWindow.status === 'harvested'
+                                    ? 'bg-[#fef3c7] text-[#92400e] border-[#fde68a]'
+                                    : harvestWindow.status === 'past_window'
+                                      ? 'bg-[#fff7ed] text-[#c2410c] border-[#ffedd5]'
+                                      : 'bg-[#f8fafc] text-[#475569] border-[#e2e8f0]'
+                                }`}
+                            >
+                              <Calendar size={13} />
+                              {harvestWindow.headline}
+                            </span>
+                          )}
+                        </div>
+                        <p className="text-xs sm:text-sm text-[#526a57] mt-1.5">
+                          {activeBotanical?.commonName} (<em>{activeBotanical?.scientificName}</em>) • Planted on{' '}
+                          {activePlant.plantedDate}
+                          {activePlant.actualHarvestDate && (
+                            <span className="ml-2 font-medium text-[#92400e]">
+                              • Confirmed Harvest: {activePlant.actualHarvestDate}
+                            </span>
+                          )}
+                        </p>
                       </div>
-                      <p className="text-xs sm:text-sm text-[#526a57] mt-1.5">
-                        {activeBotanical?.commonName} (<em>{activeBotanical?.scientificName}</em>) • Planted on{' '}
-                        {activePlant.plantedDate}
-                        {activePlant.actualHarvestDate && (
-                          <span className="ml-2 font-medium text-[#92400e]">
-                            • Confirmed Harvest: {activePlant.actualHarvestDate}
-                          </span>
-                        )}
-                      </p>
                     </div>
 
                     <div className="w-full min-w-0 pt-2 sm:pt-0">
@@ -813,11 +809,10 @@ function MyGardenContent() {
                         <button
                           type="button"
                           onClick={() => setActiveTab('intelligence')}
-                          className={`text-xs sm:text-sm font-semibold px-3.5 sm:px-4 py-2.5 rounded-xl border transition-colors flex items-center gap-1.5 min-h-[44px] shrink-0 cursor-pointer ${
-                            activeTab === 'intelligence'
+                          className={`text-xs sm:text-sm font-semibold px-3.5 sm:px-4 py-2.5 rounded-xl border transition-colors flex items-center gap-1.5 min-h-[44px] shrink-0 cursor-pointer ${activeTab === 'intelligence'
                               ? 'bg-[#144229] text-white border-[#144229] shadow-xs'
                               : 'bg-white text-[#144229] border-[#cfdfcf] hover:bg-[#eef5ee]'
-                          }`}
+                            }`}
                           title="View Grow Intelligence synthesis"
                         >
                           <Sparkles size={15} />
@@ -842,11 +837,10 @@ function MyGardenContent() {
                         <button
                           type="button"
                           onClick={() => setActiveTab('reminders')}
-                          className={`text-xs sm:text-sm font-semibold px-3.5 sm:px-4 py-2.5 rounded-xl border transition-colors flex items-center gap-1.5 min-h-[44px] shrink-0 cursor-pointer ${
-                            activeTab === 'reminders'
+                          className={`text-xs sm:text-sm font-semibold px-3.5 sm:px-4 py-2.5 rounded-xl border transition-colors flex items-center gap-1.5 min-h-[44px] shrink-0 cursor-pointer ${activeTab === 'reminders'
                               ? 'bg-[#144229] text-white border-[#144229] shadow-xs'
                               : 'bg-white text-[#144229] border-[#cfdfcf] hover:bg-[#eef5ee]'
-                          }`}
+                            }`}
                           title="View reminders for this plant"
                         >
                           <Bell size={15} />
@@ -907,15 +901,14 @@ function MyGardenContent() {
                   {/* Harvest Timeline & Phenology Intelligence */}
                   {harvestWindow && (
                     <div
-                      className={`p-4 sm:p-5 rounded-2xl border flex items-start gap-3.5 text-xs sm:text-sm ${
-                        harvestWindow.status === 'in_window'
+                      className={`p-4 sm:p-5 rounded-2xl border flex items-start gap-3.5 text-xs sm:text-sm ${harvestWindow.status === 'in_window'
                           ? 'bg-[#ecfdf5] border-[#a7f3d0] text-[#065f46]'
                           : harvestWindow.status === 'harvested'
-                          ? 'bg-[#fffbeb] border-[#fde68a] text-[#92400e]'
-                          : harvestWindow.status === 'past_window'
-                          ? 'bg-[#fff7ed] border-[#fed7aa] text-[#9a3412]'
-                          : 'bg-[#fbf9f4] border-[#ded5c5] text-[#3c5d46]'
-                      }`}
+                            ? 'bg-[#fffbeb] border-[#fde68a] text-[#92400e]'
+                            : harvestWindow.status === 'past_window'
+                              ? 'bg-[#fff7ed] border-[#fed7aa] text-[#9a3412]'
+                              : 'bg-[#fbf9f4] border-[#ded5c5] text-[#3c5d46]'
+                        }`}
                     >
                       <div className="p-2 rounded-xl bg-white/80 shrink-0">
                         <Sparkles size={18} className="text-[#144229]" />
@@ -952,13 +945,12 @@ function MyGardenContent() {
                             key={st}
                             type="button"
                             onClick={() => handleStageChange(activePlant.id, st)}
-                            className={`py-2 sm:py-3 px-1.5 sm:px-2 text-xs font-semibold rounded-xl border text-center transition-all duration-75 active:scale-95 select-none touch-manipulation cursor-pointer min-h-[44px] flex flex-col items-center justify-center gap-1 ${
-                              isCurrent
+                            className={`py-2 sm:py-3 px-1.5 sm:px-2 text-xs font-semibold rounded-xl border text-center transition-all duration-75 active:scale-95 select-none touch-manipulation cursor-pointer min-h-[44px] flex flex-col items-center justify-center gap-1 ${isCurrent
                                 ? 'bg-[#144229] text-white border-[#0f2e1d] shadow-sm ring-2 ring-[#144229]/20 font-bold'
                                 : isPast
-                                ? 'bg-[#eef5ee] text-[#1e613b] border-[#cfe0cf] hover:bg-[#d8ebd8]'
-                                : 'bg-[#fbf9f4] text-[#526a57] border-[#ded5c5] hover:bg-white'
-                            }`}
+                                  ? 'bg-[#eef5ee] text-[#1e613b] border-[#cfe0cf] hover:bg-[#d8ebd8]'
+                                  : 'bg-[#fbf9f4] text-[#526a57] border-[#ded5c5] hover:bg-white'
+                              }`}
                           >
                             <span className="text-[10px] opacity-75">Step {index + 1}</span>
                             <span>{st}</span>
@@ -996,11 +988,10 @@ function MyGardenContent() {
                   <button
                     type="button"
                     onClick={() => setActiveTab('intelligence')}
-                    className={`inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all cursor-pointer min-h-[40px] ${
-                      activeTab === 'intelligence'
+                    className={`inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all cursor-pointer min-h-[40px] ${activeTab === 'intelligence'
                         ? 'bg-[#144229] text-white shadow-xs'
                         : 'bg-white text-[#526a57] hover:bg-[#eef5ee] hover:text-[#144229] border border-[#ded5c5]'
-                    }`}
+                      }`}
                   >
                     <Sparkles size={15} />
                     <span>Intelligence</span>
@@ -1009,11 +1000,10 @@ function MyGardenContent() {
                   <button
                     type="button"
                     onClick={() => setActiveTab('conditions')}
-                    className={`inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all cursor-pointer min-h-[40px] ${
-                      activeTab === 'conditions'
+                    className={`inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all cursor-pointer min-h-[40px] ${activeTab === 'conditions'
                         ? 'bg-[#144229] text-white shadow-xs'
                         : 'bg-white text-[#526a57] hover:bg-[#eef5ee] hover:text-[#144229] border border-[#ded5c5]'
-                    }`}
+                      }`}
                   >
                     <Thermometer size={15} />
                     <span>Conditions</span>
@@ -1022,11 +1012,10 @@ function MyGardenContent() {
                   <button
                     type="button"
                     onClick={() => setActiveTab('feeding')}
-                    className={`inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all cursor-pointer min-h-[40px] ${
-                      activeTab === 'feeding'
+                    className={`inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all cursor-pointer min-h-[40px] ${activeTab === 'feeding'
                         ? 'bg-[#144229] text-white shadow-xs'
                         : 'bg-white text-[#526a57] hover:bg-[#eef5ee] hover:text-[#144229] border border-[#ded5c5]'
-                    }`}
+                      }`}
                   >
                     <Droplets size={15} />
                     <span>Feeding</span>
@@ -1035,11 +1024,10 @@ function MyGardenContent() {
                   <button
                     type="button"
                     onClick={() => setActiveTab('production')}
-                    className={`inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all cursor-pointer min-h-[40px] ${
-                      activeTab === 'production'
+                    className={`inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all cursor-pointer min-h-[40px] ${activeTab === 'production'
                         ? 'bg-[#144229] text-white shadow-xs'
                         : 'bg-white text-[#526a57] hover:bg-[#eef5ee] hover:text-[#144229] border border-[#ded5c5]'
-                    }`}
+                      }`}
                   >
                     <ShoppingBag size={15} />
                     <span>Production & Yield</span>
@@ -1048,11 +1036,10 @@ function MyGardenContent() {
                   <button
                     type="button"
                     onClick={() => setActiveTab('journal')}
-                    className={`inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all cursor-pointer min-h-[40px] ${
-                      activeTab === 'journal'
+                    className={`inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all cursor-pointer min-h-[40px] ${activeTab === 'journal'
                         ? 'bg-[#144229] text-white shadow-xs'
                         : 'bg-white text-[#526a57] hover:bg-[#eef5ee] hover:text-[#144229] border border-[#ded5c5]'
-                    }`}
+                      }`}
                   >
                     <Clock size={15} />
                     <span>Care ({activePlant.notes?.length || 0})</span>
@@ -1061,11 +1048,10 @@ function MyGardenContent() {
                   <button
                     type="button"
                     onClick={() => setActiveTab('photos')}
-                    className={`inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all cursor-pointer min-h-[40px] ${
-                      activeTab === 'photos'
+                    className={`inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all cursor-pointer min-h-[40px] ${activeTab === 'photos'
                         ? 'bg-[#144229] text-white shadow-xs'
                         : 'bg-white text-[#526a57] hover:bg-[#eef5ee] hover:text-[#144229] border border-[#ded5c5]'
-                    }`}
+                      }`}
                   >
                     <Camera size={15} />
                     <span>Photos</span>
@@ -1074,11 +1060,10 @@ function MyGardenContent() {
                   <button
                     type="button"
                     onClick={() => setActiveTab('health')}
-                    className={`inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all cursor-pointer min-h-[40px] ${
-                      activeTab === 'health'
+                    className={`inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all cursor-pointer min-h-[40px] ${activeTab === 'health'
                         ? 'bg-[#144229] text-white shadow-xs'
                         : 'bg-white text-[#526a57] hover:bg-[#eef5ee] hover:text-[#144229] border border-[#ded5c5]'
-                    }`}
+                      }`}
                   >
                     <Activity size={15} />
                     <span>Health ({activePlantDiagnoses.length})</span>
@@ -1090,11 +1075,10 @@ function MyGardenContent() {
                   <button
                     type="button"
                     onClick={() => setActiveTab('timeline')}
-                    className={`inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all cursor-pointer min-h-[40px] ${
-                      activeTab === 'timeline'
+                    className={`inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all cursor-pointer min-h-[40px] ${activeTab === 'timeline'
                         ? 'bg-[#144229] text-white shadow-xs'
                         : 'bg-white text-[#526a57] hover:bg-[#eef5ee] hover:text-[#144229] border border-[#ded5c5]'
-                    }`}
+                      }`}
                   >
                     <GitBranch size={15} />
                     <span>Timeline</span>
@@ -1103,11 +1087,10 @@ function MyGardenContent() {
                   <button
                     type="button"
                     onClick={() => setActiveTab('reminders')}
-                    className={`inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all cursor-pointer min-h-[40px] ${
-                      activeTab === 'reminders'
+                    className={`inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all cursor-pointer min-h-[40px] ${activeTab === 'reminders'
                         ? 'bg-[#144229] text-white shadow-xs'
                         : 'bg-white text-[#526a57] hover:bg-[#eef5ee] hover:text-[#144229] border border-[#ded5c5]'
-                    }`}
+                      }`}
                   >
                     <Bell size={15} />
                     <span>Reminders</span>
@@ -1379,11 +1362,10 @@ function MyGardenContent() {
                         <div
                           key={task.id}
                           onClick={() => handleTaskToggle(task)}
-                          className={`p-3 rounded-xl border text-xs sm:text-sm cursor-pointer flex items-start gap-3 transition-colors min-h-[48px] ${
-                            task.completed
+                          className={`p-3 rounded-xl border text-xs sm:text-sm cursor-pointer flex items-start gap-3 transition-colors min-h-[48px] ${task.completed
                               ? 'bg-[#f7f5ed] border-[#e2dbce] opacity-60'
                               : 'bg-[#fbf9f4] border-[#ded5c5] hover:border-[#144229] hover:bg-white'
-                          }`}
+                            }`}
                         >
                           <button
                             type="button"
@@ -1398,9 +1380,8 @@ function MyGardenContent() {
                           </button>
                           <div className="flex-1 min-w-0">
                             <p
-                              className={`font-medium ${
-                                task.completed ? 'line-through text-[#6d8573]' : 'text-[#0c2417]'
-                              }`}
+                              className={`font-medium ${task.completed ? 'line-through text-[#6d8573]' : 'text-[#0c2417]'
+                                }`}
                             >
                               {task.title}
                             </p>
