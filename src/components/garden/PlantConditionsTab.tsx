@@ -114,7 +114,7 @@ export function PlantConditionsTab({
             <Thermometer size={20} className="text-[#174C35]" />
             <span>Environmental Growing Conditions</span>
           </h3>
-          <p className="text-xs sm:text-sm text-[#68766C] mt-0.5">
+          <p className="text-xs sm:text-sm text-[#5F6D63] mt-0.5">
             Log temperature, ambient humidity, light exposure, and soil moisture observations.
           </p>
         </div>
@@ -133,7 +133,7 @@ export function PlantConditionsTab({
       {latest ? (
         <div className="bg-[#F8F6EE] border border-[#E3DFD2] rounded-3xl p-5 sm:p-6 shadow-xs space-y-4">
           <div className="flex items-center justify-between pb-3 border-b border-[#E3DFD2]/60">
-            <span className="text-xs font-semibold text-[#68766C]">
+            <span className="text-xs font-semibold text-[#5F6D63]">
               Latest Observation: {new Date(latest.observationTime).toLocaleString('en-US', { dateStyle: 'medium', timeStyle: 'short' })}
             </span>
             <span className="text-xs font-medium bg-[#EAF1E4] text-[#174C35] px-2.5 py-0.5 rounded-full border border-[#E3DFD2]">
@@ -156,7 +156,7 @@ export function PlantConditionsTab({
                   className="p-4 rounded-2xl bg-white border border-[#E3DFD2] space-y-1.5"
                 >
                   <div className="flex items-center justify-between">
-                    <span className="text-xs font-bold uppercase tracking-wider text-[#68766C]">
+                    <span className="text-xs font-bold uppercase tracking-wider text-[#5F6D63]">
                       {a.metricName.replace('_', ' ')}
                     </span>
                     <span className={`text-[10px] font-semibold px-2 py-0.5 rounded-md border ${statusColor}`}>
@@ -168,7 +168,7 @@ export function PlantConditionsTab({
                       ? `${a.observedValue}${a.metricName === 'temperature' ? '°C' : a.metricName === 'humidity' ? '%' : ''}`
                       : 'Unknown'}
                   </div>
-                  <p className="text-[11px] text-[#68766C] leading-tight">{a.explanation}</p>
+                  <p className="text-[11px] text-[#5F6D63] leading-tight">{a.explanation}</p>
                 </div>
               );
             })}
@@ -176,8 +176,8 @@ export function PlantConditionsTab({
 
           {/* Unrecorded parameters notice */}
           {assessment.unrecordedParameters.length > 0 && (
-            <div className="text-xs text-[#68766C] flex items-center gap-1.5 pt-1">
-              <HelpCircle size={14} className="text-[#68766C]" />
+            <div className="text-xs text-[#5F6D63] flex items-center gap-1.5 pt-1">
+              <HelpCircle size={14} className="text-[#5F6D63]" />
               <span>
                 Not recorded in this entry: {assessment.unrecordedParameters.join(', ')}.
               </span>
@@ -186,9 +186,9 @@ export function PlantConditionsTab({
         </div>
       ) : (
         <div className="p-8 text-center bg-white rounded-3xl border border-[#E3DFD2] space-y-3">
-          <Thermometer size={32} className="mx-auto text-[#68766C]" />
+          <Thermometer size={32} className="mx-auto text-[#5F6D63]" />
           <h4 className="font-serif font-bold text-[#203027]">No Growing Conditions Logged Yet</h4>
-          <p className="text-xs sm:text-sm text-[#68766C] max-w-md mx-auto">
+          <p className="text-xs sm:text-sm text-[#5F6D63] max-w-md mx-auto">
             Recording ambient temperature, humidity, and soil moisture allows GrowAI to assess
             whether conditions fall within standard botanical comfort ranges.
           </p>
@@ -234,7 +234,7 @@ export function PlantConditionsTab({
                   </div>
                 </div>
 
-                <div className="flex flex-wrap items-center gap-2 text-xs text-[#68766C]">
+                <div className="flex flex-wrap items-center gap-2 text-xs text-[#5F6D63]">
                   {cond.soilMoisture && (
                     <span>Soil: <strong>{cond.soilMoisture.replace('_', ' ')}</strong></span>
                   )}
@@ -250,7 +250,7 @@ export function PlantConditionsTab({
                 </div>
 
                 {cond.notes && (
-                  <p className="text-xs text-[#68766C] italic pt-0.5">{cond.notes}</p>
+                  <p className="text-xs text-[#5F6D63] italic pt-0.5">{cond.notes}</p>
                 )}
               </div>
             ))}
@@ -270,7 +270,7 @@ export function PlantConditionsTab({
               <button
                 type="button"
                 onClick={() => setShowLogModal(false)}
-                className="p-2 text-[#68766C] hover:text-[#203027] rounded-lg cursor-pointer"
+                className="p-2 text-[#5F6D63] hover:text-[#203027] rounded-lg cursor-pointer"
               >
                 <X size={18} />
               </button>
@@ -400,7 +400,7 @@ export function PlantConditionsTab({
                 <button
                   type="button"
                   onClick={() => setShowLogModal(false)}
-                  className="px-4 py-2.5 rounded-xl border border-[#E3DFD2] text-xs font-semibold text-[#68766C] hover:bg-[#F8F6EE] cursor-pointer min-h-[44px]"
+                  className="px-4 py-2.5 rounded-xl border border-[#E3DFD2] text-xs font-semibold text-[#5F6D63] hover:bg-[#F8F6EE] cursor-pointer min-h-[44px]"
                 >
                   Cancel
                 </button>

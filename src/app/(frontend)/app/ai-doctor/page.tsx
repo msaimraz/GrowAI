@@ -260,7 +260,7 @@ export default function AiDoctorPage() {
               <span className="p-1 rounded-lg bg-white/10 text-xl">
                 🌿
               </span>
-              <span className="text-xs font-mono uppercase tracking-wider text-[#78A95A]">
+              <span className="text-xs font-mono uppercase tracking-wider text-[#EAF1E4] font-semibold">
                 Plant Health Clinic
               </span>
             </div>
@@ -319,7 +319,7 @@ export default function AiDoctorPage() {
                 <h3 className="font-serif font-bold text-xl text-[#203027]">
                   Plant Consultation Form
                 </h3>
-                <p className="text-xs text-[#68766C]">
+                <p className="text-xs text-[#5F6D63]">
                   Fill in symptoms below or pick a quick scenario to begin
                 </p>
               </div>
@@ -333,7 +333,7 @@ export default function AiDoctorPage() {
                 className={`px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer min-h-[36px] ${
                   !isHeuristicMode
                     ? 'bg-[#174C35] text-white shadow-2xs'
-                    : 'text-[#68766C] hover:text-[#203027]'
+                    : 'text-[#5F6D63] hover:text-[#203027]'
                 }`}
               >
                 ✨ Gemini 3.8 Flash
@@ -344,7 +344,7 @@ export default function AiDoctorPage() {
                 className={`px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer min-h-[36px] ${
                   isHeuristicMode
                     ? 'bg-[#174C35] text-white shadow-2xs'
-                    : 'text-[#68766C] hover:text-[#203027]'
+                    : 'text-[#5F6D63] hover:text-[#203027]'
                 }`}
               >
                 🌱 Heuristic Rulebase
@@ -378,7 +378,7 @@ export default function AiDoctorPage() {
                 <label className="block text-xs font-bold uppercase tracking-wider text-[#174C35]">
                   Plant Photograph (Optional but highly recommended)
                 </label>
-                <span className="text-xs text-[#68766C]">JPEG, PNG, WebP up to 5 MB</span>
+                <span className="text-xs text-[#5F6D63]">JPEG, PNG, WebP up to 5 MB</span>
               </div>
 
               <div className="border-2 border-dashed border-[#E3DFD2] hover:border-[#174C35] rounded-3xl p-6 sm:p-8 text-center bg-[#F8F6EE] transition-all relative">
@@ -431,7 +431,7 @@ export default function AiDoctorPage() {
                       <p className="text-sm font-serif font-bold text-[#203027]">
                         Upload a clear close-up of the plant leaf or stem
                       </p>
-                      <p className="text-xs text-[#68766C] mt-0.5 max-w-md mx-auto">
+                      <p className="text-xs text-[#5F6D63] mt-0.5 max-w-md mx-auto">
                         High resolution natural daylight photos allow Gemini 3.8 Flash to evaluate discoloration, spore patterning, and insect traces.
                       </p>
                     </div>
@@ -540,7 +540,7 @@ export default function AiDoctorPage() {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
                 <label className="block text-xs font-semibold text-[#203027] mb-1.5 flex items-center gap-1.5">
-                  <Thermometer size={14} className="text-[#68766C]" />
+                  <Thermometer size={14} className="text-[#5F6D63]" />
                   <span>Ambient Temperature (Optional)</span>
                 </label>
                 <input
@@ -554,7 +554,7 @@ export default function AiDoctorPage() {
 
               <div>
                 <label className="block text-xs font-semibold text-[#203027] mb-1.5 flex items-center gap-1.5">
-                  <Layers size={14} className="text-[#68766C]" />
+                  <Layers size={14} className="text-[#5F6D63]" />
                   <span>Potting Medium / Substrate (Optional)</span>
                 </label>
                 <input
@@ -591,7 +591,7 @@ export default function AiDoctorPage() {
 
             {/* Submit Action */}
             <div className="pt-2 flex flex-col sm:flex-row items-center justify-between gap-4">
-              <span className="text-xs text-[#68766C]">
+              <span className="text-xs text-[#5F6D63]">
                 {photoFile ? '✓ Specimen photo ready for evaluation' : '💡 Tip: Attaching a photo unlocks multimodal vision.'}
               </span>
 
@@ -631,7 +631,7 @@ export default function AiDoctorPage() {
                   🌿
                 </div>
                 <div>
-                  <span className="text-xs font-mono uppercase tracking-wider text-[#68766C] block">
+                  <span className="text-xs font-mono uppercase tracking-wider text-[#5F6D63] block">
                     Plant Health Results
                   </span>
                   <h3 className="font-serif font-bold text-xl sm:text-2xl text-[#203027]">
@@ -661,37 +661,37 @@ export default function AiDoctorPage() {
             {/* Specimen Recognition & Health Summary */}
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
               <div className="bg-[#F8F6EE] p-5 rounded-2xl border border-[#E3DFD2]">
-                <span className="text-[10px] font-bold uppercase tracking-wider text-[#68766C] block mb-1">
+                <span className="text-[10px] font-bold uppercase tracking-wider text-[#5F6D63] block mb-1">
                   Plant Identification
                 </span>
                 <p className="text-base font-serif font-bold text-[#203027]">
                   {result.plantIdentification}
                 </p>
-                <span className="text-xs text-[#68766C] capitalize">
+                <span className="text-xs text-[#5F6D63] capitalize">
                   Confidence: {result.plantIdentificationConfidence}
                 </span>
               </div>
 
               <div className="bg-[#F8F6EE] p-5 rounded-2xl border border-[#E3DFD2]">
-                <span className="text-[10px] font-bold uppercase tracking-wider text-[#68766C] block mb-1">
+                <span className="text-[10px] font-bold uppercase tracking-wider text-[#5F6D63] block mb-1">
                   Overall Botanical Health
                 </span>
                 <p className="text-base font-serif font-bold capitalize text-[#203027]">
                   {result.overallHealth.replace('_', ' ')}
                 </p>
-                <span className="text-xs text-[#68766C]">
+                <span className="text-xs text-[#5F6D63]">
                   {result.requiresExpertReview ? '⚠️ Specialist review advised' : '✓ Self-manageable at home'}
                 </span>
               </div>
 
               <div className="bg-[#F8F6EE] p-5 rounded-2xl border border-[#E3DFD2]">
-                <span className="text-[10px] font-bold uppercase tracking-wider text-[#68766C] block mb-1">
+                <span className="text-[10px] font-bold uppercase tracking-wider text-[#5F6D63] block mb-1">
                   Diagnostic Certainty
                 </span>
                 <p className="text-base font-serif font-bold text-[#174C35]">
                   {result.possibleConditions[0]?.confidenceCategory.toUpperCase() || 'MODERATE'}
                 </p>
-                <span className="text-xs text-[#68766C]">
+                <span className="text-xs text-[#5F6D63]">
                   Grounded in observable symptoms
                 </span>
               </div>
@@ -783,7 +783,7 @@ export default function AiDoctorPage() {
                             <CheckCircle2 size={15} className="text-[#174C35]" />
                             Supporting Visible Evidence:
                           </span>
-                          <ul className="text-xs text-[#68766C] space-y-1.5">
+                          <ul className="text-xs text-[#5F6D63] space-y-1.5">
                             {condition.supportingEvidence.map((ev, i) => (
                               <li key={i} className="flex items-start gap-2">
                                 <span className="text-[#174C35] font-bold">•</span>
@@ -799,7 +799,7 @@ export default function AiDoctorPage() {
                             <HelpCircle size={15} className="text-[#8A6400]" />
                             Alternative Causes Considered:
                           </span>
-                          <ul className="text-xs text-[#68766C] space-y-1.5">
+                          <ul className="text-xs text-[#5F6D63] space-y-1.5">
                             {condition.alternativeCauses.map((alt, i) => (
                               <li key={i} className="flex items-start gap-2">
                                 <span className="text-[#8A6400] font-bold">•</span>
@@ -884,7 +884,7 @@ export default function AiDoctorPage() {
 
             {/* Uncertainties Box */}
             {result.uncertainties && result.uncertainties.length > 0 && (
-              <div className="bg-[#F8F6EE] p-5 rounded-2xl border border-[#E3DFD2] text-xs sm:text-sm text-[#68766C] space-y-2">
+              <div className="bg-[#F8F6EE] p-5 rounded-2xl border border-[#E3DFD2] text-xs sm:text-sm text-[#5F6D63] space-y-2">
                 <span className="font-bold uppercase tracking-wider text-[#203027] text-xs block">
                   Diagnosis Uncertainties & Photo Limitations:
                 </span>
@@ -925,7 +925,7 @@ export default function AiDoctorPage() {
 
             {/* Follow-up / New Assessment Actions */}
             <div className="pt-5 border-t border-[#E3DFD2] flex flex-col sm:flex-row items-center justify-between gap-4">
-              <div className="text-xs text-[#68766C] space-y-1">
+              <div className="text-xs text-[#5F6D63] space-y-1">
                 <p className="font-semibold text-[#203027]">
                   Follow-up: {result.suggestedFollowUp || 'Monitor plant recovery over the next 48 hours.'}
                 </p>

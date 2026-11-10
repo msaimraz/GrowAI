@@ -446,9 +446,9 @@ export function getHealthStatusBadgeConfig(status: PlantHealthStatus): {
         label: 'No Assessment',
         variant: 'slate',
         bgClass: 'bg-[#F8F6EE]',
-        textClass: 'text-[#68766C]',
+        textClass: 'text-[#5F6D63]',
         borderClass: 'border-[#E3DFD2]',
-        dotClass: 'bg-[#68766C]',
+        dotClass: 'bg-[#5F6D63]',
         description: 'No diagnostic assessments recorded yet.',
       };
   }

@@ -349,7 +349,7 @@ export function AutoLayoutModal({
               <h2 id={modalTitleId} className="font-serif text-lg sm:text-xl font-bold text-[#174C35]">
                 Generate Suggested Arrangement
               </h2>
-              <p className="text-xs text-[#68766C]">
+              <p className="text-xs text-[#5F6D63]">
                 Botanical heuristic placement based on shelf dimensions and lighting
               </p>
             </div>
@@ -357,7 +357,7 @@ export function AutoLayoutModal({
           <button
             type="button"
             onClick={onClose}
-            className="p-2 rounded-lg text-[#68766C] hover:text-[#174C35] hover:bg-[#F8F6EE] transition-colors"
+            className="p-2 rounded-lg text-[#5F6D63] hover:text-[#174C35] hover:bg-[#F8F6EE] transition-colors"
             aria-label="Close auto layout modal"
           >
             <X className="w-5 h-5" />
@@ -368,7 +368,7 @@ export function AutoLayoutModal({
         <div className="p-5 sm:p-6 overflow-y-auto space-y-6">
           {/* Step 1: Select Garden Goal */}
           <div>
-            <label className="text-xs font-bold uppercase tracking-wider text-[#68766C] block mb-2">
+            <label className="text-xs font-bold uppercase tracking-wider text-[#5F6D63] block mb-2">
               1. Select Growing Goal
             </label>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
@@ -393,7 +393,7 @@ export function AutoLayoutModal({
                         </span>
                         {isSelected && <CheckCircle2 className="w-3.5 h-3.5 text-[#174C35]" />}
                       </div>
-                      <p className="text-[11px] text-[#68766C] mt-0.5 leading-snug line-clamp-2">
+                      <p className="text-[11px] text-[#5F6D63] mt-0.5 leading-snug line-clamp-2">
                         {goal.description}
                       </p>
                     </div>
@@ -407,7 +407,7 @@ export function AutoLayoutModal({
           <div className="flex flex-wrap items-center justify-between gap-3 p-3.5 bg-white border border-[#E3DFD2] rounded-xl text-xs">
             <div>
               <span className="font-semibold text-[#174C35] block">Spacing Density</span>
-              <span className="text-[11px] text-[#68766C]">
+              <span className="text-[11px] text-[#5F6D63]">
                 Controls individual pot spacing and root zone allocation
               </span>
             </div>
@@ -461,13 +461,13 @@ export function AutoLayoutModal({
           {isGenerated && layoutResult && (
             <div className="space-y-4 pt-2">
               <div className="flex items-center justify-between border-b border-[#E3DFD2] pb-2">
-                <span className="text-xs font-bold uppercase tracking-wider text-[#68766C]">
+                <span className="text-xs font-bold uppercase tracking-wider text-[#5F6D63]">
                   2. Suggested Arrangement Breakdown
                 </span>
                 <button
                   type="button"
                   onClick={() => setIsGenerated(false)}
-                  className="text-xs text-[#68766C] hover:text-[#174C35] flex items-center gap-1 font-medium"
+                  className="text-xs text-[#5F6D63] hover:text-[#174C35] flex items-center gap-1 font-medium"
                 >
                   <RotateCcw className="w-3 h-3" />
                   Regenerate
@@ -477,14 +477,14 @@ export function AutoLayoutModal({
               {/* Overview Metric Banner */}
               <div className="grid grid-cols-3 gap-2 p-3 bg-white border border-[#E3DFD2] rounded-xl text-center">
                 <div>
-                  <span className="text-[10px] uppercase font-bold text-[#68766C] block">Placed</span>
+                  <span className="text-[10px] uppercase font-bold text-[#5F6D63] block">Placed</span>
                   <span className="font-serif text-lg font-bold text-[#174C35]">
                     {layoutResult.placements.length}
                   </span>
-                  <span className="text-[10px] text-[#68766C] block">containers</span>
+                  <span className="text-[10px] text-[#5F6D63] block">containers</span>
                 </div>
                 <div>
-                  <span className="text-[10px] uppercase font-bold text-[#68766C] block">
+                  <span className="text-[10px] uppercase font-bold text-[#5F6D63] block">
                     Est. Wet Load
                   </span>
                   <span className="font-serif text-lg font-bold text-[#174C35]">
@@ -493,14 +493,14 @@ export function AutoLayoutModal({
                       .reduce((acc, p) => acc + p.estimatedWetWeightKg, 0)
                       .toFixed(1)}
                   </span>
-                  <span className="text-[10px] text-[#68766C] block">kg total</span>
+                  <span className="text-[10px] text-[#5F6D63] block">kg total</span>
                 </div>
                 <div>
-                  <span className="text-[10px] uppercase font-bold text-[#68766C] block">Tiers Used</span>
+                  <span className="text-[10px] uppercase font-bold text-[#5F6D63] block">Tiers Used</span>
                   <span className="font-serif text-lg font-bold text-[#174C35]">
                     {new Set(layoutResult.placements.map((p) => p.tierIndex)).size} / {profile.tiers.length}
                   </span>
-                  <span className="text-[10px] text-[#68766C] block">shelves</span>
+                  <span className="text-[10px] text-[#5F6D63] block">shelves</span>
                 </div>
               </div>
 
@@ -533,13 +533,13 @@ export function AutoLayoutModal({
                         {item.rationale}
                       </p>
 
-                      <div className="flex flex-wrap items-center gap-3 text-[11px] text-[#68766C] pt-0.5">
+                      <div className="flex flex-wrap items-center gap-3 text-[11px] text-[#5F6D63] pt-0.5">
                         <span className="flex items-center gap-1">
-                          <Ruler className="w-3 h-3 text-[#68766C]" />
+                          <Ruler className="w-3 h-3 text-[#5F6D63]" />
                           Ø {item.slot.container.shape === 'circular' ? (item.slot.container as CircularContainerInput).topDiameter : 20}cm pot
                         </span>
                         <span className="flex items-center gap-1">
-                          <Sun className="w-3 h-3 text-[#68766C]" />
+                          <Sun className="w-3 h-3 text-[#5F6D63]" />
                           {item.plant.sunlight}
                         </span>
                       </div>
@@ -547,7 +547,7 @@ export function AutoLayoutModal({
                   ))}
                 </div>
               ) : (
-                <div className="p-4 bg-white border border-[#E3DFD2] rounded-xl text-center text-xs text-[#68766C]">
+                <div className="p-4 bg-white border border-[#E3DFD2] rounded-xl text-center text-xs text-[#5F6D63]">
                   No species could fit into the current space profile. Check shelf dimensions or load limits.
                 </div>
               )}
@@ -570,9 +570,9 @@ export function AutoLayoutModal({
               )}
 
               {/* Transparency & Mathematical Reality Disclosure */}
-              <div className="p-3 bg-[#F8F6EE] border border-[#E3DFD2] rounded-xl text-[11px] text-[#68766C] leading-relaxed space-y-1">
+              <div className="p-3 bg-[#F8F6EE] border border-[#E3DFD2] rounded-xl text-[11px] text-[#5F6D63] leading-relaxed space-y-1">
                 <p className="flex items-start gap-1.5">
-                  <Info className="w-3.5 h-3.5 text-[#68766C] shrink-0 mt-0.5" />
+                  <Info className="w-3.5 h-3.5 text-[#5F6D63] shrink-0 mt-0.5" />
                   <span>
                     <strong>Suggested Arrangement:</strong> This layout is generated by botanical rules and
                     linear geometric packing. It is not certified as mathematically optimal, and yields are
@@ -580,7 +580,7 @@ export function AutoLayoutModal({
                   </span>
                 </p>
                 <p className="flex items-start gap-1.5">
-                  <ShieldCheck className="w-3.5 h-3.5 text-[#68766C] shrink-0 mt-0.5" />
+                  <ShieldCheck className="w-3.5 h-3.5 text-[#5F6D63] shrink-0 mt-0.5" />
                   <span>
                     <strong>Structural Load Check:</strong> Ensure your rack manufacturer Safe Working Load
                     (SWL) is confirmed before applying soil and water.

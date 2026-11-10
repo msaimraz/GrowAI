@@ -79,7 +79,7 @@ export function MobileBottomNav() {
                 className={`flex-1 flex flex-col items-center justify-center min-h-[48px] py-1 px-1 rounded-xl text-xs font-medium transition-all duration-75 active:scale-95 active:opacity-75 select-none touch-manipulation cursor-pointer ${
                   isActive
                     ? 'text-[#174C35] font-bold'
-                    : 'text-[#68766C] hover:text-[#203027]'
+                    : 'text-[#5F6D63] hover:text-[#203027]'
                 }`}
               >
                 <span
@@ -106,7 +106,7 @@ export function MobileBottomNav() {
             className={`flex-1 flex flex-col items-center justify-center min-h-[48px] py-1 px-1 rounded-xl text-xs font-medium transition-all duration-75 active:scale-95 active:opacity-75 select-none touch-manipulation cursor-pointer ${
               isMoreActive || moreOpen
                 ? 'text-[#174C35] font-bold'
-                : 'text-[#68766C] hover:text-[#203027]'
+                : 'text-[#5F6D63] hover:text-[#203027]'
             }`}
             aria-label="Open more navigation options"
           >
@@ -146,7 +146,7 @@ export function MobileBottomNav() {
               <button
                 type="button"
                 onClick={() => setMoreOpen(false)}
-                className="p-2 rounded-xl text-[#68766C] hover:text-[#203027] hover:bg-[#E3DFD2]/50 active:scale-90 min-h-[44px] min-w-[44px] flex items-center justify-center cursor-pointer select-none touch-manipulation transition-all duration-75"
+                className="p-2 rounded-xl text-[#5F6D63] hover:text-[#203027] hover:bg-[#E3DFD2]/50 active:scale-90 min-h-[44px] min-w-[44px] flex items-center justify-center cursor-pointer select-none touch-manipulation transition-all duration-75"
                 aria-label="Close menu"
               >
                 <X size={20} />
@@ -176,12 +176,12 @@ export function MobileBottomNav() {
                         <h4 className="font-serif font-bold text-sm leading-tight">
                           {item.label}
                         </h4>
-                        <p className="text-xs text-[#68766C] mt-0.5">
+                        <p className="text-xs text-[#5F6D63] mt-0.5">
                           {item.desc}
                         </p>
                       </div>
                     </div>
-                    <span className="text-[#68766C]/60 text-xs">→</span>
+                    <span className="text-[#5F6D63]/60 text-xs">→</span>
                   </Link>
                 );
               })}

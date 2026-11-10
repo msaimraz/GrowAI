@@ -23,7 +23,7 @@ export function PlanCard({ plan, plantNickname }: PlanCardProps) {
             <div className="flex items-center gap-2 flex-wrap mb-1.5">
               <PlanStatusBadge status={plan.status} />
               <PlanStatusBadge health={plan.healthStatus} />
-              <span className="text-xs px-2 py-0.5 rounded-lg capitalize bg-[#F8F6EE] text-[#68766C] font-medium border border-[#E3DFD2]/60">
+              <span className="text-xs px-2 py-0.5 rounded-lg capitalize bg-[#F8F6EE] text-[#5F6D63] font-medium border border-[#E3DFD2]/60">
                 {plan.scope}
               </span>
             </div>
@@ -33,7 +33,7 @@ export function PlanCard({ plan, plantNickname }: PlanCardProps) {
               </Link>
             </h3>
             {plantNickname && (
-              <p className="text-xs text-[#68766C] mt-0.5">
+              <p className="text-xs text-[#5F6D63] mt-0.5">
                 Plant: <span className="font-semibold text-[#203027]">{plantNickname}</span>
               </p>
             )}
@@ -41,14 +41,14 @@ export function PlanCard({ plan, plantNickname }: PlanCardProps) {
         </div>
 
         {plan.description && (
-          <p className="text-xs text-[#68766C] line-clamp-2 mb-4 leading-relaxed">
+          <p className="text-xs text-[#5F6D63] line-clamp-2 mb-4 leading-relaxed">
             {plan.description}
           </p>
         )}
 
         {/* Progress Bar */}
         <div className="mb-4">
-          <div className="flex justify-between items-center text-xs text-[#68766C] mb-1.5 font-medium">
+          <div className="flex justify-between items-center text-xs text-[#5F6D63] mb-1.5 font-medium">
             <span>Execution Progress</span>
             <span className="font-bold text-[#203027]">{taskPct}%</span>
           </div>
@@ -64,7 +64,7 @@ export function PlanCard({ plan, plantNickname }: PlanCardProps) {
               style={{ width: `${taskPct}%` }}
             />
           </div>
-          <div className="flex justify-between items-center text-[10px] text-[#68766C] mt-1.5">
+          <div className="flex justify-between items-center text-[10px] text-[#5F6D63] mt-1.5">
             <span>{plan.steps.filter((s) => s.status === 'completed').length} of {plan.steps.length} steps complete</span>
             {plan.progress?.observationalProgressPercentage !== undefined && plan.progress?.observationalProgressPercentage !== null && (
               <span>Obs: {Math.round(plan.progress.observationalProgressPercentage)}%</span>
@@ -87,7 +87,7 @@ export function PlanCard({ plan, plantNickname }: PlanCardProps) {
 
       {/* Footer CTA */}
       <div className="pt-3 border-t border-[#F8F6EE] flex justify-between items-center text-xs">
-        <span className="text-[#68766C]">
+        <span className="text-[#5F6D63]">
           Created {new Date(plan.createdAt).toLocaleDateString()}
         </span>
         <Link

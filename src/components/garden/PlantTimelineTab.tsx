@@ -126,7 +126,7 @@ export function PlantTimelineTab({
       case 'planting':
         return <Sprout size={16} className="text-[#174C35]" />;
       case 'plant_added':
-        return <Calendar size={16} className="text-[#68766C]" />;
+        return <Calendar size={16} className="text-[#5F6D63]" />;
       case 'germination':
         return <Sparkles size={16} className="text-emerald-600" />;
       case 'transplant':
@@ -134,7 +134,7 @@ export function PlantTimelineTab({
       case 'stage_change':
         return <Sprout size={16} className="text-[#174C35]" />;
       case 'growth_observation':
-        return <Clock size={16} className="text-[#68766C]" />;
+        return <Clock size={16} className="text-[#5F6D63]" />;
       case 'photo':
         return <Camera size={16} className="text-amber-600" />;
       case 'health_assessment':
@@ -154,7 +154,7 @@ export function PlantTimelineTab({
       case 'harvest':
         return <Scissors size={16} className="text-emerald-800" />;
       default:
-        return <Clock size={16} className="text-[#68766C]" />;
+        return <Clock size={16} className="text-[#5F6D63]" />;
     }
   };
 
@@ -171,7 +171,7 @@ export function PlantTimelineTab({
       case 'accent':
         return 'bg-[#EAF1E4] text-[#174C35] border-[#E3DFD2] font-semibold';
       default:
-        return 'bg-[#F8F6EE] text-[#68766C] border-[#E3DFD2]';
+        return 'bg-[#F8F6EE] text-[#5F6D63] border-[#E3DFD2]';
     }
   };
 
@@ -182,7 +182,7 @@ export function PlantTimelineTab({
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-[#E3DFD2]">
           <div>
             <div className="flex items-center gap-2">
-              <span className="text-xs uppercase tracking-wider font-semibold text-[#68766C]">
+              <span className="text-xs uppercase tracking-wider font-semibold text-[#5F6D63]">
                 Growth Timeline & Journal
               </span>
               {summary.hasPropagationLineage && (
@@ -227,7 +227,7 @@ export function PlantTimelineTab({
 
         {/* Stage Progression Chain */}
         {summary.stageHistory.length > 1 && (
-          <div className="py-3 border-b border-[#E3DFD2] flex flex-wrap items-center gap-1.5 text-xs text-[#68766C]">
+          <div className="py-3 border-b border-[#E3DFD2] flex flex-wrap items-center gap-1.5 text-xs text-[#5F6D63]">
             <span className="font-semibold text-[#203027]">Observed Stages:</span>
             {summary.stageHistory.map((stg, idx) => (
               <React.Fragment key={stg}>
@@ -235,13 +235,13 @@ export function PlantTimelineTab({
                   className={`px-2 py-0.5 rounded-md ${
                     stg === summary.currentStage
                       ? 'bg-[#174C35] text-white font-bold'
-                      : 'bg-white border border-[#E3DFD2] text-[#68766C]'
+                      : 'bg-white border border-[#E3DFD2] text-[#5F6D63]'
                   }`}
                 >
                   {stg}
                 </span>
                 {idx < summary.stageHistory.length - 1 && (
-                  <ChevronRight size={13} className="text-[#68766C]" />
+                  <ChevronRight size={13} className="text-[#5F6D63]" />
                 )}
               </React.Fragment>
             ))}
@@ -251,19 +251,19 @@ export function PlantTimelineTab({
         {/* Botanical Metrics Grid */}
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-4 text-xs">
           <div className="p-3 bg-white rounded-xl border border-[#E3DFD2]">
-            <span className="text-[#68766C] block mb-0.5">Planted Date</span>
+            <span className="text-[#5F6D63] block mb-0.5">Planted Date</span>
             <strong className="text-[#203027] text-sm">{summary.plantedDateDisplay}</strong>
           </div>
           <div className="p-3 bg-white rounded-xl border border-[#E3DFD2]">
-            <span className="text-[#68766C] block mb-0.5">Last Observation</span>
+            <span className="text-[#5F6D63] block mb-0.5">Last Observation</span>
             <strong className="text-[#203027] text-sm">{summary.lastObservationDateDisplay}</strong>
           </div>
           <div className="p-3 bg-white rounded-xl border border-[#E3DFD2]">
-            <span className="text-[#68766C] block mb-0.5">Photo Journal</span>
+            <span className="text-[#5F6D63] block mb-0.5">Photo Journal</span>
             <strong className="text-[#203027] text-sm">{summary.totalPhotosCount} photos</strong>
           </div>
           <div className="p-3 bg-white rounded-xl border border-[#E3DFD2]">
-            <span className="text-[#68766C] block mb-0.5">AI Health Records</span>
+            <span className="text-[#5F6D63] block mb-0.5">AI Health Records</span>
             <strong className="text-[#203027] text-sm">
               {summary.totalHealthAssessmentsCount} assessments
             </strong>
@@ -294,7 +294,7 @@ export function PlantTimelineTab({
               className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold transition-all cursor-pointer min-h-[38px] ${
                 isActive
                   ? 'bg-[#174C35] text-white shadow-xs'
-                  : 'bg-white text-[#68766C] hover:bg-[#EAF1E4] hover:text-[#174C35] border border-[#E3DFD2]'
+                  : 'bg-white text-[#5F6D63] hover:bg-[#EAF1E4] hover:text-[#174C35] border border-[#E3DFD2]'
               }`}
             >
               <span>{tab.label}</span>
@@ -313,11 +313,11 @@ export function PlantTimelineTab({
       {/* 3. Chronological Botanical Timeline */}
       {filteredEvents.length === 0 ? (
         <div className="p-8 text-center bg-white rounded-2xl border border-[#E3DFD2]">
-          <Sprout className="w-10 h-10 text-[#68766C] mx-auto mb-3 opacity-60" />
+          <Sprout className="w-10 h-10 text-[#5F6D63] mx-auto mb-3 opacity-60" />
           <h4 className="font-serif text-lg font-bold text-[#203027] mb-1">
             No events in this category yet
           </h4>
-          <p className="text-xs text-[#68766C] max-w-sm mx-auto mb-4">
+          <p className="text-xs text-[#5F6D63] max-w-sm mx-auto mb-4">
             {filter === 'photos'
               ? 'Add progress photos from the Photo Journal tab to record visual changes.'
               : filter === 'health'
@@ -370,7 +370,7 @@ export function PlantTimelineTab({
                     )}
                   </div>
 
-                  <span className="text-[11px] text-[#68766C] capitalize">
+                  <span className="text-[11px] text-[#5F6D63] capitalize">
                     {evt.category}
                   </span>
                 </div>
@@ -379,7 +379,7 @@ export function PlantTimelineTab({
                   {evt.title}
                 </h4>
 
-                <p className="text-xs sm:text-sm text-[#68766C] leading-relaxed mb-3">
+                <p className="text-xs sm:text-sm text-[#5F6D63] leading-relaxed mb-3">
                   {evt.description}
                 </p>
 
@@ -394,7 +394,7 @@ export function PlantTimelineTab({
                         loading="lazy"
                       />
                       {evt.media.caption && (
-                        <div className="p-2 text-[11px] text-[#68766C] bg-white/90 border-t border-[#E3DFD2]">
+                        <div className="p-2 text-[11px] text-[#5F6D63] bg-white/90 border-t border-[#E3DFD2]">
                           {evt.media.caption}
                         </div>
                       )}

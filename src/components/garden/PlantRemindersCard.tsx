@@ -73,7 +73,7 @@ export function PlantRemindersCard({ plant, onRefreshNeeded }: PlantRemindersCar
             <h4 className="font-serif text-sm sm:text-base font-bold text-[#203027]">
               Plant Reminders
             </h4>
-            <p className="text-[11px] text-[#68766C]">
+            <p className="text-[11px] text-[#5F6D63]">
               {activeReminders.length} active schedule{activeReminders.length === 1 ? '' : 's'}
               {overdueCount > 0 && (
                 <span className="text-rose-600 font-bold ml-1">
@@ -100,7 +100,7 @@ export function PlantRemindersCard({ plant, onRefreshNeeded }: PlantRemindersCar
           <Loader2 size={20} className="animate-spin text-[#174C35] mx-auto" />
         </div>
       ) : activeReminders.length === 0 ? (
-        <div className="p-4 rounded-xl bg-[#F8F6EE] border border-[#E3DFD2] text-center text-xs text-[#68766C]">
+        <div className="p-4 rounded-xl bg-[#F8F6EE] border border-[#E3DFD2] text-center text-xs text-[#5F6D63]">
           <span>No upcoming reminders scheduled for {plant.nickname}.</span>
         </div>
       ) : (
@@ -120,7 +120,7 @@ export function PlantRemindersCard({ plant, onRefreshNeeded }: PlantRemindersCar
                     </span>
                     <ReminderStatusBadge status={status} size="sm" />
                   </div>
-                  <span className="text-[11px] text-[#68766C]">
+                  <span className="text-[11px] text-[#5F6D63]">
                     Due: {new Date(r.dueAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
                   </span>
                 </div>

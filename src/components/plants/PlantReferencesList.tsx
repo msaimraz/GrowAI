@@ -26,7 +26,7 @@ export function PlantReferencesList({
               <h3 className="text-xl sm:text-2xl font-serif font-bold text-[#203027]">
                 7. Traceable Scientific & Regulatory References
               </h3>
-              <p className="text-xs sm:text-sm text-[#68766C]">
+              <p className="text-xs sm:text-sm text-[#5F6D63]">
                 Peer-reviewed citations, government agricultural extensions, and toxicology authorities.
               </p>
             </div>
@@ -59,7 +59,7 @@ export function PlantReferencesList({
                         <span>• ({ref.year})</span>
                       )}
                       {ref.publication && (
-                        <span className="italic text-[#68766C]">
+                        <span className="italic text-[#5F6D63]">
                           • {ref.publication}
                         </span>
                       )}
@@ -78,7 +78,7 @@ export function PlantReferencesList({
                         </a>
                       )}
                       {ref.doi && (
-                        <span className="text-xs font-mono text-[#68766C]">
+                        <span className="text-xs font-mono text-[#5F6D63]">
                           DOI: {ref.doi}
                         </span>
                       )}
@@ -124,11 +124,11 @@ export function PlantReferencesList({
                     <span className="font-bold text-[#203027] block truncate group-hover:text-[#174C35]">
                       Source {i + 1}
                     </span>
-                    <span className="text-xs text-[#68766C] truncate block">
+                    <span className="text-xs text-[#5F6D63] truncate block">
                       {domain}
                     </span>
                   </div>
-                  <ExternalLink size={15} className="shrink-0 text-[#68766C] group-hover:text-[#174C35]" />
+                  <ExternalLink size={15} className="shrink-0 text-[#5F6D63] group-hover:text-[#174C35]" />
                 </a>
               );
             })}

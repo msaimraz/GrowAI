@@ -344,7 +344,7 @@ export function PwaProvider({ children }: { children: React.ReactNode }) {
               <button
                 type="button"
                 onClick={() => setHasUpdate(false)}
-                className="px-2.5 py-1.5 rounded-lg text-xs font-medium text-[#68766C] hover:text-[#203027] cursor-pointer"
+                className="px-2.5 py-1.5 rounded-lg text-xs font-medium text-[#5F6D63] hover:text-[#203027] cursor-pointer"
               >
                 Later
               </button>
@@ -353,7 +353,7 @@ export function PwaProvider({ children }: { children: React.ReactNode }) {
           <button
             type="button"
             onClick={() => setHasUpdate(false)}
-            className="text-[#68766C] hover:text-[#203027] p-1"
+            className="text-[#5F6D63] hover:text-[#203027] p-1"
             aria-label="Dismiss update notification"
           >
             <X size={16} />
@@ -376,7 +376,7 @@ export function PwaProvider({ children }: { children: React.ReactNode }) {
               <h4 className="font-serif font-bold text-sm text-[#203027]">
                 Install GrowAI App
               </h4>
-              <p className="text-xs text-[#68766C]">
+              <p className="text-xs text-[#5F6D63]">
                 Quick launch from home screen with offline botanical access.
               </p>
             </div>
@@ -392,7 +392,7 @@ export function PwaProvider({ children }: { children: React.ReactNode }) {
             <button
               type="button"
               onClick={dismissInstall}
-              className="p-1.5 text-[#68766C] hover:text-[#203027] rounded-lg"
+              className="p-1.5 text-[#5F6D63] hover:text-[#203027] rounded-lg"
               aria-label="Dismiss install banner"
             >
               <X size={16} />
@@ -420,7 +420,7 @@ export function PwaProvider({ children }: { children: React.ReactNode }) {
               <button
                 type="button"
                 onClick={() => setShowIosInstructions(false)}
-                className="text-[#68766C] hover:text-[#203027] p-1"
+                className="text-[#5F6D63] hover:text-[#203027] p-1"
                 aria-label="Close dialog"
               >
                 <X size={18} />

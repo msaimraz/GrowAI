@@ -45,7 +45,7 @@ export function Navbar() {
             <Link
               key={link.href}
               href={link.href}
-              className="text-xs sm:text-sm font-medium text-[#68766C] hover:text-[#203027] transition-colors py-2 whitespace-nowrap"
+              className="text-xs sm:text-sm font-medium text-[#5F6D63] hover:text-[#203027] transition-colors py-2 whitespace-nowrap"
             >
               {link.label}
             </Link>
@@ -69,7 +69,7 @@ export function Navbar() {
           {user ? (
             <Link
               href="/app"
-              className="text-xs font-medium text-[#68766C] hover:text-[#203027] px-2.5 py-1.5 transition-colors flex items-center gap-1.5"
+              className="text-xs font-medium text-[#5F6D63] hover:text-[#203027] px-2.5 py-1.5 transition-colors flex items-center gap-1.5"
             >
               <span className="w-1.5 h-1.5 rounded-full bg-[#174C35]" />
               <span className="truncate max-w-[120px]">{user.email?.split('@')[0]}</span>
@@ -77,7 +77,7 @@ export function Navbar() {
           ) : (
             <Link
               href="/auth/login"
-              className="text-xs font-medium text-[#68766C] hover:text-[#203027] px-2.5 py-1.5 transition-colors"
+              className="text-xs font-medium text-[#5F6D63] hover:text-[#203027] px-2.5 py-1.5 transition-colors"
             >
               Sign In
             </Link>
@@ -131,7 +131,7 @@ export function Navbar() {
                     <Icon size={16} className="text-[#174C35]" />
                     {link.label}
                   </span>
-                  <span className="text-[#68766C] text-xs">→</span>
+                  <span className="text-[#5F6D63] text-xs">→</span>
                 </Link>
               );
             })}
@@ -157,7 +157,7 @@ export function Navbar() {
               <Link
                 href="/auth/login"
                 onClick={() => setMobileMenuOpen(false)}
-                className="block text-center text-xs font-semibold py-2 text-[#68766C] hover:text-[#203027] min-h-[40px] flex items-center justify-center"
+                className="block text-center text-xs font-semibold py-2 text-[#5F6D63] hover:text-[#203027] min-h-[40px] flex items-center justify-center"
               >
                 Sign In to Your Account
               </Link>

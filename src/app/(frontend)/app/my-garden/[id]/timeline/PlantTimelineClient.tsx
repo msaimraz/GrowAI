@@ -95,7 +95,7 @@ export function PlantTimelineClient({ plantId }: PlantTimelineClientProps) {
       <main className="flex-1 max-w-4xl w-full mx-auto px-4 py-8 sm:px-6">
         {/* Navigation Breadcrumb */}
         <div className="flex items-center justify-between gap-4 mb-6">
-          <nav className="flex items-center gap-2 text-xs text-[#68766C]">
+          <nav className="flex items-center gap-2 text-xs text-[#5F6D63]">
             <Link
               href="/app/my-garden"
               className="inline-flex items-center gap-1.5 hover:text-[#174C35] transition-colors cursor-pointer"
@@ -103,12 +103,12 @@ export function PlantTimelineClient({ plantId }: PlantTimelineClientProps) {
               <ArrowLeft size={14} />
               <span>My Garden</span>
             </Link>
-            <ChevronRight size={12} className="text-[#68766C]" />
+            <ChevronRight size={12} className="text-[#5F6D63]" />
             <span className="font-semibold text-[#203027]">
               {plant?.nickname || 'Plant Timeline'}
             </span>
-            <ChevronRight size={12} className="text-[#68766C]" />
-            <span className="text-[#68766C]">Growth Timeline</span>
+            <ChevronRight size={12} className="text-[#5F6D63]" />
+            <span className="text-[#5F6D63]">Growth Timeline</span>
           </nav>
 
           <button
@@ -129,7 +129,7 @@ export function PlantTimelineClient({ plantId }: PlantTimelineClientProps) {
             <p className="text-sm font-semibold text-[#203027]">
               Loading longitudinal timeline...
             </p>
-            <p className="text-xs text-[#68766C] mt-1">
+            <p className="text-xs text-[#5F6D63] mt-1">
               Aggregating lifecycle milestones, growth observations, care tasks, photos, and health events.
             </p>
           </div>
@@ -142,7 +142,7 @@ export function PlantTimelineClient({ plantId }: PlantTimelineClientProps) {
             <h3 className="font-serif text-lg font-bold text-[#203027] mb-1">
               Timeline Unavailable
             </h3>
-            <p className="text-xs text-[#68766C] max-w-sm mx-auto mb-4">{error}</p>
+            <p className="text-xs text-[#5F6D63] max-w-sm mx-auto mb-4">{error}</p>
             <Link
               href="/app/my-garden"
               className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-semibold bg-[#174C35] text-white hover:bg-[#203027] transition-all cursor-pointer"

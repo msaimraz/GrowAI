@@ -115,7 +115,7 @@ export function PlantFeedingTab({
             <Sprout size={20} className="text-[#174C35]" />
             <span>Feeding & Nutrition Tracking</span>
           </h3>
-          <p className="text-xs sm:text-sm text-[#68766C] mt-0.5">
+          <p className="text-xs sm:text-sm text-[#5F6D63] mt-0.5">
             Log organic feeds, mineral nutrients, application methods, and foliar vigor notes.
           </p>
         </div>
@@ -131,7 +131,7 @@ export function PlantFeedingTab({
       </div>
 
       {/* Safety Banner */}
-      <div className="bg-[#F8F6EE] border border-[#E3DFD2] rounded-2xl p-4 text-xs text-[#68766C] flex items-start gap-3">
+      <div className="bg-[#F8F6EE] border border-[#E3DFD2] rounded-2xl p-4 text-xs text-[#5F6D63] flex items-start gap-3">
         <HelpCircle size={16} className="text-[#174C35] shrink-0 mt-0.5" />
         <div>
           <strong className="text-[#203027] block font-medium">Agronomic Safety Note</strong>
@@ -169,7 +169,7 @@ export function PlantFeedingTab({
                       </span>
                     )}
                   </div>
-                  <span className="text-xs text-[#68766C]">
+                  <span className="text-xs text-[#5F6D63]">
                     {new Date(feed.feedingDate).toLocaleDateString('en-US', {
                       day: 'numeric',
                       month: 'short',
@@ -178,13 +178,13 @@ export function PlantFeedingTab({
                   </span>
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 text-xs text-[#68766C] pt-1">
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 text-xs text-[#5F6D63] pt-1">
                   <div>
-                    <span className="text-[#68766C] block text-[11px]">Method:</span>
+                    <span className="text-[#5F6D63] block text-[11px]">Method:</span>
                     <span className="font-medium capitalize">{feed.applicationMethod.replace(/_/g, ' ')}</span>
                   </div>
                   <div>
-                    <span className="text-[#68766C] block text-[11px]">Applied Dosage:</span>
+                    <span className="text-[#5F6D63] block text-[11px]">Applied Dosage:</span>
                     <span className="font-medium">
                       {feed.dosageAmount !== null && feed.dosageAmount !== undefined
                         ? `${feed.dosageAmount} ${feed.dosageUnit || ''}`
@@ -194,7 +194,7 @@ export function PlantFeedingTab({
                     </span>
                   </div>
                   <div>
-                    <span className="text-[#68766C] block text-[11px]">Next Planned:</span>
+                    <span className="text-[#5F6D63] block text-[11px]">Next Planned:</span>
                     <span className="font-medium">
                       {feed.nextPlannedDate || 'None scheduled'}
                     </span>
@@ -208,7 +208,7 @@ export function PlantFeedingTab({
                 )}
 
                 {feed.growerObservation && (
-                  <p className="text-xs text-[#68766C] italic">{feed.growerObservation}</p>
+                  <p className="text-xs text-[#5F6D63] italic">{feed.growerObservation}</p>
                 )}
               </div>
             ))}
@@ -216,9 +216,9 @@ export function PlantFeedingTab({
         </div>
       ) : (
         <div className="p-8 text-center bg-white rounded-3xl border border-[#E3DFD2] space-y-3">
-          <Package size={32} className="mx-auto text-[#68766C]" />
+          <Package size={32} className="mx-auto text-[#5F6D63]" />
           <h4 className="font-serif font-bold text-[#203027]">No Feeding Records Logged Yet</h4>
-          <p className="text-xs sm:text-sm text-[#68766C] max-w-md mx-auto">
+          <p className="text-xs sm:text-sm text-[#5F6D63] max-w-md mx-auto">
             Log your organic liquid feeds, worm casting top-dressings, or compost applications to
             track nutrient cycles and plant response over time.
           </p>
@@ -245,7 +245,7 @@ export function PlantFeedingTab({
               <button
                 type="button"
                 onClick={() => setShowLogModal(false)}
-                className="p-2 text-[#68766C] hover:text-[#203027] rounded-lg cursor-pointer"
+                className="p-2 text-[#5F6D63] hover:text-[#203027] rounded-lg cursor-pointer"
               >
                 <X size={18} />
               </button>
@@ -345,7 +345,7 @@ export function PlantFeedingTab({
                   <label className="text-xs font-semibold text-[#203027]">
                     Applied Dosage Amount
                   </label>
-                  <label className="flex items-center gap-1.5 text-xs text-[#68766C] cursor-pointer">
+                  <label className="flex items-center gap-1.5 text-xs text-[#5F6D63] cursor-pointer">
                     <input
                       type="checkbox"
                       checked={dosageUnknown}
@@ -419,7 +419,7 @@ export function PlantFeedingTab({
                 <button
                   type="button"
                   onClick={() => setShowLogModal(false)}
-                  className="px-4 py-2.5 rounded-xl border border-[#E3DFD2] text-xs font-semibold text-[#68766C] hover:bg-[#F8F6EE] cursor-pointer min-h-[44px]"
+                  className="px-4 py-2.5 rounded-xl border border-[#E3DFD2] text-xs font-semibold text-[#5F6D63] hover:bg-[#F8F6EE] cursor-pointer min-h-[44px]"
                 >
                   Cancel
                 </button>

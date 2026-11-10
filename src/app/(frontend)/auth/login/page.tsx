@@ -66,7 +66,7 @@ function LoginForm() {
         <h1 className="text-2xl font-serif font-bold text-[#203027] tracking-tight">
           Welcome Back, Grower
         </h1>
-        <p className="text-xs text-[#68766C]">
+        <p className="text-xs text-[#5F6D63]">
           Sign in to access your persistent cloud garden log and care tasks
         </p>
       </div>
@@ -96,7 +96,7 @@ function LoginForm() {
             Email Address
           </label>
           <div className="relative">
-            <Mail size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[#68766C]" />
+            <Mail size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[#5F6D63]" />
             <input
               type="email"
               value={email}
@@ -115,7 +115,7 @@ function LoginForm() {
             </label>
           </div>
           <div className="relative">
-            <Lock size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[#68766C]" />
+            <Lock size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[#5F6D63]" />
             <input
               type="password"
               value={password}
@@ -143,7 +143,7 @@ function LoginForm() {
         </button>
       </form>
 
-      <div className="pt-2 border-t border-[#E3DFD2] space-y-3 text-center text-xs text-[#68766C]">
+      <div className="pt-2 border-t border-[#E3DFD2] space-y-3 text-center text-xs text-[#5F6D63]">
         <p>
           Don&apos;t have a cloud account yet?{' '}
           <Link href="/auth/sign-up" className="font-semibold text-[#174C35] hover:underline">
@@ -164,7 +164,7 @@ function LoginForm() {
 export default function LoginPage() {
   return (
     <div className="min-h-screen flex items-center justify-center p-4 bg-[#F8F6EE]">
-      <Suspense fallback={<div className="text-xs text-[#68766C]">Loading sign in...</div>}>
+      <Suspense fallback={<div className="text-xs text-[#5F6D63]">Loading sign in...</div>}>
         <LoginForm />
       </Suspense>
     </div>

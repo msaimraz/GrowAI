@@ -475,7 +475,7 @@ function GrowIntelligenceContent() {
               <div className="p-5 rounded-2xl bg-[#F8F6EE] border border-[#E3DFD2] flex flex-col md:flex-row md:items-center justify-between gap-4">
                 <div className="space-y-1.5 min-w-0 flex-1">
                   <div className="flex items-center gap-2 flex-wrap">
-                    <span className="text-xs uppercase tracking-wider font-bold px-2 py-0.5 rounded-md bg-white border border-[#E3DFD2] text-[#68766C]">
+                    <span className="text-xs uppercase tracking-wider font-bold px-2 py-0.5 rounded-md bg-white border border-[#E3DFD2] text-[#5F6D63]">
                       {nextBestAction.category.replace('_', ' ')}
                     </span>
                     {nextBestAction.plantName && (
@@ -487,7 +487,7 @@ function GrowIntelligenceContent() {
                   <h4 className="font-serif font-bold text-base sm:text-lg text-[#203027]">
                     {nextBestAction.title}
                   </h4>
-                  <p className="text-xs sm:text-sm text-[#68766C] leading-relaxed">
+                  <p className="text-xs sm:text-sm text-[#5F6D63] leading-relaxed">
                     {nextBestAction.explanation}
                   </p>
                   <div className="mt-2 text-xs font-semibold text-[#174C35] bg-[#EAF1E4] p-2.5 rounded-xl border border-[#E3DFD2]">
@@ -517,7 +517,7 @@ function GrowIntelligenceContent() {
                       key={i}
                       className="p-3 rounded-xl border border-[#E3DFD2] bg-[#F8F6EE] text-xs space-y-1"
                     >
-                      <span className="text-[10px] uppercase font-bold tracking-wider text-[#68766C] block">
+                      <span className="text-[10px] uppercase font-bold tracking-wider text-[#5F6D63] block">
                         Source: {ev.source.replace('_', ' ')}
                       </span>
                       <p className="text-[#203027] font-medium">{ev.description}</p>
@@ -532,7 +532,7 @@ function GrowIntelligenceContent() {
               <p className="text-sm sm:text-base font-serif font-bold text-[#203027]">
                 Nothing requires your attention right now.
               </p>
-              <p className="text-xs text-[#68766C]">
+              <p className="text-xs text-[#5F6D63]">
                 All care tasks, observations, health follow-ups, and schedules across your garden are completely up to date.
               </p>
             </div>
@@ -547,7 +547,7 @@ function GrowIntelligenceContent() {
                 <Calendar size={18} className="text-[#174C35]" />
                 <span>Active Grow Plans</span>
               </h3>
-              <p className="text-xs text-[#68766C] mt-0.5">
+              <p className="text-xs text-[#5F6D63] mt-0.5">
                 Structured execution milestone tracking adapting to actual observations.
               </p>
             </div>
@@ -562,7 +562,7 @@ function GrowIntelligenceContent() {
 
           {growPlans.filter((p) => p.status === 'active').length === 0 ? (
             <div className="p-5 text-center rounded-2xl bg-[#F8F6EE] border border-[#E3DFD2] flex flex-col sm:flex-row justify-between items-center gap-3">
-              <span className="text-xs text-[#68766C]">No active grow plans running right now.</span>
+              <span className="text-xs text-[#5F6D63]">No active grow plans running right now.</span>
               <Link
                 href="/app/grow-plans"
                 className="px-3.5 py-1.5 rounded-xl bg-emerald-600 text-white text-xs font-semibold hover:bg-emerald-700 transition"
@@ -593,7 +593,7 @@ function GrowIntelligenceContent() {
                         <div className="w-full bg-[#F8F6EE] h-2 rounded-full overflow-hidden my-2">
                           <div className="bg-[#174C35] h-full" style={{ width: `${taskPct}%` }} />
                         </div>
-                        <div className="flex justify-between items-center text-[11px] text-[#68766C] mb-2">
+                        <div className="flex justify-between items-center text-[11px] text-[#5F6D63] mb-2">
                           <span>{taskPct}% tasks complete</span>
                           <span>{p.steps.filter((s) => s.status === 'completed').length}/{p.steps.length} steps</span>
                         </div>
@@ -626,7 +626,7 @@ function GrowIntelligenceContent() {
                 <CheckCircle2 size={18} className="text-[#174C35]" />
                 <span>Prioritized Garden Action Queue</span>
               </h3>
-              <p className="text-xs text-[#68766C] mt-0.5">
+              <p className="text-xs text-[#5F6D63] mt-0.5">
                 Deterministic priority ranking across health, care, environment, nutrition, and production.
               </p>
             </div>
@@ -641,7 +641,7 @@ function GrowIntelligenceContent() {
                   className={`px-3 py-1.5 rounded-xl capitalize font-semibold transition-all cursor-pointer whitespace-nowrap min-h-[36px] ${
                     actionCategoryFilter === cat
                       ? 'bg-[#174C35] text-white shadow-xs'
-                      : 'bg-[#F8F6EE] text-[#68766C] hover:bg-[#EAF1E4] border border-[#E3DFD2]'
+                      : 'bg-[#F8F6EE] text-[#5F6D63] hover:bg-[#EAF1E4] border border-[#E3DFD2]'
                   }`}
                 >
                   {cat}
@@ -660,7 +660,7 @@ function GrowIntelligenceContent() {
                   <div className="space-y-2">
                     <div className="flex items-center justify-between gap-2">
                       <div className="flex items-center gap-1.5 flex-wrap">
-                        <span className="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded-md bg-white border border-[#E3DFD2] text-[#68766C]">
+                        <span className="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded-md bg-white border border-[#E3DFD2] text-[#5F6D63]">
                           {act.category}
                         </span>
                         {act.plantName && (
@@ -675,7 +675,7 @@ function GrowIntelligenceContent() {
                             ? 'bg-[#FBE9E2] text-[#963A23] border-[#E4775D/30]'
                             : act.priority === 'high'
                             ? 'bg-[#FFF3D7] text-[#8A6400] border-[#F0C04D/30]'
-                            : 'bg-white text-[#68766C] border-[#E3DFD2]'
+                            : 'bg-white text-[#5F6D63] border-[#E3DFD2]'
                         }`}
                       >
                         {act.priority}
@@ -685,7 +685,7 @@ function GrowIntelligenceContent() {
                     <h5 className="font-bold text-xs sm:text-sm text-[#203027]">
                       {act.title}
                     </h5>
-                    <p className="text-xs text-[#68766C] leading-relaxed">
+                    <p className="text-xs text-[#5F6D63] leading-relaxed">
                       {act.explanation}
                     </p>
 
@@ -709,7 +709,7 @@ function GrowIntelligenceContent() {
               ))}
             </div>
           ) : (
-            <div className="p-6 text-center text-xs sm:text-sm text-[#68766C] italic">
+            <div className="p-6 text-center text-xs sm:text-sm text-[#5F6D63] italic">
               No actions pending for category: {actionCategoryFilter}.
             </div>
           )}
@@ -731,7 +731,7 @@ function GrowIntelligenceContent() {
                     Garden Copilot
                   </span>
                 </h3>
-                <p className="text-xs text-[#68766C]">
+                <p className="text-xs text-[#5F6D63]">
                   What would you like help with? Grounded strictly in your living garden records.
                 </p>
               </div>
@@ -760,7 +760,7 @@ function GrowIntelligenceContent() {
                 <MessageSquare size={18} className="text-[#174C35]" />
                 <span>Ask Your Garden Records</span>
               </h3>
-              <p className="text-xs text-[#68766C] mt-0.5">
+              <p className="text-xs text-[#5F6D63] mt-0.5">
                 Answers are strictly grounded in your recorded garden facts, health history, and measurements.
               </p>
             </div>
@@ -785,7 +785,7 @@ function GrowIntelligenceContent() {
                 onChange={(e) => setQueryInput(e.target.value)}
                 className="w-full pl-10 pr-4 py-2.5 text-xs sm:text-sm rounded-xl border border-[#E3DFD2] bg-[#F8F6EE] text-[#203027] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#174C35] min-h-[44px]"
               />
-              <Search size={16} className="absolute left-3.5 top-3.5 text-[#68766C]" />
+              <Search size={16} className="absolute left-3.5 top-3.5 text-[#5F6D63]" />
             </div>
             <button
               type="submit"
@@ -797,7 +797,7 @@ function GrowIntelligenceContent() {
 
           {/* Quick Prompt Chips */}
           <div className="flex items-center gap-2 flex-wrap text-xs pt-1">
-            <span className="text-[11px] font-semibold text-[#68766C]">Quick questions:</span>
+            <span className="text-[11px] font-semibold text-[#5F6D63]">Quick questions:</span>
             {[
               'How is my garden doing?',
               'What should I do today?',
@@ -823,7 +823,7 @@ function GrowIntelligenceContent() {
             <div className="p-4 sm:p-5 rounded-2xl bg-[#F8F6EE] border border-[#E3DFD2] space-y-3 mt-3">
               <div className="flex items-center justify-between text-xs">
                 <strong className="text-[#203027]">Query Result</strong>
-                <span className="text-[11px] text-[#68766C] bg-white px-2 py-0.5 rounded-md border border-[#E3DFD2]">
+                <span className="text-[11px] text-[#5F6D63] bg-white px-2 py-0.5 rounded-md border border-[#E3DFD2]">
                   Confidence: {queryResult.confidence}
                 </span>
               </div>
@@ -832,7 +832,7 @@ function GrowIntelligenceContent() {
               </p>
 
               {queryResult.groundedFacts.length > 0 && (
-                <div className="pt-2 border-t border-[#E3DFD2]/60 text-xs text-[#68766C] space-y-1">
+                <div className="pt-2 border-t border-[#E3DFD2]/60 text-xs text-[#5F6D63] space-y-1">
                   <span className="font-semibold text-[#203027] block">Grounded Evidence Facts:</span>
                   <ul className="list-disc list-inside space-y-0.5 pl-1">
                     {queryResult.groundedFacts.map((fact, idx) => (
@@ -853,12 +853,12 @@ function GrowIntelligenceContent() {
                 <ShieldCheck size={18} className="text-[#174C35]" />
                 <span>Garden Record Completeness</span>
               </h3>
-              <p className="text-xs text-[#68766C] mt-0.5">
+              <p className="text-xs text-[#5F6D63] mt-0.5">
                 Measures data completeness across basics, growth, environment, nutrition, and health.
               </p>
             </div>
             <div className="flex items-center gap-2">
-              <span className="text-xs font-semibold text-[#68766C]">Completeness Score:</span>
+              <span className="text-xs font-semibold text-[#5F6D63]">Completeness Score:</span>
               <strong className="text-lg font-bold text-[#174C35]">
                 {dataQualityReport.score}%
               </strong>
@@ -880,7 +880,7 @@ function GrowIntelligenceContent() {
                 key={idx}
                 className="p-3 rounded-xl border border-[#E3DFD2] bg-[#F8F6EE] text-xs space-y-1"
               >
-                <span className="text-[10px] uppercase font-bold tracking-wider text-[#68766C] block truncate">
+                <span className="text-[10px] uppercase font-bold tracking-wider text-[#5F6D63] block truncate">
                   {cat.category}
                 </span>
                 <strong className="text-sm font-bold text-[#203027] block">
@@ -897,7 +897,7 @@ function GrowIntelligenceContent() {
             ))}
           </div>
 
-          <p className="text-[11px] text-[#68766C] italic pt-1">
+          <p className="text-[11px] text-[#5F6D63] italic pt-1">
             Note: Data completeness is strictly a measure of logged records, never a judgment of plant health.
           </p>
         </div>
@@ -916,7 +916,7 @@ function GrowIntelligenceContent() {
                   Garden Intelligence Synthesis
                 </h2>
               </div>
-              <p className="text-xs sm:text-sm text-[#68766C] max-w-3xl leading-relaxed">
+              <p className="text-xs sm:text-sm text-[#5F6D63] max-w-3xl leading-relaxed">
                 GrowAI unifies plant state across growing conditions, nutrition, health, propagation,
                 and measured harvests. Strict agronomic rules prevent guessing: unknown values remain
                 unknown, fertilizer dosage follows labels, and yield per area is only computed when
@@ -939,42 +939,42 @@ function GrowIntelligenceContent() {
           {/* Key Metrics Quick Ribbon */}
           <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-6 gap-3 pt-1">
             <div className="p-3.5 rounded-2xl bg-[#F8F6EE] border border-[#E3DFD2]">
-              <span className="text-[11px] font-semibold text-[#68766C] block">Total Plants</span>
+              <span className="text-[11px] font-semibold text-[#5F6D63] block">Total Plants</span>
               <strong className="text-lg font-bold text-[#203027]">
                 {dashboard.gardenOverview.totalPlants}
               </strong>
             </div>
 
             <div className="p-3.5 rounded-2xl bg-[#F8F6EE] border border-[#E3DFD2]">
-              <span className="text-[11px] font-semibold text-[#68766C] block">Today's Tasks</span>
+              <span className="text-[11px] font-semibold text-[#5F6D63] block">Today's Tasks</span>
               <strong className="text-lg font-bold text-[#174C35]">
                 {dashboard.todayActionCount}
               </strong>
             </div>
 
             <div className="p-3.5 rounded-2xl bg-[#F8F6EE] border border-[#E3DFD2]">
-              <span className="text-[11px] font-semibold text-[#68766C] block">Condition Observations</span>
+              <span className="text-[11px] font-semibold text-[#5F6D63] block">Condition Observations</span>
               <strong className="text-lg font-bold text-[#203027]">
                 {conditions.length}
               </strong>
             </div>
 
             <div className="p-3.5 rounded-2xl bg-[#F8F6EE] border border-[#E3DFD2]">
-              <span className="text-[11px] font-semibold text-[#68766C] block">Feedings Logged</span>
+              <span className="text-[11px] font-semibold text-[#5F6D63] block">Feedings Logged</span>
               <strong className="text-lg font-bold text-[#203027]">
                 {feedings.length}
               </strong>
             </div>
 
             <div className="p-3.5 rounded-2xl bg-[#F8F6EE] border border-[#E3DFD2]">
-              <span className="text-[11px] font-semibold text-[#68766C] block">Active Cuttings</span>
+              <span className="text-[11px] font-semibold text-[#5F6D63] block">Active Cuttings</span>
               <strong className="text-lg font-bold text-[#174C35]">
                 {dashboard.propagationHighlights.activeEventsCount}
               </strong>
             </div>
 
             <div className="p-3.5 rounded-2xl bg-[#F8F6EE] border border-[#E3DFD2]">
-              <span className="text-[11px] font-semibold text-[#68766C] block">Harvest Events</span>
+              <span className="text-[11px] font-semibold text-[#5F6D63] block">Harvest Events</span>
               <strong className="text-lg font-bold text-[#203027]">
                 {dashboard.productionHighlights.totalHarvestsRecorded}
               </strong>
@@ -1006,12 +1006,12 @@ function GrowIntelligenceContent() {
                       <span className="font-bold text-xs sm:text-sm text-[#203027] truncate">
                         {rem.title}
                       </span>
-                      <span className="text-[10px] font-semibold px-2 py-0.5 rounded-md bg-white border border-[#E3DFD2] capitalize text-[#68766C]">
+                      <span className="text-[10px] font-semibold px-2 py-0.5 rounded-md bg-white border border-[#E3DFD2] capitalize text-[#5F6D63]">
                         {rem.reminderType}
                       </span>
                     </div>
-                    <p className="text-xs text-[#68766C] line-clamp-2">{rem.body}</p>
-                    <span className="text-[11px] text-[#68766C] block">
+                    <p className="text-xs text-[#5F6D63] line-clamp-2">{rem.body}</p>
+                    <span className="text-[11px] text-[#5F6D63] block">
                       Due: {new Date(rem.dueAt).toLocaleDateString()}
                     </span>
                   </div>
@@ -1028,7 +1028,7 @@ function GrowIntelligenceContent() {
               ))}
             </div>
           ) : (
-            <div className="p-6 text-center text-xs sm:text-sm text-[#68766C] italic">
+            <div className="p-6 text-center text-xs sm:text-sm text-[#5F6D63] italic">
               All scheduled care tasks, health follow-ups, and feeding observations are up to date!
             </div>
           )}
@@ -1054,20 +1054,20 @@ function GrowIntelligenceContent() {
 
             <div className="grid grid-cols-2 gap-3 text-xs">
               <div className="p-3.5 rounded-2xl bg-[#F8F6EE] border border-[#E3DFD2]">
-                <span className="text-[#68766C] block text-[11px] font-medium">Observed Recently</span>
+                <span className="text-[#5F6D63] block text-[11px] font-medium">Observed Recently</span>
                 <strong className="text-base text-[#203027]">
                   {dashboard.conditionsHighlights.recentlyObservedCount} plants
                 </strong>
               </div>
               <div className="p-3.5 rounded-2xl bg-[#F8F6EE] border border-[#E3DFD2]">
-                <span className="text-[#68766C] block text-[11px] font-medium">Missing Condition Logs</span>
+                <span className="text-[#5F6D63] block text-[11px] font-medium">Missing Condition Logs</span>
                 <strong className="text-base text-[#8A6400]">
                   {dashboard.conditionsHighlights.plantsMissingConditionsCount} plants
                 </strong>
               </div>
             </div>
 
-            <p className="text-xs text-[#68766C] leading-relaxed">
+            <p className="text-xs text-[#5F6D63] leading-relaxed">
               Recording temperature, ambient humidity, and soil moisture ensures plants stay within
               their expected botanical ranges and informs diagnosis hypotheses.
             </p>
@@ -1091,20 +1091,20 @@ function GrowIntelligenceContent() {
 
             <div className="grid grid-cols-2 gap-3 text-xs">
               <div className="p-3.5 rounded-2xl bg-[#F8F6EE] border border-[#E3DFD2]">
-                <span className="text-[#68766C] block text-[11px] font-medium">Recently Fed (14d)</span>
+                <span className="text-[#5F6D63] block text-[11px] font-medium">Recently Fed (14d)</span>
                 <strong className="text-base text-[#174C35]">
                   {dashboard.feedingHighlights.recentlyFedCount} plants
                 </strong>
               </div>
               <div className="p-3.5 rounded-2xl bg-[#F8F6EE] border border-[#E3DFD2]">
-                <span className="text-[#68766C] block text-[11px] font-medium">Scheduled Upcoming</span>
+                <span className="text-[#5F6D63] block text-[11px] font-medium">Scheduled Upcoming</span>
                 <strong className="text-base text-[#203027]">
                   {dashboard.feedingHighlights.upcomingFeedingCount} events
                 </strong>
               </div>
             </div>
 
-            <p className="text-xs text-[#68766C] leading-relaxed">
+            <p className="text-xs text-[#5F6D63] leading-relaxed">
               GrowAI preserves NPK ratios and manufacturer label guidance. Foliar observations
               track whether plants exhibit chlorosis, vigor, or edge browning over time.
             </p>
@@ -1119,7 +1119,7 @@ function GrowIntelligenceContent() {
                 <ShoppingBag size={20} className="text-[#174C35]" />
                 <span>Crop Cycles & Cumulative Harvest Yield</span>
               </h3>
-              <p className="text-xs sm:text-sm text-[#68766C] mt-0.5">
+              <p className="text-xs sm:text-sm text-[#5F6D63] mt-0.5">
                 Batch production cycles, cut-and-come-again yields, and verified weight metrics.
               </p>
             </div>
@@ -1136,21 +1136,21 @@ function GrowIntelligenceContent() {
 
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             <div className="p-4 rounded-2xl bg-[#F8F6EE] border border-[#E3DFD2]">
-              <span className="text-xs text-[#68766C] block font-medium">Active Production Cycles</span>
+              <span className="text-xs text-[#5F6D63] block font-medium">Active Production Cycles</span>
               <strong className="text-xl font-bold text-[#203027] mt-1 block">
                 {dashboard.productionHighlights.activeCyclesCount}
               </strong>
             </div>
 
             <div className="p-4 rounded-2xl bg-[#F8F6EE] border border-[#E3DFD2]">
-              <span className="text-xs text-[#68766C] block font-medium">Total Harvest Events</span>
+              <span className="text-xs text-[#5F6D63] block font-medium">Total Harvest Events</span>
               <strong className="text-xl font-bold text-[#174C35] mt-1 block">
                 {dashboard.productionHighlights.totalHarvestsRecorded}
               </strong>
             </div>
 
             <div className="p-4 rounded-2xl bg-[#F8F6EE] border border-[#E3DFD2]">
-              <span className="text-xs text-[#68766C] block font-medium">Cumulative Yield Logged</span>
+              <span className="text-xs text-[#5F6D63] block font-medium">Cumulative Yield Logged</span>
               <div className="mt-1 space-y-0.5">
                 {Object.keys(dashboard.productionHighlights.totalYieldByUnit).length > 0 ? (
                   Object.entries(dashboard.productionHighlights.totalYieldByUnit).map(
@@ -1161,7 +1161,7 @@ function GrowIntelligenceContent() {
                     )
                   )
                 ) : (
-                  <span className="text-sm text-[#68766C] italic">0 g recorded</span>
+                  <span className="text-sm text-[#5F6D63] italic">0 g recorded</span>
                 )}
               </div>
             </div>
@@ -1170,7 +1170,7 @@ function GrowIntelligenceContent() {
           {/* Active Cycles Table / List */}
           {cycles.length > 0 && (
             <div className="space-y-3 pt-2">
-              <h4 className="font-semibold text-xs text-[#68766C] uppercase tracking-wider">
+              <h4 className="font-semibold text-xs text-[#5F6D63] uppercase tracking-wider">
                 Logged Production Cycles
               </h4>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
@@ -1184,11 +1184,11 @@ function GrowIntelligenceContent() {
                         <strong className="text-xs sm:text-sm text-[#203027]">
                           {cyc.cycleName}
                         </strong>
-                        <span className="text-[10px] font-semibold px-2 py-0.5 rounded-md bg-white border border-[#E3DFD2] capitalize text-[#68766C]">
+                        <span className="text-[10px] font-semibold px-2 py-0.5 rounded-md bg-white border border-[#E3DFD2] capitalize text-[#5F6D63]">
                           {cyc.stage}
                         </span>
                       </div>
-                      <span className="text-[11px] text-[#68766C] block mt-0.5">
+                      <span className="text-[11px] text-[#5F6D63] block mt-0.5">
                         Planted: {cyc.quantityPlanted} • Active: {cyc.quantityActive} • Harvested: {cyc.quantityHarvested}
                       </span>
                     </div>
@@ -1220,28 +1220,28 @@ function GrowIntelligenceContent() {
 
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs">
             <div className="p-3.5 rounded-2xl bg-[#F8F6EE] border border-[#E3DFD2]">
-              <span className="text-[#68766C] block text-[11px] font-medium">Total Capacity</span>
+              <span className="text-[#5F6D63] block text-[11px] font-medium">Total Capacity</span>
               <strong className="text-base text-[#203027]">
                 {dashboard.spaceHighlights.totalSpaceCapacityUnits} slots
               </strong>
             </div>
 
             <div className="p-3.5 rounded-2xl bg-[#F8F6EE] border border-[#E3DFD2]">
-              <span className="text-[#68766C] block text-[11px] font-medium">Active Occupancy</span>
+              <span className="text-[#5F6D63] block text-[11px] font-medium">Active Occupancy</span>
               <strong className="text-base text-[#174C35]">
                 {dashboard.spaceHighlights.occupancyRatePercent}%
               </strong>
             </div>
 
             <div className="p-3.5 rounded-2xl bg-[#F8F6EE] border border-[#E3DFD2]">
-              <span className="text-[#68766C] block text-[11px] font-medium">Unused Slots</span>
+              <span className="text-[#5F6D63] block text-[11px] font-medium">Unused Slots</span>
               <strong className="text-base text-[#203027]">
                 {dashboard.spaceHighlights.unusedCapacitySlots} slots
               </strong>
             </div>
 
             <div className="p-3.5 rounded-2xl bg-[#F8F6EE] border border-[#E3DFD2]">
-              <span className="text-[#68766C] block text-[11px] font-medium">Structural Safety</span>
+              <span className="text-[#5F6D63] block text-[11px] font-medium">Structural Safety</span>
               <strong className="text-base text-[#8A6400]">
                 Mandatory Check
               </strong>
@@ -1271,7 +1271,7 @@ function GrowIntelligenceContent() {
               <button
                 type="button"
                 onClick={() => setShowCycleModal(false)}
-                className="p-1 rounded-lg text-[#68766C] hover:bg-[#F8F6EE] cursor-pointer"
+                className="p-1 rounded-lg text-[#5F6D63] hover:bg-[#F8F6EE] cursor-pointer"
               >
                 <X size={18} />
               </button>
@@ -1341,7 +1341,7 @@ function GrowIntelligenceContent() {
                 <button
                   type="button"
                   onClick={() => setShowCycleModal(false)}
-                  className="px-4 py-2.5 rounded-xl border border-[#E3DFD2] text-xs font-semibold text-[#68766C] hover:bg-[#F8F6EE] cursor-pointer min-h-[44px]"
+                  className="px-4 py-2.5 rounded-xl border border-[#E3DFD2] text-xs font-semibold text-[#5F6D63] hover:bg-[#F8F6EE] cursor-pointer min-h-[44px]"
                 >
                   Cancel
                 </button>

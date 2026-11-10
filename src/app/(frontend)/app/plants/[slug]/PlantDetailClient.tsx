@@ -134,7 +134,7 @@ export function PlantDetailClient({ plant }: PlantDetailClientProps) {
               <ArrowLeft size={16} />
               <span>Plant Library</span>
             </Link>
-            <span className="hidden sm:inline text-[#68766C]">/</span>
+            <span className="hidden sm:inline text-[#5F6D63]">/</span>
             <span className="font-serif font-bold text-base sm:text-base text-[#203027] truncate max-w-full">
               {plant.commonName}
             </span>
@@ -237,7 +237,7 @@ export function PlantDetailClient({ plant }: PlantDetailClientProps) {
                     <div className="p-3 rounded-xl bg-[#FFF3D7]/70 border border-[#F0C04D/30] space-y-1">
                       <span className="text-base block">☀️</span>
                       <strong className="text-[#203027] block text-xs">Light</strong>
-                      <p className="text-[11px] text-[#68766C] leading-tight">
+                      <p className="text-[11px] text-[#5F6D63] leading-tight">
                         {plant.sunlightHours || plant.sunlight.replace('-', ' ')}
                       </p>
                     </div>
@@ -246,7 +246,7 @@ export function PlantDetailClient({ plant }: PlantDetailClientProps) {
                     <div className="p-3 rounded-xl bg-[#E7F2F9]/70 border border-[#65A8D0/30] space-y-1">
                       <span className="text-base block">💧</span>
                       <strong className="text-[#203027] block text-xs">Water</strong>
-                      <p className="text-[11px] text-[#68766C] leading-tight">
+                      <p className="text-[11px] text-[#5F6D63] leading-tight">
                         {plant.watering.moistureLevel} · When top soil is dry
                       </p>
                     </div>
@@ -255,7 +255,7 @@ export function PlantDetailClient({ plant }: PlantDetailClientProps) {
                     <div className="p-3 rounded-xl bg-[#FBE9E2]/70 border border-[#E4775D/30] space-y-1">
                       <span className="text-base block">🌡️</span>
                       <strong className="text-[#203027] block text-xs">Temp</strong>
-                      <p className="text-[11px] text-[#68766C] leading-tight">
+                      <p className="text-[11px] text-[#5F6D63] leading-tight">
                         {plant.temperatureRange.min}°C – {plant.temperatureRange.max}°C
                       </p>
                     </div>
@@ -264,7 +264,7 @@ export function PlantDetailClient({ plant }: PlantDetailClientProps) {
                     <div className="p-3 rounded-xl bg-[#EAF1E4]/70 border border-[#E3DFD2] space-y-1">
                       <span className="text-base block">🌱</span>
                       <strong className="text-[#203027] block text-xs">Soil</strong>
-                      <p className="text-[11px] text-[#68766C] leading-tight line-clamp-2">
+                      <p className="text-[11px] text-[#5F6D63] leading-tight line-clamp-2">
                         {plant.soil.type || 'Aerated container potting mix'}
                       </p>
                     </div>
@@ -273,7 +273,7 @@ export function PlantDetailClient({ plant }: PlantDetailClientProps) {
                     <div className="p-3 rounded-xl bg-[#F0ECF7]/70 border border-[#9A83C5/30] space-y-1 col-span-2 sm:col-span-1">
                       <span className="text-base block">✂️</span>
                       <strong className="text-[#203027] block text-xs">Cycle</strong>
-                      <p className="text-[11px] text-[#68766C] leading-tight">
+                      <p className="text-[11px] text-[#5F6D63] leading-tight">
                         {plant.timelines?.harvestDays?.max
                           ? `${plant.timelines.harvestDays.max}d to harvest`
                           : plant.daysToMaturity
@@ -290,7 +290,7 @@ export function PlantDetailClient({ plant }: PlantDetailClientProps) {
                     <h3 className="text-xs font-mono uppercase tracking-wider font-bold text-[#174C35]">
                       How to Grow It · Growth Journey
                     </h3>
-                    <span className="text-[11px] font-mono text-[#68766C]">
+                    <span className="text-[11px] font-mono text-[#5F6D63]">
                       From seed/cutting to harvest
                     </span>
                   </div>
@@ -299,7 +299,7 @@ export function PlantDetailClient({ plant }: PlantDetailClientProps) {
 
                 {/* Growing Environment Badges */}
                 <div className="pt-1 space-y-2">
-                  <span className="text-xs font-bold uppercase tracking-wider text-[#68766C] block">
+                  <span className="text-xs font-bold uppercase tracking-wider text-[#5F6D63] block">
                     Verified Growing Environments:
                   </span>
                   <div className="flex flex-wrap gap-2">
@@ -319,7 +319,7 @@ export function PlantDetailClient({ plant }: PlantDetailClientProps) {
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5 pt-4 border-t border-[#E3DFD2]">
                   {/* Metric 1: Sunlight */}
                   <div className="bg-[#F8F6EE] p-3.5 rounded-2xl border border-[#E3DFD2]/70 space-y-1">
-                    <span className="text-xs font-mono font-bold uppercase tracking-wider text-[#68766C] block">
+                    <span className="text-xs font-mono font-bold uppercase tracking-wider text-[#5F6D63] block">
                       Sunlight Exposure
                     </span>
                     <span className="text-sm sm:text-base font-bold text-[#203027] capitalize block">
@@ -329,7 +329,7 @@ export function PlantDetailClient({ plant }: PlantDetailClientProps) {
 
                   {/* Metric 2: Moisture Strategy */}
                   <div className="bg-[#F8F6EE] p-3.5 rounded-2xl border border-[#E3DFD2]/70 space-y-1">
-                    <span className="text-xs font-mono font-bold uppercase tracking-wider text-[#68766C] block">
+                    <span className="text-xs font-mono font-bold uppercase tracking-wider text-[#5F6D63] block">
                       Moisture Strategy
                     </span>
                     <span className="text-sm sm:text-base font-bold text-[#203027] capitalize block">
@@ -339,7 +339,7 @@ export function PlantDetailClient({ plant }: PlantDetailClientProps) {
 
                   {/* Metric 3: Temperature Range */}
                   <div className="bg-[#F8F6EE] p-3.5 rounded-2xl border border-[#E3DFD2]/70 space-y-1">
-                    <span className="text-xs font-mono font-bold uppercase tracking-wider text-[#68766C] block">
+                    <span className="text-xs font-mono font-bold uppercase tracking-wider text-[#5F6D63] block">
                       Temperature Range
                     </span>
                     <span className="text-sm sm:text-base font-bold text-[#203027] block">
@@ -349,7 +349,7 @@ export function PlantDetailClient({ plant }: PlantDetailClientProps) {
 
                   {/* Metric 4: Daily Light / Photoperiod - SPANS FULL WIDTH */}
                   <div className="col-span-1 sm:col-span-3 bg-[#F8F6EE] p-4 rounded-2xl border border-[#E3DFD2]/70 space-y-1.5">
-                    <span className="text-xs font-mono font-bold uppercase tracking-wider text-[#68766C] block">
+                    <span className="text-xs font-mono font-bold uppercase tracking-wider text-[#5F6D63] block">
                       Daily Light & Photoperiod Regime
                     </span>
                     <p className="text-base font-semibold text-[#203027] leading-relaxed">
@@ -407,7 +407,7 @@ export function PlantDetailClient({ plant }: PlantDetailClientProps) {
 
                 <div className="space-y-3.5 text-base">
                   <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-1 sm:gap-4">
-                    <span className="text-[#68766C] font-medium flex items-center gap-1.5 shrink-0">
+                    <span className="text-[#5F6D63] font-medium flex items-center gap-1.5 shrink-0">
                       <Thermometer size={18} className="text-[#174C35]" />
                       Temperature Range:
                     </span>
@@ -422,14 +422,14 @@ export function PlantDetailClient({ plant }: PlantDetailClientProps) {
                   </div>
 
                   <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-1 sm:gap-4 border-t border-[#E3DFD2] pt-2.5">
-                    <span className="text-[#68766C] font-medium shrink-0">Sunlight Exposure:</span>
+                    <span className="text-[#5F6D63] font-medium shrink-0">Sunlight Exposure:</span>
                     <span className="sm:text-right text-[#203027] font-semibold capitalize">
                       {plant.sunlight.replace('-', ' ')}
                     </span>
                   </div>
 
                   <div className="border-t border-[#E3DFD2] pt-3 space-y-1">
-                    <span className="text-xs font-mono font-bold uppercase tracking-wider text-[#68766C] block">
+                    <span className="text-xs font-mono font-bold uppercase tracking-wider text-[#5F6D63] block">
                       Daily Photoperiod & Light Regime:
                     </span>
                     <p className="text-base font-semibold text-[#203027] leading-relaxed">
@@ -456,7 +456,7 @@ export function PlantDetailClient({ plant }: PlantDetailClientProps) {
 
                 <div className="space-y-3.5 text-base text-[#203027]">
                   <div>
-                    <span className="text-[#68766C] font-medium text-sm block mb-1">
+                    <span className="text-[#5F6D63] font-medium text-sm block mb-1">
                       Irrigation Frequency ({plant.watering.moistureLevel} Moisture Strategy):
                     </span>
                     <p className="font-semibold text-[#203027] leading-relaxed">
@@ -468,7 +468,7 @@ export function PlantDetailClient({ plant }: PlantDetailClientProps) {
                   </div>
 
                   <div className="border-t border-[#E3DFD2] pt-2.5">
-                    <span className="text-[#68766C] font-medium text-sm block mb-1">
+                    <span className="text-[#5F6D63] font-medium text-sm block mb-1">
                       Soil Medium & Drainage Requirements:
                     </span>
                     <p className="font-semibold text-[#203027]">
@@ -584,7 +584,7 @@ export function PlantDetailClient({ plant }: PlantDetailClientProps) {
                 <h3 className="text-xl sm:text-2xl font-serif font-bold text-[#203027] tracking-tight">
                   Days From Seeding to Maturity
                 </h3>
-                <p className="text-sm sm:text-base text-[#68766C] mt-0.5">
+                <p className="text-sm sm:text-base text-[#5F6D63] mt-0.5">
                   Sourced from temperate horticulture extensions; growth duration responds dynamically to ambient temperature.
                 </p>
               </div>
@@ -643,7 +643,7 @@ export function PlantDetailClient({ plant }: PlantDetailClientProps) {
 
               {/* Phase 4: Full Physiological Maturity */}
               <div className="p-5 sm:p-6 rounded-2xl bg-[#F8F6EE] border border-[#E3DFD2] space-y-2 relative">
-                <span className="text-xs font-mono uppercase font-bold text-[#68766C] block">
+                <span className="text-xs font-mono uppercase font-bold text-[#5F6D63] block">
                   Phase 4 • Full Maturity
                 </span>
                 <p className="text-2xl sm:text-3xl font-serif font-bold text-[#203027]">
@@ -698,7 +698,7 @@ export function PlantDetailClient({ plant }: PlantDetailClientProps) {
                   <h3 className="text-xl sm:text-2xl font-serif font-bold text-[#203027]">
                     Common Garden Pests & Stress Symptoms
                   </h3>
-                  <p className="text-sm sm:text-base text-[#68766C]">
+                  <p className="text-sm sm:text-base text-[#5F6D63]">
                     Diagnostic symptoms, cultural prevention methods, and non-toxic horticultural remedies.
                   </p>
                 </div>
@@ -819,7 +819,7 @@ export function PlantDetailClient({ plant }: PlantDetailClientProps) {
             <div className="bg-[#174C35] text-white rounded-3xl p-6 sm:p-8 lg:p-10 shadow-xs relative overflow-hidden">
               <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
                 <div className="space-y-2">
-                  <span className="text-xs font-mono uppercase tracking-widest text-[#78A95A] font-semibold flex items-center gap-2">
+                  <span className="text-xs font-mono uppercase tracking-widest text-[#EAF1E4] font-semibold flex items-center gap-2">
                     <FlaskConical size={18} />
                     Botanical Pharmacognosy & Secondary Metabolites
                   </span>
@@ -852,7 +852,7 @@ export function PlantDetailClient({ plant }: PlantDetailClientProps) {
                     <h3 className="text-xl sm:text-2xl font-serif font-bold text-[#203027]">
                       1. Medicinal Value & Edibility Assessment
                     </h3>
-                    <p className="text-xs sm:text-sm text-[#68766C]">
+                    <p className="text-xs sm:text-sm text-[#5F6D63]">
                       Consumption suitability and investigated physiological activities.
                     </p>
                   </div>
@@ -905,7 +905,7 @@ export function PlantDetailClient({ plant }: PlantDetailClientProps) {
               {/* Biological Properties Pill Cluster */}
               {plant.medicinalProfile.biologicalProperties.length > 0 && (
                 <div className="space-y-2 pt-2">
-                  <span className="text-xs font-bold uppercase tracking-wider text-[#68766C] block">
+                  <span className="text-xs font-bold uppercase tracking-wider text-[#5F6D63] block">
                     Observed Biological Activities:
                   </span>
                   <div className="flex flex-wrap gap-2">
@@ -934,7 +934,7 @@ export function PlantDetailClient({ plant }: PlantDetailClientProps) {
                     <h3 className="text-xl sm:text-2xl font-serif font-bold text-[#203027]">
                       2. Active Compounds & Phytochemicals
                     </h3>
-                    <p className="text-xs sm:text-sm text-[#68766C]">
+                    <p className="text-xs sm:text-sm text-[#5F6D63]">
                       Identified secondary metabolites, chemical classifications, and tissue distribution.
                     </p>
                   </div>
@@ -969,7 +969,7 @@ export function PlantDetailClient({ plant }: PlantDetailClientProps) {
                     <h3 className="text-xl sm:text-2xl font-serif font-bold text-[#203027]">
                       3. Herbal Preparations & Formulations
                     </h3>
-                    <p className="text-xs sm:text-sm text-[#68766C]">
+                    <p className="text-xs sm:text-sm text-[#5F6D63]">
                       Documented extraction methods, anatomical parts used, and evidence status.
                     </p>
                   </div>
@@ -1032,14 +1032,14 @@ export function PlantDetailClient({ plant }: PlantDetailClientProps) {
             {/* SUB-SECTION 4: Role in Traditional Herbal Medicine */}
             <div className="bg-white rounded-3xl border border-[#E3DFD2] p-6 sm:p-8 lg:p-10 shadow-xs space-y-5">
               <div className="flex items-center gap-3 pb-4 border-b border-[#E3DFD2]">
-                <span className="w-10 h-10 rounded-2xl bg-[#F8F6EE] border border-[#E3DFD2] flex items-center justify-center text-[#68766C] shrink-0">
+                <span className="w-10 h-10 rounded-2xl bg-[#F8F6EE] border border-[#E3DFD2] flex items-center justify-center text-[#5F6D63] shrink-0">
                   <BookOpen size={20} />
                 </span>
                 <div>
                   <h3 className="text-xl sm:text-2xl font-serif font-bold text-[#203027]">
                     4. Role in Traditional Herbal Medicine
                   </h3>
-                  <p className="text-xs sm:text-sm text-[#68766C]">
+                  <p className="text-xs sm:text-sm text-[#5F6D63]">
                     Historical ethnobotanical context across world botanical traditions.
                   </p>
                 </div>
@@ -1049,8 +1049,8 @@ export function PlantDetailClient({ plant }: PlantDetailClientProps) {
                 {plant.medicinalProfile.traditionalMedicineRole}
               </p>
 
-              <div className="p-4 rounded-2xl bg-[#F8F6EE] border border-[#E3DFD2] text-xs sm:text-sm text-[#68766C] leading-relaxed flex items-start gap-3">
-                <Info size={18} className="shrink-0 mt-0.5 text-[#68766C]" />
+              <div className="p-4 rounded-2xl bg-[#F8F6EE] border border-[#E3DFD2] text-xs sm:text-sm text-[#5F6D63] leading-relaxed flex items-start gap-3">
+                <Info size={18} className="shrink-0 mt-0.5 text-[#5F6D63]" />
                 <span>
                   <strong>Ethnobotanical Notice:</strong> Traditional and historical folklore reports reflect ancient cultural practices and do not constitute clinical efficacy proof. GrowAI does not recommend consuming ornamental or non-food plants for medicinal experimentation.
                 </span>
@@ -1068,7 +1068,7 @@ export function PlantDetailClient({ plant }: PlantDetailClientProps) {
                     <h3 className="text-xl sm:text-2xl font-serif font-bold text-[#203027]">
                       5. Scientific Research & Biological Properties
                     </h3>
-                    <p className="text-xs sm:text-sm text-[#68766C]">
+                    <p className="text-xs sm:text-sm text-[#5F6D63]">
                       Peer-reviewed laboratory investigations and current evidentiary standing.
                     </p>
                   </div>
@@ -1082,7 +1082,7 @@ export function PlantDetailClient({ plant }: PlantDetailClientProps) {
 
               {plant.medicinalProfile.biologicalProperties.length > 0 && (
                 <div className="space-y-3">
-                  <span className="text-xs font-bold uppercase tracking-wider text-[#68766C] block">
+                  <span className="text-xs font-bold uppercase tracking-wider text-[#5F6D63] block">
                     Documented Biological Activities in Research:
                   </span>
                   <ul className="grid grid-cols-1 md:grid-cols-2 gap-3 text-base text-[#203027]">
@@ -1144,7 +1144,7 @@ export function PlantDetailClient({ plant }: PlantDetailClientProps) {
                 <h3 className="font-serif font-bold text-lg sm:text-xl text-[#203027]">
                   Essential Botanical Safety Rules for Young Gardeners
                 </h3>
-                <p className="text-xs sm:text-sm text-[#68766C]">
+                <p className="text-xs sm:text-sm text-[#5F6D63]">
                   Safe, responsible gardening practices for beginners, students, and teenagers.
                 </p>
               </div>
@@ -1205,7 +1205,7 @@ export function PlantDetailClient({ plant }: PlantDetailClientProps) {
                     <h3 className="text-xl sm:text-2xl font-serif font-bold text-[#203027]">
                       Plant-Specific Safety & Ingestion Toxicology
                     </h3>
-                    <p className="text-xs sm:text-sm text-[#68766C]">
+                    <p className="text-xs sm:text-sm text-[#5F6D63]">
                       Toxicological risks, adverse ingestion symptoms, contraindications, and drug interactions.
                     </p>
                   </div>

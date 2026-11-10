@@ -117,7 +117,7 @@ export function PlantCard({
               <span>{displayName}</span>
             </h3>
             {!hideScientific && plant.scientificName && (
-              <p className="text-xs text-[#68766C] italic font-serif mt-0.5 line-clamp-1">
+              <p className="text-xs text-[#5F6D63] italic font-serif mt-0.5 line-clamp-1">
                 {plant.scientificName}
               </p>
             )}
@@ -140,7 +140,7 @@ export function PlantCard({
           {/* Plant Observation Progress */}
           {latestObservation ? (
             <div className="text-xs text-[#203027] bg-[#EAF1E4]/70 p-2.5 rounded-xl border border-[#E3DFD2] space-y-0.5 mt-1.5">
-              <span className="text-[10px] font-mono uppercase tracking-wider text-[#68766C] block font-semibold">
+              <span className="text-[10px] font-mono uppercase tracking-wider text-[#5F6D63] block font-semibold">
                 Latest Observation
               </span>
               <p className="line-clamp-2 text-[#203027] font-medium leading-relaxed">
@@ -148,7 +148,7 @@ export function PlantCard({
               </p>
             </div>
           ) : stage ? (
-            <p className="text-xs text-[#68766C] italic pt-1">
+            <p className="text-xs text-[#5F6D63] italic pt-1">
               Start tracking your plant’s growth.
             </p>
           ) : null}
@@ -170,7 +170,7 @@ export function PlantCard({
 
         {/* 3. Action Footer */}
         <div className="pt-2.5 border-t border-[#E3DFD2] flex items-center justify-between">
-          <span className="text-xs text-[#68766C] font-medium truncate max-w-[65%]">
+          <span className="text-xs text-[#5F6D63] font-medium truncate max-w-[65%]">
             {nextAction || (plant.timelines?.maturityDays?.max
               ? `${plant.timelines.maturityDays.max}d cycle`
               : 'Container ready')}

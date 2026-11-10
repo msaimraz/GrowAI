@@ -300,7 +300,7 @@ export function DiagnosisDetailClient({ diagnosisId }: DiagnosisDetailClientProp
             type="button"
             onClick={handleDeleteDiagnosis}
             disabled={deleting}
-            className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#68766C] hover:text-red-600 transition-colors cursor-pointer"
+            className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#5F6D63] hover:text-red-600 transition-colors cursor-pointer"
           >
             <Trash2 size={14} />
             <span>{deleting ? 'Deleting...' : 'Delete Assessment'}</span>
@@ -309,7 +309,7 @@ export function DiagnosisDetailClient({ diagnosisId }: DiagnosisDetailClientProp
 
         {/* Loading State */}
         {loading ? (
-          <div className="py-24 flex flex-col items-center justify-center gap-3 text-[#68766C]">
+          <div className="py-24 flex flex-col items-center justify-center gap-3 text-[#5F6D63]">
             <Loader2 size={32} className="animate-spin text-[#174C35]" />
             <p className="text-sm font-medium">Retrieving diagnosis assessment details...</p>
           </div>
@@ -318,7 +318,7 @@ export function DiagnosisDetailClient({ diagnosisId }: DiagnosisDetailClientProp
           <div className="bg-white rounded-3xl border border-[#E3DFD2] p-10 text-center space-y-4">
             <AlertTriangle size={36} className="text-[#963A23] mx-auto" />
             <h3 className="font-serif font-bold text-xl text-[#203027]">Assessment Not Found</h3>
-            <p className="text-xs sm:text-sm text-[#68766C] max-w-md mx-auto">
+            <p className="text-xs sm:text-sm text-[#5F6D63] max-w-md mx-auto">
               {error || 'The requested diagnosis record could not be found or you do not have permission to access it.'}
             </p>
             <Link
@@ -440,7 +440,7 @@ export function DiagnosisDetailClient({ diagnosisId }: DiagnosisDetailClientProp
                   <ShieldCheck size={18} className="text-[#174C35]" />
                   Evidence Separation & Diagnostic Grounding
                 </h3>
-                <p className="text-xs text-[#68766C]">
+                <p className="text-xs text-[#5F6D63]">
                   Strictly delineates directly visible photographic clues from botanical hypotheses and unseen environmental factors.
                 </p>
 
@@ -477,7 +477,7 @@ export function DiagnosisDetailClient({ diagnosisId }: DiagnosisDetailClientProp
 
                   {/* Unknown Information */}
                   <div className="p-4 rounded-2xl bg-[#F8F6EE] border border-[#E3DFD2] space-y-2">
-                    <h5 className="font-bold text-xs uppercase tracking-wider text-[#68766C]">
+                    <h5 className="font-bold text-xs uppercase tracking-wider text-[#5F6D63]">
                       3. Unknown Factors
                     </h5>
                     <ul className="text-xs text-[#203027] space-y-1.5">
@@ -501,7 +501,7 @@ export function DiagnosisDetailClient({ diagnosisId }: DiagnosisDetailClientProp
                     <Search size={20} className="text-[#174C35]" />
                     Differential Diagnosis Candidates
                   </h3>
-                  <p className="text-xs text-[#68766C] mt-0.5">
+                  <p className="text-xs text-[#5F6D63] mt-0.5">
                     Up to three hypotheses evaluated by the diagnostic engine, ordered by plausibility.
                   </p>
                 </div>
@@ -579,7 +579,7 @@ export function DiagnosisDetailClient({ diagnosisId }: DiagnosisDetailClientProp
                             </div>
                           )}
                           {cand.groundedTreatment.cureDisclaimer && (
-                            <p className="italic text-[11px] text-[#68766C] pt-1">
+                            <p className="italic text-[11px] text-[#5F6D63] pt-1">
                               {cand.groundedTreatment.cureDisclaimer}
                             </p>
                           )}
@@ -598,7 +598,7 @@ export function DiagnosisDetailClient({ diagnosisId }: DiagnosisDetailClientProp
                   <HelpCircle size={18} className="text-[#174C35]" />
                   Context Follow-Up Questions
                 </h3>
-                <p className="text-xs text-[#68766C]">
+                <p className="text-xs text-[#5F6D63]">
                   These diagnostic questions were suggested to differentiate between the leading hypotheses.
                 </p>
 
@@ -609,7 +609,7 @@ export function DiagnosisDetailClient({ diagnosisId }: DiagnosisDetailClientProp
                       className="p-3.5 rounded-xl bg-[#F8F6EE] border border-[#E3DFD2] text-xs space-y-1"
                     >
                       <p className="font-semibold text-[#203027]">{q.question}</p>
-                      <p className="text-[#68766C] italic">Rationale: {q.rationale}</p>
+                      <p className="text-[#5F6D63] italic">Rationale: {q.rationale}</p>
                     </div>
                   ))}
                 </div>
@@ -628,7 +628,7 @@ export function DiagnosisDetailClient({ diagnosisId }: DiagnosisDetailClientProp
                       Treatment & Action Tracking
                     </h3>
                   </div>
-                  <p className="text-xs text-[#68766C] mt-1">
+                  <p className="text-xs text-[#5F6D63] mt-1">
                     Record cultural adjustments, physical steps, and observations taken in response to this diagnosis.
                   </p>
                 </div>
@@ -763,7 +763,7 @@ export function DiagnosisDetailClient({ diagnosisId }: DiagnosisDetailClientProp
                           <Badge variant={getStatusBadgeVariant(treatment.status)} size="sm">
                             {treatment.status}
                           </Badge>
-                          <span className="text-[11px] text-[#68766C]">
+                          <span className="text-[11px] text-[#5F6D63]">
                             ({treatment.actionDate})
                           </span>
                         </div>
@@ -790,7 +790,7 @@ export function DiagnosisDetailClient({ diagnosisId }: DiagnosisDetailClientProp
                         <button
                           type="button"
                           onClick={() => handleDeleteTreatment(treatment.id)}
-                          className="p-1.5 text-[#68766C] hover:text-red-600 transition-colors rounded cursor-pointer"
+                          className="p-1.5 text-[#5F6D63] hover:text-red-600 transition-colors rounded cursor-pointer"
                           title="Delete action"
                         >
                           <Trash2 size={15} />
@@ -800,7 +800,7 @@ export function DiagnosisDetailClient({ diagnosisId }: DiagnosisDetailClientProp
                   ))}
                 </div>
               ) : (
-                <div className="p-6 rounded-2xl border border-dashed border-[#E3DFD2] text-center space-y-1.5 text-xs text-[#68766C]">
+                <div className="p-6 rounded-2xl border border-dashed border-[#E3DFD2] text-center space-y-1.5 text-xs text-[#5F6D63]">
                   <p className="font-medium text-[#203027]">No Treatments Recorded Yet</p>
                   <p>
                     Log actions like watering changes, leaf pruning, or pest monitoring to track plant health progress.
@@ -821,7 +821,7 @@ export function DiagnosisDetailClient({ diagnosisId }: DiagnosisDetailClientProp
                       Follow-Up / Recovery Outcome Tracking
                     </h3>
                   </div>
-                  <p className="text-xs text-[#68766C] mt-1">
+                  <p className="text-xs text-[#5F6D63] mt-1">
                     Record subsequent observations. Note: Outcomes track plant response and do not prove or disprove initial hypotheses.
                   </p>
                 </div>
@@ -947,7 +947,7 @@ export function DiagnosisDetailClient({ diagnosisId }: DiagnosisDetailClientProp
                   ))}
                 </div>
               ) : (
-                <div className="p-6 rounded-2xl border border-dashed border-[#E3DFD2] text-center space-y-1.5 text-xs text-[#68766C]">
+                <div className="p-6 rounded-2xl border border-dashed border-[#E3DFD2] text-center space-y-1.5 text-xs text-[#5F6D63]">
                   <p className="font-medium text-[#203027]">No Follow-Up Outcomes Logged</p>
                   <p>
                     Return after 48–72 hours to record whether foliage is improving, unchanged, or worsening.
@@ -957,7 +957,7 @@ export function DiagnosisDetailClient({ diagnosisId }: DiagnosisDetailClientProp
             </div>
 
             {/* Disclaimer Footer */}
-            <div className="p-5 rounded-2xl bg-[#F8F6EE] border border-[#E3DFD2] text-xs text-[#68766C] space-y-1">
+            <div className="p-5 rounded-2xl bg-[#F8F6EE] border border-[#E3DFD2] text-xs text-[#5F6D63] space-y-1">
               <strong className="text-[#203027] block">Botanical Care Disclaimer:</strong>
               <p className="leading-relaxed">{record.disclaimer}</p>
             </div>

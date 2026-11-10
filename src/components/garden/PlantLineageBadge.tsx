@@ -70,7 +70,7 @@ export function PlantLineageBadge({
 
       {/* When Parent is archived/deleted, accurately display state */}
       {isParentArchived && (
-        <div className="flex items-center gap-2 p-2 rounded-xl bg-[#F8F6EE] border border-[#E3DFD2] text-xs text-[#68766C]">
+        <div className="flex items-center gap-2 p-2 rounded-xl bg-[#F8F6EE] border border-[#E3DFD2] text-xs text-[#5F6D63]">
           <GitFork size={13} className="rotate-180 text-[#8A6400]" />
           <span>
             Propagated via <strong className="font-semibold">{METHOD_LABELS[currentPlant.propagationMethod || 'cutting']}</strong> (Parent specimen was previously archived)
@@ -88,7 +88,7 @@ export function PlantLineageBadge({
             <p className="font-semibold text-[#203027]">
               Plant Lineage & Offspring
             </p>
-            <p className="text-[#68766C]">
+            <p className="text-[#5F6D63]">
               {offspring.length === 0
                 ? 'No active daughter plants propagated from this specimen yet.'
                 : `${offspring.length} active offspring registered in your garden.`}
@@ -109,7 +109,7 @@ export function PlantLineageBadge({
       {/* Offspring Chips */}
       {offspring.length > 0 && (
         <div className="flex flex-wrap items-center gap-1.5 pl-1">
-          <span className="text-[11px] font-semibold text-[#68766C] uppercase tracking-wider mr-1">
+          <span className="text-[11px] font-semibold text-[#5F6D63] uppercase tracking-wider mr-1">
             Daughter Plants:
           </span>
           {offspring.map((child) => (
@@ -121,7 +121,7 @@ export function PlantLineageBadge({
             >
               <Sprout size={11} className="text-[#174C35]" />
               <span>{child.nickname}</span>
-              <span className="text-[10px] text-[#68766C]">
+              <span className="text-[10px] text-[#5F6D63]">
                 ({child.currentStage})
               </span>
             </button>

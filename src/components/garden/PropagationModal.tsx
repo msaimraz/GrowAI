@@ -140,7 +140,7 @@ export function PropagationModal({
               <h2 className="font-serif font-bold text-lg text-[#203027]">
                 Propagate Daughter Specimen
               </h2>
-              <p className="text-xs text-[#68766C]">
+              <p className="text-xs text-[#5F6D63]">
                 Cloning from mother: <strong className="font-semibold text-[#174C35]">{parentPlant.nickname}</strong> ({botanical?.commonName || parentPlant.plantSlug})
               </p>
             </div>
@@ -148,7 +148,7 @@ export function PropagationModal({
           <button
             type="button"
             onClick={onClose}
-            className="p-1.5 rounded-lg text-[#68766C] hover:bg-[#E3DFD2] transition-colors cursor-pointer"
+            className="p-1.5 rounded-lg text-[#5F6D63] hover:bg-[#E3DFD2] transition-colors cursor-pointer"
             aria-label="Close modal"
           >
             <X size={18} />
@@ -191,7 +191,7 @@ export function PropagationModal({
                       <p className={`text-xs font-semibold ${isSelected ? 'text-white' : 'text-[#203027]'}`}>
                         {m.name}
                       </p>
-                      <p className={`text-[11px] mt-0.5 leading-snug line-clamp-2 ${isSelected ? 'text-[#EAF1E4]' : 'text-[#68766C]'}`}>
+                      <p className={`text-[11px] mt-0.5 leading-snug line-clamp-2 ${isSelected ? 'text-[#EAF1E4]' : 'text-[#5F6D63]'}`}>
                         {m.summary}
                       </p>
                     </div>
@@ -279,7 +279,7 @@ export function PropagationModal({
               type="button"
               onClick={onClose}
               disabled={isSubmitting}
-              className="px-4 py-2 rounded-xl text-xs font-semibold text-[#68766C] hover:bg-[#E3DFD2] transition-colors cursor-pointer"
+              className="px-4 py-2 rounded-xl text-xs font-semibold text-[#5F6D63] hover:bg-[#E3DFD2] transition-colors cursor-pointer"
             >
               Cancel
             </button>

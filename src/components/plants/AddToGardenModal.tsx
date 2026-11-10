@@ -93,7 +93,7 @@ export function AddToGardenModal({ plant, isOpen, onClose }: AddToGardenModalPro
               <h3 className="font-serif font-bold text-lg text-[#203027] truncate">
                 Add to My Garden Log
               </h3>
-              <p className="text-xs text-[#68766C] truncate">
+              <p className="text-xs text-[#5F6D63] truncate">
                 {plant.commonName} ({plant.scientificName})
               </p>
             </div>
@@ -101,7 +101,7 @@ export function AddToGardenModal({ plant, isOpen, onClose }: AddToGardenModalPro
           <button
             type="button"
             onClick={onClose}
-            className="p-1.5 rounded-lg text-[#68766C] hover:text-[#203027] hover:bg-[#EAF1E4]"
+            className="p-1.5 rounded-lg text-[#5F6D63] hover:text-[#203027] hover:bg-[#EAF1E4]"
             aria-label="Close dialog"
           >
             <X size={20} />
@@ -212,7 +212,7 @@ export function AddToGardenModal({ plant, isOpen, onClose }: AddToGardenModalPro
               type="button"
               onClick={onClose}
               disabled={saving}
-              className="w-full sm:w-auto px-5 py-2.5 text-sm font-semibold text-[#68766C] hover:bg-[#EAF1E4] rounded-xl border border-[#E3DFD2] cursor-pointer min-h-[44px]"
+              className="w-full sm:w-auto px-5 py-2.5 text-sm font-semibold text-[#5F6D63] hover:bg-[#EAF1E4] rounded-xl border border-[#E3DFD2] cursor-pointer min-h-[44px]"
             >
               Cancel
             </button>

@@ -86,12 +86,12 @@ export function VisualProgress({
                 {stg.label}
               </h4>
               {stg.timing && (
-                <span className="text-[10px] font-mono text-[#68766C] block">
+                <span className="text-[10px] font-mono text-[#5F6D63] block">
                   {stg.timing}
                 </span>
               )}
               {stg.description && (
-                <p className="text-[11px] text-[#68766C] leading-snug line-clamp-2">
+                <p className="text-[11px] text-[#5F6D63] leading-snug line-clamp-2">
                   {stg.description}
                 </p>
               )}
@@ -126,13 +126,13 @@ export function VisualProgress({
                     {stg.label}
                   </h4>
                   {stg.timing && (
-                    <span className="text-[10px] font-mono text-[#68766C]">
+                    <span className="text-[10px] font-mono text-[#5F6D63]">
                       {stg.timing}
                     </span>
                   )}
                 </div>
                 {stg.description && (
-                  <p className="text-xs text-[#68766C] truncate">
+                  <p className="text-xs text-[#5F6D63] truncate">
                     {stg.description}
                   </p>
                 )}

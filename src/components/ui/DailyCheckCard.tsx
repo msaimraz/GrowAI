@@ -1,7 +1,7 @@
 'use client';
 
 import * as React from 'react';
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo, useRef } from 'react';
 import Link from 'next/link';
 import { CheckCircle2, Camera, ArrowRight, RotateCcw, Sparkles } from 'lucide-react';
 import { useGrowToast } from '@/components/ui/GrowSuccessToast';
@@ -63,6 +63,48 @@ export function DailyCheckCard({
   });
 
   const todayStr = useMemo(() => getLocalTodayDateStr(), []);
+
+  // Multi-plant chips horizontal scroll affordance
+  const chipsRailRef = useRef<HTMLDivElement>(null);
+  const [canScrollLeft, setCanScrollLeft] = useState(false);
+  const [canScrollRight, setCanScrollRight] = useState(false);
+
+  const checkChipsScroll = () => {
+    const el = chipsRailRef.current;
+    if (el) {
+      setCanScrollLeft(el.scrollLeft > 4);
+      setCanScrollRight(el.scrollLeft < el.scrollWidth - el.clientWidth - 4);
+    }
+  };
+
+  useEffect(() => {
+    checkChipsScroll();
+    const el = chipsRailRef.current;
+    if (el) {
+      el.addEventListener('scroll', checkChipsScroll, { passive: true });
+      window.addEventListener('resize', checkChipsScroll, { passive: true });
+      return () => {
+        el.removeEventListener('scroll', checkChipsScroll);
+        window.removeEventListener('resize', checkChipsScroll);
+      };
+    }
+  }, [effectivePlants]);
+
+  // Ensure active plant chip is scrolled into view smoothly
+  useEffect(() => {
+    if (selectedPlantId && chipsRailRef.current) {
+      const selectedBtn = chipsRailRef.current.querySelector(
+        '[data-selected="true"]'
+      ) as HTMLElement | null;
+      if (selectedBtn) {
+        selectedBtn.scrollIntoView({
+          behavior: 'smooth',
+          block: 'nearest',
+          inline: 'nearest',
+        });
+      }
+    }
+  }, [selectedPlantId]);
 
   // Update garden habit progress
   const refreshProgress = () => {
@@ -199,7 +241,7 @@ export function DailyCheckCard({
             🌱
           </span>
           <div>
-            <span className="text-[11px] font-mono uppercase tracking-wider text-[#68766C] block">
+            <span className="text-[11px] font-mono uppercase tracking-wider text-[#5F6D63] block">
               Daily Plant Check
             </span>
             <h3 className="font-serif text-base sm:text-lg font-bold text-[#203027] leading-snug">
@@ -207,7 +249,7 @@ export function DailyCheckCard({
             </h3>
           </div>
         </div>
-        <p className="text-xs sm:text-sm text-[#68766C] leading-relaxed">
+        <p className="text-xs sm:text-sm text-[#5F6D63] leading-relaxed">
           Add your first plant to start building your daily growing habit and track its progress every day.
         </p>
         <Link
@@ -227,13 +269,14 @@ export function DailyCheckCard({
     >
       {/* 1. GARDEN HABIT PROGRESS BAR (PART 3.6 & NEW PALETTE) */}
       <div className="bg-white/95 backdrop-blur-xs rounded-2xl border border-[#E3DFD2] p-3 sm:p-4 space-y-2">
-        <div className="flex items-center justify-between text-xs">
-          <div className="flex items-center gap-1.5 font-bold font-serif text-[#203027]">
-            <span className="text-[#78A95A]">🌱</span>
-            <span>YOUR GARDEN TODAY</span>
+        <div className="flex items-center justify-between gap-2 text-xs flex-wrap">
+          <div className="flex items-center gap-1.5 font-bold font-serif text-[#203027] shrink-0">
+            <span className="text-[#78A95A] text-sm shrink-0">🌱</span>
+            <span className="text-[11px] sm:text-xs tracking-wide whitespace-nowrap">YOUR GARDEN TODAY</span>
           </div>
-          <span className="font-mono text-[11px] font-semibold text-[#174C35]">
-            {progressState.checkedCount} of {progressState.totalCount} plants checked
+          <span className="font-mono text-[10px] sm:text-[11px] font-semibold text-[#174C35] whitespace-nowrap shrink-0 ml-auto">
+            {progressState.checkedCount} of {progressState.totalCount}{' '}
+            <span className="hidden sm:inline">plants </span>checked
           </span>
         </div>
 
@@ -245,7 +288,7 @@ export function DailyCheckCard({
           />
         </div>
 
-        <p className="text-[11px] text-[#68766C]">
+        <p className="text-[11px] text-[#5F6D63]">
           {progressState.isAllChecked
             ? '✨ All plants checked today! You’re building wonderful growing habits.'
             : 'Keep getting to know your plants.'}
@@ -254,29 +297,54 @@ export function DailyCheckCard({
 
       {/* 2. MULTI-PLANT SELECTION CHIPS IF > 1 PLANT */}
       {effectivePlants.length > 1 && (
-        <div className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none -mx-1 px-1">
-          {effectivePlants.map((plant) => {
-            const isSelected = plant.id === currentPlant?.id;
-            const isChecked = progressState.checkedPlantIds.includes(plant.id);
+        <div className="relative -mx-4 px-4 sm:-mx-6 sm:px-6">
+          {/* Left subtle edge fade affordance (Mobile) */}
+          <div
+            aria-hidden="true"
+            className={`pointer-events-none absolute left-0 top-0 bottom-1 w-8 bg-gradient-to-r from-white via-white/80 to-transparent z-10 transition-opacity duration-200 sm:hidden ${
+              canScrollLeft ? 'opacity-100' : 'opacity-0'
+            }`}
+          />
 
-            return (
-              <button
-                key={plant.id}
-                type="button"
-                onClick={() => setSelectedPlantId(plant.id)}
-                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold border transition-all cursor-pointer select-none shrink-0 min-h-[36px] touch-manipulation ${
-                  isSelected
-                    ? 'bg-[#174C35] text-white border-[#174C35] shadow-2xs'
-                    : isChecked
-                    ? 'bg-[#EAF1E4] text-[#174C35] border-[#78A95A]/40'
-                    : 'bg-white text-[#203027] border-[#E3DFD2] hover:bg-[#EAF1E4]'
-                }`}
-              >
-                <span>{isChecked ? '✓' : '🌿'}</span>
-                <span>{plant.nickname}</span>
-              </button>
-            );
-          })}
+          {/* Horizontally scrollable chips rail */}
+          <div
+            ref={chipsRailRef}
+            onScroll={checkChipsScroll}
+            className="flex items-center gap-2 overflow-x-auto overflow-y-hidden pb-1 pt-0.5 scrollbar-none scroll-smooth [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
+            style={{ WebkitOverflowScrolling: 'touch' }}
+          >
+            {effectivePlants.map((plant) => {
+              const isSelected = plant.id === currentPlant?.id;
+              const isChecked = progressState.checkedPlantIds.includes(plant.id);
+
+              return (
+                <button
+                  key={plant.id}
+                  type="button"
+                  data-selected={isSelected}
+                  onClick={() => setSelectedPlantId(plant.id)}
+                  className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold border transition-all cursor-pointer select-none shrink-0 min-h-[36px] touch-manipulation max-w-[170px] sm:max-w-none ${
+                    isSelected
+                      ? 'bg-[#174C35] text-white border-[#174C35] shadow-2xs font-bold'
+                      : isChecked
+                      ? 'bg-[#EAF1E4] text-[#174C35] border-[#78A95A]/40'
+                      : 'bg-white text-[#203027] border-[#E3DFD2] hover:bg-[#EAF1E4]'
+                  }`}
+                >
+                  <span className="shrink-0">{isChecked ? '✓' : '🌿'}</span>
+                  <span className="truncate">{plant.nickname}</span>
+                </button>
+              );
+            })}
+          </div>
+
+          {/* Right subtle edge fade affordance (Mobile) */}
+          <div
+            aria-hidden="true"
+            className={`pointer-events-none absolute right-0 top-0 bottom-1 w-8 bg-gradient-to-l from-white via-white/80 to-transparent z-10 transition-opacity duration-200 sm:hidden ${
+              canScrollRight ? 'opacity-100' : 'opacity-0'
+            }`}
+          />
         </div>
       )}
 
@@ -288,8 +356,8 @@ export function DailyCheckCard({
               {currentQuestion.icon}
             </span>
             <div className="min-w-0">
-              <span className="text-[11px] font-mono uppercase tracking-wider text-[#68766C] block font-semibold">
-                Daily Plant Check · {currentQuestion.category} · {currentPlant?.nickname}
+              <span className="text-[10px] sm:text-[11px] font-mono uppercase tracking-wide sm:tracking-wider text-[#5F6D63] block font-semibold truncate">
+                <span className="hidden sm:inline">Daily Plant </span>Check · {currentQuestion.category} · {currentPlant?.nickname}
               </span>
               <h3 className="font-serif text-base sm:text-lg font-bold text-[#203027] leading-snug whitespace-normal break-words pt-0.5">
                 {currentQuestion.text}
@@ -350,7 +418,7 @@ export function DailyCheckCard({
                   <p className="text-sm font-bold text-[#174C35] flex items-center gap-1.5">
                     <span>✓</span> Nice! Your daily plant check is complete.
                   </p>
-                  <p className="text-xs sm:text-sm text-[#68766C] leading-relaxed">
+                  <p className="text-xs sm:text-sm text-[#5F6D63] leading-relaxed">
                     We’ve logged that {currentPlant?.nickname} is looking happy and healthy today.
                   </p>
                 </div>
@@ -401,7 +469,7 @@ export function DailyCheckCard({
                   </div>
 
                   {activeCheckRecord.noticedDetail && (
-                    <p className="text-xs text-[#68766C] pt-1">
+                    <p className="text-xs text-[#5F6D63] pt-1">
                       Observation saved: {activeCheckRecord.noticedDetail} noted in {currentPlant?.nickname}’s timeline.
                     </p>
                   )}
@@ -419,7 +487,7 @@ export function DailyCheckCard({
                       💡 <strong>Quick tip:</strong> {currentQuestion.guidanceTip}
                     </div>
                   )}
-                  <p className="text-xs text-[#68766C] leading-relaxed">
+                  <p className="text-xs text-[#5F6D63] leading-relaxed">
                     Observing small changes is how all great growers learn. You’re doing great!
                   </p>
                 </div>
@@ -429,7 +497,7 @@ export function DailyCheckCard({
             <button
               type="button"
               onClick={handleResetCheck}
-              className="text-[11px] font-mono text-[#68766C] hover:text-[#174C35] underline cursor-pointer shrink-0 min-h-[36px] flex items-center gap-1"
+              className="text-[11px] font-mono text-[#5F6D63] hover:text-[#174C35] underline cursor-pointer shrink-0 min-h-[36px] flex items-center gap-1"
               title="Change answer"
             >
               <RotateCcw size={11} />

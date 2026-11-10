@@ -100,7 +100,7 @@ export function DidYouKnowCard({ plant }: DidYouKnowCardProps) {
         </p>
       </div>
 
-      <div className="pt-2 text-xs text-[#68766C] flex items-center gap-1.5 font-medium border-t border-[#E3DFD2]/60">
+      <div className="pt-2 text-xs text-[#5F6D63] flex items-center gap-1.5 font-medium border-t border-[#E3DFD2]/60">
         <Sparkles size={14} className="text-[#F0C04D]" />
         <span>Curated photobiology & agronomic trivia</span>
       </div>
@@ -204,7 +204,7 @@ export function GardeningChallengeCard({ plant }: GardeningChallengeProps) {
           <p className="text-sm sm:text-base text-[#203027] leading-relaxed">
             {challenge.step}
           </p>
-          <p className="text-xs sm:text-sm text-[#68766C] bg-[#F8F6EE] p-3 rounded-xl border border-[#E3DFD2] leading-relaxed">
+          <p className="text-xs sm:text-sm text-[#5F6D63] bg-[#F8F6EE] p-3 rounded-xl border border-[#E3DFD2] leading-relaxed">
             💡 <strong>Gardener’s Tip:</strong> {challenge.tip}
           </p>
         </div>
@@ -353,7 +353,7 @@ export function PlantQuizCard({ plant }: PlantQuizProps) {
             <h3 className="text-xl sm:text-2xl font-serif font-bold text-[#203027] leading-tight">
               Quick Knowledge Check
             </h3>
-            <p className="text-xs sm:text-sm text-[#68766C] mt-0.5">
+            <p className="text-xs sm:text-sm text-[#5F6D63] mt-0.5">
               Test what you’ve learned about {plant.commonName} with this 3-question quiz!
             </p>
           </div>
@@ -450,7 +450,7 @@ export function PlantQuizCard({ plant }: PlantQuizProps) {
             </p>
           )}
           {answeredCount < 3 && (
-            <p className="text-xs sm:text-sm text-[#68766C]">
+            <p className="text-xs sm:text-sm text-[#5F6D63]">
               Select an answer above for immediate feedback.
             </p>
           )}
@@ -502,7 +502,7 @@ export function SectionExploredToggle({
 
   return (
     <div className="pt-4 border-t border-[#E3DFD2] flex items-center justify-between gap-3">
-      <span className="text-xs text-[#68766C]">
+      <span className="text-xs text-[#5F6D63]">
         Track your learning:
       </span>
       <button

@@ -154,7 +154,7 @@ export default async function LearnPage() {
               <h3 className="text-xl sm:text-2xl font-serif font-bold text-[#203027]">
                 The Five Growth Essentials
               </h3>
-              <p className="text-xs sm:text-sm text-[#68766C] mt-0.5">
+              <p className="text-xs sm:text-sm text-[#5F6D63] mt-0.5">
                 Every plant flourishes when these five environmental inputs remain in balance
               </p>
             </div>
@@ -208,7 +208,7 @@ export default async function LearnPage() {
               <h3 className="text-xl sm:text-2xl font-serif font-bold text-[#203027]">
                 The Botanical Life Cycle
               </h3>
-              <p className="text-xs sm:text-sm text-[#68766C] mt-0.5">
+              <p className="text-xs sm:text-sm text-[#5F6D63] mt-0.5">
                 From dormant seed embryo to true leaves, flowering, and seed saving
               </p>
             </div>
@@ -258,7 +258,7 @@ export default async function LearnPage() {
               <h3 className="text-xl sm:text-2xl font-serif font-bold text-[#203027]">
                 The 3Rs of Sustainable Home Agriculture
               </h3>
-              <p className="text-xs sm:text-sm text-[#68766C] mt-0.5">
+              <p className="text-xs sm:text-sm text-[#5F6D63] mt-0.5">
                 Zero-waste principles: Reduce inputs, Reuse containers, and Recycle organics
               </p>
             </div>

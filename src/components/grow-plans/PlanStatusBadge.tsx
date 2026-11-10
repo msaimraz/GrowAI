@@ -14,7 +14,7 @@ export function PlanStatusBadge({ status, health, stepStatus, size = 'sm' }: Pla
   const sizeClasses = size === 'sm' ? 'px-2.5 py-0.5 text-xs' : 'px-3 py-1 text-sm';
 
   if (status) {
-    let colorClass = 'bg-[#F8F6EE] text-[#68766C] border border-[#E3DFD2]';
+    let colorClass = 'bg-[#F8F6EE] text-[#5F6D63] border border-[#E3DFD2]';
     let label = status.replace(/_/g, ' ');
 
     switch (status) {
@@ -35,7 +35,7 @@ export function PlanStatusBadge({ status, health, stepStatus, size = 'sm' }: Pla
         colorClass = 'bg-[#FBE9E2] text-[#963A23] border border-[#E4775D]/35';
         break;
       case 'draft':
-        colorClass = 'bg-[#F8F6EE] text-[#68766C] border border-[#E3DFD2]';
+        colorClass = 'bg-[#F8F6EE] text-[#5F6D63] border border-[#E3DFD2]';
         break;
     }
 
@@ -47,7 +47,7 @@ export function PlanStatusBadge({ status, health, stepStatus, size = 'sm' }: Pla
   }
 
   if (health) {
-    let colorClass = 'bg-[#F8F6EE] text-[#68766C] border border-[#E3DFD2]';
+    let colorClass = 'bg-[#F8F6EE] text-[#5F6D63] border border-[#E3DFD2]';
     let label = health.replace(/_/g, ' ');
 
     switch (health) {
@@ -78,7 +78,7 @@ export function PlanStatusBadge({ status, health, stepStatus, size = 'sm' }: Pla
   }
 
   if (stepStatus) {
-    let colorClass = 'bg-[#F8F6EE] text-[#68766C] border border-[#E3DFD2]';
+    let colorClass = 'bg-[#F8F6EE] text-[#5F6D63] border border-[#E3DFD2]';
     let label = stepStatus.replace(/_/g, ' ');
 
     switch (stepStatus) {
@@ -95,7 +95,7 @@ export function PlanStatusBadge({ status, health, stepStatus, size = 'sm' }: Pla
         colorClass = 'bg-[#FFF3D7] text-[#8A6400] border border-[#F0C04D]/35';
         break;
       case 'skipped':
-        colorClass = 'bg-[#F8F6EE] text-[#68766C] line-through border border-[#E3DFD2]';
+        colorClass = 'bg-[#F8F6EE] text-[#5F6D63] line-through border border-[#E3DFD2]';
         break;
     }
 

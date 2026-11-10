@@ -196,7 +196,7 @@ export function PlantProductionTab({
             <ShoppingBag size={20} className="text-[#174C35]" />
             <span>Propagation, Production & Harvest Log</span>
           </h3>
-          <p className="text-xs sm:text-sm text-[#68766C] mt-0.5">
+          <p className="text-xs sm:text-sm text-[#5F6D63] mt-0.5">
             Track lineage, cuttings in progress, harvest frequency, and measured yields.
           </p>
         </div>
@@ -225,11 +225,11 @@ export function PlantProductionTab({
       {/* Yield Analytics Banner */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5">
         <div className="p-4 rounded-2xl bg-white border border-[#E3DFD2]">
-          <span className="text-xs font-semibold text-[#68766C] block mb-1">Total Harvest Events</span>
+          <span className="text-xs font-semibold text-[#5F6D63] block mb-1">Total Harvest Events</span>
           <strong className="text-xl font-bold text-[#203027]">
             {yieldMetrics.totalHarvestCount}
           </strong>
-          <span className="text-[11px] text-[#68766C] block mt-0.5">
+          <span className="text-[11px] text-[#5F6D63] block mt-0.5">
             {yieldMetrics.latestHarvestDate
               ? `Latest: ${new Date(yieldMetrics.latestHarvestDate).toLocaleDateString()}`
               : 'No harvests recorded yet'}
@@ -237,7 +237,7 @@ export function PlantProductionTab({
         </div>
 
         <div className="p-4 rounded-2xl bg-white border border-[#E3DFD2]">
-          <span className="text-xs font-semibold text-[#68766C] block mb-1">Cumulative Recorded Yield</span>
+          <span className="text-xs font-semibold text-[#5F6D63] block mb-1">Cumulative Recorded Yield</span>
           <div className="text-sm font-bold text-[#203027] space-y-0.5">
             {Object.keys(yieldMetrics.totalsByUnit).length > 0 ? (
               Object.entries(yieldMetrics.totalsByUnit).map(([unit, total]) => (
@@ -246,17 +246,17 @@ export function PlantProductionTab({
                 </div>
               ))
             ) : (
-              <span className="text-xs font-normal text-[#68766C]">0 units</span>
+              <span className="text-xs font-normal text-[#5F6D63]">0 units</span>
             )}
           </div>
         </div>
 
         <div className="p-4 rounded-2xl bg-white border border-[#E3DFD2]">
-          <span className="text-xs font-semibold text-[#68766C] block mb-1">Lineage & Descendants</span>
+          <span className="text-xs font-semibold text-[#5F6D63] block mb-1">Lineage & Descendants</span>
           <strong className="text-xl font-bold text-[#203027]">
             {lineage.offspringCount} offspring
           </strong>
-          <span className="text-[11px] text-[#68766C] block mt-0.5">
+          <span className="text-[11px] text-[#5F6D63] block mt-0.5">
             {lineage.parentNickname ? `Propagated from ${lineage.parentNickname}` : 'Primary seed/specimen'}
           </span>
         </div>
@@ -286,12 +286,12 @@ export function PlantProductionTab({
                     <strong className="text-sm text-[#203027] capitalize">
                       {prop.propagationMethod} Cutting
                     </strong>
-                    <span className="text-xs text-[#68766C]">in {prop.medium || 'water'}</span>
+                    <span className="text-xs text-[#5F6D63]">in {prop.medium || 'water'}</span>
                   </div>
-                  <p className="text-xs text-[#68766C] mt-1">
+                  <p className="text-xs text-[#5F6D63] mt-1">
                     Started: {prop.startedDate} • Next check: {prop.expectedFollowupDate || 'Pending'}
                   </p>
-                  {prop.notes && <p className="text-xs text-[#68766C] mt-1 italic">{prop.notes}</p>}
+                  {prop.notes && <p className="text-xs text-[#5F6D63] mt-1 italic">{prop.notes}</p>}
                 </div>
 
                 <div className="flex items-center gap-2 shrink-0">
@@ -348,7 +348,7 @@ export function PlantProductionTab({
                       </span>
                     )}
                   </div>
-                  <span className="text-xs text-[#68766C]">
+                  <span className="text-xs text-[#5F6D63]">
                     {new Date(h.harvestDate).toLocaleDateString('en-US', {
                       day: 'numeric',
                       month: 'short',
@@ -356,12 +356,12 @@ export function PlantProductionTab({
                     })}
                   </span>
                 </div>
-                {h.notes && <p className="text-xs text-[#68766C] italic">{h.notes}</p>}
+                {h.notes && <p className="text-xs text-[#5F6D63] italic">{h.notes}</p>}
               </div>
             ))}
           </div>
         ) : (
-          <div className="p-6 text-center text-xs sm:text-sm text-[#68766C] italic">
+          <div className="p-6 text-center text-xs sm:text-sm text-[#5F6D63] italic">
             No harvests recorded for this plant yet. Log your first harvest or pruning yield above.
           </div>
         )}
@@ -379,7 +379,7 @@ export function PlantProductionTab({
               <button
                 type="button"
                 onClick={() => setShowPropModal(false)}
-                className="p-2 text-[#68766C] hover:text-[#203027] rounded-lg cursor-pointer"
+                className="p-2 text-[#5F6D63] hover:text-[#203027] rounded-lg cursor-pointer"
               >
                 <X size={18} />
               </button>
@@ -458,7 +458,7 @@ export function PlantProductionTab({
                 <button
                   type="button"
                   onClick={() => setShowPropModal(false)}
-                  className="px-4 py-2.5 rounded-xl border border-[#E3DFD2] text-xs font-semibold text-[#68766C] hover:bg-[#F8F6EE] cursor-pointer min-h-[44px]"
+                  className="px-4 py-2.5 rounded-xl border border-[#E3DFD2] text-xs font-semibold text-[#5F6D63] hover:bg-[#F8F6EE] cursor-pointer min-h-[44px]"
                 >
                   Cancel
                 </button>
@@ -488,7 +488,7 @@ export function PlantProductionTab({
               <button
                 type="button"
                 onClick={() => setShowHarvestModal(false)}
-                className="p-2 text-[#68766C] hover:text-[#203027] rounded-lg cursor-pointer"
+                className="p-2 text-[#5F6D63] hover:text-[#203027] rounded-lg cursor-pointer"
               >
                 <X size={18} />
               </button>
@@ -589,7 +589,7 @@ export function PlantProductionTab({
                 <button
                   type="button"
                   onClick={() => setShowHarvestModal(false)}
-                  className="px-4 py-2.5 rounded-xl border border-[#E3DFD2] text-xs font-semibold text-[#68766C] hover:bg-[#F8F6EE] cursor-pointer min-h-[44px]"
+                  className="px-4 py-2.5 rounded-xl border border-[#E3DFD2] text-xs font-semibold text-[#5F6D63] hover:bg-[#F8F6EE] cursor-pointer min-h-[44px]"
                 >
                   Cancel
                 </button>

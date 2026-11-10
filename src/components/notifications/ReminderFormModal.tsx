@@ -143,7 +143,7 @@ export function ReminderFormModal({
           <button
             type="button"
             onClick={onClose}
-            className="p-1.5 rounded-xl text-[#68766C] hover:bg-[#EAF1E4] hover:text-[#174C35] transition-colors cursor-pointer"
+            className="p-1.5 rounded-xl text-[#5F6D63] hover:bg-[#EAF1E4] hover:text-[#174C35] transition-colors cursor-pointer"
             aria-label="Close form"
           >
             <X size={18} />
@@ -170,7 +170,7 @@ export function ReminderFormModal({
               onChange={(e) => setTitle(e.target.value)}
               placeholder="e.g. Inspect balcony tomatoes for pests"
               required
-              className="w-full px-3.5 py-2.5 rounded-xl bg-white border border-[#E3DFD2] text-xs sm:text-sm text-[#203027] placeholder:text-[#68766C] focus:outline-none focus:ring-2 focus:ring-[#174C35]"
+              className="w-full px-3.5 py-2.5 rounded-xl bg-white border border-[#E3DFD2] text-xs sm:text-sm text-[#203027] placeholder:text-[#5F6D63] focus:outline-none focus:ring-2 focus:ring-[#174C35]"
             />
           </div>
 
@@ -247,7 +247,7 @@ export function ReminderFormModal({
 
             {(recurrenceType === 'every_n_days' || recurrenceType === 'every_n_weeks') && (
               <div>
-                <label className="block text-[11px] font-semibold text-[#68766C] mb-1">
+                <label className="block text-[11px] font-semibold text-[#5F6D63] mb-1">
                   Interval ({recurrenceType === 'every_n_days' ? 'Days' : 'Weeks'})
                 </label>
                 <input
@@ -276,7 +276,7 @@ export function ReminderFormModal({
                   className={`py-2 text-xs font-semibold rounded-xl border capitalize transition-all cursor-pointer ${
                     priority === pr
                       ? 'bg-[#174C35] text-white border-[#174C35]'
-                      : 'bg-white text-[#68766C] border-[#E3DFD2] hover:bg-[#EAF1E4]'
+                      : 'bg-white text-[#5F6D63] border-[#E3DFD2] hover:bg-[#EAF1E4]'
                   }`}
                 >
                   {pr}
@@ -295,7 +295,7 @@ export function ReminderFormModal({
               onChange={(e) => setBody(e.target.value)}
               rows={3}
               placeholder="Add optional notes, observations, or special instructions..."
-              className="w-full px-3.5 py-2.5 rounded-xl bg-white border border-[#E3DFD2] text-xs sm:text-sm text-[#203027] placeholder:text-[#68766C] focus:outline-none focus:ring-2 focus:ring-[#174C35]"
+              className="w-full px-3.5 py-2.5 rounded-xl bg-white border border-[#E3DFD2] text-xs sm:text-sm text-[#203027] placeholder:text-[#5F6D63] focus:outline-none focus:ring-2 focus:ring-[#174C35]"
             />
           </div>
 
@@ -304,7 +304,7 @@ export function ReminderFormModal({
             <button
               type="button"
               onClick={onClose}
-              className="px-4 py-2 text-xs font-semibold rounded-xl bg-white border border-[#E3DFD2] text-[#68766C] hover:bg-[#EAF1E4] transition-all cursor-pointer min-h-[40px]"
+              className="px-4 py-2 text-xs font-semibold rounded-xl bg-white border border-[#E3DFD2] text-[#5F6D63] hover:bg-[#EAF1E4] transition-all cursor-pointer min-h-[40px]"
             >
               Cancel
             </button>

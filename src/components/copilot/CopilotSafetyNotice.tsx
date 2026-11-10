@@ -5,7 +5,7 @@ import { ShieldCheck, Info } from 'lucide-react';
 
 export function CopilotSafetyNotice() {
   return (
-    <div className="p-3.5 rounded-2xl bg-[#F8F6EE] border border-[#E3DFD2] flex items-start gap-2.5 text-xs text-[#68766C] leading-relaxed">
+    <div className="p-3.5 rounded-2xl bg-[#F8F6EE] border border-[#E3DFD2] flex items-start gap-2.5 text-xs text-[#5F6D63] leading-relaxed">
       <ShieldCheck size={16} className="text-[#174C35] shrink-0 mt-0.5" />
       <div>
         <strong className="text-[#203027] font-semibold">Agronomic & Evidence Boundaries: </strong>

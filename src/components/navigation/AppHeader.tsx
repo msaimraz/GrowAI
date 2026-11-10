@@ -91,7 +91,7 @@ export function AppHeader({
                 </h1>
               )}
               {subtitle && (
-                <p className="hidden md:block text-xs sm:text-sm text-[#68766C] mt-0.5 font-medium leading-normal">
+                <p className="hidden md:block text-xs sm:text-sm text-[#5F6D63] mt-0.5 font-medium leading-normal">
                   {subtitle}
                 </p>
               )}

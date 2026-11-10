@@ -32,7 +32,7 @@ export default function AppDashboardPage() {
   return (
     <React.Suspense
       fallback={
-        <div className="min-h-screen flex items-center justify-center text-sm text-[#68766C] bg-[#F8F6EE]">
+        <div className="min-h-screen flex items-center justify-center text-sm text-[#5F6D63] bg-[#F8F6EE]">
           Loading your garden...
         </div>
       }
@@ -175,14 +175,14 @@ function AppDashboardContent() {
           <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-2">
             <div>
               {currentDate && (
-                <span className="text-xs font-mono uppercase tracking-wider text-[#68766C] block">
+                <span className="text-xs font-mono uppercase tracking-wider text-[#5F6D63] block">
                   {currentDate}
                 </span>
               )}
               <h1 className="font-serif text-2xl sm:text-3xl lg:text-4xl font-bold text-[#203027] tracking-tight">
                 {greeting}, {userName} 🌱
               </h1>
-              <p className="text-sm sm:text-base text-[#68766C] mt-1">
+              <p className="text-sm sm:text-base text-[#5F6D63] mt-1">
                 Here’s what your garden needs today.
               </p>
             </div>
@@ -230,7 +230,7 @@ function AppDashboardContent() {
                 <span>Offline mode</span>
               </span>
             ) : (
-              <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#EAF1E4] text-[#68766C] border border-[#E3DFD2] font-medium">
+              <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#EAF1E4] text-[#5F6D63] border border-[#E3DFD2] font-medium">
                 <span>🌱</span>
                 <span>Guest mode</span>
               </span>
@@ -261,7 +261,7 @@ function AppDashboardContent() {
               </h2>
             </div>
             {careTasks.length > 0 && (
-              <span className="text-xs font-mono text-[#68766C]">
+              <span className="text-xs font-mono text-[#5F6D63]">
                 {completedTasks.length} of {careTasks.length} done
               </span>
             )}
@@ -280,7 +280,7 @@ function AppDashboardContent() {
               ))}
             </div>
           ) : careTasks.length === 0 ? (
-            <div className="p-6 rounded-2xl bg-white border border-[#E3DFD2] text-center text-xs text-[#68766C] space-y-1">
+            <div className="p-6 rounded-2xl bg-white border border-[#E3DFD2] text-center text-xs text-[#5F6D63] space-y-1">
               <span className="text-2xl block select-none">🎉</span>
               <p className="font-medium text-[#203027]">No tasks scheduled for today</p>
               <p>Your garden is happy and hydrated. Enjoy watching it grow!</p>
@@ -318,7 +318,7 @@ function AppDashboardContent() {
               {completedTasks.length > 0 && (
                 <div className="pt-2">
                   <div className="flex items-center justify-between mb-2">
-                    <span className="text-[11px] font-mono uppercase tracking-wider text-[#68766C] font-bold">
+                    <span className="text-[11px] font-mono uppercase tracking-wider text-[#5F6D63] font-bold">
                       Completed Today ({completedTasks.length})
                     </span>
                     {completedTasks.length > 2 && (
@@ -456,7 +456,7 @@ function AppDashboardContent() {
         ========================================================= */}
         <section className="pt-4 border-t border-[#E3DFD2] space-y-4">
           <div className="flex items-center justify-between">
-            <h3 className="text-xs font-mono uppercase tracking-wider text-[#68766C] font-bold">
+            <h3 className="text-xs font-mono uppercase tracking-wider text-[#5F6D63] font-bold">
               Quick Tools
             </h3>
           </div>
@@ -473,7 +473,7 @@ function AppDashboardContent() {
                 <h4 className="font-serif font-bold text-sm text-[#203027] group-hover:text-[#174C35]">
                   Plant Check
                 </h4>
-                <p className="text-xs text-[#68766C] whitespace-normal leading-normal">
+                <p className="text-xs text-[#5F6D63] whitespace-normal leading-normal">
                   Check a plant
                 </p>
               </div>
@@ -490,7 +490,7 @@ function AppDashboardContent() {
                 <h4 className="font-serif font-bold text-sm text-[#203027] group-hover:text-[#174C35]">
                   Space Planner
                 </h4>
-                <p className="text-xs text-[#68766C] whitespace-normal leading-normal">
+                <p className="text-xs text-[#5F6D63] whitespace-normal leading-normal">
                   Plan your space
                 </p>
               </div>
@@ -507,7 +507,7 @@ function AppDashboardContent() {
                 <h4 className="font-serif font-bold text-sm text-[#203027] group-hover:text-[#174C35]">
                   Grow Plans
                 </h4>
-                <p className="text-xs text-[#68766C] whitespace-normal leading-normal">
+                <p className="text-xs text-[#5F6D63] whitespace-normal leading-normal">
                   Follow a growing journey
                 </p>
               </div>

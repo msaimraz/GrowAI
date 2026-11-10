@@ -47,7 +47,7 @@ export function CopilotMessage({ message, onActionExecuted }: CopilotMessageProp
         {response?.whatGrowAiFound && response.whatGrowAiFound.length > 0 && (
           <div className="p-3.5 rounded-2xl bg-[#F8F6EE] border border-[#E3DFD2] space-y-1.5 text-xs">
             <span className="font-bold text-[#203027] block">What GrowAI Found:</span>
-            <ul className="space-y-1 text-[#68766C]">
+            <ul className="space-y-1 text-[#5F6D63]">
               {response.whatGrowAiFound.map((item, idx) => (
                 <li key={idx} className="flex items-start gap-1.5">
                   <span className="text-[#174C35] font-bold">•</span>
@@ -60,7 +60,7 @@ export function CopilotMessage({ message, onActionExecuted }: CopilotMessageProp
 
         {/* Why */}
         {response?.why && (
-          <div className="text-xs text-[#68766C] leading-relaxed">
+          <div className="text-xs text-[#5F6D63] leading-relaxed">
             <strong className="text-[#203027] font-semibold">Why: </strong>
             {response.why}
           </div>
@@ -80,7 +80,7 @@ export function CopilotMessage({ message, onActionExecuted }: CopilotMessageProp
         {/* Traceable Evidence Cards */}
         {response?.evidence && response.evidence.length > 0 && (
           <div className="space-y-2 pt-1 border-t border-[#E3DFD2]">
-            <span className="text-[11px] font-bold uppercase tracking-wider text-[#68766C] block">
+            <span className="text-[11px] font-bold uppercase tracking-wider text-[#5F6D63] block">
               Supporting Garden Records ({response.evidence.length})
             </span>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
@@ -106,7 +106,7 @@ export function CopilotMessage({ message, onActionExecuted }: CopilotMessageProp
 
         {/* Source & Provenance Tag Footer */}
         {response && (
-          <div className="flex items-center justify-between pt-2 border-t border-[#E3DFD2] text-[10px] text-[#68766C]">
+          <div className="flex items-center justify-between pt-2 border-t border-[#E3DFD2] text-[10px] text-[#5F6D63]">
             <span>
               Source:{' '}
               {response.source === 'gemini_grounded'

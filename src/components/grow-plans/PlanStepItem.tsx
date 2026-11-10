@@ -108,11 +108,11 @@ export function PlanStepItem({
       <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4">
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 flex-wrap mb-1.5">
-            <span className="text-xs font-mono font-semibold px-2 py-0.5 rounded-lg bg-[#F8F6EE] text-[#68766C] border border-[#E3DFD2]/50">
+            <span className="text-xs font-mono font-semibold px-2 py-0.5 rounded-lg bg-[#F8F6EE] text-[#5F6D63] border border-[#E3DFD2]/50">
               Step {step.stepOrder || 1}
             </span>
             <PlanStatusBadge stepStatus={step.status} />
-            <span className="text-xs px-2 py-0.5 rounded-lg capitalize bg-[#F8F6EE] text-[#68766C] font-medium border border-[#E3DFD2]/50">
+            <span className="text-xs px-2 py-0.5 rounded-lg capitalize bg-[#F8F6EE] text-[#5F6D63] font-medium border border-[#E3DFD2]/50">
               {step.category.replace(/_/g, ' ')}
             </span>
             {step.priority === 'critical' && (
@@ -124,14 +124,14 @@ export function PlanStepItem({
 
           <h4
             className={`text-sm sm:text-base font-serif font-bold text-[#203027] leading-snug ${
-              isCompleted ? 'line-through text-[#68766C]' : ''
+              isCompleted ? 'line-through text-[#5F6D63]' : ''
             }`}
           >
             {step.title}
           </h4>
 
           {step.description && (
-            <p className="text-xs sm:text-sm text-[#68766C] mt-1 leading-relaxed">
+            <p className="text-xs sm:text-sm text-[#5F6D63] mt-1 leading-relaxed">
               {step.description}
             </p>
           )}
@@ -187,13 +187,13 @@ export function PlanStepItem({
 
           {/* Grower notes recorded */}
           {step.notes && (
-            <p className="text-xs italic text-[#68766C] mt-2.5 bg-[#F8F6EE] border border-[#E3DFD2]/70 p-2.5 rounded-xl leading-relaxed">
+            <p className="text-xs italic text-[#5F6D63] mt-2.5 bg-[#F8F6EE] border border-[#E3DFD2]/70 p-2.5 rounded-xl leading-relaxed">
               <strong>Grower Notes:</strong> &ldquo;{step.notes}&rdquo;
             </p>
           )}
 
           {/* Timestamps */}
-          <div className="flex items-center gap-3 text-[11px] text-[#68766C] mt-2.5 flex-wrap">
+          <div className="flex items-center gap-3 text-[11px] text-[#5F6D63] mt-2.5 flex-wrap">
             {step.dueAt && (
               <span>Target date: {new Date(step.dueAt).toLocaleDateString()}</span>
             )}
@@ -203,7 +203,7 @@ export function PlanStepItem({
               </span>
             )}
             {step.status === 'skipped' && (
-              <span className="text-[#68766C] font-medium">
+              <span className="text-[#5F6D63] font-medium">
                 Skipped by grower
               </span>
             )}
@@ -250,7 +250,7 @@ export function PlanStepItem({
                 type="button"
                 onClick={handleOpenSkip}
                 disabled={isExecuting}
-                className="px-3 py-2 min-h-[44px] text-xs font-medium rounded-xl text-[#68766C] hover:text-[#203027] hover:bg-[#F8F6EE] transition active:scale-95 select-none touch-manipulation cursor-pointer disabled:opacity-50 flex items-center justify-center gap-1"
+                className="px-3 py-2 min-h-[44px] text-xs font-medium rounded-xl text-[#5F6D63] hover:text-[#203027] hover:bg-[#F8F6EE] transition active:scale-95 select-none touch-manipulation cursor-pointer disabled:opacity-50 flex items-center justify-center gap-1"
               >
                 <FastForward className="w-3.5 h-3.5" />
                 <span>Skip</span>
@@ -273,7 +273,7 @@ export function PlanStepItem({
                   : 'Completion Notes (Optional)'
                 : 'Reason for Skipping Step'}
             </label>
-            <span className="text-[11px] text-[#68766C]">
+            <span className="text-[11px] text-[#5F6D63]">
               {actionType === 'complete' && step.requiresObservation && !hasRecordedObservation
                 ? 'Evidence Grounded'
                 : 'Saved to Plan History'}
@@ -288,7 +288,7 @@ export function PlanStepItem({
                   key={idx}
                   type="button"
                   onClick={() => setNotes(chip)}
-                  className="text-[11px] px-2.5 py-1 rounded-lg bg-white border border-[#E3DFD2] text-[#68766C] hover:text-[#174C35] hover:border-[#174C35]/40 hover:bg-[#EAF1E4] transition cursor-pointer"
+                  className="text-[11px] px-2.5 py-1 rounded-lg bg-white border border-[#E3DFD2] text-[#5F6D63] hover:text-[#174C35] hover:border-[#174C35]/40 hover:bg-[#EAF1E4] transition cursor-pointer"
                 >
                   + {chip}
                 </button>
@@ -309,7 +309,7 @@ export function PlanStepItem({
                 : 'e.g. Step skipped due to weather, container size, or prior pruning.'
             }
             rows={2}
-            className="w-full text-xs sm:text-sm p-3 rounded-xl border border-[#E3DFD2] bg-white text-[#203027] placeholder:text-[#68766C] focus:outline-none focus:ring-2 focus:ring-[#174C35]/20 focus:border-[#174C35] transition"
+            className="w-full text-xs sm:text-sm p-3 rounded-xl border border-[#E3DFD2] bg-white text-[#203027] placeholder:text-[#5F6D63] focus:outline-none focus:ring-2 focus:ring-[#174C35]/20 focus:border-[#174C35] transition"
           />
 
           <div className="flex justify-end gap-2.5 pt-1">
@@ -320,7 +320,7 @@ export function PlanStepItem({
                 setActionType(null);
                 setNotes('');
               }}
-              className="px-3.5 py-2 min-h-[40px] text-xs font-semibold rounded-xl border border-[#E3DFD2] text-[#68766C] hover:text-[#203027] hover:bg-white transition cursor-pointer"
+              className="px-3.5 py-2 min-h-[40px] text-xs font-semibold rounded-xl border border-[#E3DFD2] text-[#5F6D63] hover:text-[#203027] hover:bg-white transition cursor-pointer"
             >
               Cancel
             </button>

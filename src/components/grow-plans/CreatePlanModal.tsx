@@ -99,7 +99,7 @@ export function CreatePlanModal({
               <h2 className="font-serif text-lg sm:text-xl font-bold text-[#203027]">
                 Create Adaptive Grow Plan
               </h2>
-              <p className="text-xs text-[#68766C] mt-0.5">
+              <p className="text-xs text-[#5F6D63] mt-0.5">
                 Structured, evidence-grounded care plans that adapt to actual plant observations.
               </p>
             </div>
@@ -108,7 +108,7 @@ export function CreatePlanModal({
             type="button"
             onClick={onClose}
             aria-label="Close modal"
-            className="text-[#68766C] hover:text-[#203027] p-1.5 rounded-xl hover:bg-[#F8F6EE] transition cursor-pointer"
+            className="text-[#5F6D63] hover:text-[#203027] p-1.5 rounded-xl hover:bg-[#F8F6EE] transition cursor-pointer"
           >
             <X className="w-5 h-5" />
           </button>
@@ -151,7 +151,7 @@ export function CreatePlanModal({
                         </span>
                       )}
                     </div>
-                    <div className="text-[11px] text-[#68766C] line-clamp-2 leading-relaxed">
+                    <div className="text-[11px] text-[#5F6D63] line-clamp-2 leading-relaxed">
                       {tpl.description}
                     </div>
                     <div className="mt-2 text-[10px] font-mono text-[#174C35] font-semibold">
@@ -194,7 +194,7 @@ export function CreatePlanModal({
                 value={customName}
                 onChange={(e) => setCustomName(e.target.value)}
                 placeholder={preview.name}
-                className="w-full text-xs sm:text-sm p-3 rounded-2xl border border-[#E3DFD2] bg-white text-[#203027] focus:outline-none focus:ring-2 focus:ring-[#174C35]/20 focus:border-[#174C35] placeholder:text-[#68766C] transition"
+                className="w-full text-xs sm:text-sm p-3 rounded-2xl border border-[#E3DFD2] bg-white text-[#203027] focus:outline-none focus:ring-2 focus:ring-[#174C35]/20 focus:border-[#174C35] placeholder:text-[#5F6D63] transition"
               />
             </div>
             <div>
@@ -206,7 +206,7 @@ export function CreatePlanModal({
                 value={customDescription}
                 onChange={(e) => setCustomDescription(e.target.value)}
                 placeholder={preview.description}
-                className="w-full text-xs sm:text-sm p-3 rounded-2xl border border-[#E3DFD2] bg-white text-[#203027] focus:outline-none focus:ring-2 focus:ring-[#174C35]/20 focus:border-[#174C35] placeholder:text-[#68766C] transition"
+                className="w-full text-xs sm:text-sm p-3 rounded-2xl border border-[#E3DFD2] bg-white text-[#203027] focus:outline-none focus:ring-2 focus:ring-[#174C35]/20 focus:border-[#174C35] placeholder:text-[#5F6D63] transition"
               />
             </div>
           </div>
@@ -217,7 +217,7 @@ export function CreatePlanModal({
               <label className="block text-xs font-semibold text-[#203027] uppercase tracking-wider">
                 Generated Steps Sequence ({preview.steps.length})
               </label>
-              <span className="text-[11px] text-[#68766C]">Prerequisites strictly enforced</span>
+              <span className="text-[11px] text-[#5F6D63]">Prerequisites strictly enforced</span>
             </div>
             <div className="space-y-2 max-h-48 overflow-y-auto pr-1">
               {preview.steps.map((st, idx) => (
@@ -226,9 +226,9 @@ export function CreatePlanModal({
                   className="p-3 rounded-2xl border border-[#E3DFD2]/70 bg-white text-xs flex items-center justify-between shadow-2xs"
                 >
                   <div className="flex items-center gap-2 min-w-0 pr-2">
-                    <span className="font-mono text-[#68766C] shrink-0 text-[11px]">#{idx + 1}</span>
+                    <span className="font-mono text-[#5F6D63] shrink-0 text-[11px]">#{idx + 1}</span>
                     <span className="font-semibold text-[#203027] truncate">{st.title}</span>
-                    <span className="text-[10px] px-2 py-0.5 rounded-lg bg-[#F8F6EE] text-[#68766C] border border-[#E3DFD2]/50 capitalize shrink-0 font-medium">
+                    <span className="text-[10px] px-2 py-0.5 rounded-lg bg-[#F8F6EE] text-[#5F6D63] border border-[#E3DFD2]/50 capitalize shrink-0 font-medium">
                       {st.category}
                     </span>
                   </div>
@@ -255,7 +255,7 @@ export function CreatePlanModal({
             <button
               type="button"
               onClick={onClose}
-              className="px-4 py-2 text-xs sm:text-sm font-semibold rounded-xl border border-[#E3DFD2] text-[#68766C] hover:text-[#203027] hover:bg-[#F8F6EE] transition min-h-[44px] cursor-pointer"
+              className="px-4 py-2 text-xs sm:text-sm font-semibold rounded-xl border border-[#E3DFD2] text-[#5F6D63] hover:text-[#203027] hover:bg-[#F8F6EE] transition min-h-[44px] cursor-pointer"
             >
               Cancel
             </button>

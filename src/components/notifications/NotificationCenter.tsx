@@ -301,7 +301,7 @@ export function NotificationCenter({
             <button
               type="button"
               onClick={() => setIsPreferencesOpen(true)}
-              className="p-2 rounded-xl text-[#68766C] hover:bg-[#EAF1E4] hover:text-[#174C35] transition-colors cursor-pointer min-h-[40px] min-w-[40px] flex items-center justify-center"
+              className="p-2 rounded-xl text-[#5F6D63] hover:bg-[#EAF1E4] hover:text-[#174C35] transition-colors cursor-pointer min-h-[40px] min-w-[40px] flex items-center justify-center"
               title="Notification preferences"
               aria-label="Notification preferences"
             >
@@ -310,7 +310,7 @@ export function NotificationCenter({
             <button
               type="button"
               onClick={onClose}
-              className="p-2 rounded-xl text-[#68766C] hover:bg-[#EAF1E4] hover:text-[#174C35] transition-colors cursor-pointer min-h-[40px] min-w-[40px] flex items-center justify-center"
+              className="p-2 rounded-xl text-[#5F6D63] hover:bg-[#EAF1E4] hover:text-[#174C35] transition-colors cursor-pointer min-h-[40px] min-w-[40px] flex items-center justify-center"
               aria-label="Close notification panel"
             >
               <X size={18} />
@@ -338,7 +338,7 @@ export function NotificationCenter({
                   className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer whitespace-nowrap min-h-[32px] ${
                     activeFilter === tab.id
                       ? 'bg-[#174C35] text-white shadow-2xs'
-                      : 'text-[#68766C] hover:bg-[#F8F6EE]'
+                      : 'text-[#5F6D63] hover:bg-[#F8F6EE]'
                   }`}
                 >
                   {tab.label}
@@ -395,11 +395,11 @@ export function NotificationCenter({
 
           {!loading && filteredReminders.length === 0 && (
             <div className="p-8 text-center bg-white rounded-2xl border border-[#E3DFD2] space-y-2 mt-4 shadow-xs">
-              <Sprout size={32} className="text-[#68766C] mx-auto opacity-70" />
+              <Sprout size={32} className="text-[#5F6D63] mx-auto opacity-70" />
               <h4 className="font-serif font-bold text-sm text-[#203027]">
                 No reminders found
               </h4>
-              <p className="text-xs text-[#68766C] max-w-xs mx-auto leading-relaxed">
+              <p className="text-xs text-[#5F6D63] max-w-xs mx-auto leading-relaxed">
                 {activeFilter === 'due'
                   ? 'All current garden tasks and health follow-ups are up to date.'
                   : activeFilter === 'upcoming'
@@ -446,10 +446,10 @@ export function NotificationCenter({
           {!loading && upcomingGroup.length > 0 && (
             <div className="space-y-2.5">
               <div className="flex items-center justify-between">
-                <span className="text-[11px] uppercase tracking-wider font-bold text-[#68766C]">
+                <span className="text-[11px] uppercase tracking-wider font-bold text-[#5F6D63]">
                   Upcoming
                 </span>
-                <span className="text-[11px] font-medium text-[#68766C]">
+                <span className="text-[11px] font-medium text-[#5F6D63]">
                   {upcomingGroup.length}
                 </span>
               </div>
@@ -469,10 +469,10 @@ export function NotificationCenter({
           {!loading && completedGroup.length > 0 && (
             <div className="space-y-2.5">
               <div className="flex items-center justify-between">
-                <span className="text-[11px] uppercase tracking-wider font-bold text-[#68766C]">
+                <span className="text-[11px] uppercase tracking-wider font-bold text-[#5F6D63]">
                   Earlier & Completed
                 </span>
-                <span className="text-[11px] font-medium text-[#68766C]">
+                <span className="text-[11px] font-medium text-[#5F6D63]">
                   {completedGroup.length}
                 </span>
               </div>

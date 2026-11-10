@@ -40,13 +40,13 @@ export function WhatGrowAiDoesSection() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12 sm:space-y-16">
         {/* Editorial Heading */}
         <div className="max-w-2xl mx-auto text-center space-y-3">
-          <span className="text-[11px] font-mono tracking-widest text-[#68766C] uppercase font-bold block">
+          <span className="text-[11px] font-mono tracking-widest text-[#5F6D63] uppercase font-bold block">
             EVERYDAY GROWING SIMPLIFIED
           </span>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-serif font-bold text-[#203027] tracking-tight leading-tight">
             Your Garden, All in One Place.
           </h2>
-          <p className="text-base sm:text-lg text-[#68766C] leading-relaxed pt-1">
+          <p className="text-base sm:text-lg text-[#5F6D63] leading-relaxed pt-1">
             GrowAI connects the everyday things growers need — plants, care, health, space, plans, and progress.
           </p>
         </div>
@@ -66,7 +66,7 @@ export function WhatGrowAiDoesSection() {
                   <h3 className="font-serif font-bold text-lg text-[#203027]">
                     {item.title}
                   </h3>
-                  <p className="text-xs sm:text-sm text-[#68766C] leading-relaxed">
+                  <p className="text-xs sm:text-sm text-[#5F6D63] leading-relaxed">
                     {item.description}
                   </p>
                 </div>

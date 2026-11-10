@@ -154,7 +154,7 @@ export function SaveDiagnosisModal({
         <button
           type="button"
           onClick={onClose}
-          className="absolute top-5 right-5 p-2 rounded-full text-[#68766C] hover:bg-[#F8F6EE] hover:text-[#203027] transition-colors cursor-pointer"
+          className="absolute top-5 right-5 p-2 rounded-full text-[#5F6D63] hover:bg-[#F8F6EE] hover:text-[#203027] transition-colors cursor-pointer"
           aria-label="Close modal"
         >
           <X size={20} />
@@ -169,7 +169,7 @@ export function SaveDiagnosisModal({
             <h3 className="text-xl font-serif font-bold text-[#203027]">
               Save Diagnosis to History
             </h3>
-            <p className="text-xs text-[#68766C]">
+            <p className="text-xs text-[#5F6D63]">
               Keep a permanent record to monitor plant recovery and log treatments
             </p>
           </div>
@@ -246,7 +246,7 @@ export function SaveDiagnosisModal({
 
             {/* Diagnosis Summary Preview */}
             <div className="p-4 rounded-2xl bg-[#F8F6EE] border border-[#E3DFD2] space-y-2 text-xs">
-              <div className="flex justify-between items-center text-[#68766C]">
+              <div className="flex justify-between items-center text-[#5F6D63]">
                 <span className="font-semibold uppercase tracking-wider text-[11px] text-[#203027]">
                   Assessment Snapshot
                 </span>
@@ -277,7 +277,7 @@ export function SaveDiagnosisModal({
               </label>
 
               {loadingPlants ? (
-                <div className="flex items-center gap-2 text-xs text-[#68766C] py-2">
+                <div className="flex items-center gap-2 text-xs text-[#5F6D63] py-2">
                   <Loader2 size={16} className="animate-spin text-[#174C35]" />
                   <span>Loading your garden plants...</span>
                 </div>
@@ -296,7 +296,7 @@ export function SaveDiagnosisModal({
                   ))}
                 </select>
               ) : (
-                <p className="text-xs text-[#68766C] italic">
+                <p className="text-xs text-[#5F6D63] italic">
                   No garden plants found. Diagnosis will be saved as a standalone assessment.
                 </p>
               )}

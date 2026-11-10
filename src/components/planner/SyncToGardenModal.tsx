@@ -305,7 +305,7 @@ export function SyncToGardenModal({
               <h2 id={modalTitleId} className="font-serif text-lg sm:text-xl font-bold text-[#174C35]">
                 Add Layout to My Garden
               </h2>
-              <p className="text-xs text-[#68766C]">
+              <p className="text-xs text-[#5F6D63]">
                 Create active plant tracking records from &quot;{profile.name}&quot;
               </p>
             </div>
@@ -314,7 +314,7 @@ export function SyncToGardenModal({
             type="button"
             disabled={isSubmitting}
             onClick={onClose}
-            className="p-2 rounded-lg text-[#68766C] hover:text-[#174C35] hover:bg-[#F8F6EE] transition-colors"
+            className="p-2 rounded-lg text-[#5F6D63] hover:text-[#174C35] hover:bg-[#F8F6EE] transition-colors"
             aria-label="Close sync modal"
           >
             <X className="w-5 h-5" />
@@ -373,10 +373,10 @@ export function SyncToGardenModal({
           {/* Finding C: Growth Stage Selection */}
           <div className="p-4 bg-white border border-[#E3DFD2] rounded-xl space-y-3">
             <div>
-              <label className="text-xs font-bold uppercase tracking-wider text-[#68766C] block">
+              <label className="text-xs font-bold uppercase tracking-wider text-[#5F6D63] block">
                 Initial Growth Stage
               </label>
-              <p className="text-[11px] text-[#68766C] mt-0.5">
+              <p className="text-[11px] text-[#5F6D63] mt-0.5">
                 Set how your plants are entering the garden. Established plants are not forced to start as seeds.
               </p>
             </div>
@@ -399,7 +399,7 @@ export function SyncToGardenModal({
                       <span className="font-serif font-bold text-xs text-[#203027]">{opt.label}</span>
                       {isSelected && <Check className="w-3.5 h-3.5 text-[#174C35]" />}
                     </div>
-                    <p className="text-[10px] text-[#68766C] mt-1 leading-snug">{opt.description}</p>
+                    <p className="text-[10px] text-[#5F6D63] mt-1 leading-snug">{opt.description}</p>
                   </button>
                 );
               })}
@@ -409,10 +409,10 @@ export function SyncToGardenModal({
           {/* Plant Containers Checklist */}
           <div className="space-y-2.5">
             <div className="flex items-center justify-between">
-              <span className="text-xs font-bold uppercase tracking-wider text-[#68766C]">
+              <span className="text-xs font-bold uppercase tracking-wider text-[#5F6D63]">
                 Planned Containers ({itemsToCreate.length} of {plannedItems.length} selected)
               </span>
-              <div className="flex items-center gap-3 text-xs text-[#68766C]">
+              <div className="flex items-center gap-3 text-xs text-[#5F6D63]">
                 <button
                   type="button"
                   onClick={() => {
@@ -436,7 +436,7 @@ export function SyncToGardenModal({
             </div>
 
             {plannedItems.length === 0 ? (
-              <div className="p-6 text-center bg-white border border-[#E3DFD2] rounded-xl text-xs text-[#68766C]">
+              <div className="p-6 text-center bg-white border border-[#E3DFD2] rounded-xl text-xs text-[#5F6D63]">
                 No plant containers found in this space configuration. Assign plants in the visualizer before
                 synchronizing.
               </div>
@@ -487,7 +487,7 @@ export function SyncToGardenModal({
                                 </Badge>
                               )}
                             </div>
-                            <span className="text-[11px] text-[#68766C] italic block truncate mt-0.5">
+                            <span className="text-[11px] text-[#5F6D63] italic block truncate mt-0.5">
                               {item.commonName} • {item.potSizeDescription}
                             </span>
                           </div>
@@ -532,7 +532,7 @@ export function SyncToGardenModal({
           </div>
 
           {/* Finding B: Preservation Disclosure */}
-          <div className="p-3 bg-[#F8F6EE] border border-[#E3DFD2] rounded-xl text-[11px] text-[#68766C] leading-relaxed">
+          <div className="p-3 bg-[#F8F6EE] border border-[#E3DFD2] rounded-xl text-[11px] text-[#5F6D63] leading-relaxed">
             <strong>Data Integrity Assurance:</strong> Records are saved to your current garden log with
             pure container dimensions. Editing or deleting this planner space profile will{' '}
             <strong className="text-[#203027]">never delete or modify</strong> your created garden plants,

@@ -36,9 +36,9 @@ export function CopilotInput({
           disabled={disabled || isLoading}
           onChange={(e) => setText(e.target.value)}
           placeholder={placeholder}
-          className="w-full pl-4 pr-10 py-3 text-xs sm:text-sm rounded-2xl border border-[#E3DFD2] bg-[#F8F6EE] text-[#203027] placeholder:text-[#68766C] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#174C35] transition-all disabled:opacity-60 min-h-[48px]"
+          className="w-full pl-4 pr-10 py-3 text-xs sm:text-sm rounded-2xl border border-[#E3DFD2] bg-[#F8F6EE] text-[#203027] placeholder:text-[#5F6D63] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#174C35] transition-all disabled:opacity-60 min-h-[48px]"
         />
-        <div className="absolute right-3.5 top-3.5 hidden sm:flex items-center text-[10px] text-[#68766C] pointer-events-none">
+        <div className="absolute right-3.5 top-3.5 hidden sm:flex items-center text-[10px] text-[#5F6D63] pointer-events-none">
           <CornerDownLeft size={13} />
         </div>
       </div>

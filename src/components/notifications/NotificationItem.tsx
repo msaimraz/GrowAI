@@ -51,7 +51,7 @@ export function NotificationItem({
         return <Sparkles size={16} className="text-amber-600" />;
       case 'custom':
       default:
-        return <Bell size={16} className="text-[#68766C]" />;
+        return <Bell size={16} className="text-[#5F6D63]" />;
     }
   };
 
@@ -80,7 +80,7 @@ export function NotificationItem({
           <button
             type="button"
             onClick={(e) => onComplete(reminder.id, e)}
-            className="w-8 h-8 rounded-xl border border-[#E3DFD2] bg-[#F8F6EE] hover:bg-[#EAF1E4] hover:border-[#174C35] flex items-center justify-center text-[#68766C] hover:text-[#174C35] transition-all cursor-pointer"
+            className="w-8 h-8 rounded-xl border border-[#E3DFD2] bg-[#F8F6EE] hover:bg-[#EAF1E4] hover:border-[#174C35] flex items-center justify-center text-[#5F6D63] hover:text-[#174C35] transition-all cursor-pointer"
             title="Mark as completed"
             aria-label={`Mark ${reminder.title} as completed`}
           >
@@ -111,7 +111,7 @@ export function NotificationItem({
           )}
           {reminder.recurrence && reminder.recurrence.type !== 'none' && (
             <span
-              className="inline-flex items-center gap-0.5 text-[10px] text-[#68766C]"
+              className="inline-flex items-center gap-0.5 text-[10px] text-[#5F6D63]"
               title={`Repeats ${reminder.recurrence.type.replace(/_/g, ' ')}`}
             >
               <Repeat size={10} />
@@ -119,11 +119,11 @@ export function NotificationItem({
           )}
         </div>
 
-        <p className="text-xs text-[#68766C] line-clamp-2 leading-relaxed mb-2">
+        <p className="text-xs text-[#5F6D63] line-clamp-2 leading-relaxed mb-2">
           {reminder.body}
         </p>
 
-        <div className="flex flex-wrap items-center gap-2 text-[11px] text-[#68766C]">
+        <div className="flex flex-wrap items-center gap-2 text-[11px] text-[#5F6D63]">
           <ReminderStatusBadge status={currentStatus} />
           {reminder.metadata?.syncPending && (
             <span className="inline-flex items-center gap-1 px-1.5 py-0.5 text-[10px] font-medium rounded-md bg-amber-50 text-amber-800 border border-amber-200">
@@ -159,7 +159,7 @@ export function NotificationItem({
             </button>
           </>
         )}
-        <ChevronRight size={14} className="text-[#68766C]" />
+        <ChevronRight size={14} className="text-[#5F6D63]" />
       </div>
     </div>
   );

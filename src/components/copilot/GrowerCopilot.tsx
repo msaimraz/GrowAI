@@ -235,7 +235,7 @@ export function GrowerCopilot({
                 </span>
               )}
             </div>
-            <p className="text-xs text-[#68766C] mt-0.5">
+            <p className="text-xs text-[#5F6D63] mt-0.5">
               Grounded conversational assistant answering strictly from your recorded garden data.
             </p>
           </div>
@@ -253,7 +253,7 @@ export function GrowerCopilot({
             <button
               type="button"
               onClick={handleResetConversation}
-              className="p-2 rounded-xl text-[#68766C] hover:bg-[#F8F6EE] hover:text-[#174C35] border border-[#E3DFD2] transition-colors cursor-pointer text-xs flex items-center gap-1 min-h-[36px]"
+              className="p-2 rounded-xl text-[#5F6D63] hover:bg-[#F8F6EE] hover:text-[#174C35] border border-[#E3DFD2] transition-colors cursor-pointer text-xs flex items-center gap-1 min-h-[36px]"
               title="Reset conversation"
             >
               <RotateCcw size={13} />

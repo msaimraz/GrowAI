@@ -137,7 +137,7 @@ export default function DiagnosisHistoryPage() {
         {/* Filter Pills */}
         {records.length > 0 && (
           <div className="flex flex-wrap items-center gap-2 pt-2">
-            <span className="text-xs font-semibold text-[#68766C] mr-1">Filter by:</span>
+            <span className="text-xs font-semibold text-[#5F6D63] mr-1">Filter by:</span>
             {(['all', 'biotic', 'abiotic', 'mixed', 'undetermined'] as const).map((cls) => (
               <button
                 key={cls}
@@ -157,7 +157,7 @@ export default function DiagnosisHistoryPage() {
 
         {/* Loading State */}
         {loading ? (
-          <div className="py-20 flex flex-col items-center justify-center gap-3 text-[#68766C]">
+          <div className="py-20 flex flex-col items-center justify-center gap-3 text-[#5F6D63]">
             <Loader2 size={32} className="animate-spin text-[#174C35]" />
             <p className="text-sm font-medium">Retrieving diagnosis history...</p>
           </div>
@@ -173,7 +173,7 @@ export default function DiagnosisHistoryPage() {
                   ? 'No Saved Diagnoses Yet'
                   : `No ${filter} diagnoses found`}
               </h3>
-              <p className="text-xs sm:text-sm text-[#68766C] leading-relaxed">
+              <p className="text-xs sm:text-sm text-[#5F6D63] leading-relaxed">
                 {filter === 'all'
                   ? 'When you consult the AI Plant Doctor about leaf spots, yellowing, or pests, you can save the assessment to track treatments and recovery over time.'
                   : `Try switching the filter back to 'All' or start a new diagnosis consultation.`}
@@ -209,7 +209,7 @@ export default function DiagnosisHistoryPage() {
                   {/* Top Bar: Date, Provenance, Badges, Delete */}
                   <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 pb-3 border-b border-[#E3DFD2]">
                     <div className="flex flex-wrap items-center gap-2">
-                      <span className="text-xs text-[#68766C] flex items-center gap-1 font-medium">
+                      <span className="text-xs text-[#5F6D63] flex items-center gap-1 font-medium">
                         <Calendar size={14} />
                         {formattedDate}
                       </span>
@@ -246,7 +246,7 @@ export default function DiagnosisHistoryPage() {
                           <button
                             type="button"
                             onClick={() => setDeleteConfirmId(null)}
-                            className="px-2 py-1 text-xs rounded border border-[#E3DFD2] text-[#68766C] hover:bg-[#F8F6EE]"
+                            className="px-2 py-1 text-xs rounded border border-[#E3DFD2] text-[#5F6D63] hover:bg-[#F8F6EE]"
                           >
                             Cancel
                           </button>
@@ -255,7 +255,7 @@ export default function DiagnosisHistoryPage() {
                         <button
                           type="button"
                           onClick={() => setDeleteConfirmId(record.id)}
-                          className="p-1.5 text-[#68766C] hover:text-red-600 transition-colors rounded-lg cursor-pointer ml-1"
+                          className="p-1.5 text-[#5F6D63] hover:text-red-600 transition-colors rounded-lg cursor-pointer ml-1"
                           title="Delete diagnosis record"
                         >
                           <Trash2 size={16} />
@@ -271,7 +271,7 @@ export default function DiagnosisHistoryPage() {
                     </h4>
 
                     {record.symptoms && (
-                      <p className="text-xs text-[#68766C] line-clamp-2">
+                      <p className="text-xs text-[#5F6D63] line-clamp-2">
                         <span className="font-semibold text-[#203027]">Observed Symptoms:</span>{' '}
                         {record.symptoms}
                       </p>
@@ -284,7 +284,7 @@ export default function DiagnosisHistoryPage() {
 
                   {/* Bottom: Next actions & Details Link */}
                   <div className="pt-3 border-t border-[#E3DFD2] flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
-                    <div className="text-[#68766C]">
+                    <div className="text-[#5F6D63]">
                       {record.immediateActions?.length > 0 && (
                         <span>
                           <strong className="text-[#203027]">Immediate Step:</strong>{' '}

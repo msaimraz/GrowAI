@@ -395,7 +395,7 @@ function MyGardenContent() {
         )}
 
         {/* Sync Mode Banner */}
-        <div className="bg-white border border-[#E3DFD2] p-4 sm:p-5 rounded-2xl flex flex-col sm:flex-row sm:items-center justify-between gap-4 text-xs sm:text-sm text-[#68766C] shadow-xs">
+        <div className="bg-white border border-[#E3DFD2] p-4 sm:p-5 rounded-2xl flex flex-col sm:flex-row sm:items-center justify-between gap-4 text-xs sm:text-sm text-[#5F6D63] shadow-xs">
           <div className="flex items-center gap-3">
             {isCloud ? (
               <>
@@ -404,7 +404,7 @@ function MyGardenContent() {
                 </div>
                 <div>
                   <span className="font-bold text-[#203027] block">Synced to Your Account</span>
-                  <span className="text-xs text-[#68766C]">
+                  <span className="text-xs text-[#5F6D63]">
                     Logged in as <strong>{user?.email}</strong>. Your garden data is securely backed up.
                   </span>
                 </div>
@@ -416,7 +416,7 @@ function MyGardenContent() {
                 </div>
                 <div>
                   <span className="font-bold text-[#203027] block">Guest Mode</span>
-                  <span className="text-xs text-[#68766C]">
+                  <span className="text-xs text-[#5F6D63]">
                     Plants are safely saved on this device.{' '}
                     {isConfigured && (
                       <Link href="/auth/login" className="font-semibold text-[#174C35] underline hover:no-underline">
@@ -531,7 +531,7 @@ function MyGardenContent() {
                   <h3 className="text-base font-serif font-bold text-[#203027]">
                     My Garden ({userPlants.length})
                   </h3>
-                  <p className="text-xs text-[#68766C]">Tap a specimen to view its journal</p>
+                  <p className="text-xs text-[#5F6D63]">Tap a specimen to view its journal</p>
                 </div>
                 <Link
                   href="/app/plants"
@@ -575,7 +575,7 @@ function MyGardenContent() {
                           {plant.nickname}
                         </p>
                         <p
-                          className={`text-[10px] truncate ${isSelected ? 'text-[#E3DFD2]' : 'text-[#68766C]'
+                          className={`text-[10px] truncate ${isSelected ? 'text-[#E3DFD2]' : 'text-[#5F6D63]'
                             }`}
                         >
                           {plant.currentStage}
@@ -594,7 +594,7 @@ function MyGardenContent() {
                   <h3 className="text-base font-serif font-bold text-[#203027]">
                     My Garden ({userPlants.length})
                   </h3>
-                  <p className="text-xs text-[#68766C]">Select a specimen to open its journal</p>
+                  <p className="text-xs text-[#5F6D63]">Select a specimen to open its journal</p>
                 </div>
                 <Link
                   href="/app/plants"
@@ -646,7 +646,7 @@ function MyGardenContent() {
                           </div>
                           <div className="flex flex-wrap items-center gap-1.5 mt-0.5">
                             <p
-                              className={`text-xs truncate ${isSelected ? 'text-[#E3DFD2]' : 'text-[#68766C]'
+                              className={`text-xs truncate ${isSelected ? 'text-[#E3DFD2]' : 'text-[#5F6D63]'
                                 }`}
                             >
                               {botanical?.commonName} • {plant.notes?.length || 0} note(s)
@@ -663,7 +663,7 @@ function MyGardenContent() {
                       </div>
                       <ChevronRight
                         size={18}
-                        className={`shrink-0 ${isSelected ? 'text-white' : 'text-[#68766C]'}`}
+                        className={`shrink-0 ${isSelected ? 'text-white' : 'text-[#5F6D63]'}`}
                       />
                     </div>
                   );
@@ -716,12 +716,12 @@ function MyGardenContent() {
                       </button>
                       <div className="flex-1 min-w-0">
                         <p
-                          className={`font-medium ${task.completed ? 'line-through text-[#68766C]' : 'text-[#203027]'
+                          className={`font-medium ${task.completed ? 'line-through text-[#5F6D63]' : 'text-[#203027]'
                             }`}
                         >
                           {task.title}
                         </p>
-                        <p className="text-xs text-[#68766C] mt-0.5">
+                        <p className="text-xs text-[#5F6D63] mt-0.5">
                           {task.plantName.split('(')[0]} • Due {task.dueDate}
                         </p>
                       </div>
@@ -777,7 +777,7 @@ function MyGardenContent() {
                                     ? 'bg-[#FFF3D7] text-[#8A6400] border-[#F0C04D/30]'
                                     : harvestWindow.status === 'past_window'
                                       ? 'bg-[#FFF3D7] text-[#8A6400] border-[#FFF3D7]'
-                                      : 'bg-[#F8F6EE] text-[#68766C] border-[#E3DFD2]'
+                                      : 'bg-[#F8F6EE] text-[#5F6D63] border-[#E3DFD2]'
                                 }`}
                             >
                               <Calendar size={13} />
@@ -785,7 +785,7 @@ function MyGardenContent() {
                             </span>
                           )}
                         </div>
-                        <p className="text-xs sm:text-sm text-[#68766C] mt-1.5">
+                        <p className="text-xs sm:text-sm text-[#5F6D63] mt-1.5">
                           {activeBotanical?.commonName} (<em>{activeBotanical?.scientificName}</em>) • Planted on{' '}
                           {activePlant.plantedDate}
                           {activePlant.actualHarvestDate && (
@@ -949,7 +949,7 @@ function MyGardenContent() {
                                 ? 'bg-[#174C35] text-white border-[#123C2A] shadow-sm ring-2 ring-[#174C35]/20 font-bold'
                                 : isPast
                                   ? 'bg-[#EAF1E4] text-[#174C35] border-[#E3DFD2] hover:bg-[#EAF1E4]'
-                                  : 'bg-[#F8F6EE] text-[#68766C] border-[#E3DFD2] hover:bg-white'
+                                  : 'bg-[#F8F6EE] text-[#5F6D63] border-[#E3DFD2] hover:bg-white'
                               }`}
                           >
                             <span className="text-[10px] opacity-75">Step {index + 1}</span>
@@ -963,15 +963,15 @@ function MyGardenContent() {
                   {/* Environment & Placement Info */}
                   <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5 text-xs sm:text-sm pt-2">
                     <div className="p-4 rounded-2xl bg-[#F8F6EE] border border-[#E3DFD2]">
-                      <span className="text-[#68766C] block text-xs mb-1">Assigned Location</span>
+                      <span className="text-[#5F6D63] block text-xs mb-1">Assigned Location</span>
                       <strong className="text-[#203027] text-sm">{activePlant.location || 'Balcony Vertical Rack'}</strong>
                     </div>
                     <div className="p-4 rounded-2xl bg-[#F8F6EE] border border-[#E3DFD2]">
-                      <span className="text-[#68766C] block text-xs mb-1">Vertical Tier Zone</span>
+                      <span className="text-[#5F6D63] block text-xs mb-1">Vertical Tier Zone</span>
                       <strong className="text-[#203027] text-sm capitalize">{activePlant.tier || 'Middle'} Tier</strong>
                     </div>
                     <div className="p-4 rounded-2xl bg-[#F8F6EE] border border-[#E3DFD2]">
-                      <span className="text-[#68766C] block text-xs mb-1">Container Depth</span>
+                      <span className="text-[#5F6D63] block text-xs mb-1">Container Depth</span>
                       <strong className="text-[#203027] text-sm">{activeBotanical?.potting.minDepthCm || 20} cm depth</strong>
                     </div>
                   </div>
@@ -990,7 +990,7 @@ function MyGardenContent() {
                     onClick={() => setActiveTab('intelligence')}
                     className={`inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all cursor-pointer min-h-[40px] ${activeTab === 'intelligence'
                         ? 'bg-[#174C35] text-white shadow-xs'
-                        : 'bg-white text-[#68766C] hover:bg-[#EAF1E4] hover:text-[#174C35] border border-[#E3DFD2]'
+                        : 'bg-white text-[#5F6D63] hover:bg-[#EAF1E4] hover:text-[#174C35] border border-[#E3DFD2]'
                       }`}
                   >
                     <Sparkles size={15} />
@@ -1002,7 +1002,7 @@ function MyGardenContent() {
                     onClick={() => setActiveTab('conditions')}
                     className={`inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all cursor-pointer min-h-[40px] ${activeTab === 'conditions'
                         ? 'bg-[#174C35] text-white shadow-xs'
-                        : 'bg-white text-[#68766C] hover:bg-[#EAF1E4] hover:text-[#174C35] border border-[#E3DFD2]'
+                        : 'bg-white text-[#5F6D63] hover:bg-[#EAF1E4] hover:text-[#174C35] border border-[#E3DFD2]'
                       }`}
                   >
                     <Thermometer size={15} />
@@ -1014,7 +1014,7 @@ function MyGardenContent() {
                     onClick={() => setActiveTab('feeding')}
                     className={`inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all cursor-pointer min-h-[40px] ${activeTab === 'feeding'
                         ? 'bg-[#174C35] text-white shadow-xs'
-                        : 'bg-white text-[#68766C] hover:bg-[#EAF1E4] hover:text-[#174C35] border border-[#E3DFD2]'
+                        : 'bg-white text-[#5F6D63] hover:bg-[#EAF1E4] hover:text-[#174C35] border border-[#E3DFD2]'
                       }`}
                   >
                     <Droplets size={15} />
@@ -1026,7 +1026,7 @@ function MyGardenContent() {
                     onClick={() => setActiveTab('production')}
                     className={`inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all cursor-pointer min-h-[40px] ${activeTab === 'production'
                         ? 'bg-[#174C35] text-white shadow-xs'
-                        : 'bg-white text-[#68766C] hover:bg-[#EAF1E4] hover:text-[#174C35] border border-[#E3DFD2]'
+                        : 'bg-white text-[#5F6D63] hover:bg-[#EAF1E4] hover:text-[#174C35] border border-[#E3DFD2]'
                       }`}
                   >
                     <ShoppingBag size={15} />
@@ -1038,7 +1038,7 @@ function MyGardenContent() {
                     onClick={() => setActiveTab('journal')}
                     className={`inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all cursor-pointer min-h-[40px] ${activeTab === 'journal'
                         ? 'bg-[#174C35] text-white shadow-xs'
-                        : 'bg-white text-[#68766C] hover:bg-[#EAF1E4] hover:text-[#174C35] border border-[#E3DFD2]'
+                        : 'bg-white text-[#5F6D63] hover:bg-[#EAF1E4] hover:text-[#174C35] border border-[#E3DFD2]'
                       }`}
                   >
                     <Clock size={15} />
@@ -1050,7 +1050,7 @@ function MyGardenContent() {
                     onClick={() => setActiveTab('photos')}
                     className={`inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all cursor-pointer min-h-[40px] ${activeTab === 'photos'
                         ? 'bg-[#174C35] text-white shadow-xs'
-                        : 'bg-white text-[#68766C] hover:bg-[#EAF1E4] hover:text-[#174C35] border border-[#E3DFD2]'
+                        : 'bg-white text-[#5F6D63] hover:bg-[#EAF1E4] hover:text-[#174C35] border border-[#E3DFD2]'
                       }`}
                   >
                     <Camera size={15} />
@@ -1062,7 +1062,7 @@ function MyGardenContent() {
                     onClick={() => setActiveTab('health')}
                     className={`inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all cursor-pointer min-h-[40px] ${activeTab === 'health'
                         ? 'bg-[#174C35] text-white shadow-xs'
-                        : 'bg-white text-[#68766C] hover:bg-[#EAF1E4] hover:text-[#174C35] border border-[#E3DFD2]'
+                        : 'bg-white text-[#5F6D63] hover:bg-[#EAF1E4] hover:text-[#174C35] border border-[#E3DFD2]'
                       }`}
                   >
                     <Activity size={15} />
@@ -1077,7 +1077,7 @@ function MyGardenContent() {
                     onClick={() => setActiveTab('timeline')}
                     className={`inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all cursor-pointer min-h-[40px] ${activeTab === 'timeline'
                         ? 'bg-[#174C35] text-white shadow-xs'
-                        : 'bg-white text-[#68766C] hover:bg-[#EAF1E4] hover:text-[#174C35] border border-[#E3DFD2]'
+                        : 'bg-white text-[#5F6D63] hover:bg-[#EAF1E4] hover:text-[#174C35] border border-[#E3DFD2]'
                       }`}
                   >
                     <GitBranch size={15} />
@@ -1089,7 +1089,7 @@ function MyGardenContent() {
                     onClick={() => setActiveTab('reminders')}
                     className={`inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all cursor-pointer min-h-[40px] ${activeTab === 'reminders'
                         ? 'bg-[#174C35] text-white shadow-xs'
-                        : 'bg-white text-[#68766C] hover:bg-[#EAF1E4] hover:text-[#174C35] border border-[#E3DFD2]'
+                        : 'bg-white text-[#5F6D63] hover:bg-[#EAF1E4] hover:text-[#174C35] border border-[#E3DFD2]'
                       }`}
                   >
                     <Bell size={15} />
@@ -1110,7 +1110,7 @@ function MyGardenContent() {
                           <h3 className="font-serif font-bold text-lg text-[#203027]">
                             Record Growth Observation
                           </h3>
-                          <p className="text-xs text-[#68766C]">
+                          <p className="text-xs text-[#5F6D63]">
                             Log height, stem branching, pests, or watering adjustments
                           </p>
                         </div>
@@ -1193,7 +1193,7 @@ function MyGardenContent() {
                             <h3 className="font-serif font-bold text-lg text-[#203027]">
                               Observation Timeline
                             </h3>
-                            <p className="text-xs text-[#68766C]">
+                            <p className="text-xs text-[#5F6D63]">
                               {activePlant.notes?.length || 0} chronological records logged
                             </p>
                           </div>
@@ -1202,9 +1202,9 @@ function MyGardenContent() {
 
                       {!activePlant.notes || activePlant.notes.length === 0 ? (
                         <div className="text-center py-10 space-y-2 bg-[#F8F6EE] rounded-2xl border border-dashed border-[#E3DFD2]">
-                          <Sprout size={28} className="text-[#68766C] mx-auto" />
+                          <Sprout size={28} className="text-[#5F6D63] mx-auto" />
                           <p className="text-sm font-serif font-bold text-[#203027]">No Observations Yet</p>
-                          <p className="text-xs text-[#68766C] max-w-sm mx-auto">
+                          <p className="text-xs text-[#5F6D63] max-w-sm mx-auto">
                             Record your first dated entry above to start building this plant&apos;s botanical growth timeline.
                           </p>
                         </div>
@@ -1221,7 +1221,7 @@ function MyGardenContent() {
                                 <div className="space-y-1.5 flex-1">
                                   <div className="flex items-center gap-2.5">
                                     <Badge variant="sage" size="sm">{note.stage}</Badge>
-                                    <span className="text-[#68766C] flex items-center gap-1.5 text-xs">
+                                    <span className="text-[#5F6D63] flex items-center gap-1.5 text-xs">
                                       <Calendar size={13} /> {note.date}
                                     </span>
                                   </div>
@@ -1380,12 +1380,12 @@ function MyGardenContent() {
                           </button>
                           <div className="flex-1 min-w-0">
                             <p
-                              className={`font-medium ${task.completed ? 'line-through text-[#68766C]' : 'text-[#203027]'
+                              className={`font-medium ${task.completed ? 'line-through text-[#5F6D63]' : 'text-[#203027]'
                                 }`}
                             >
                               {task.title}
                             </p>
-                            <p className="text-xs text-[#68766C] mt-0.5">
+                            <p className="text-xs text-[#5F6D63] mt-0.5">
                               {task.plantName.split('(')[0]} • Due {task.dueDate}
                             </p>
                           </div>
@@ -1422,7 +1422,7 @@ export default function MyGardenPage() {
   return (
     <React.Suspense
       fallback={
-        <div className="min-h-screen flex items-center justify-center text-sm text-[#68766C] bg-[#F8F6EE]">
+        <div className="min-h-screen flex items-center justify-center text-sm text-[#5F6D63] bg-[#F8F6EE]">
           Loading your garden journal...
         </div>
       }

@@ -10,10 +10,10 @@ export function Footer() {
           {/* Brand Column */}
           <div className="col-span-2 lg:col-span-2 space-y-3">
             <Logo size="md" />
-            <p className="text-xs sm:text-sm text-[#68766C] leading-relaxed max-w-sm pt-1">
+            <p className="text-xs sm:text-sm text-[#5F6D63] leading-relaxed max-w-sm pt-1">
               A calm botanical workspace connecting plant knowledge, garden planning, health tracking, and growing guidance.
             </p>
-            <div className="flex items-center gap-2 text-xs text-[#68766C] pt-1">
+            <div className="flex items-center gap-2 text-xs text-[#5F6D63] pt-1">
               <span className="w-1.5 h-1.5 rounded-full bg-[#174C35]" />
               <span>Calibrated for small spaces, containers & balconies</span>
             </div>
@@ -24,7 +24,7 @@ export function Footer() {
             <h4 className="text-[11px] font-mono uppercase tracking-wider text-[#174C35] font-bold">
               Explore
             </h4>
-            <ul className="space-y-2 text-xs sm:text-sm text-[#68766C]">
+            <ul className="space-y-2 text-xs sm:text-sm text-[#5F6D63]">
               <li>
                 <Link href="/app/plants" className="hover:text-[#203027] transition-colors block py-0.5">
                   Plant Library
@@ -53,7 +53,7 @@ export function Footer() {
             <h4 className="text-[11px] font-mono uppercase tracking-wider text-[#174C35] font-bold">
               Product
             </h4>
-            <ul className="space-y-2 text-xs sm:text-sm text-[#68766C]">
+            <ul className="space-y-2 text-xs sm:text-sm text-[#5F6D63]">
               <li>
                 <Link href="/app/my-garden" className="hover:text-[#203027] transition-colors block py-0.5">
                   My Garden
@@ -82,7 +82,7 @@ export function Footer() {
             <h4 className="text-[11px] font-mono uppercase tracking-wider text-[#174C35] font-bold">
               Standards
             </h4>
-            <ul className="space-y-2 text-xs sm:text-sm text-[#68766C]">
+            <ul className="space-y-2 text-xs sm:text-sm text-[#5F6D63]">
               <li>
                 <Link href="/app/learn" className="hover:text-[#203027] transition-colors block py-0.5">
                   Plant Safety
@@ -103,7 +103,7 @@ export function Footer() {
         </div>
 
         {/* Legal & Copyright */}
-        <div className="pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-[#68766C]">
+        <div className="pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-[#5F6D63]">
           <p>GrowAI © 2026. Built for home and small-space growers.</p>
           <div className="flex items-center gap-5">
             <Link href="/app/learn" className="hover:text-[#203027] transition-colors">

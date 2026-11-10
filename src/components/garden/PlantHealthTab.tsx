@@ -92,7 +92,7 @@ export function PlantHealthTab({ plant, isCloud, onRefreshNeeded }: PlantHealthT
     return (
       <div className="bg-white rounded-3xl border border-[#E3DFD2] p-8 text-center space-y-3 shadow-xs">
         <Loader2 size={24} className="animate-spin text-[#174C35] mx-auto" />
-        <p className="text-xs text-[#68766C]">Loading health history for {plant.nickname}...</p>
+        <p className="text-xs text-[#5F6D63]">Loading health history for {plant.nickname}...</p>
       </div>
     );
   }
@@ -118,7 +118,7 @@ export function PlantHealthTab({ plant, isCloud, onRefreshNeeded }: PlantHealthT
             <h3 className="font-serif font-bold text-xl text-[#203027]">
               Plant Health & Monitoring
             </h3>
-            <p className="text-xs text-[#68766C] mt-0.5">
+            <p className="text-xs text-[#5F6D63] mt-0.5">
               {summary.lastCheckedDate
                 ? `Last evaluated on ${new Date(summary.lastCheckedDate).toLocaleDateString()}`
                 : 'No diagnostic assessments recorded yet'}
@@ -150,28 +150,28 @@ export function PlantHealthTab({ plant, isCloud, onRefreshNeeded }: PlantHealthT
         {/* Stats Grid */}
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs">
           <div className="p-3 rounded-2xl bg-[#F8F6EE] border border-[#E3DFD2]">
-            <span className="text-[#68766C] block text-[11px] mb-0.5">Active Issue</span>
+            <span className="text-[#5F6D63] block text-[11px] mb-0.5">Active Issue</span>
             <strong className="text-[#203027] text-sm font-semibold truncate block">
               {summary.activeIssue || 'None detected'}
             </strong>
           </div>
 
           <div className="p-3 rounded-2xl bg-[#F8F6EE] border border-[#E3DFD2]">
-            <span className="text-[#68766C] block text-[11px] mb-0.5">Latest Outcome</span>
+            <span className="text-[#5F6D63] block text-[11px] mb-0.5">Latest Outcome</span>
             <strong className="text-[#203027] text-sm font-semibold capitalize">
               {summary.latestFollowUpOutcome || 'Awaiting check'}
             </strong>
           </div>
 
           <div className="p-3 rounded-2xl bg-[#F8F6EE] border border-[#E3DFD2]">
-            <span className="text-[#68766C] block text-[11px] mb-0.5">Pending Actions</span>
+            <span className="text-[#5F6D63] block text-[11px] mb-0.5">Pending Actions</span>
             <strong className="text-[#203027] text-sm font-semibold">
               {summary.pendingTreatmentsCount} task(s)
             </strong>
           </div>
 
           <div className="p-3 rounded-2xl bg-[#F8F6EE] border border-[#E3DFD2]">
-            <span className="text-[#68766C] block text-[11px] mb-0.5">Total Assessments</span>
+            <span className="text-[#5F6D63] block text-[11px] mb-0.5">Total Assessments</span>
             <strong className="text-[#203027] text-sm font-semibold">{diagnoses.length} logs</strong>
           </div>
         </div>
@@ -209,9 +209,9 @@ export function PlantHealthTab({ plant, isCloud, onRefreshNeeded }: PlantHealthT
 
         {diagnoses.length === 0 ? (
           <div className="text-center py-10 space-y-3 bg-[#F8F6EE] rounded-2xl border border-dashed border-[#E3DFD2]">
-            <Stethoscope size={28} className="text-[#68766C] mx-auto" />
+            <Stethoscope size={28} className="text-[#5F6D63] mx-auto" />
             <p className="text-sm font-serif font-bold text-[#203027]">No Health Records Yet</p>
-            <p className="text-xs text-[#68766C] max-w-sm mx-auto">
+            <p className="text-xs text-[#5F6D63] max-w-sm mx-auto">
               Scan this {plant.nickname} with AI Doctor to diagnose foliar stress, track disease recovery, and log treatments.
             </p>
             <div className="pt-2">
@@ -243,12 +243,12 @@ export function PlantHealthTab({ plant, isCloud, onRefreshNeeded }: PlantHealthT
                         {diag.candidates?.[0]?.conditionName || diag.plantIdentification}
                       </span>
                       {diag.candidates?.[0]?.confidenceCategory && (
-                        <span className="text-[10px] px-2 py-0.5 rounded-full bg-white border border-[#E3DFD2] text-[#68766C]">
+                        <span className="text-[10px] px-2 py-0.5 rounded-full bg-white border border-[#E3DFD2] text-[#5F6D63]">
                           {diag.candidates[0].confidenceCategory} confidence
                         </span>
                       )}
                     </div>
-                    <span className="text-[11px] text-[#68766C] flex items-center gap-1">
+                    <span className="text-[11px] text-[#5F6D63] flex items-center gap-1">
                       <Calendar size={12} />
                       {diag.diagnosedAt ? new Date(diag.diagnosedAt).toLocaleDateString() : ''}
                     </span>
@@ -269,7 +269,7 @@ export function PlantHealthTab({ plant, isCloud, onRefreshNeeded }: PlantHealthT
                             onClick={() => handleToggleTreatment(t)}
                             className="p-2 rounded-xl bg-white border border-[#E3DFD2] flex items-center justify-between cursor-pointer hover:border-[#174C35] transition-colors"
                           >
-                            <span className={t.status === 'completed' ? 'line-through text-[#68766C]' : 'text-[#203027] font-medium'}>
+                            <span className={t.status === 'completed' ? 'line-through text-[#5F6D63]' : 'text-[#203027] font-medium'}>
                               {t.actionTitle}
                             </span>
                             <span className="text-[10px] uppercase font-bold text-[#174C35]">

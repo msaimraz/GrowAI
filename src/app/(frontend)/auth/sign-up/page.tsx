@@ -91,7 +91,7 @@ function SignUpForm() {
         <h1 className="text-2xl font-serif font-bold text-[#203027] tracking-tight">
           Create Grower Account
         </h1>
-        <p className="text-xs text-[#68766C]">
+        <p className="text-xs text-[#5F6D63]">
           Sync your vertical garden, growth logs, and care tasks across all your devices
         </p>
       </div>
@@ -140,7 +140,7 @@ function SignUpForm() {
               Full Name or Grower Alias
             </label>
             <div className="relative">
-              <User size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[#68766C]" />
+              <User size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[#5F6D63]" />
               <input
                 type="text"
                 value={fullName}
@@ -157,7 +157,7 @@ function SignUpForm() {
               Email Address
             </label>
             <div className="relative">
-              <Mail size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[#68766C]" />
+              <Mail size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[#5F6D63]" />
               <input
                 type="email"
                 value={email}
@@ -174,7 +174,7 @@ function SignUpForm() {
               Password (min. 6 characters)
             </label>
             <div className="relative">
-              <Lock size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[#68766C]" />
+              <Lock size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[#5F6D63]" />
               <input
                 type="password"
                 value={password}
@@ -204,7 +204,7 @@ function SignUpForm() {
         </form>
       )}
 
-      <div className="pt-2 border-t border-[#E3DFD2] space-y-3 text-center text-xs text-[#68766C]">
+      <div className="pt-2 border-t border-[#E3DFD2] space-y-3 text-center text-xs text-[#5F6D63]">
         <p>
           Already have an account?{' '}
           <Link href="/auth/login" className="font-semibold text-[#174C35] hover:underline">
@@ -225,7 +225,7 @@ function SignUpForm() {
 export default function SignUpPage() {
   return (
     <div className="min-h-screen flex items-center justify-center p-4 bg-[#F8F6EE]">
-      <Suspense fallback={<div className="text-xs text-[#68766C]">Loading registration...</div>}>
+      <Suspense fallback={<div className="text-xs text-[#5F6D63]">Loading registration...</div>}>
         <SignUpForm />
       </Suspense>
     </div>

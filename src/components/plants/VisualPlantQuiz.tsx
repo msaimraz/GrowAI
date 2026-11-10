@@ -136,7 +136,7 @@ export function VisualPlantQuiz({ plant, className = '' }: VisualPlantQuizProps)
             🏆
           </span>
           <div>
-            <span className="text-[11px] font-mono uppercase tracking-wider text-[#68766C] block">
+            <span className="text-[11px] font-mono uppercase tracking-wider text-[#5F6D63] block">
               Quick Knowledge Check
             </span>
             <h4 className="font-serif font-bold text-base text-[#203027] leading-tight">
@@ -146,7 +146,7 @@ export function VisualPlantQuiz({ plant, className = '' }: VisualPlantQuizProps)
         </div>
 
         {!quizFinished && (
-          <span className="text-xs font-mono text-[#68766C]">
+          <span className="text-xs font-mono text-[#5F6D63]">
             {currentQuestionIndex + 1} of {questions.length}
           </span>
         )}
@@ -205,7 +205,7 @@ export function VisualPlantQuiz({ plant, className = '' }: VisualPlantQuizProps)
                     </>
                   )}
                 </span>
-                <p className="text-[#68766C] leading-relaxed">
+                <p className="text-[#5F6D63] leading-relaxed">
                   {currentQ.explanation}
                 </p>
               </div>
@@ -228,7 +228,7 @@ export function VisualPlantQuiz({ plant, className = '' }: VisualPlantQuizProps)
           <h5 className="font-serif text-xl font-bold text-[#203027]">
             {score === questions.length ? 'Botanical Master!' : 'Great Check-In!'}
           </h5>
-          <p className="text-xs text-[#68766C] max-w-xs mx-auto">
+          <p className="text-xs text-[#5F6D63] max-w-xs mx-auto">
             You scored {score} of {questions.length} on {plant.commonName}. You’re ready to grow!
           </p>
           <div className="pt-2">

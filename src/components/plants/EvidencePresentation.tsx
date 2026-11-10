@@ -70,7 +70,7 @@ export const EVIDENCE_CONFIG: Record<
       'Current pharmacological and clinical literature cannot adequately confirm or validate proposed physiological activities or health claims.',
     bg: 'bg-[#F8F6EE]',
     border: 'border-[#E3DFD2]',
-    text: 'text-[#68766C]',
+    text: 'text-[#5F6D63]',
     icon: HelpCircle,
   },
 };
@@ -124,7 +124,7 @@ export function EvidenceFrameworkGuide() {
             <h4 className="text-base sm:text-lg font-serif font-bold text-[#203027]">
               Scientific Evidence Hierarchy Guide
             </h4>
-            <p className="text-xs sm:text-sm text-[#68766C]">
+            <p className="text-xs sm:text-sm text-[#5F6D63]">
               How GrowAI evaluates clinical trials, in vitro laboratory research, and traditional medicine.
             </p>
           </div>

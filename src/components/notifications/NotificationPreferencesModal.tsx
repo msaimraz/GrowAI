@@ -122,7 +122,7 @@ export function NotificationPreferencesModal({
           <button
             type="button"
             onClick={onClose}
-            className="p-1.5 rounded-xl text-[#68766C] hover:bg-[#EAF1E4] hover:text-[#174C35] transition-colors cursor-pointer"
+            className="p-1.5 rounded-xl text-[#5F6D63] hover:bg-[#EAF1E4] hover:text-[#174C35] transition-colors cursor-pointer"
             aria-label="Close preferences"
           >
             <X size={18} />
@@ -151,7 +151,7 @@ export function NotificationPreferencesModal({
                   <span className="font-semibold text-xs text-[#203027] block">
                     In-App Notification Center
                   </span>
-                  <span className="text-[11px] text-[#68766C]">
+                  <span className="text-[11px] text-[#5F6D63]">
                     Display reminders in the GrowAI app navigation bell.
                   </span>
                 </div>
@@ -171,7 +171,7 @@ export function NotificationPreferencesModal({
                   <span className="font-semibold text-xs text-[#203027] block">
                     Browser & Device Notifications
                   </span>
-                  <span className="text-[11px] text-[#68766C]">
+                  <span className="text-[11px] text-[#5F6D63]">
                     Receive system notifications on desktop or mobile device.
                   </span>
                   {browserPerm === 'denied' && (
@@ -186,7 +186,7 @@ export function NotificationPreferencesModal({
                   className={`px-3 py-1 rounded-xl text-xs font-semibold border transition-all cursor-pointer ${
                     channels.browser
                       ? 'bg-[#174C35] text-white border-[#174C35]'
-                      : 'bg-white text-[#68766C] border-[#E3DFD2] hover:bg-[#EAF1E4]'
+                      : 'bg-white text-[#5F6D63] border-[#E3DFD2] hover:bg-[#EAF1E4]'
                   }`}
                 >
                   {channels.browser ? 'Enabled' : 'Enable'}
@@ -218,7 +218,7 @@ export function NotificationPreferencesModal({
                     <span className="font-semibold text-xs text-[#203027] block">
                       {item.label}
                     </span>
-                    <span className="text-[11px] text-[#68766C] block">
+                    <span className="text-[11px] text-[#5F6D63] block">
                       {item.desc}
                     </span>
                   </div>
@@ -245,7 +245,7 @@ export function NotificationPreferencesModal({
               <span>Timezone</span>
             </h4>
             <div className="bg-white p-3.5 rounded-2xl border border-[#E3DFD2]">
-              <div className="flex items-center justify-between text-xs text-[#68766C]">
+              <div className="flex items-center justify-between text-xs text-[#5F6D63]">
                 <span>Active Notification Timezone:</span>
                 <strong className="text-[#203027]">{timezone}</strong>
               </div>
@@ -258,7 +258,7 @@ export function NotificationPreferencesModal({
           <button
             type="button"
             onClick={onClose}
-            className="px-4 py-2 text-xs font-semibold rounded-xl bg-white border border-[#E3DFD2] text-[#68766C] hover:bg-[#EAF1E4] transition-all cursor-pointer min-h-[40px]"
+            className="px-4 py-2 text-xs font-semibold rounded-xl bg-white border border-[#E3DFD2] text-[#5F6D63] hover:bg-[#EAF1E4] transition-all cursor-pointer min-h-[40px]"
           >
             Cancel
           </button>

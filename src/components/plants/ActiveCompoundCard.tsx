@@ -57,7 +57,7 @@ export function ActiveCompoundCard({ compound }: ActiveCompoundCardProps) {
               <span>{compound.name}</span>
             </h4>
             {compound.primaryLocation && (
-              <p className="text-xs sm:text-sm text-[#68766C] font-medium flex items-center gap-1.5">
+              <p className="text-xs sm:text-sm text-[#5F6D63] font-medium flex items-center gap-1.5">
                 <MapPin size={14} className="text-[#174C35] shrink-0" />
                 <span>Found in: <strong className="text-[#203027] font-semibold">{compound.primaryLocation}</strong></span>
               </p>
@@ -91,7 +91,7 @@ export function ActiveCompoundCard({ compound }: ActiveCompoundCardProps) {
         {/* Studied Bioactivities Cluster */}
         {compound.studiedProperties && compound.studiedProperties.length > 0 && (
           <div className="space-y-1.5 pt-1">
-            <span className="text-xs font-bold uppercase tracking-wider text-[#68766C] block">
+            <span className="text-xs font-bold uppercase tracking-wider text-[#5F6D63] block">
               What Scientists Study It For:
             </span>
             <div className="flex flex-wrap gap-1.5">
@@ -134,12 +134,12 @@ export function ActiveCompoundCard({ compound }: ActiveCompoundCardProps) {
             </div>
 
             {compound.chemicalClass && (
-              <p className="text-[#68766C]">
+              <p className="text-[#5F6D63]">
                 <strong className="text-[#203027]">Chemical Family:</strong> {compound.chemicalClass}. Secondary plant metabolites synthesized for stress adaptation, pathogen defense, and cellular signaling.
               </p>
             )}
 
-            <p className="text-[#68766C] pt-1 border-t border-[#E3DFD2]">
+            <p className="text-[#5F6D63] pt-1 border-t border-[#E3DFD2]">
               <strong>Laboratory & Culinary Note:</strong> Natural concentrations of {compound.name} fluctuate with harvest timing, sunlight exposure, and temperature. For culinary species, food preparation methods like chopping, heat exposure, or steaming directly influence compound stability and systemic bioavailability.
             </p>
           </div>

@@ -125,7 +125,7 @@ export function ActionCard({
           <div className="flex items-center gap-2 flex-wrap">
             <h4
               className={`font-serif text-sm sm:text-base font-bold text-[#203027] leading-snug whitespace-normal break-words ${
-                completed ? 'line-through text-[#68766C]' : ''
+                completed ? 'line-through text-[#5F6D63]' : ''
               }`}
               style={{ overflowWrap: 'anywhere' }}
             >
@@ -147,7 +147,7 @@ export function ActionCard({
             )}
           </div>
           {subtitle && (
-            <p className="text-xs text-[#68766C] leading-relaxed whitespace-normal break-words">
+            <p className="text-xs text-[#5F6D63] leading-relaxed whitespace-normal break-words">
               {subtitle}
             </p>
           )}

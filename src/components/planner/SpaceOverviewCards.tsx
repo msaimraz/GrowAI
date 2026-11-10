@@ -104,7 +104,7 @@ export function SpaceOverviewCards({ profile, selectedTierIndex }: SpaceOverview
       {/* 1. Usable Spatial Capacity */}
       <div className="bg-white rounded-3xl border border-[#E3DFD2] p-5 shadow-xs flex flex-col justify-between space-y-3">
         <div className="flex items-center justify-between">
-          <span className="text-xs font-bold uppercase tracking-wider text-[#68766C]">
+          <span className="text-xs font-bold uppercase tracking-wider text-[#5F6D63]">
             Linear Capacity
           </span>
           <div className="w-8 h-8 rounded-xl bg-[#EAF1E4] text-[#174C35] flex items-center justify-center">
@@ -117,7 +117,7 @@ export function SpaceOverviewCards({ profile, selectedTierIndex }: SpaceOverview
             <span className="font-serif font-bold text-2xl text-[#203027]">
               {totalOccupiedWidthCm} / {totalUsableWidthCm}
             </span>
-            <span className="text-xs text-[#68766C]">cm occupied</span>
+            <span className="text-xs text-[#5F6D63]">cm occupied</span>
           </div>
 
           <div className="w-full bg-[#E3DFD2] h-2 rounded-full overflow-hidden mt-2.5">
@@ -130,7 +130,7 @@ export function SpaceOverviewCards({ profile, selectedTierIndex }: SpaceOverview
           </div>
         </div>
 
-        <div className="pt-2 border-t border-[#E3DFD2] flex items-center justify-between text-xs text-[#68766C]">
+        <div className="pt-2 border-t border-[#E3DFD2] flex items-center justify-between text-xs text-[#5F6D63]">
           <span>{totalContainers} Containers placed</span>
           <strong className="text-[#203027]">{remainingLinearSpaceCm} cm free</strong>
         </div>
@@ -139,7 +139,7 @@ export function SpaceOverviewCards({ profile, selectedTierIndex }: SpaceOverview
       {/* 2. Structural Load & Saturated Soil Weight */}
       <div className="bg-white rounded-3xl border border-[#E3DFD2] p-5 shadow-xs flex flex-col justify-between space-y-3">
         <div className="flex items-center justify-between">
-          <span className="text-xs font-bold uppercase tracking-wider text-[#68766C]">
+          <span className="text-xs font-bold uppercase tracking-wider text-[#5F6D63]">
             Est. Wet Weight
           </span>
           <div className="w-8 h-8 rounded-xl bg-[#EAF1E4] text-[#174C35] flex items-center justify-center">
@@ -152,9 +152,9 @@ export function SpaceOverviewCards({ profile, selectedTierIndex }: SpaceOverview
             <span className="font-serif font-bold text-2xl text-[#203027]">
               ~{totalEstimatedWetWeightKg.toFixed(1)}
             </span>
-            <span className="text-xs text-[#68766C]">kg wet soil load</span>
+            <span className="text-xs text-[#5F6D63]">kg wet soil load</span>
           </div>
-          <p className="text-[11px] text-[#68766C] mt-1">
+          <p className="text-[11px] text-[#5F6D63] mt-1">
             {hasIncompleteWeightInputs
               ? 'Based on 1.05 kg/L soil density. Tare/biomass unconfigured.'
               : 'Includes saturated soil density, tare, and estimated biomass.'}
@@ -184,7 +184,7 @@ export function SpaceOverviewCards({ profile, selectedTierIndex }: SpaceOverview
       {/* 3. Photobiology Profile & Simulated Attenuation */}
       <div className="bg-white rounded-3xl border border-[#E3DFD2] p-5 shadow-xs flex flex-col justify-between space-y-3">
         <div className="flex items-center justify-between">
-          <span className="text-xs font-bold uppercase tracking-wider text-[#68766C]">
+          <span className="text-xs font-bold uppercase tracking-wider text-[#5F6D63]">
             Sunlight Profile
           </span>
           <div className="w-8 h-8 rounded-xl bg-[#FFF3D7] text-[#8A6400] flex items-center justify-center">
@@ -197,17 +197,17 @@ export function SpaceOverviewCards({ profile, selectedTierIndex }: SpaceOverview
             <span className="font-serif font-bold text-2xl text-[#203027]">
               {profile.sunlightHours} hrs
             </span>
-            <span className="text-xs text-[#68766C] capitalize">
+            <span className="text-xs text-[#5F6D63] capitalize">
               {profile.orientation || 'South'} exposure
             </span>
           </div>
-          <p className="text-[11px] text-[#68766C] mt-1 capitalize">
+          <p className="text-[11px] text-[#5F6D63] mt-1 capitalize">
             {profile.environment.replace('_', ' ')} microclimate
           </p>
         </div>
 
-        <div className="pt-2 border-t border-[#E3DFD2] flex items-center justify-between text-xs text-[#68766C]">
-          <span className="text-[11px] text-[#68766C] italic">Simulated Attenuation</span>
+        <div className="pt-2 border-t border-[#E3DFD2] flex items-center justify-between text-xs text-[#5F6D63]">
+          <span className="text-[11px] text-[#5F6D63] italic">Simulated Attenuation</span>
           <Badge variant="amber" size="sm">
             Top: 100% • Bot: 45%
           </Badge>
@@ -217,7 +217,7 @@ export function SpaceOverviewCards({ profile, selectedTierIndex }: SpaceOverview
       {/* 4. Rack Tiers & Health Summary */}
       <div className="bg-white rounded-3xl border border-[#E3DFD2] p-5 shadow-xs flex flex-col justify-between space-y-3">
         <div className="flex items-center justify-between">
-          <span className="text-xs font-bold uppercase tracking-wider text-[#68766C]">
+          <span className="text-xs font-bold uppercase tracking-wider text-[#5F6D63]">
             Vertical Shelves
           </span>
           <div className="w-8 h-8 rounded-xl bg-[#EAF1E4] text-[#174C35] flex items-center justify-center">
@@ -230,14 +230,14 @@ export function SpaceOverviewCards({ profile, selectedTierIndex }: SpaceOverview
             <span className="font-serif font-bold text-2xl text-[#203027]">
               {profile.tiers.length}
             </span>
-            <span className="text-xs text-[#68766C]">Active shelf tiers</span>
+            <span className="text-xs text-[#5F6D63]">Active shelf tiers</span>
           </div>
-          <p className="text-[11px] text-[#68766C] mt-1">
+          <p className="text-[11px] text-[#5F6D63] mt-1">
             Total usable surface: ~{(totalUsableAreaCm2 / 10000).toFixed(2)} m²
           </p>
         </div>
 
-        <div className="pt-2 border-t border-[#E3DFD2] flex items-center justify-between text-xs text-[#68766C]">
+        <div className="pt-2 border-t border-[#E3DFD2] flex items-center justify-between text-xs text-[#5F6D63]">
           <span>Cascading Drainage</span>
           <strong className="text-[#203027]">
             {profile.tiers.some((t) => t.confirmedShelfLoadRatingKg) ? 'SWL Configured' : 'Unrated Stand'}

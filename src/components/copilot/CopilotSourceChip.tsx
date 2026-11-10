@@ -40,7 +40,7 @@ export function CopilotSourceChip({ provenance }: CopilotSourceChipProps) {
       );
     default:
       return (
-        <span className="text-[10px] font-semibold px-2 py-0.5 rounded-md border bg-[#F8F6EE] text-[#68766C] border-[#E3DFD2]">
+        <span className="text-[10px] font-semibold px-2 py-0.5 rounded-md border bg-[#F8F6EE] text-[#5F6D63] border-[#E3DFD2]">
           ○ Unknown
         </span>
       );

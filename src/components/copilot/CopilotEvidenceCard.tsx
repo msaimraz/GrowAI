@@ -16,7 +16,7 @@ export function CopilotEvidenceCard({ evidence }: CopilotEvidenceCardProps) {
       <div className="flex items-center justify-between gap-2">
         <CopilotSourceChip provenance={evidence.provenance} />
         {evidence.recordedAt && (
-          <span className="text-[10px] text-[#68766C]">
+          <span className="text-[10px] text-[#5F6D63]">
             {evidence.recordedAt.split('T')[0]}
           </span>
         )}

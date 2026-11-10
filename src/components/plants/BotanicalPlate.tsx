@@ -260,7 +260,7 @@ export function BotanicalPlate({ plant }: BotanicalPlateProps) {
           <span className="text-[11px] font-mono tracking-widest uppercase font-bold text-[#174C35] block">
             GrowAI Herbarium Archive
           </span>
-          <span className="text-xs font-mono text-[#68766C] truncate block">
+          <span className="text-xs font-mono text-[#5F6D63] truncate block">
             {taxonomy.specimenId} • {taxonomy.order.toUpperCase()}
           </span>
         </div>
@@ -273,7 +273,7 @@ export function BotanicalPlate({ plant }: BotanicalPlateProps) {
             className={`px-2.5 py-1 rounded-lg text-xs font-semibold flex items-center gap-1 transition-all cursor-pointer select-none ${
               viewMode === 'photo'
                 ? 'bg-white text-[#174C35] shadow-2xs'
-                : 'text-[#68766C] hover:text-[#174C35]'
+                : 'text-[#5F6D63] hover:text-[#174C35]'
             }`}
             title="View Real Botanical Photograph"
           >
@@ -286,7 +286,7 @@ export function BotanicalPlate({ plant }: BotanicalPlateProps) {
             className={`px-2.5 py-1 rounded-lg text-xs font-semibold flex items-center gap-1 transition-all cursor-pointer select-none ${
               viewMode === 'plate'
                 ? 'bg-white text-[#174C35] shadow-2xs'
-                : 'text-[#68766C] hover:text-[#174C35]'
+                : 'text-[#5F6D63] hover:text-[#174C35]'
             }`}
             title="View Botanical Engraving Plate"
           >
@@ -311,7 +311,7 @@ export function BotanicalPlate({ plant }: BotanicalPlateProps) {
             />
           </div>
           <div className="text-center">
-            <p className="text-xs font-mono uppercase tracking-widest text-[#68766C]">
+            <p className="text-xs font-mono uppercase tracking-widest text-[#5F6D63]">
               Verified Botanical Photography · {taxonomy.specimenId}
             </p>
             <p className="text-sm font-serif italic text-[#174C35] font-medium mt-0.5">
@@ -331,7 +331,7 @@ export function BotanicalPlate({ plant }: BotanicalPlateProps) {
           </div>
 
           <div className="mt-3 relative z-10">
-            <p className="text-xs font-mono uppercase tracking-widest text-[#68766C]">
+            <p className="text-xs font-mono uppercase tracking-widest text-[#5F6D63]">
               Botanical Plate No. {taxonomy.specimenId.replace('GA-BOT-', '')}
             </p>
             <p className="text-sm font-serif italic text-[#174C35] font-medium mt-0.5">
@@ -345,15 +345,15 @@ export function BotanicalPlate({ plant }: BotanicalPlateProps) {
       <div className="space-y-3 pt-1">
         <div className="p-3.5 bg-white/90 rounded-2xl border border-[#E3DFD2] space-y-2 text-xs sm:text-sm">
           <div className="flex items-start justify-between gap-2">
-            <span className="text-[#68766C] font-medium">Family:</span>
+            <span className="text-[#5F6D63] font-medium">Family:</span>
             <span className="font-semibold text-[#203027] text-right">{taxonomy.family}</span>
           </div>
           <div className="flex items-start justify-between gap-2 border-t border-[#E3DFD2] pt-1.5">
-            <span className="text-[#68766C] font-medium">Habit:</span>
+            <span className="text-[#5F6D63] font-medium">Habit:</span>
             <span className="font-semibold text-[#203027] text-right">{taxonomy.habit}</span>
           </div>
           <div className="flex items-start justify-between gap-2 border-t border-[#E3DFD2] pt-1.5">
-            <span className="text-[#68766C] font-medium">Phytogeography:</span>
+            <span className="text-[#5F6D63] font-medium">Phytogeography:</span>
             <span className="text-[#2e4435] text-right font-medium">{taxonomy.phytogeography}</span>
           </div>
         </div>
@@ -374,7 +374,7 @@ export function BotanicalPlate({ plant }: BotanicalPlateProps) {
           </div>
 
           <div className="p-3 bg-white rounded-xl border border-[#E3DFD2] space-y-1">
-            <span className="text-[11px] font-bold text-[#68766C] uppercase tracking-wider block flex items-center gap-1">
+            <span className="text-[11px] font-bold text-[#5F6D63] uppercase tracking-wider block flex items-center gap-1">
               <Ruler size={13} />
               Root Volume
             </span>

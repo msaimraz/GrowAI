@@ -82,7 +82,7 @@ function GrowSuccessToastItem({
         <h4 className={`font-serif font-bold text-sm sm:text-base leading-snug ${variantStyles.titleColor}`}>
           {title}
         </h4>
-        <p className="text-xs text-[#68766C] leading-relaxed mt-0.5 break-words">
+        <p className="text-xs text-[#5F6D63] leading-relaxed mt-0.5 break-words">
           {message}
         </p>
       </div>
@@ -92,7 +92,7 @@ function GrowSuccessToastItem({
         type="button"
         onClick={onDismiss}
         aria-label="Dismiss notification"
-        className="w-11 h-11 -mr-1.5 -mt-1 rounded-xl flex items-center justify-center text-[#68766C] hover:text-[#174C35] hover:bg-[#EAF1E4] transition-colors cursor-pointer shrink-0"
+        className="w-11 h-11 -mr-1.5 -mt-1 rounded-xl flex items-center justify-center text-[#5F6D63] hover:text-[#174C35] hover:bg-[#EAF1E4] transition-colors cursor-pointer shrink-0"
       >
         <X size={16} strokeWidth={2.25} />
       </button>

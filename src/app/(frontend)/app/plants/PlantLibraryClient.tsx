@@ -126,7 +126,7 @@ export function PlantLibraryClient({
               Plant Library
             </h1>
           </div>
-          <p className="text-sm sm:text-base text-[#68766C]">
+          <p className="text-sm sm:text-base text-[#5F6D63]">
             Find your next plant 🌱 Explore container-friendly herbs, greens, and vegetables.
           </p>
         </div>
@@ -136,20 +136,20 @@ export function PlantLibraryClient({
           <div className="relative flex-1">
             <Search
               size={19}
-              className="absolute left-4 top-1/2 -translate-y-1/2 text-[#68766C]"
+              className="absolute left-4 top-1/2 -translate-y-1/2 text-[#5F6D63]"
             />
             <input
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Search tomato, basil, mint..."
-              className="w-full h-12 pl-11 pr-10 rounded-2xl border border-[#E3DFD2] bg-white text-sm sm:text-base text-[#203027] placeholder:text-[#68766C]/70 shadow-xs focus:outline-hidden focus:border-[#174C35] focus:ring-2 focus:ring-[#174C35]/15 transition-all"
+              className="w-full h-12 pl-11 pr-10 rounded-2xl border border-[#E3DFD2] bg-white text-sm sm:text-base text-[#203027] placeholder:text-[#5F6D63]/70 shadow-xs focus:outline-hidden focus:border-[#174C35] focus:ring-2 focus:ring-[#174C35]/15 transition-all"
             />
             {searchQuery && (
               <button
                 type="button"
                 onClick={() => setSearchQuery('')}
-                className="absolute right-3.5 top-1/2 -translate-y-1/2 p-1 text-[#68766C] hover:text-[#203027] cursor-pointer"
+                className="absolute right-3.5 top-1/2 -translate-y-1/2 p-1 text-[#5F6D63] hover:text-[#203027] cursor-pointer"
                 aria-label="Clear search"
               >
                 <X size={16} />
@@ -164,7 +164,7 @@ export function PlantLibraryClient({
             className={`h-12 px-4 rounded-2xl border text-xs sm:text-sm font-medium transition-colors flex items-center gap-2 cursor-pointer shrink-0 ${
               hasAdvancedFilters || showAdvancedFilters
                 ? 'bg-[#EAF1E4] border-[#174C35] text-[#174C35]'
-                : 'bg-white border-[#E3DFD2] text-[#68766C] hover:text-[#203027]'
+                : 'bg-white border-[#E3DFD2] text-[#5F6D63] hover:text-[#203027]'
             }`}
             aria-label="Toggle advanced filters"
           >
@@ -179,7 +179,7 @@ export function PlantLibraryClient({
         {/* Compact Advanced Filter Drawer */}
         {showAdvancedFilters && (
           <div className="p-4 rounded-2xl bg-white border border-[#E3DFD2] shadow-xs flex flex-wrap items-center gap-3 animate-in fade-in duration-150">
-            <div className="flex items-center gap-2 text-xs font-medium text-[#68766C]">
+            <div className="flex items-center gap-2 text-xs font-medium text-[#5F6D63]">
               <span>Space:</span>
               <select
                 value={selectedEnvironment}
@@ -193,7 +193,7 @@ export function PlantLibraryClient({
               </select>
             </div>
 
-            <div className="flex items-center gap-2 text-xs font-medium text-[#68766C]">
+            <div className="flex items-center gap-2 text-xs font-medium text-[#5F6D63]">
               <span>Difficulty:</span>
               <select
                 value={selectedDifficulty}
@@ -249,7 +249,7 @@ export function PlantLibraryClient({
         </div>
 
         {/* Result Count Status */}
-        <div className="flex items-center justify-between text-xs text-[#68766C] px-1 font-mono">
+        <div className="flex items-center justify-between text-xs text-[#5F6D63] px-1 font-mono">
           <span>
             {filteredPlants.length} {filteredPlants.length === 1 ? 'plant' : 'plants'} found
           </span>

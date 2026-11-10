@@ -165,7 +165,7 @@ export function PlantPhotoGallery({
             <Camera size={18} className="text-[#174C35]" />
             <span>Chronological Visual Photo Journal</span>
           </h3>
-          <p className="text-xs text-[#68766C]">
+          <p className="text-xs text-[#5F6D63]">
             {isCloud ? 'Encrypted & securely stored in private cloud vault.' : 'Stored locally on this device via browser IndexedDB.'}
           </p>
         </div>
@@ -189,7 +189,7 @@ export function PlantPhotoGallery({
 
       {/* Loading State */}
       {loading && (
-        <div className="py-12 flex flex-col items-center justify-center text-xs text-[#68766C] gap-2">
+        <div className="py-12 flex flex-col items-center justify-center text-xs text-[#5F6D63] gap-2">
           <Loader2 size={20} className="animate-spin text-[#174C35]" />
           <span>Loading visual observations...</span>
         </div>
@@ -205,7 +205,7 @@ export function PlantPhotoGallery({
             <p className="font-serif font-bold text-sm text-[#203027]">
               No Visual Observations Yet
             </p>
-            <p className="text-xs text-[#68766C] mt-1 leading-relaxed">
+            <p className="text-xs text-[#5F6D63] mt-1 leading-relaxed">
               Capture your first seedling photo to start tracking visual foliage changes, node expansion, and milestones over time.
             </p>
           </div>
@@ -247,7 +247,7 @@ export function PlantPhotoGallery({
                       loading="lazy"
                     />
                   ) : (
-                    <div className="w-full h-full flex items-center justify-center text-xs text-[#68766C]">
+                    <div className="w-full h-full flex items-center justify-center text-xs text-[#5F6D63]">
                       Loading...
                     </div>
                   )}
@@ -267,7 +267,7 @@ export function PlantPhotoGallery({
                       <Calendar size={11} className="text-[#174C35]" />
                       <span>{dateStr}</span>
                       {photo.heightCm && (
-                        <span className="ml-auto text-[#68766C] font-medium flex items-center gap-0.5">
+                        <span className="ml-auto text-[#5F6D63] font-medium flex items-center gap-0.5">
                           <Ruler size={10} />
                           {photo.heightCm} cm
                         </span>
@@ -317,7 +317,7 @@ export function PlantPhotoGallery({
               <button
                 type="button"
                 onClick={closeUploadModal}
-                className="p-1.5 rounded-lg text-[#68766C] hover:bg-[#E3DFD2] transition-colors cursor-pointer"
+                className="p-1.5 rounded-lg text-[#5F6D63] hover:bg-[#E3DFD2] transition-colors cursor-pointer"
               >
                 <X size={16} />
               </button>
@@ -335,7 +335,7 @@ export function PlantPhotoGallery({
                   ref={fileInputRef}
                   onChange={handleFileChange}
                   required
-                  className="w-full text-xs text-[#68766C] file:mr-3 file:py-2 file:px-3 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-[#174C35] file:text-white hover:file:bg-[#174C35] file:cursor-pointer"
+                  className="w-full text-xs text-[#5F6D63] file:mr-3 file:py-2 file:px-3 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-[#174C35] file:text-white hover:file:bg-[#174C35] file:cursor-pointer"
                 />
               </div>
 
@@ -410,7 +410,7 @@ export function PlantPhotoGallery({
                   type="button"
                   onClick={closeUploadModal}
                   disabled={uploading}
-                  className="px-3.5 py-1.5 rounded-xl text-xs font-semibold text-[#68766C] hover:bg-[#E3DFD2]"
+                  className="px-3.5 py-1.5 rounded-xl text-xs font-semibold text-[#5F6D63] hover:bg-[#E3DFD2]"
                 >
                   Cancel
                 </button>
@@ -475,7 +475,7 @@ export function PlantPhotoGallery({
                 <p className="font-semibold text-[#174C35] mb-0.5">Observation Log:</p>
                 <p className="leading-relaxed">{selectedPhotoForView.caption}</p>
                 {selectedPhotoForView.heightCm && (
-                  <p className="text-[11px] text-[#68766C] mt-1 font-medium">
+                  <p className="text-[11px] text-[#5F6D63] mt-1 font-medium">
                     Recorded Height: {selectedPhotoForView.heightCm} cm
                   </p>
                 )}

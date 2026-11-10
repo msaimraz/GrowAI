@@ -59,13 +59,13 @@ export function RealProductCapabilitiesSection() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12 sm:space-y-16">
         {/* Editorial Heading */}
         <div className="max-w-2xl mx-auto text-center space-y-3">
-          <span className="text-[11px] font-mono tracking-widest text-[#68766C] uppercase font-bold block">
+          <span className="text-[11px] font-mono tracking-widest text-[#5F6D63] uppercase font-bold block">
             CORE CAPABILITIES
           </span>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-serif font-bold text-[#203027] tracking-tight leading-tight">
             Everything You Need to Grow Well.
           </h2>
-          <p className="text-base sm:text-lg text-[#68766C] leading-relaxed pt-1">
+          <p className="text-base sm:text-lg text-[#5F6D63] leading-relaxed pt-1">
             Practical gardening tools built for real home spaces, combined into one calm experience.
           </p>
         </div>
@@ -87,7 +87,7 @@ export function RealProductCapabilitiesSection() {
                     <h3 className="font-serif font-bold text-lg text-[#203027]">
                       {cap.title}
                     </h3>
-                    <p className="text-xs sm:text-sm text-[#68766C] mt-1 leading-relaxed">
+                    <p className="text-xs sm:text-sm text-[#5F6D63] mt-1 leading-relaxed">
                       {cap.description}
                     </p>
                   </div>
@@ -117,7 +117,7 @@ export function RealProductCapabilitiesSection() {
                 <h3 className="font-serif font-bold text-2xl sm:text-3xl text-[#203027] leading-snug">
                   Follow step-by-step journeys without information overload.
                 </h3>
-                <p className="text-xs sm:text-sm text-[#68766C] leading-relaxed">
+                <p className="text-xs sm:text-sm text-[#5F6D63] leading-relaxed">
                   Grow Plans turn botanical goals into simple milestones. Whether starting microgreens or pruning basil for bushier growth, each step tells you what to observe and what to do next.
                 </p>
                 <div className="pt-2">
@@ -161,10 +161,10 @@ export function RealProductCapabilitiesSection() {
                     <span className="block text-[10px]">👉</span>
                     <span>03 Pinch</span>
                   </div>
-                  <div className="p-2 rounded-xl bg-[#F8F6EE] text-[#68766C] border border-[#E3DFD2]">
+                  <div className="p-2 rounded-xl bg-[#F8F6EE] text-[#5F6D63] border border-[#E3DFD2]">
                     <span>04 Branch</span>
                   </div>
-                  <div className="p-2 rounded-xl bg-[#F8F6EE] text-[#68766C] border border-[#E3DFD2]">
+                  <div className="p-2 rounded-xl bg-[#F8F6EE] text-[#5F6D63] border border-[#E3DFD2]">
                     <span>05 Harvest</span>
                   </div>
                 </div>
@@ -177,7 +177,7 @@ export function RealProductCapabilitiesSection() {
                     </span>
                     <span className="text-[10px] text-[#174C35] font-semibold">Recommended Now</span>
                   </div>
-                  <p className="text-xs text-[#68766C] leading-relaxed">
+                  <p className="text-xs text-[#5F6D63] leading-relaxed">
                     Snip above the second set of true leaves. This encourages lateral shoots to branch out, doubling your leaf yield.
                   </p>
                 </div>

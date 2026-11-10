@@ -32,7 +32,7 @@ export function CopilotEmptyState({ activePlantNickname, onSelectQuestion }: Cop
         <h3 className="font-serif font-bold text-lg sm:text-xl text-[#203027]">
           {activePlantNickname ? `Ask GrowAI about ${activePlantNickname}` : 'Ask GrowAI'}
         </h3>
-        <p className="text-xs sm:text-sm text-[#68766C] max-w-md mx-auto">
+        <p className="text-xs sm:text-sm text-[#5F6D63] max-w-md mx-auto">
           What would you like help with? Tap a quick question or type your own below.
         </p>
       </div>
@@ -52,7 +52,7 @@ export function CopilotEmptyState({ activePlantNickname, onSelectQuestion }: Cop
         </div>
       )}
 
-      <div className="flex items-center justify-center gap-4 text-[11px] text-[#68766C] pt-2">
+      <div className="flex items-center justify-center gap-4 text-[11px] text-[#5F6D63] pt-2">
         <span className="flex items-center gap-1">
           <ShieldCheck size={13} className="text-[#174C35]" />
           <span>Factual Grounding</span>

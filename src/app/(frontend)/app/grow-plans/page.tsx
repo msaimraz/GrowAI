@@ -102,14 +102,14 @@ function GrowPlansContent() {
     if (searchQuery.trim()) {
       return (
         <div className="text-center py-16 px-6 bg-white rounded-3xl border border-[#E3DFD2] max-w-lg mx-auto shadow-xs space-y-4">
-          <div className="w-12 h-12 rounded-2xl bg-[#F8F6EE] text-[#68766C] flex items-center justify-center mx-auto">
+          <div className="w-12 h-12 rounded-2xl bg-[#F8F6EE] text-[#5F6D63] flex items-center justify-center mx-auto">
             <Search className="w-6 h-6" />
           </div>
           <div>
             <h3 className="font-serif text-lg font-bold text-[#203027]">
               No Matching Plans Found
             </h3>
-            <p className="text-xs sm:text-sm text-[#68766C] max-w-sm mx-auto mt-1">
+            <p className="text-xs sm:text-sm text-[#5F6D63] max-w-sm mx-auto mt-1">
               No grow plans match &ldquo;{searchQuery}&rdquo;. Try another search term or clear your filters.
             </p>
           </div>
@@ -133,14 +133,14 @@ function GrowPlansContent() {
     if (statusFilter === 'paused') {
       return (
         <div className="text-center py-16 px-6 bg-white rounded-3xl border border-[#E3DFD2] max-w-lg mx-auto shadow-xs space-y-4">
-          <div className="w-12 h-12 rounded-2xl bg-[#F8F6EE] text-[#68766C] flex items-center justify-center mx-auto">
+          <div className="w-12 h-12 rounded-2xl bg-[#F8F6EE] text-[#5F6D63] flex items-center justify-center mx-auto">
             <span className="text-xl">⏸</span>
           </div>
           <div>
             <h3 className="font-serif text-lg font-bold text-[#203027]">
               No Paused Plans
             </h3>
-            <p className="text-xs sm:text-sm text-[#68766C] max-w-sm mx-auto mt-1">
+            <p className="text-xs sm:text-sm text-[#5F6D63] max-w-sm mx-auto mt-1">
               {counts.active > 0
                 ? `Your current plans are still moving forward. You have ${counts.active} active grow plan${counts.active === 1 ? '' : 's'}.`
                 : 'You don’t have any paused plans. All current journeys are active or completed.'}
@@ -179,7 +179,7 @@ function GrowPlansContent() {
             <h3 className="font-serif text-lg font-bold text-[#203027]">
               No Completed Plans Yet
             </h3>
-            <p className="text-xs sm:text-sm text-[#68766C] max-w-sm mx-auto mt-1">
+            <p className="text-xs sm:text-sm text-[#5F6D63] max-w-sm mx-auto mt-1">
               Your finished growing journeys will appear here once all steps are completed.
             </p>
           </div>
@@ -216,7 +216,7 @@ function GrowPlansContent() {
             <h3 className="font-serif text-lg font-bold text-[#203027]">
               All Plans Look Healthy
             </h3>
-            <p className="text-xs sm:text-sm text-[#68766C] max-w-sm mx-auto mt-1">
+            <p className="text-xs sm:text-sm text-[#5F6D63] max-w-sm mx-auto mt-1">
               No active issues need immediate attention. Your plants are on track!
             </p>
           </div>
@@ -244,7 +244,7 @@ function GrowPlansContent() {
             <h3 className="font-serif text-lg font-bold text-[#203027]">
               No Active Plans
             </h3>
-            <p className="text-xs sm:text-sm text-[#68766C] max-w-sm mx-auto mt-1">
+            <p className="text-xs sm:text-sm text-[#5F6D63] max-w-sm mx-auto mt-1">
               All your plans are currently completed or paused.
             </p>
           </div>
@@ -278,7 +278,7 @@ function GrowPlansContent() {
           <h3 className="font-serif text-lg font-bold text-[#203027]">
             No Grow Plans Yet
           </h3>
-          <p className="text-xs sm:text-sm text-[#68766C] max-w-sm mx-auto mt-1">
+          <p className="text-xs sm:text-sm text-[#5F6D63] max-w-sm mx-auto mt-1">
             Start a guided growing journey for one of your plants with step-by-step care milestones.
           </p>
         </div>
@@ -323,7 +323,7 @@ function GrowPlansContent() {
                 Grow Plans
               </h1>
             </div>
-            <p className="text-xs sm:text-sm text-[#68766C] mt-1">
+            <p className="text-xs sm:text-sm text-[#5F6D63] mt-1">
               Structured developmental roadmaps with evidence-based milestones and reminders.
             </p>
           </div>
@@ -364,7 +364,7 @@ function GrowPlansContent() {
                 className={`px-3 py-1.5 text-xs font-semibold rounded-xl whitespace-nowrap transition cursor-pointer flex items-center gap-1.5 ${
                   statusFilter === tab.id
                     ? 'bg-[#174C35] text-white shadow-xs'
-                    : 'text-[#68766C] hover:bg-[#F8F6EE]'
+                    : 'text-[#5F6D63] hover:bg-[#F8F6EE]'
                 }`}
               >
                 <span>{tab.label}</span>
@@ -372,7 +372,7 @@ function GrowPlansContent() {
                   className={`text-[10px] px-1.5 py-0.2 rounded-full font-bold ${
                     statusFilter === tab.id
                       ? 'bg-white/20 text-white'
-                      : 'bg-[#F8F6EE] text-[#68766C]'
+                      : 'bg-[#F8F6EE] text-[#5F6D63]'
                   }`}
                 >
                   {tab.count}
@@ -384,7 +384,7 @@ function GrowPlansContent() {
           {/* Search Box & Clear Button */}
           <div className="flex items-center gap-2 w-full sm:w-auto">
             <div className="relative flex-1 sm:w-64">
-              <Search className="w-3.5 h-3.5 absolute left-3 top-2.5 text-[#68766C]" />
+              <Search className="w-3.5 h-3.5 absolute left-3 top-2.5 text-[#5F6D63]" />
               <input
                 type="text"
                 placeholder="Search plans..."
@@ -396,7 +396,7 @@ function GrowPlansContent() {
                 <button
                   type="button"
                   onClick={() => setSearchQuery('')}
-                  className="absolute right-2 top-2 text-[#68766C] hover:text-[#203027]"
+                  className="absolute right-2 top-2 text-[#5F6D63] hover:text-[#203027]"
                   aria-label="Clear search"
                 >
                   <X size={14} />
@@ -411,7 +411,7 @@ function GrowPlansContent() {
                   setSearchQuery('');
                   setStatusFilter('all');
                 }}
-                className="px-2.5 py-1.5 text-xs font-semibold rounded-xl text-[#68766C] hover:bg-[#F8F6EE] hover:text-[#203027] transition cursor-pointer whitespace-nowrap"
+                className="px-2.5 py-1.5 text-xs font-semibold rounded-xl text-[#5F6D63] hover:bg-[#F8F6EE] hover:text-[#203027] transition cursor-pointer whitespace-nowrap"
               >
                 Clear
               </button>
@@ -460,7 +460,7 @@ function GrowPlansContent() {
 
 export default function GrowPlansPage() {
   return (
-    <Suspense fallback={<div className="p-8 text-center text-xs text-[#68766C]">Loading Grow Plans...</div>}>
+    <Suspense fallback={<div className="p-8 text-center text-xs text-[#5F6D63]">Loading Grow Plans...</div>}>
       <GrowPlansContent />
     </Suspense>
   );

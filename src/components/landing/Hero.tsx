@@ -19,7 +19,7 @@ export function Hero() {
           {/* Left Column: Editorial Statement & Direct CTAs */}
           <div className="lg:col-span-6 space-y-6 sm:space-y-8">
             <div className="space-y-4">
-              <span className="text-[11px] font-mono tracking-widest text-[#68766C] uppercase font-bold block">
+              <span className="text-[11px] font-mono tracking-widest text-[#5F6D63] uppercase font-bold block">
                 INTELLIGENT GROWING SYSTEM
               </span>
 
@@ -31,7 +31,7 @@ export function Hero() {
                 </span>
               </h1>
 
-              <p className="text-base sm:text-lg text-[#68766C] leading-relaxed max-w-xl font-normal pt-1">
+              <p className="text-base sm:text-lg text-[#5F6D63] leading-relaxed max-w-xl font-normal pt-1">
                 GrowAI brings plant knowledge, garden planning, health tracking, and growing guidance together in one calm, practical workspace.
               </p>
             </div>
@@ -55,7 +55,7 @@ export function Hero() {
             </div>
 
             {/* Supporting Metadata */}
-            <div className="pt-2 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-[#68766C] font-medium">
+            <div className="pt-2 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-[#5F6D63] font-medium">
               <span className="flex items-center gap-1.5">
                 <span className="w-1.5 h-1.5 rounded-full bg-[#174C35]" />
                 Plant knowledge
@@ -90,7 +90,7 @@ export function Hero() {
                   <h3 className="font-serif text-xl sm:text-2xl font-bold text-[#203027] truncate">
                     Genovese Basil
                   </h3>
-                  <p className="text-xs text-[#68766C] italic">
+                  <p className="text-xs text-[#5F6D63] italic">
                     Ocimum basilicum · Vegetative Growth Stage
                   </p>
                 </div>
@@ -104,27 +104,27 @@ export function Hero() {
               {/* Quick Care Snapshot */}
               <div className="grid grid-cols-2 gap-2.5 text-xs">
                 <div className="p-3 rounded-2xl bg-[#F8F6EE] border border-[#E3DFD2] space-y-1">
-                  <div className="flex items-center gap-1.5 text-[#68766C]">
+                  <div className="flex items-center gap-1.5 text-[#5F6D63]">
                     <Sun size={13} className="text-[#F0C04D]" />
                     <span className="text-[11px] font-medium">Sunlight</span>
                   </div>
                   <strong className="block text-xs text-[#203027]">6h Direct Light</strong>
-                  <span className="text-[10px] text-[#68766C] block">Morning balcony tier</span>
+                  <span className="text-[10px] text-[#5F6D63] block">Morning balcony tier</span>
                 </div>
 
                 <div className="p-3 rounded-2xl bg-[#F8F6EE] border border-[#E3DFD2] space-y-1">
-                  <div className="flex items-center gap-1.5 text-[#68766C]">
+                  <div className="flex items-center gap-1.5 text-[#5F6D63]">
                     <Droplets size={13} className="text-teal-700" />
                     <span className="text-[11px] font-medium">Moisture</span>
                   </div>
                   <strong className="block text-xs text-[#203027]">Top 2 cm Dry</strong>
-                  <span className="text-[10px] text-[#68766C] block">Water this evening</span>
+                  <span className="text-[10px] text-[#5F6D63] block">Water this evening</span>
                 </div>
               </div>
 
               {/* Today's Care Tasks */}
               <div className="space-y-2">
-                <span className="text-[11px] font-bold uppercase tracking-wider text-[#68766C] block">
+                <span className="text-[11px] font-bold uppercase tracking-wider text-[#5F6D63] block">
                   Today’s Care Routine
                 </span>
                 <div className="space-y-2">
@@ -145,11 +145,11 @@ export function Hero() {
                       <div className="w-6 h-6 rounded-lg bg-[#EAF1E4] text-[#174C35] flex items-center justify-center shrink-0">
                         <CheckCircle2 size={13} />
                       </div>
-                      <span className="font-medium text-[#68766C] truncate">
+                      <span className="font-medium text-[#5F6D63] truncate">
                         Inspect new node growth
                       </span>
                     </div>
-                    <span className="text-[10px] text-[#68766C] shrink-0">Completed</span>
+                    <span className="text-[10px] text-[#5F6D63] shrink-0">Completed</span>
                   </div>
                 </div>
               </div>
@@ -160,16 +160,16 @@ export function Hero() {
                   <span className="font-serif font-bold text-[#174C35]">
                     Daily Plant Check
                   </span>
-                  <span className="text-[10px] text-[#68766C]">How does it look today?</span>
+                  <span className="text-[10px] text-[#5F6D63]">How does it look today?</span>
                 </div>
                 <div className="grid grid-cols-3 gap-1.5 text-center text-xs font-semibold">
                   <span className="py-1.5 px-2 rounded-xl bg-[#174C35] text-white shadow-2xs">
                     🙂 Great
                   </span>
-                  <span className="py-1.5 px-2 rounded-xl bg-white text-[#68766C] border border-[#E3DFD2]">
+                  <span className="py-1.5 px-2 rounded-xl bg-white text-[#5F6D63] border border-[#E3DFD2]">
                     👀 Changed
                   </span>
-                  <span className="py-1.5 px-2 rounded-xl bg-white text-[#68766C] border border-[#E3DFD2]">
+                  <span className="py-1.5 px-2 rounded-xl bg-white text-[#5F6D63] border border-[#E3DFD2]">
                     🤔 Not sure
                   </span>
                 </div>

@@ -51,7 +51,7 @@ export function GardenHealthOverviewCard({
             <h4 className="font-serif font-bold text-sm sm:text-base text-[#203027]">
               Plant Health Overview
             </h4>
-            <p className="text-[11px] text-[#68766C]">
+            <p className="text-[11px] text-[#5F6D63]">
               {hasAssessments
                 ? `${overview.assessedPlants} of ${overview.totalPlants} specimen(s) monitored`
                 : 'No diagnostic assessments recorded yet'}
@@ -70,7 +70,7 @@ export function GardenHealthOverviewCard({
 
       {!hasAssessments ? (
         <div className="p-4 rounded-2xl bg-[#F8F6EE] border border-dashed border-[#E3DFD2] text-center space-y-2">
-          <p className="text-xs text-[#68766C] leading-relaxed">
+          <p className="text-xs text-[#5F6D63] leading-relaxed">
             No health assessments yet. Diagnose chlorosis, spots, or pests with the AI Doctor to start monitoring.
           </p>
           <Link
@@ -89,7 +89,7 @@ export function GardenHealthOverviewCard({
               className={`p-2 sm:p-2.5 rounded-xl border ${
                 overview.needsAttentionCount > 0
                   ? 'bg-[#FBE9E2] border-[#E4775D/30] text-[#963A23]'
-                  : 'bg-[#F8F6EE] border-[#E3DFD2] text-[#68766C]'
+                  : 'bg-[#F8F6EE] border-[#E3DFD2] text-[#5F6D63]'
               }`}
             >
               <strong className="block text-base sm:text-lg font-bold font-serif">
@@ -104,7 +104,7 @@ export function GardenHealthOverviewCard({
               className={`p-2 sm:p-2.5 rounded-xl border ${
                 overview.monitoringCount > 0
                   ? 'bg-[#FFF3D7] border-[#F0C04D/30] text-[#8A6400]'
-                  : 'bg-[#F8F6EE] border-[#E3DFD2] text-[#68766C]'
+                  : 'bg-[#F8F6EE] border-[#E3DFD2] text-[#5F6D63]'
               }`}
             >
               <strong className="block text-base sm:text-lg font-bold font-serif">
@@ -119,7 +119,7 @@ export function GardenHealthOverviewCard({
               className={`p-2 sm:p-2.5 rounded-xl border ${
                 overview.followUpsDueCount > 0
                   ? 'bg-[#FBE9E2] border-[#E4775D/30] text-[#963A23] animate-pulse'
-                  : 'bg-[#F8F6EE] border-[#E3DFD2] text-[#68766C]'
+                  : 'bg-[#F8F6EE] border-[#E3DFD2] text-[#5F6D63]'
               }`}
             >
               <strong className="block text-base sm:text-lg font-bold font-serif">
@@ -134,7 +134,7 @@ export function GardenHealthOverviewCard({
           {/* Quick links to plants needing action */}
           {(attentionPlants.length > 0 || followUpDuePlants.length > 0) && (
             <div className="space-y-1.5 pt-1">
-              <span className="text-[10px] font-bold uppercase tracking-wider text-[#68766C] block">
+              <span className="text-[10px] font-bold uppercase tracking-wider text-[#5F6D63] block">
                 Action Required:
               </span>
               <div className="space-y-1">

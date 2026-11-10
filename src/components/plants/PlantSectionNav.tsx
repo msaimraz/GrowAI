@@ -205,7 +205,7 @@ export function PlantSectionNav({
                   className={`min-h-[44px] px-3.5 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all duration-75 active:scale-95 flex items-center gap-2 cursor-pointer shrink-0 whitespace-nowrap select-none touch-manipulation ${
                     isActive
                       ? 'bg-[#174C35] text-white shadow-xs font-bold ring-1 ring-[#174C35]'
-                      : 'bg-white/90 text-[#68766C] border border-[#E3DFD2] hover:bg-white hover:text-[#203027]'
+                      : 'bg-white/90 text-[#5F6D63] border border-[#E3DFD2] hover:bg-white hover:text-[#203027]'
                   }`}
                 >
                   <Icon

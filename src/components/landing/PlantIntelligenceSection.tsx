@@ -22,7 +22,7 @@ export function PlantIntelligenceSection() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
           {/* Left Column: Editorial Explanation & Grounding in Plant Knowledge */}
           <div className="lg:col-span-6 space-y-5">
-            <span className="text-[11px] font-mono tracking-widest text-[#68766C] uppercase font-bold block">
+            <span className="text-[11px] font-mono tracking-widest text-[#5F6D63] uppercase font-bold block">
               EVIDENCE-GROUNDED BOTANY
             </span>
 
@@ -30,7 +30,7 @@ export function PlantIntelligenceSection() {
               Know Your Plants Better.
             </h2>
 
-            <p className="text-base sm:text-lg text-[#68766C] leading-relaxed">
+            <p className="text-base sm:text-lg text-[#5F6D63] leading-relaxed">
               GrowAI combines curated botanical knowledge with your garden’s own observations, conditions, history, and progress.
             </p>
 
@@ -40,12 +40,12 @@ export function PlantIntelligenceSection() {
                 <ShieldCheck size={16} />
                 <span>Grounded in plant knowledge</span>
               </div>
-              <p className="text-xs sm:text-sm text-[#68766C] leading-relaxed">
+              <p className="text-xs sm:text-sm text-[#5F6D63] leading-relaxed">
                 GrowAI separates observed plant information from interpretation and keeps uncertain information clearly marked. We prioritize non-toxic cultural practices and evidence-grounded parameters.
               </p>
             </div>
 
-            <div className="pt-2 flex flex-wrap items-center gap-2 text-xs text-[#68766C]">
+            <div className="pt-2 flex flex-wrap items-center gap-2 text-xs text-[#5F6D63]">
               <span className="px-3 py-1 rounded-full bg-white border border-[#E3DFD2]">
                 Plant knowledge
               </span>
@@ -73,7 +73,7 @@ export function PlantIntelligenceSection() {
                   <h3 className="font-serif text-2xl font-bold text-[#203027]">
                     Genovese Basil
                   </h3>
-                  <p className="text-xs text-[#68766C] italic">
+                  <p className="text-xs text-[#5F6D63] italic">
                     Ocimum basilicum · Lamiaceae family
                   </p>
                 </div>
@@ -90,48 +90,48 @@ export function PlantIntelligenceSection() {
               {/* Verified Care Parameters Grid */}
               <div className="grid grid-cols-2 gap-3 text-xs">
                 <div className="p-3.5 rounded-2xl bg-[#F8F6EE] border border-[#E3DFD2] space-y-1">
-                  <span className="text-[#68766C] flex items-center gap-1.5 font-medium text-[11px]">
+                  <span className="text-[#5F6D63] flex items-center gap-1.5 font-medium text-[11px]">
                     <Sun size={13} className="text-[#F0C04D]" /> Sun Exposure
                   </span>
                   <strong className="text-sm font-serif text-[#203027] block">
                     Bright Direct
                   </strong>
-                  <span className="text-[10px] text-[#68766C] block">6+ hours daily</span>
+                  <span className="text-[10px] text-[#5F6D63] block">6+ hours daily</span>
                 </div>
 
                 <div className="p-3.5 rounded-2xl bg-[#F8F6EE] border border-[#E3DFD2] space-y-1">
-                  <span className="text-[#68766C] flex items-center gap-1.5 font-medium text-[11px]">
+                  <span className="text-[#5F6D63] flex items-center gap-1.5 font-medium text-[11px]">
                     <Droplets size={13} className="text-teal-700" /> Watering
                   </span>
                   <strong className="text-sm font-serif text-[#203027] block">
                     Moderate
                   </strong>
-                  <span className="text-[10px] text-[#68766C] block">When top 2 cm is dry</span>
+                  <span className="text-[10px] text-[#5F6D63] block">When top 2 cm is dry</span>
                 </div>
 
                 <div className="p-3.5 rounded-2xl bg-[#F8F6EE] border border-[#E3DFD2] space-y-1">
-                  <span className="text-[#68766C] flex items-center gap-1.5 font-medium text-[11px]">
+                  <span className="text-[#5F6D63] flex items-center gap-1.5 font-medium text-[11px]">
                     <Sprout size={13} className="text-[#174C35]" /> Growth Timeline
                   </span>
                   <strong className="text-sm font-serif text-[#203027] block">
                     Day 27
                   </strong>
-                  <span className="text-[10px] text-[#68766C] block">Vegetative foliage stage</span>
+                  <span className="text-[10px] text-[#5F6D63] block">Vegetative foliage stage</span>
                 </div>
 
                 <div className="p-3.5 rounded-2xl bg-[#F8F6EE] border border-[#E3DFD2] space-y-1">
-                  <span className="text-[#68766C] flex items-center gap-1.5 font-medium text-[11px]">
+                  <span className="text-[#5F6D63] flex items-center gap-1.5 font-medium text-[11px]">
                     <Layers size={13} className="text-[#174C35]" /> Shelf Placement
                   </span>
                   <strong className="text-sm font-serif text-[#203027] block">
                     Top / Middle Tier
                   </strong>
-                  <span className="text-[10px] text-[#68766C] block">Unobstructed sun</span>
+                  <span className="text-[10px] text-[#5F6D63] block">Unobstructed sun</span>
                 </div>
               </div>
 
               <div className="pt-1 flex items-center justify-between text-xs border-t border-[#E3DFD2]">
-                <span className="text-[#68766C]">Verified container minimum: 20 cm depth</span>
+                <span className="text-[#5F6D63]">Verified container minimum: 20 cm depth</span>
                 <Link
                   href="/app/plants/genovese-basil"
                   className="font-semibold text-[#174C35] hover:underline active:scale-95 transition-all select-none touch-manipulation min-h-[36px] inline-flex items-center"
@@ -151,13 +151,13 @@ export function PlantIntelligenceSection() {
             {/* Left: Small Space & Vertical Elevation Preview */}
             <div className="lg:col-span-6 space-y-6">
               <div className="space-y-2">
-                <span className="text-[11px] font-mono tracking-widest text-[#68766C] uppercase font-bold block">
+                <span className="text-[11px] font-mono tracking-widest text-[#5F6D63] uppercase font-bold block">
                   SPACE & VERTICAL INTELLIGENCE
                 </span>
                 <h3 className="font-serif font-bold text-2xl sm:text-3xl text-[#203027]">
                   Small Space. Big Possibilities.
                 </h3>
-                <p className="text-xs sm:text-sm text-[#68766C] leading-relaxed">
+                <p className="text-xs sm:text-sm text-[#5F6D63] leading-relaxed">
                   Plan balconies, windowsills, and vertical growing spaces around the plants you actually want to grow. Match crops to the light each tier receives.
                 </p>
               </div>
@@ -200,7 +200,7 @@ export function PlantIntelligenceSection() {
                   <div className="p-3 rounded-2xl bg-[#F8F6EE] border border-[#E3DFD2] flex items-center justify-between text-xs">
                     <div>
                       <strong className="block text-[#203027]">Tier 3 (Bottom) · Shade-Tolerant Greens</strong>
-                      <span className="text-[11px] text-[#68766C]">Mung Bean Sprouts, Radish Microgreens</span>
+                      <span className="text-[11px] text-[#5F6D63]">Mung Bean Sprouts, Radish Microgreens</span>
                     </div>
                     <span className="text-[10px] font-mono text-[#203027] bg-white px-2 py-0.5 rounded-md border border-[#E3DFD2]">
                       Ambient
@@ -213,13 +213,13 @@ export function PlantIntelligenceSection() {
             {/* Right: Daily Guidance Experience (Today's Care + Daily Check) */}
             <div className="lg:col-span-6 space-y-6">
               <div className="space-y-2">
-                <span className="text-[11px] font-mono tracking-widest text-[#68766C] uppercase font-bold block">
+                <span className="text-[11px] font-mono tracking-widest text-[#5F6D63] uppercase font-bold block">
                   DAILY GROWING EXPERIENCE
                 </span>
                 <h3 className="font-serif font-bold text-2xl sm:text-3xl text-[#203027]">
                   A Little Guidance, Every Day.
                 </h3>
-                <p className="text-xs sm:text-sm text-[#68766C] leading-relaxed">
+                <p className="text-xs sm:text-sm text-[#5F6D63] leading-relaxed">
                   Friendly check-ins keep growing enjoyable. Simple questions confirm your plants are thriving or flag changes early.
                 </p>
               </div>
@@ -232,7 +232,7 @@ export function PlantIntelligenceSection() {
                     <span className="text-xs font-serif font-bold text-[#203027]">
                       Today’s Care
                     </span>
-                    <span className="text-[10px] text-[#68766C]">2 tasks pending</span>
+                    <span className="text-[10px] text-[#5F6D63]">2 tasks pending</span>
                   </div>
                   <div className="space-y-2 text-xs">
                     <div className="p-2.5 rounded-xl border border-[#E3DFD2] bg-[#F8F6EE] flex items-center gap-2.5">
@@ -277,14 +277,14 @@ export function PlantIntelligenceSection() {
                     </button>
                     <button
                       type="button"
-                      className="p-2.5 rounded-xl bg-white border border-[#E3DFD2] text-[#68766C] hover:bg-[#F8F6EE] transition-colors"
+                      className="p-2.5 rounded-xl bg-white border border-[#E3DFD2] text-[#5F6D63] hover:bg-[#F8F6EE] transition-colors"
                     >
                       <span className="block text-base mb-0.5">👀</span>
                       <span>Different</span>
                     </button>
                     <button
                       type="button"
-                      className="p-2.5 rounded-xl bg-white border border-[#E3DFD2] text-[#68766C] hover:bg-[#F8F6EE] transition-colors"
+                      className="p-2.5 rounded-xl bg-white border border-[#E3DFD2] text-[#5F6D63] hover:bg-[#F8F6EE] transition-colors"
                     >
                       <span className="block text-base mb-0.5">🤔</span>
                       <span>Not sure</span>

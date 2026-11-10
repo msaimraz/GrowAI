@@ -401,7 +401,7 @@ export function SpaceConfigForm({
                 placeholder="Name your growing space..."
               />
             </div>
-            <p className="text-xs text-[#68766C] mt-0.5">
+            <p className="text-xs text-[#5F6D63] mt-0.5">
               {currentProfile.dimensions.width} × {currentProfile.dimensions.depth} × {currentProfile.dimensions.height} {activeUnit} • {currentProfile.tiers.length} Tiers
             </p>
           </div>
@@ -462,7 +462,7 @@ export function SpaceConfigForm({
           <button
             type="button"
             onClick={() => setIsExpanded(!isExpanded)}
-            className="p-2.5 rounded-xl text-[#68766C] hover:bg-[#EAF1E4] min-h-[44px] min-w-[44px] flex items-center justify-center cursor-pointer"
+            className="p-2.5 rounded-xl text-[#5F6D63] hover:bg-[#EAF1E4] min-h-[44px] min-w-[44px] flex items-center justify-center cursor-pointer"
             aria-label="Toggle configuration panel"
           >
             {isExpanded ? <ChevronUp size={18} /> : <ChevronDown size={18} />}
@@ -496,7 +496,7 @@ export function SpaceConfigForm({
         <div className="space-y-6 pt-1">
           {/* Preset Selection */}
           <div>
-            <label className="block text-xs font-bold uppercase tracking-wider text-[#68766C] mb-2.5">
+            <label className="block text-xs font-bold uppercase tracking-wider text-[#5F6D63] mb-2.5">
               Select Growing Footprint Preset
             </label>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
@@ -516,7 +516,7 @@ export function SpaceConfigForm({
                       <span className="font-serif font-bold text-sm text-[#203027]">{p.label}</span>
                       {isSelected && <CheckCircle2 size={15} className="text-[#174C35]" />}
                     </div>
-                    <p className="text-[11px] text-[#68766C] mt-1 leading-snug">{p.description}</p>
+                    <p className="text-[11px] text-[#5F6D63] mt-1 leading-snug">{p.description}</p>
                   </div>
                 );
               })}
@@ -537,7 +537,7 @@ export function SpaceConfigForm({
                   type="button"
                   onClick={() => handleUnitToggle('cm')}
                   className={`px-3 py-1 text-xs font-semibold rounded-lg transition-colors cursor-pointer ${
-                    activeUnit === 'cm' ? 'bg-[#174C35] text-white' : 'text-[#68766C]'
+                    activeUnit === 'cm' ? 'bg-[#174C35] text-white' : 'text-[#5F6D63]'
                   }`}
                 >
                   Metric (cm)
@@ -546,7 +546,7 @@ export function SpaceConfigForm({
                   type="button"
                   onClick={() => handleUnitToggle('in')}
                   className={`px-3 py-1 text-xs font-semibold rounded-lg transition-colors cursor-pointer ${
-                    activeUnit === 'in' ? 'bg-[#174C35] text-white' : 'text-[#68766C]'
+                    activeUnit === 'in' ? 'bg-[#174C35] text-white' : 'text-[#5F6D63]'
                   }`}
                 >
                   Imperial (in)
@@ -636,7 +636,7 @@ export function SpaceConfigForm({
             <div>
               <label className="block text-xs font-semibold text-[#203027] mb-1 flex items-center justify-between">
                 <span>Cardinal Orientation</span>
-                <Compass size={14} className="text-[#68766C]" />
+                <Compass size={14} className="text-[#5F6D63]" />
               </label>
               <select
                 value={currentProfile.orientation || 'south'}
@@ -672,7 +672,7 @@ export function SpaceConfigForm({
                 }
                 className="w-full px-3.5 py-2.5 rounded-xl border border-[#E3DFD2] bg-white text-sm text-[#203027] min-h-[44px]"
               />
-              <p className="text-[10px] text-[#68766C] mt-1">
+              <p className="text-[10px] text-[#5F6D63] mt-1">
                 Ambient unobstructed daylight hours. Attenuation is simulated per tier.
               </p>
             </div>
@@ -685,7 +685,7 @@ export function SpaceConfigForm({
                 <h4 className="font-serif font-bold text-base text-[#203027]">
                   Rack Tiers ({currentProfile.tiers.length} Shelves)
                 </h4>
-                <p className="text-xs text-[#68766C]">
+                <p className="text-xs text-[#5F6D63]">
                   Configure per-shelf clearances, edge margins, and manufacturer load ratings.
                 </p>
               </div>
@@ -720,7 +720,7 @@ export function SpaceConfigForm({
                         }}
                         className="font-serif font-bold text-sm text-[#203027] bg-transparent border-b border-dashed border-[#E3DFD2]"
                       />
-                      <span className="block text-[11px] text-[#68766C] capitalize">
+                      <span className="block text-[11px] text-[#5F6D63] capitalize">
                         {tier.position} Shelf Position
                       </span>
                     </div>
@@ -728,7 +728,7 @@ export function SpaceConfigForm({
 
                   <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs flex-1 max-w-2xl">
                     <div>
-                      <label className="text-[11px] text-[#68766C] block mb-0.5">Shelf W ({activeUnit})</label>
+                      <label className="text-[11px] text-[#5F6D63] block mb-0.5">Shelf W ({activeUnit})</label>
                       <input
                         type="number"
                         step="0.5"
@@ -749,7 +749,7 @@ export function SpaceConfigForm({
                     </div>
 
                     <div>
-                      <label className="text-[11px] text-[#68766C] block mb-0.5">Shelf D ({activeUnit})</label>
+                      <label className="text-[11px] text-[#5F6D63] block mb-0.5">Shelf D ({activeUnit})</label>
                       <input
                         type="number"
                         step="0.5"
@@ -770,7 +770,7 @@ export function SpaceConfigForm({
                     </div>
 
                     <div>
-                      <label className="text-[11px] text-[#68766C] block mb-0.5">Headroom ({activeUnit})</label>
+                      <label className="text-[11px] text-[#5F6D63] block mb-0.5">Headroom ({activeUnit})</label>
                       <input
                         type="number"
                         step="0.5"
@@ -793,7 +793,7 @@ export function SpaceConfigForm({
                     </div>
 
                     <div>
-                      <label className="text-[11px] text-[#68766C] block mb-0.5" title="Leave blank if unconfirmed">
+                      <label className="text-[11px] text-[#5F6D63] block mb-0.5" title="Leave blank if unconfirmed">
                         SWL Rating (kg)
                       </label>
                       <input

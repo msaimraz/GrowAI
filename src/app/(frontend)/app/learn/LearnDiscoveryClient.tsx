@@ -238,7 +238,7 @@ export function LearnDiscoveryClient({ articles, plants }: LearnDiscoveryClientP
                 className={`inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold transition-all cursor-pointer min-h-[44px] ${
                   isSelected
                     ? 'bg-[#174C35] text-white shadow-xs ring-2 ring-[#174C35]/20'
-                    : 'bg-white text-[#68766C] border border-[#E3DFD2] hover:bg-[#EAF1E4] hover:text-[#203027]'
+                    : 'bg-white text-[#5F6D63] border border-[#E3DFD2] hover:bg-[#EAF1E4] hover:text-[#203027]'
                 }`}
               >
                 <Icon size={16} />
@@ -258,7 +258,7 @@ export function LearnDiscoveryClient({ articles, plants }: LearnDiscoveryClientP
                 ? 'Curated Horticultural Modules'
                 : CATEGORIES.find((c) => c.id === selectedCategory)?.label}
             </h3>
-            <p className="text-xs sm:text-sm text-[#68766C] mt-0.5">
+            <p className="text-xs sm:text-sm text-[#5F6D63] mt-0.5">
               Showing {filteredTopics.length} interactive learning module(s)
             </p>
           </div>
@@ -352,7 +352,7 @@ export function LearnDiscoveryClient({ articles, plants }: LearnDiscoveryClientP
               <Sparkles size={22} className="text-[#174C35]" />
               <span>Interactive Knowledge Testing & Daily Challenge</span>
             </h3>
-            <p className="text-xs sm:text-sm text-[#68766C] mt-0.5">
+            <p className="text-xs sm:text-sm text-[#5F6D63] mt-0.5">
               Test your botanical memory and earn daily gardening badges
             </p>
           </div>
@@ -396,7 +396,7 @@ export function LearnDiscoveryClient({ articles, plants }: LearnDiscoveryClientP
               <h3 className="font-serif font-bold text-xl sm:text-2xl text-[#203027]">
                 Curated Agronomic & Vertical Farming Editorial Guides
               </h3>
-              <p className="text-xs sm:text-sm text-[#68766C] mt-0.5">
+              <p className="text-xs sm:text-sm text-[#5F6D63] mt-0.5">
                 Managed dynamically via Payload CMS with real botanical workflows
               </p>
             </div>
@@ -417,7 +417,7 @@ export function LearnDiscoveryClient({ articles, plants }: LearnDiscoveryClientP
                       {art.categoryLabel || art.category}
                     </span>
                     {art.publishedAt && (
-                      <span className="text-xs font-mono text-[#68766C]">
+                      <span className="text-xs font-mono text-[#5F6D63]">
                         {art.publishedAt}
                       </span>
                     )}

@@ -47,7 +47,7 @@ export function AuthStatus({ variant = 'sidebar', onImportSuccess }: AuthStatusP
 
   if (loading) {
     return (
-      <div className="flex items-center gap-2 text-xs text-[#68766C] py-1">
+      <div className="flex items-center gap-2 text-xs text-[#5F6D63] py-1">
         <Loader2 size={13} className="animate-spin" />
         <span>Checking sync status...</span>
       </div>
@@ -68,7 +68,7 @@ export function AuthStatus({ variant = 'sidebar', onImportSuccess }: AuthStatusP
           <button
             type="button"
             onClick={() => signOut()}
-            className="p-1.5 text-xs text-[#68766C] hover:text-[#963A23] hover:bg-[#FBE9E2] rounded-lg transition-colors cursor-pointer min-h-[38px] min-w-[38px] flex items-center justify-center"
+            className="p-1.5 text-xs text-[#5F6D63] hover:text-[#963A23] hover:bg-[#FBE9E2] rounded-lg transition-colors cursor-pointer min-h-[38px] min-w-[38px] flex items-center justify-center"
             title="Sign Out"
             aria-label="Sign Out"
           >
@@ -117,7 +117,7 @@ export function AuthStatus({ variant = 'sidebar', onImportSuccess }: AuthStatusP
             </span>
             <div className="min-w-0">
               <p className="font-medium truncate text-xs">{user.email}</p>
-              <p className="text-[10px] text-[#68766C]">Sync active via RLS</p>
+              <p className="text-[10px] text-[#EAF1E4]/90">Sync active via RLS</p>
             </div>
           </div>
 
@@ -161,7 +161,7 @@ export function AuthStatus({ variant = 'sidebar', onImportSuccess }: AuthStatusP
               </Link>
             )}
           </div>
-          <p className="text-[11px] text-[#68766C] leading-relaxed">
+          <p className="text-[11px] text-[#EAF1E4]/90 leading-relaxed">
             Data saved in this browser. Sign in to sync your garden across devices.
           </p>
         </div>

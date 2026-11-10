@@ -224,7 +224,7 @@ export function LoadingState({
     <div className="bg-white rounded-3xl border border-[#E3DFD2] p-10 text-center space-y-3 shadow-xs">
       <Loader2 size={32} className="animate-spin text-[#174C35] mx-auto" />
       <h4 className="font-serif font-bold text-lg text-[#203027]">{message}</h4>
-      <p className="text-sm text-[#68766C]">{description}</p>
+      <p className="text-sm text-[#5F6D63]">{description}</p>
     </div>
   );
 }
@@ -294,7 +294,7 @@ export function EducationalCallout({
         {children}
       </div>
       {tip && (
-        <p className="text-xs sm:text-sm text-[#68766C] bg-white p-3 rounded-xl border border-[#E3DFD2]">
+        <p className="text-xs sm:text-sm text-[#5F6D63] bg-white p-3 rounded-xl border border-[#E3DFD2]">
           💡 <strong>Grower Note:</strong> {tip}
         </p>
       )}

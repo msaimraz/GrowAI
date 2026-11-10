@@ -14,7 +14,7 @@ export function CopilotLoadingState() {
           <Sparkles size={12} className="text-[#174C35]" />
           <span>Consulting garden records and synthesizing evidence...</span>
         </span>
-        <span className="text-[11px] text-[#68766C] block">
+        <span className="text-[11px] text-[#5F6D63] block">
           Verifying health, care, environment, and feeding observations
         </span>
       </div>

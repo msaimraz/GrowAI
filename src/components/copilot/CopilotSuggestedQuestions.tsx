@@ -18,7 +18,7 @@ export function CopilotSuggestedQuestions({
 
   return (
     <div className="space-y-1.5">
-      <span className="text-[11px] font-semibold text-[#68766C] flex items-center gap-1">
+      <span className="text-[11px] font-semibold text-[#5F6D63] flex items-center gap-1">
         <Sparkles size={12} className="text-[#174C35]" />
         <span>Suggested Inquiries:</span>
       </span>

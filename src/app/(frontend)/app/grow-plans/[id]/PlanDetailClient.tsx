@@ -319,7 +319,7 @@ export function PlanDetailClient({ planId }: PlanDetailClientProps) {
           <h2 className="font-serif text-xl font-bold text-[#203027] mb-2">
             {error || 'Plan Not Found'}
           </h2>
-          <p className="text-xs sm:text-sm text-[#68766C] mb-6 leading-relaxed">
+          <p className="text-xs sm:text-sm text-[#5F6D63] mb-6 leading-relaxed">
             The requested grow plan could not be located in local or cloud storage.
           </p>
           <Link
@@ -345,7 +345,7 @@ export function PlanDetailClient({ planId }: PlanDetailClientProps) {
         <div className="mb-4">
           <Link
             href="/app/grow-plans"
-            className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#68766C] hover:text-[#203027] min-h-[36px] transition-colors"
+            className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#5F6D63] hover:text-[#203027] min-h-[36px] transition-colors"
           >
             <ArrowLeft className="w-4 h-4" /> Back to Plans
           </Link>
@@ -356,7 +356,7 @@ export function PlanDetailClient({ planId }: PlanDetailClientProps) {
           <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4">
             <div className="min-w-0">
               <div className="flex items-center gap-2 flex-wrap mb-2">
-                <span className="text-xs px-2.5 py-0.5 rounded-lg capitalize bg-[#F8F6EE] text-[#68766C] font-medium border border-[#E3DFD2]/60">
+                <span className="text-xs px-2.5 py-0.5 rounded-lg capitalize bg-[#F8F6EE] text-[#5F6D63] font-medium border border-[#E3DFD2]/60">
                   {plan.scope} Scope
                 </span>
                 <PlanStatusBadge status={plan.status} />
@@ -366,12 +366,12 @@ export function PlanDetailClient({ planId }: PlanDetailClientProps) {
                 {plan.name}
               </h1>
               {plan.description && (
-                <p className="text-xs sm:text-sm text-[#68766C] mt-1.5 leading-relaxed max-w-xl">
+                <p className="text-xs sm:text-sm text-[#5F6D63] mt-1.5 leading-relaxed max-w-xl">
                   {plan.description}
                 </p>
               )}
               {primaryPlant && (
-                <div className="mt-3 flex items-center gap-2 text-xs text-[#68766C] flex-wrap">
+                <div className="mt-3 flex items-center gap-2 text-xs text-[#5F6D63] flex-wrap">
                   <span className="font-medium text-[#203027]">Associated Specimen:</span>
                   <Link
                     href={`/app/my-garden`}
@@ -440,7 +440,7 @@ export function PlanDetailClient({ planId }: PlanDetailClientProps) {
 
           {/* Progress Bar & Indicators */}
           <div className="mt-6 pt-5 border-t border-[#E3DFD2]/60">
-            <div className="flex justify-between items-center text-xs text-[#68766C] mb-2 font-medium">
+            <div className="flex justify-between items-center text-xs text-[#5F6D63] mb-2 font-medium">
               <span className="font-semibold text-[#203027]">Overall Execution Progress</span>
               <span className="font-bold text-[#203027]">{taskPct}%</span>
             </div>
@@ -458,24 +458,24 @@ export function PlanDetailClient({ planId }: PlanDetailClientProps) {
             </div>
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-4">
               <div className="bg-[#F8F6EE] p-3 rounded-2xl border border-[#E3DFD2]/60 text-center">
-                <span className="text-[10px] text-[#68766C] uppercase tracking-wider block font-semibold">Total Steps</span>
+                <span className="text-[10px] text-[#5F6D63] uppercase tracking-wider block font-semibold">Total Steps</span>
                 <span className="text-sm sm:text-base font-bold text-[#203027]">{plan.steps.length}</span>
               </div>
               <div className="bg-[#F8F6EE] p-3 rounded-2xl border border-[#E3DFD2]/60 text-center">
-                <span className="text-[10px] text-[#68766C] uppercase tracking-wider block font-semibold">Completed</span>
+                <span className="text-[10px] text-[#5F6D63] uppercase tracking-wider block font-semibold">Completed</span>
                 <span className="text-sm sm:text-base font-bold text-[#174C35]">
                   {plan.steps.filter((s) => s.status === 'completed').length}
                 </span>
               </div>
               <div className="bg-[#F8F6EE] p-3 rounded-2xl border border-[#E3DFD2]/60 text-center">
-                <span className="text-[10px] text-[#68766C] uppercase tracking-wider block font-semibold">Actionable Today</span>
+                <span className="text-[10px] text-[#5F6D63] uppercase tracking-wider block font-semibold">Actionable Today</span>
                 <span className="text-sm sm:text-base font-bold text-[#174C35]">
                   {plan.steps.filter((s) => s.status === 'ready' || s.status === 'in_progress').length}
                 </span>
               </div>
               <div className="bg-[#F8F6EE] p-3 rounded-2xl border border-[#E3DFD2]/60 text-center">
-                <span className="text-[10px] text-[#68766C] uppercase tracking-wider block font-semibold">Blocked Steps</span>
-                <span className="text-sm sm:text-base font-bold text-[#68766C]">
+                <span className="text-[10px] text-[#5F6D63] uppercase tracking-wider block font-semibold">Blocked Steps</span>
+                <span className="text-sm sm:text-base font-bold text-[#5F6D63]">
                   {plan.steps.filter((s) => s.status === 'blocked').length}
                 </span>
               </div>
@@ -489,7 +489,7 @@ export function PlanDetailClient({ planId }: PlanDetailClientProps) {
             <h2 className="font-serif text-base sm:text-lg font-bold text-[#203027]">
               Execution Sequence ({plan.steps.length} Steps)
             </h2>
-            <span className="text-xs text-[#68766C]">
+            <span className="text-xs text-[#5F6D63]">
               Deterministic sequence • Prerequisites strictly enforced
             </span>
           </div>
@@ -529,12 +529,12 @@ export function PlanDetailClient({ planId }: PlanDetailClientProps) {
                       {ev.description}
                     </span>
                     {ev.value !== undefined && ev.value !== null && (
-                      <span className="ml-2 text-[#68766C] font-mono text-[11px]">
+                      <span className="ml-2 text-[#5F6D63] font-mono text-[11px]">
                         [{String(ev.value)}]
                       </span>
                     )}
                   </div>
-                  <span className="text-[10px] px-2 py-0.5 rounded-lg font-mono uppercase tracking-wider self-start sm:self-auto bg-[#F8F6EE] text-[#68766C] border border-[#E3DFD2]/60">
+                  <span className="text-[10px] px-2 py-0.5 rounded-lg font-mono uppercase tracking-wider self-start sm:self-auto bg-[#F8F6EE] text-[#5F6D63] border border-[#E3DFD2]/60">
                     {ev.provenance}
                   </span>
                 </div>
@@ -558,7 +558,7 @@ export function PlanDetailClient({ planId }: PlanDetailClientProps) {
                   key={idx}
                   className="text-xs p-3.5 rounded-2xl bg-[#F8F6EE] border border-[#E3DFD2]/60"
                 >
-                  <div className="flex justify-between items-center text-[10px] text-[#68766C] mb-1">
+                  <div className="flex justify-between items-center text-[10px] text-[#5F6D63] mb-1">
                     <span className="font-mono uppercase font-bold text-[#174C35]">
                       Trigger: {adj.trigger}
                     </span>
@@ -584,14 +584,14 @@ export function PlanDetailClient({ planId }: PlanDetailClientProps) {
                 {confirmModal.title}
               </h3>
             </div>
-            <p className="text-xs text-[#68766C] mb-5 leading-relaxed">
+            <p className="text-xs text-[#5F6D63] mb-5 leading-relaxed">
               {confirmModal.message}
             </p>
             <div className="flex justify-end gap-2.5">
               <button
                 type="button"
                 onClick={() => setConfirmModal({ isOpen: false, action: null, title: '', message: '' })}
-                className="px-4 py-2 text-xs font-semibold rounded-xl border border-[#E3DFD2] text-[#68766C] hover:text-[#203027] hover:bg-white transition cursor-pointer min-h-[40px]"
+                className="px-4 py-2 text-xs font-semibold rounded-xl border border-[#E3DFD2] text-[#5F6D63] hover:text-[#203027] hover:bg-white transition cursor-pointer min-h-[40px]"
               >
                 Go Back
               </button>

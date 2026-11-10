@@ -68,8 +68,8 @@ const OUTCOME_OPTIONS: Array<{
     value: 'uncertain',
     label: 'Uncertain',
     description: 'Not enough clear visual evidence yet to confirm direction of recovery.',
-    badgeClass: 'bg-[#F8F6EE] text-[#68766C] border-[#E3DFD2]',
-    dotClass: 'bg-[#68766C]',
+    badgeClass: 'bg-[#F8F6EE] text-[#5F6D63] border-[#E3DFD2]',
+    dotClass: 'bg-[#5F6D63]',
   },
 ];
 
@@ -193,14 +193,14 @@ export function RecordFollowUpModal({
             <h3 className="font-serif font-bold text-xl text-[#203027]">
               Record Follow-Up Observation
             </h3>
-            <p className="text-xs text-[#68766C] mt-1">
+            <p className="text-xs text-[#5F6D63] mt-1">
               Document how {diagnosis.plantIdentification} is responding to care and environmental adjustments.
             </p>
           </div>
           <button
             type="button"
             onClick={onClose}
-            className="p-2 text-[#68766C] hover:text-[#203027] hover:bg-[#F8F6EE] rounded-xl transition-colors min-h-[44px] min-w-[44px] flex items-center justify-center cursor-pointer"
+            className="p-2 text-[#5F6D63] hover:text-[#203027] hover:bg-[#F8F6EE] rounded-xl transition-colors min-h-[44px] min-w-[44px] flex items-center justify-center cursor-pointer"
             aria-label="Close modal"
           >
             <X size={20} />
@@ -257,7 +257,7 @@ export function RecordFollowUpModal({
               Observation Date:
             </label>
             <div className="relative">
-              <Calendar size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[#68766C]" />
+              <Calendar size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[#5F6D63]" />
               <input
                 type="date"
                 value={followUpDate}
@@ -304,7 +304,7 @@ export function RecordFollowUpModal({
                 />
                 <div className="flex-1 min-w-0 text-xs">
                   <p className="font-semibold text-[#203027] truncate">{selectedFile?.name}</p>
-                  <p className="text-[11px] text-[#68766C]">
+                  <p className="text-[11px] text-[#5F6D63]">
                     {((selectedFile?.size || 0) / 1024).toFixed(1)} KB • WebP compressed on save
                   </p>
                 </div>
@@ -321,7 +321,7 @@ export function RecordFollowUpModal({
               <button
                 type="button"
                 onClick={() => fileInputRef.current?.click()}
-                className="w-full py-3 px-4 rounded-xl border border-dashed border-[#E3DFD2] hover:border-[#174C35] bg-[#F8F6EE] hover:bg-white text-xs text-[#68766C] hover:text-[#174C35] transition-all flex items-center justify-center gap-2 cursor-pointer min-h-[48px]"
+                className="w-full py-3 px-4 rounded-xl border border-dashed border-[#E3DFD2] hover:border-[#174C35] bg-[#F8F6EE] hover:bg-white text-xs text-[#5F6D63] hover:text-[#174C35] transition-all flex items-center justify-center gap-2 cursor-pointer min-h-[48px]"
               >
                 <Camera size={16} />
                 <span>Snap or Upload Progress Photo</span>
@@ -349,7 +349,7 @@ export function RecordFollowUpModal({
               type="button"
               onClick={onClose}
               disabled={saving}
-              className="px-4 py-2.5 rounded-xl border border-[#E3DFD2] bg-white text-xs font-semibold text-[#68766C] hover:bg-[#F8F6EE] transition-colors min-h-[44px] cursor-pointer"
+              className="px-4 py-2.5 rounded-xl border border-[#E3DFD2] bg-white text-xs font-semibold text-[#5F6D63] hover:bg-[#F8F6EE] transition-colors min-h-[44px] cursor-pointer"
             >
               Cancel
             </button>

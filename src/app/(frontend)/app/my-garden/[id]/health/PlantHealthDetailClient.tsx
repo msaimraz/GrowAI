@@ -127,7 +127,7 @@ export function PlantHealthDetailClient({ plantId }: PlantHealthDetailClientProp
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-[#F8F6EE] flex flex-col items-center justify-center p-6 text-[#68766C] gap-3">
+      <div className="min-h-screen bg-[#F8F6EE] flex flex-col items-center justify-center p-6 text-[#5F6D63] gap-3">
         <Loader2 size={32} className="animate-spin text-[#174C35]" />
         <p className="text-sm font-medium">Loading plant health records...</p>
       </div>
@@ -138,9 +138,9 @@ export function PlantHealthDetailClient({ plantId }: PlantHealthDetailClientProp
     return (
       <div className="min-h-screen bg-[#F8F6EE] p-6 sm:p-12">
         <div className="max-w-xl mx-auto bg-white rounded-3xl border border-[#E3DFD2] p-8 text-center space-y-4">
-          <Sprout size={36} className="text-[#68766C] mx-auto" />
+          <Sprout size={36} className="text-[#5F6D63] mx-auto" />
           <h2 className="font-serif font-bold text-2xl text-[#203027]">Plant Specimen Not Found</h2>
-          <p className="text-sm text-[#68766C]">
+          <p className="text-sm text-[#5F6D63]">
             This specimen could not be found in your garden records. It may have been removed or migrated.
           </p>
           <div className="pt-2">
@@ -174,7 +174,7 @@ export function PlantHealthDetailClient({ plantId }: PlantHealthDetailClientProp
             <span>Back to {plant?.nickname}&apos;s Garden Journal</span>
           </Link>
 
-          <span className="text-[11px] font-semibold text-[#68766C] bg-white px-3 py-1 rounded-full border border-[#E3DFD2]">
+          <span className="text-[11px] font-semibold text-[#5F6D63] bg-white px-3 py-1 rounded-full border border-[#E3DFD2]">
             {isCloud ? 'Cloud Synced' : 'Local Demo Mode'}
           </span>
         </div>
@@ -216,7 +216,7 @@ export function PlantHealthDetailClient({ plantId }: PlantHealthDetailClientProp
               <h1 className="text-2xl sm:text-3xl font-serif font-bold text-[#203027]">
                 {plant?.nickname}
               </h1>
-              <p className="text-xs sm:text-sm text-[#68766C] mt-1">
+              <p className="text-xs sm:text-sm text-[#5F6D63] mt-1">
                 {botanical?.commonName} (<em>{botanical?.scientificName}</em>) • Planted on {plant?.plantedDate}
                 {plant?.location && ` • ${plant.location}`}
                 {plant?.tier && ` • ${plant.tier.toUpperCase()} Tier`}
@@ -251,26 +251,26 @@ export function PlantHealthDetailClient({ plantId }: PlantHealthDetailClientProp
           {/* Metric Pills */}
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs">
             <div className="p-3.5 rounded-2xl bg-[#F8F6EE] border border-[#E3DFD2]">
-              <span className="text-[#68766C] block text-[11px] mb-0.5">Total Assessments</span>
+              <span className="text-[#5F6D63] block text-[11px] mb-0.5">Total Assessments</span>
               <strong className="text-[#203027] text-sm font-semibold">{diagnoses.length} logged</strong>
             </div>
 
             <div className="p-3.5 rounded-2xl bg-[#F8F6EE] border border-[#E3DFD2]">
-              <span className="text-[#68766C] block text-[11px] mb-0.5">Active Issue</span>
+              <span className="text-[#5F6D63] block text-[11px] mb-0.5">Active Issue</span>
               <strong className="text-[#203027] text-sm font-semibold truncate block">
                 {healthSummary.activeIssue || 'None detected'}
               </strong>
             </div>
 
             <div className="p-3.5 rounded-2xl bg-[#F8F6EE] border border-[#E3DFD2]">
-              <span className="text-[#68766C] block text-[11px] mb-0.5">Latest Outcome</span>
+              <span className="text-[#5F6D63] block text-[11px] mb-0.5">Latest Outcome</span>
               <strong className="text-[#203027] text-sm font-semibold capitalize">
                 {healthSummary.latestFollowUpOutcome || 'Awaiting observation'}
               </strong>
             </div>
 
             <div className="p-3.5 rounded-2xl bg-[#F8F6EE] border border-[#E3DFD2]">
-              <span className="text-[#68766C] block text-[11px] mb-0.5">Pending Treatments</span>
+              <span className="text-[#5F6D63] block text-[11px] mb-0.5">Pending Treatments</span>
               <strong className="text-[#203027] text-sm font-semibold">
                 {healthSummary.pendingTreatmentsCount} action(s)
               </strong>
@@ -296,7 +296,7 @@ export function PlantHealthDetailClient({ plantId }: PlantHealthDetailClientProp
               <Clock size={18} className="text-[#174C35]" />
               <span>Health Timeline & Interventions</span>
             </h2>
-            <span className="text-xs text-[#68766C]">
+            <span className="text-xs text-[#5F6D63]">
               {diagnoses.length} assessment(s) recorded
             </span>
           </div>
@@ -309,7 +309,7 @@ export function PlantHealthDetailClient({ plantId }: PlantHealthDetailClientProp
               <h3 className="font-serif font-bold text-xl text-[#203027]">
                 No Health Assessments Yet
               </h3>
-              <p className="text-xs sm:text-sm text-[#68766C] max-w-md mx-auto leading-relaxed">
+              <p className="text-xs sm:text-sm text-[#5F6D63] max-w-md mx-auto leading-relaxed">
                 {plant?.nickname} has no diagnostic scans or follow-up observations recorded. If you notice yellowing leaves, pests, or wilting, run an AI Doctor assessment.
               </p>
               <div className="pt-2">
@@ -343,7 +343,7 @@ export function PlantHealthDetailClient({ plantId }: PlantHealthDetailClientProp
                           #{diagnoses.length - index}
                         </span>
                         <div>
-                          <span className="text-[11px] font-bold uppercase tracking-wider text-[#68766C] block">
+                          <span className="text-[11px] font-bold uppercase tracking-wider text-[#5F6D63] block">
                             Diagnostic Assessment
                           </span>
                           <span className="font-serif font-bold text-base text-[#203027]">
@@ -353,7 +353,7 @@ export function PlantHealthDetailClient({ plantId }: PlantHealthDetailClientProp
                       </div>
 
                       <div className="flex items-center gap-2.5">
-                        <span className="text-xs text-[#68766C] flex items-center gap-1.5 bg-[#F8F6EE] px-3 py-1.5 rounded-xl border border-[#E3DFD2]">
+                        <span className="text-xs text-[#5F6D63] flex items-center gap-1.5 bg-[#F8F6EE] px-3 py-1.5 rounded-xl border border-[#E3DFD2]">
                           <Calendar size={13} />
                           {diag.diagnosedAt ? new Date(diag.diagnosedAt).toLocaleDateString() : 'Historical'}
                         </span>
@@ -374,7 +374,7 @@ export function PlantHealthDetailClient({ plantId }: PlantHealthDetailClientProp
                           <Sparkles size={11} />
                           AI Assessment (Hypothesis)
                         </span>
-                        <span className="text-xs text-[#68766C]">
+                        <span className="text-xs text-[#5F6D63]">
                           Source: {diag.diagnosticSource === 'gemini-vision' ? 'Gemini Multimodal' : 'Agronomic Heuristic'}
                         </span>
                       </div>
@@ -395,11 +395,11 @@ export function PlantHealthDetailClient({ plantId }: PlantHealthDetailClientProp
                                 <strong className="font-serif font-bold text-[#203027] text-sm">
                                   {c.conditionName}
                                 </strong>
-                                <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-[#F8F6EE] text-[#68766C]">
+                                <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-[#F8F6EE] text-[#5F6D63]">
                                   {c.confidenceCategory} confidence
                                 </span>
                               </div>
-                              <p className="text-[#68766C] leading-relaxed">{c.explanation}</p>
+                              <p className="text-[#5F6D63] leading-relaxed">{c.explanation}</p>
                               {c.recommendedNextObservation && (
                                 <p className="text-[11px] text-[#174C35] pt-1">
                                   <strong>Next Check:</strong> {c.recommendedNextObservation}
@@ -484,7 +484,7 @@ export function PlantHealthDetailClient({ plantId }: PlantHealthDetailClientProp
                                           isSkipped ? 'planned' : 'skipped'
                                         )
                                       }
-                                      className="px-2.5 py-1.5 rounded-xl text-[11px] font-semibold text-[#68766C] hover:bg-white transition-colors cursor-pointer min-h-[36px]"
+                                      className="px-2.5 py-1.5 rounded-xl text-[11px] font-semibold text-[#5F6D63] hover:bg-white transition-colors cursor-pointer min-h-[36px]"
                                     >
                                       {isSkipped ? 'Unskip' : 'Skip'}
                                     </button>
@@ -517,7 +517,7 @@ export function PlantHealthDetailClient({ plantId }: PlantHealthDetailClientProp
 
                       {followUps.length === 0 ? (
                         <div className="p-4 rounded-2xl bg-[#F8F6EE] border border-dashed border-[#E3DFD2] text-center space-y-1">
-                          <p className="text-xs text-[#68766C]">
+                          <p className="text-xs text-[#5F6D63]">
                             No follow-up logged yet. Record what happens after applying recommended adjustments.
                           </p>
                         </div>

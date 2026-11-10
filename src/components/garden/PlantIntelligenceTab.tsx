@@ -71,7 +71,7 @@ function getProvenanceBadge(provenance: ProvenanceCategory) {
     case 'recommended':
       return { label: 'Action Recommendation', bg: 'bg-[#EAF1E4] text-[#174C35] border-[#78A95A/30]' };
     default:
-      return { label: 'Status Unknown', bg: 'bg-[#F8F6EE] text-[#68766C] border-[#E3DFD2]' };
+      return { label: 'Status Unknown', bg: 'bg-[#F8F6EE] text-[#5F6D63] border-[#E3DFD2]' };
   }
 }
 
@@ -152,11 +152,11 @@ export function PlantIntelligenceTab({
               <h3 className="font-serif font-bold text-base sm:text-lg text-[#203027]">
                 Adaptive Grow Intelligence: {plant.nickname}
               </h3>
-              <span className="text-[11px] font-medium text-[#68766C] bg-white px-2.5 py-0.5 rounded-full border border-[#E3DFD2]">
+              <span className="text-[11px] font-medium text-[#5F6D63] bg-white px-2.5 py-0.5 rounded-full border border-[#E3DFD2]">
                 Strict Data Provenance
               </span>
             </div>
-            <p className="text-xs sm:text-sm text-[#68766C] leading-relaxed">
+            <p className="text-xs sm:text-sm text-[#5F6D63] leading-relaxed">
               Synthesizes recorded garden facts into evidence-based recommendations. Unknown parameters
               remain strictly unknown, fertilizer dosages follow product labels, and no diagnoses are
               invented without recorded evidence.
@@ -179,7 +179,7 @@ export function PlantIntelligenceTab({
           <span className="px-2 py-0.5 rounded-md border bg-[#FFF3D7] text-[#8A6400] border-[#F0C04D/30]">
             ◆ Agronomic Inference
           </span>
-          <span className="px-2 py-0.5 rounded-md border bg-[#F8F6EE] text-[#68766C] border-[#E3DFD2]">
+          <span className="px-2 py-0.5 rounded-md border bg-[#F8F6EE] text-[#5F6D63] border-[#E3DFD2]">
             ○ Unknown (Unrecorded)
           </span>
         </div>
@@ -199,7 +199,7 @@ export function PlantIntelligenceTab({
                   Conversational AI
                 </span>
               </h4>
-              <p className="text-xs text-[#68766C]">
+              <p className="text-xs text-[#5F6D63]">
                 Natural-language intelligence grounded in {plant.nickname}&apos;s recorded history and evidence.
               </p>
             </div>
@@ -242,7 +242,7 @@ export function PlantIntelligenceTab({
               <h4 className="font-serif font-bold text-sm sm:text-base text-[#203027]">
                 Active Grow Plan
               </h4>
-              <p className="text-[11px] text-[#68766C]">Structured milestone execution for {plant.nickname}</p>
+              <p className="text-[11px] text-[#5F6D63]">Structured milestone execution for {plant.nickname}</p>
             </div>
           </div>
           <Link
@@ -290,7 +290,7 @@ export function PlantIntelligenceTab({
           </div>
         ) : (
           <div className="p-4 rounded-2xl bg-[#F8F6EE] border border-[#E3DFD2] text-xs flex justify-between items-center">
-            <span className="text-[#68766C]">No active grow plan assigned to this plant yet.</span>
+            <span className="text-[#5F6D63]">No active grow plan assigned to this plant yet.</span>
             <Link
               href="/app/grow-plans"
               className="px-3 py-1.5 rounded-xl bg-emerald-600 text-white font-medium hover:bg-emerald-700 transition"
@@ -335,7 +335,7 @@ export function PlantIntelligenceTab({
                   <h5 className="font-bold text-sm sm:text-base text-[#203027]">
                     {primaryAction.title}
                   </h5>
-                  <p className="text-xs sm:text-sm text-[#68766C] mt-1 leading-relaxed">
+                  <p className="text-xs sm:text-sm text-[#5F6D63] mt-1 leading-relaxed">
                     {primaryAction.explanation}
                   </p>
                 </div>
@@ -385,7 +385,7 @@ export function PlantIntelligenceTab({
                           {evBadge.label}
                         </span>
                         {ev.sourceId && (
-                          <span className="text-[10px] text-[#68766C] font-mono">
+                          <span className="text-[10px] text-[#5F6D63] font-mono">
                             Ref: {ev.sourceId.slice(0, 8)}
                           </span>
                         )}
@@ -403,7 +403,7 @@ export function PlantIntelligenceTab({
             <p className="text-xs sm:text-sm font-semibold text-[#203027]">
               Nothing requires your immediate attention right now.
             </p>
-            <p className="text-xs text-[#68766C]">
+            <p className="text-xs text-[#5F6D63]">
               Your health assessments, environmental observations, and care schedules for this plant are up to date.
             </p>
           </div>
@@ -413,63 +413,63 @@ export function PlantIntelligenceTab({
       {/* 3. Unified Botanical State Matrix (All 6 Domains) */}
       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
         <div className="p-3.5 rounded-2xl bg-white border border-[#E3DFD2]">
-          <span className="text-[11px] font-medium text-[#68766C] block">Stage</span>
+          <span className="text-[11px] font-medium text-[#5F6D63] block">Stage</span>
           <strong className="text-xs sm:text-sm text-[#203027] mt-0.5 block truncate">
             {intel.currentState.identity.currentStage}
           </strong>
-          <span className="text-[10px] text-[#68766C]">{intel.currentState.identity.ageDisplay}</span>
+          <span className="text-[10px] text-[#5F6D63]">{intel.currentState.identity.ageDisplay}</span>
         </div>
 
         <div className="p-3.5 rounded-2xl bg-white border border-[#E3DFD2]">
-          <span className="text-[11px] font-medium text-[#68766C] block">Health Status</span>
+          <span className="text-[11px] font-medium text-[#5F6D63] block">Health Status</span>
           <strong className="text-xs sm:text-sm text-[#203027] mt-0.5 block capitalize truncate">
             {intel.currentState.health.status.replace('_', ' ')}
           </strong>
-          <span className="text-[10px] text-[#68766C]">
+          <span className="text-[10px] text-[#5F6D63]">
             {intel.currentState.health.isAiHypothesis ? 'AI Doctor Analysis' : 'Unassessed'}
           </span>
         </div>
 
         <div className="p-3.5 rounded-2xl bg-white border border-[#E3DFD2]">
-          <span className="text-[11px] font-medium text-[#68766C] block">Environment</span>
+          <span className="text-[11px] font-medium text-[#5F6D63] block">Environment</span>
           <strong className="text-xs sm:text-sm text-[#203027] mt-0.5 block capitalize truncate">
             {intel.currentState.environment.summaryStatus.replace('_', ' ')}
           </strong>
-          <span className="text-[10px] text-[#68766C]">
+          <span className="text-[10px] text-[#5F6D63]">
             {intel.currentState.environment.lastObserved || 'Never recorded'}
           </span>
         </div>
 
         <div className="p-3.5 rounded-2xl bg-white border border-[#E3DFD2]">
-          <span className="text-[11px] font-medium text-[#68766C] block">Nutrition & Feed</span>
+          <span className="text-[11px] font-medium text-[#5F6D63] block">Nutrition & Feed</span>
           <strong className="text-xs sm:text-sm text-[#203027] mt-0.5 block truncate">
             {intel.currentState.feeding.totalFeedings > 0
               ? `${intel.currentState.feeding.totalFeedings} feeds logged`
               : 'No feeds logged'}
           </strong>
-          <span className="text-[10px] text-[#68766C]">
+          <span className="text-[10px] text-[#5F6D63]">
             {intel.currentState.feeding.lastFed ? `Last: ${intel.currentState.feeding.lastFed}` : 'Unknown schedule'}
           </span>
         </div>
 
         <div className="p-3.5 rounded-2xl bg-white border border-[#E3DFD2]">
-          <span className="text-[11px] font-medium text-[#68766C] block">Photos & Growth</span>
+          <span className="text-[11px] font-medium text-[#5F6D63] block">Photos & Growth</span>
           <strong className="text-xs sm:text-sm text-[#203027] mt-0.5 block truncate">
             {intel.currentState.growth.photoCount} photos • {intel.currentState.growth.totalNotes} notes
           </strong>
-          <span className="text-[10px] text-[#68766C]">
+          <span className="text-[10px] text-[#5F6D63]">
             {intel.currentState.growth.lastNoteDate ? `Note: ${intel.currentState.growth.lastNoteDate}` : 'No notes'}
           </span>
         </div>
 
         <div className="p-3.5 rounded-2xl bg-white border border-[#E3DFD2]">
-          <span className="text-[11px] font-medium text-[#68766C] block">Harvests & Yield</span>
+          <span className="text-[11px] font-medium text-[#5F6D63] block">Harvests & Yield</span>
           <strong className="text-xs sm:text-sm text-[#203027] mt-0.5 block truncate">
             {intel.currentState.production.totalHarvestCount > 0
               ? `${intel.currentState.production.totalHarvestCount} harvest events`
               : '0 harvests'}
           </strong>
-          <span className="text-[10px] text-[#68766C]">
+          <span className="text-[10px] text-[#5F6D63]">
             {intel.currentState.production.hasActiveCycle ? 'Active cycle' : 'Individual plant'}
           </span>
         </div>
@@ -527,12 +527,12 @@ export function PlantIntelligenceTab({
               <HelpCircle size={18} className="text-[#174C35]" />
               <span>Information Gaps (Unknowns)</span>
             </h4>
-            <span className="text-xs font-semibold text-[#68766C] bg-[#F8F6EE] px-2.5 py-0.5 rounded-full border border-[#E3DFD2]">
+            <span className="text-xs font-semibold text-[#5F6D63] bg-[#F8F6EE] px-2.5 py-0.5 rounded-full border border-[#E3DFD2]">
               {intel.informationGaps.length} unrecorded
             </span>
           </div>
 
-          <p className="text-xs text-[#68766C]">
+          <p className="text-xs text-[#5F6D63]">
             The following parameters have not been recorded yet. Recording them improves predictive
             accuracy without guessing.
           </p>
@@ -544,12 +544,12 @@ export function PlantIntelligenceTab({
                 className="p-3.5 rounded-2xl border border-[#E3DFD2] bg-[#F8F6EE] flex flex-col justify-between"
               >
                 <div>
-                  <span className="text-[10px] uppercase font-bold tracking-wider text-[#68766C] block mb-1">
+                  <span className="text-[10px] uppercase font-bold tracking-wider text-[#5F6D63] block mb-1">
                     {gap.area} gap
                   </span>
                   <p className="text-xs text-[#203027] font-medium leading-relaxed">{gap.description}</p>
                 </div>
-                <p className="text-[11px] text-[#68766C] mt-2 italic">Check: {gap.actionableCheck}</p>
+                <p className="text-[11px] text-[#5F6D63] mt-2 italic">Check: {gap.actionableCheck}</p>
               </div>
             ))}
           </div>
@@ -589,7 +589,7 @@ export function PlantIntelligenceTab({
           <Info size={18} className="text-[#174C35]" />
           <span>Recorded Botanical Facts for this Plant</span>
         </h4>
-        <ul className="space-y-1.5 text-xs text-[#68766C]">
+        <ul className="space-y-1.5 text-xs text-[#5F6D63]">
           {intel.evidenceFacts.map((fact: string, idx: number) => (
             <li key={idx} className="flex items-start gap-2">
               <span className="text-[#174C35] font-bold">•</span>

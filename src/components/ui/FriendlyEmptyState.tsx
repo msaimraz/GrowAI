@@ -33,7 +33,7 @@ export function FriendlyEmptyState({
         <h3 className="font-serif text-xl sm:text-2xl font-bold text-[#203027]">
           {title}
         </h3>
-        <p className="text-sm text-[#68766C] leading-relaxed max-w-sm mx-auto">
+        <p className="text-sm text-[#5F6D63] leading-relaxed max-w-sm mx-auto">
           {description}
         </p>
       </div>

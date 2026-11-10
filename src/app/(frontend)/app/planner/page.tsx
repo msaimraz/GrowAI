@@ -289,7 +289,7 @@ export default function PlannerPage() {
             </div>
             <div className="min-w-0 flex-1">
               <div className="flex items-center gap-2 flex-wrap">
-                <span className="text-xs uppercase font-bold tracking-wider text-[#68766C]">
+                <span className="text-xs uppercase font-bold tracking-wider text-[#5F6D63]">
                   Active Growing Space:
                 </span>
                 {saveBanner && (
@@ -363,7 +363,7 @@ export default function PlannerPage() {
             <button
               type="button"
               onClick={handleResetToDefault}
-              className="p-2.5 rounded-xl border border-[#E3DFD2] text-[#68766C] hover:text-[#963A23] hover:bg-[#FBE9E2] transition-colors cursor-pointer min-h-[44px] min-w-[44px] flex items-center justify-center shrink-0"
+              className="p-2.5 rounded-xl border border-[#E3DFD2] text-[#5F6D63] hover:text-[#963A23] hover:bg-[#FBE9E2] transition-colors cursor-pointer min-h-[44px] min-w-[44px] flex items-center justify-center shrink-0"
               title="Reset layout to standard defaults"
               aria-label="Reset layout to standard defaults"
             >
@@ -407,7 +407,7 @@ export default function PlannerPage() {
         </section>
 
         {/* Educational Botanical Reference Link Footer */}
-        <footer className="pt-4 pb-8 text-center text-xs text-[#68766C] space-y-1">
+        <footer className="pt-4 pb-8 text-center text-xs text-[#5F6D63] space-y-1">
           <p>
             GrowAI Small-Space Optimizer • Powered by peer-reviewed botanical photobiology and physical soil physics.
           </p>
