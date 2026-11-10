@@ -265,11 +265,11 @@ export function AppHeader({
             {/* Drawer Footer */}
             <div className="pt-4 border-t border-[#1b4a30] text-xs text-[#86aa91]">
               <Link
-                href="/"
+                href="/app"
                 onClick={() => setMobileMenuOpen(false)}
                 className="block text-center py-2.5 text-[#bed4c5] hover:text-white font-medium min-h-[44px] flex items-center justify-center"
               >
-                ← Return to Landing Page
+                GrowAI Dashboard
               </Link>
             </div>
           </div>

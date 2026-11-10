@@ -74,7 +74,7 @@ export function AppSidebar() {
     <aside className="hidden lg:flex lg:flex-col w-64 bg-[#174C35] text-[#FBF9F4] border-r border-[#123E2A] h-[100dvh] max-h-[100dvh] sticky top-0 shrink-0 select-none z-30 p-4 overflow-hidden">
       {/* Brand Header */}
       <div className="pb-4 border-b border-[#235F44] shrink-0">
-        <Link href="/" className="inline-block focus:outline-hidden focus:ring-2 focus:ring-[#86efac] rounded-xl">
+        <Link href="/app" className="inline-block focus:outline-hidden focus:ring-2 focus:ring-[#86efac] rounded-xl">
           <div className="flex items-center gap-2.5">
             <span className="flex items-center justify-center w-8 h-8 rounded-xl bg-white text-[#174C35] shadow-xs font-bold text-base select-none">
               🌱
