@@ -265,16 +265,16 @@ export function DailyCheckCard({
 
   return (
     <div
-      className={`rounded-3xl border border-[#E3DFD2] bg-gradient-to-br from-[#FFF3D7]/40 via-white to-[#EAF1E4]/50 p-4 sm:p-6 shadow-xs space-y-4 ${className}`}
+      className={`rounded-3xl border border-[#E3DFD2] bg-gradient-to-br from-[#FFF3D7]/40 via-white to-[#EAF1E4]/50 p-4 sm:p-6 shadow-xs space-y-4 overflow-hidden ${className}`}
     >
       {/* 1. GARDEN HABIT PROGRESS BAR (PART 3.6 & NEW PALETTE) */}
       <div className="bg-white/95 backdrop-blur-xs rounded-2xl border border-[#E3DFD2] p-3 sm:p-4 space-y-2">
-        <div className="flex items-center justify-between gap-2 text-xs flex-wrap">
-          <div className="flex items-center gap-1.5 font-bold font-serif text-[#203027] shrink-0">
+        <div className="flex items-center justify-between gap-2 text-xs">
+          <div className="flex items-center gap-1.5 font-bold font-serif text-[#203027] shrink-0 min-w-0">
             <span className="text-[#78A95A] text-sm shrink-0">🌱</span>
             <span className="text-[11px] sm:text-xs tracking-wide whitespace-nowrap">YOUR GARDEN TODAY</span>
           </div>
-          <span className="font-mono text-[10px] sm:text-[11px] font-semibold text-[#174C35] whitespace-nowrap shrink-0 ml-auto">
+          <span className="font-mono text-[10.5px] sm:text-[11px] font-semibold text-[#174C35] whitespace-nowrap shrink-0 ml-auto">
             {progressState.checkedCount} of {progressState.totalCount}{' '}
             <span className="hidden sm:inline">plants </span>checked
           </span>
@@ -301,7 +301,7 @@ export function DailyCheckCard({
           {/* Left subtle edge fade affordance (Mobile) */}
           <div
             aria-hidden="true"
-            className={`pointer-events-none absolute left-0 top-0 bottom-1 w-8 bg-gradient-to-r from-white via-white/80 to-transparent z-10 transition-opacity duration-200 sm:hidden ${
+            className={`pointer-events-none absolute left-0 top-0 bottom-1 w-6 sm:w-8 bg-gradient-to-r from-white via-white/80 to-transparent z-10 transition-opacity duration-200 ${
               canScrollLeft ? 'opacity-100' : 'opacity-0'
             }`}
           />
@@ -323,7 +323,7 @@ export function DailyCheckCard({
                   type="button"
                   data-selected={isSelected}
                   onClick={() => setSelectedPlantId(plant.id)}
-                  className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold border transition-all cursor-pointer select-none shrink-0 min-h-[36px] touch-manipulation max-w-[170px] sm:max-w-none ${
+                  className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold border transition-all cursor-pointer select-none shrink-0 min-h-[36px] touch-manipulation whitespace-nowrap ${
                     isSelected
                       ? 'bg-[#174C35] text-white border-[#174C35] shadow-2xs font-bold'
                       : isChecked
@@ -332,7 +332,7 @@ export function DailyCheckCard({
                   }`}
                 >
                   <span className="shrink-0">{isChecked ? '✓' : '🌿'}</span>
-                  <span className="truncate">{plant.nickname}</span>
+                  <span>{plant.nickname}</span>
                 </button>
               );
             })}
@@ -341,7 +341,7 @@ export function DailyCheckCard({
           {/* Right subtle edge fade affordance (Mobile) */}
           <div
             aria-hidden="true"
-            className={`pointer-events-none absolute right-0 top-0 bottom-1 w-8 bg-gradient-to-l from-white via-white/80 to-transparent z-10 transition-opacity duration-200 sm:hidden ${
+            className={`pointer-events-none absolute right-0 top-0 bottom-1 w-6 sm:w-8 bg-gradient-to-l from-white via-white/80 to-transparent z-10 transition-opacity duration-200 ${
               canScrollRight ? 'opacity-100' : 'opacity-0'
             }`}
           />

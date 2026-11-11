@@ -6,11 +6,13 @@
 
 import { CopilotIntent } from '@/types/grower-copilot';
 import { UserPlant } from '@/types/garden';
+import { PLANTS_DATA } from '@/data/plants';
 
 export interface IntentClassificationResult {
   intent: CopilotIntent;
   targetPlantId?: string | null;
   targetPlantNickname?: string | null;
+  activePlantSlug?: string | null;
   confidence: 'high' | 'moderate' | 'low';
 }
 
@@ -18,33 +20,96 @@ interface ClassifyParams {
   query: string;
   activePlantId?: string | null;
   activePlantNickname?: string | null;
+  activePlantSlug?: string | null;
   plants?: UserPlant[];
 }
 
 export function classifyCopilotIntent(params: ClassifyParams): IntentClassificationResult {
-  const { query, activePlantId, activePlantNickname, plants = [] } = params;
+  const { query, activePlantId, activePlantNickname, activePlantSlug, plants = [] } = params;
   const q = query.trim().toLowerCase();
 
   // 1. Plant Target & Pronoun Resolution
   let resolvedPlantId: string | null = activePlantId || null;
   let resolvedPlantNickname: string | null = activePlantNickname || null;
+  let resolvedPlantSlug: string | null = activePlantSlug || null;
 
-  // Search if a specific plant nickname or slug is explicitly mentioned in the query
+  const GENERIC_WORDS = new Set([
+    'plant',
+    'plants',
+    'bean',
+    'bush',
+    'leaf',
+    'leaves',
+    'herb',
+    'herbs',
+    'sweet',
+    'french',
+    'west',
+    'king',
+    'grow',
+    'crop',
+  ]);
+
+  // If no activePlantSlug was provided, or if the user mentions another specific plant full name
+  if (!resolvedPlantSlug) {
+    for (const bp of PLANTS_DATA) {
+      const common = bp.commonName.toLowerCase();
+      const slug = bp.slug.toLowerCase().replace(/-/g, ' ');
+      const commonWords = common
+        .replace(/[^\w\s-]/g, ' ')
+        .split(/\s+/)
+        .filter((w) => w.length >= 4 && !GENERIC_WORDS.has(w.toLowerCase()));
+
+      const matchesSpecificWord = commonWords.some((w) => {
+        const cleanWord = w.replace(/[^\w-]/g, '');
+        if (!cleanWord) return false;
+        const regex = new RegExp(`\\b${cleanWord}\\b`, 'i');
+        return regex.test(q);
+      });
+
+      if (q.includes(common) || q.includes(slug) || matchesSpecificWord) {
+        resolvedPlantSlug = bp.slug;
+        if (!resolvedPlantNickname) resolvedPlantNickname = bp.commonName;
+        if (!resolvedPlantId) resolvedPlantId = bp.id;
+        break;
+      }
+    }
+  }
+
+  // If resolvedPlantSlug is active, populate botanical metadata
+  if (resolvedPlantSlug && (!resolvedPlantNickname || !resolvedPlantId)) {
+    const bp = PLANTS_DATA.find((p) => p.slug === resolvedPlantSlug);
+    if (bp) {
+      if (!resolvedPlantNickname) resolvedPlantNickname = bp.commonName;
+      if (!resolvedPlantId) resolvedPlantId = bp.id;
+    }
+  }
+
+  // Search if a specific user plant nickname or slug is explicitly mentioned in the query
   for (const plant of plants) {
     const nick = (plant.nickname || '').toLowerCase();
     const slug = (plant.plantSlug || '').toLowerCase().replace(/-/g, ' ');
-    const nickWords: string[] = nick.split(/\s+/).filter((w: string) => w.length >= 3);
-    const slugWords: string[] = slug.split(/\s+/).filter((w: string) => w.length >= 3);
+    const nickWords: string[] = nick
+      .replace(/[^\w\s-]/g, ' ')
+      .split(/\s+/)
+      .filter((w: string) => w.length >= 3);
+    const slugWords: string[] = slug
+      .replace(/[^\w\s-]/g, ' ')
+      .split(/\s+/)
+      .filter((w: string) => w.length >= 3);
 
     if ((nick && q.includes(nick)) || (slug && q.includes(slug))) {
       resolvedPlantId = plant.id;
       resolvedPlantNickname = plant.nickname;
+      resolvedPlantSlug = plant.plantSlug;
       break;
     }
 
     // Keyword match on distinctive nickname or slug words (e.g. "basil", "mint", "tomato")
     const matchesWord = [...nickWords, ...slugWords].some((word: string) => {
-      const regex = new RegExp(`\\b${word}\\b`, 'i');
+      const cleanWord = word.replace(/[^\w-]/g, '');
+      if (!cleanWord) return false;
+      const regex = new RegExp(`\\b${cleanWord}\\b`, 'i');
       return regex.test(q);
     });
 
@@ -54,13 +119,14 @@ export function classifyCopilotIntent(params: ClassifyParams): IntentClassificat
     if (matchesWord || queryMatchesSlug) {
       resolvedPlantId = plant.id;
       resolvedPlantNickname = plant.nickname;
+      resolvedPlantSlug = plant.plantSlug;
       break;
     }
   }
 
   // Check for pronoun context ("its", "it", "this plant", "the plant")
   const isPlantScopedByPronoun =
-    /\b(it|its|this plant|that plant|the plant|this crop)\b/i.test(q) && Boolean(resolvedPlantId);
+    /\b(it|its|this plant|that plant|the plant|this crop)\b/i.test(q) && Boolean(resolvedPlantId || resolvedPlantSlug);
 
   const hasTargetPlant = Boolean(resolvedPlantId);
 
@@ -266,7 +332,8 @@ export function classifyCopilotIntent(params: ClassifyParams): IntentClassificat
     q.includes('show me my recent harvests') ||
     q.includes('recent harvests') ||
     q.includes('harvest history') ||
-    q.includes('harvest') ||
+    q.includes('harvest records') ||
+    q.includes('past harvests') ||
     q.includes('yield') ||
     q.includes('how much harvested')
   ) {
@@ -424,6 +491,193 @@ export function classifyCopilotIntent(params: ClassifyParams): IntentClassificat
       targetPlantId: null,
       targetPlantNickname: null,
       confidence: 'high',
+    };
+  }
+
+  // 14.5 Botanical & Species-Specific (Ask Your Plant)
+  const isBotanicalScoped =
+    Boolean(resolvedPlantSlug) || Boolean(activePlantSlug) || isPlantScopedByPronoun || Boolean(resolvedPlantNickname);
+
+  // A. Sunlight / Lighting / Exposure
+  if (
+    q.includes('sunlight') ||
+    q.includes('sun') ||
+    q.includes('light') ||
+    q.includes('shade') ||
+    q.includes('dark') ||
+    q.includes('window') ||
+    q.includes('windowsill') ||
+    q.includes('bright') ||
+    q.includes('direct sun') ||
+    q.includes('indirect light')
+  ) {
+    if (isBotanicalScoped || q.includes('plant') || q.includes('grow')) {
+      return {
+        intent: 'botanical_sunlight',
+        targetPlantId: resolvedPlantId,
+        targetPlantNickname: resolvedPlantNickname,
+        activePlantSlug: resolvedPlantSlug,
+        confidence: 'high',
+      };
+    }
+  }
+
+  // B. Water / Watering / Missed watering / Drought stress
+  if (
+    q.includes('water') ||
+    q.includes('wet') ||
+    q.includes('dry') ||
+    q.includes('hydrate') ||
+    q.includes('moisture') ||
+    q.includes('thirst') ||
+    q.includes('drought')
+  ) {
+    if (isBotanicalScoped || q.includes('plant') || q.includes('soil')) {
+      return {
+        intent: 'botanical_watering',
+        targetPlantId: resolvedPlantId,
+        targetPlantNickname: resolvedPlantNickname,
+        activePlantSlug: resolvedPlantSlug,
+        confidence: 'high',
+      };
+    }
+  }
+
+  // C. Leaf symptoms / Problems / Yellow leaves / Pests / Disease
+  if (
+    q.includes('yellow') ||
+    q.includes('leaves') ||
+    q.includes('leaf') ||
+    q.includes('brown') ||
+    q.includes('wilt') ||
+    q.includes('pest') ||
+    q.includes('bug') ||
+    q.includes('rot') ||
+    q.includes('blight') ||
+    q.includes('problem') ||
+    q.includes('sick') ||
+    q.includes('dying') ||
+    q.includes('spot') ||
+    q.includes('look for on its leaves')
+  ) {
+    if (isBotanicalScoped || q.includes('plant')) {
+      return {
+        intent: 'botanical_problems',
+        targetPlantId: resolvedPlantId,
+        targetPlantNickname: resolvedPlantNickname,
+        activePlantSlug: resolvedPlantSlug,
+        confidence: 'high',
+      };
+    }
+  }
+
+  // D. Medicinal / Health / Toxicity / Traditional uses / Safety
+  if (
+    /\b(medicin|medicinal|cure|treat|treatment|remedy|health|illness|disease|toxic|toxicity|poison|safe|safety|pet safe|herbal)\b/i.test(
+      q
+    )
+  ) {
+    if (isBotanicalScoped || q.includes('plant')) {
+      return {
+        intent: 'botanical_medicinal',
+        targetPlantId: resolvedPlantId,
+        targetPlantNickname: resolvedPlantNickname,
+        activePlantSlug: resolvedPlantSlug,
+        confidence: 'high',
+      };
+    }
+  }
+
+  // E. Practical / Culinary / Cooking / Benefits / Uses
+  if (
+    /\b(benefit|benefits|use|uses|used for|cook|cooking|culinary|eat|eating|edible|nutrition|recipe|tea|taste|flavor|flavour)\b/i.test(
+      q
+    )
+  ) {
+    if (isBotanicalScoped || q.includes('plant')) {
+      return {
+        intent: 'botanical_benefits',
+        targetPlantId: resolvedPlantId,
+        targetPlantNickname: resolvedPlantNickname,
+        activePlantSlug: resolvedPlantSlug,
+        confidence: 'high',
+      };
+    }
+  }
+
+  // F. Harvest / When to pick / Maturity
+  if (
+    q.includes('harvest') ||
+    q.includes('ready to harvest') ||
+    q.includes('pick') ||
+    q.includes('when to pick') ||
+    q.includes('ripe')
+  ) {
+    if (isBotanicalScoped || q.includes('plant')) {
+      return {
+        intent: 'botanical_harvest',
+        targetPlantId: resolvedPlantId,
+        targetPlantNickname: resolvedPlantNickname,
+        activePlantSlug: resolvedPlantSlug,
+        confidence: 'high',
+      };
+    }
+  }
+
+  // G. Soil / Potting / Container / Depth / pH
+  if (
+    q.includes('soil') ||
+    q.includes('potting') ||
+    q.includes('pot') ||
+    q.includes('container') ||
+    q.includes('depth') ||
+    q.includes('drainage') ||
+    q.includes('substrate') ||
+    q.includes('ph')
+  ) {
+    if (isBotanicalScoped || q.includes('plant')) {
+      return {
+        intent: 'botanical_soil_ph',
+        targetPlantId: resolvedPlantId,
+        targetPlantNickname: resolvedPlantNickname,
+        activePlantSlug: resolvedPlantSlug,
+        confidence: 'high',
+      };
+    }
+  }
+
+  // H. Growth Guide / Temperature / Humidity / How to grow successfully
+  if (
+    q.includes('how do i grow') ||
+    q.includes('how to grow') ||
+    q.includes('grow better') ||
+    q.includes('care') ||
+    q.includes('temperature') ||
+    q.includes('humidity') ||
+    q.includes('indoor') ||
+    q.includes('balcony') ||
+    q.includes('grow it') ||
+    q.includes('help it grow')
+  ) {
+    if (isBotanicalScoped || q.includes('plant')) {
+      return {
+        intent: 'botanical_growth_guide',
+        targetPlantId: resolvedPlantId,
+        targetPlantNickname: resolvedPlantNickname,
+        activePlantSlug: resolvedPlantSlug,
+        confidence: 'high',
+      };
+    }
+  }
+
+  // I. General inquiry scoped to a botanical plant
+  if (isBotanicalScoped) {
+    return {
+      intent: 'botanical_general',
+      targetPlantId: resolvedPlantId,
+      targetPlantNickname: resolvedPlantNickname,
+      activePlantSlug: resolvedPlantSlug,
+      confidence: 'moderate',
     };
   }
 

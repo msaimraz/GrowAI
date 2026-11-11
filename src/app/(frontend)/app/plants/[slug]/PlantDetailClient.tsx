@@ -23,6 +23,7 @@ import { VisualPlantQuiz } from '@/components/plants/VisualPlantQuiz';
 import { CareBadge } from '@/components/ui/CareBadge';
 import { VisualProgress } from '@/components/ui/VisualProgress';
 import { useGrowToast } from '@/components/ui/GrowSuccessToast';
+import { AskPlantAssistant } from '@/components/plants/AskPlantAssistant';
 import {
   Thermometer,
   Sun,
@@ -59,6 +60,7 @@ interface PlantDetailClientProps {
 export function PlantDetailClient({ plant }: PlantDetailClientProps) {
   const { showSuccess } = useGrowToast();
   const [modalOpen, setModalOpen] = useState(false);
+  const [askPlantOpen, setAskPlantOpen] = useState(false);
   const [exploredSections, setExploredSections] = useState<Record<string, boolean>>({});
 
   // Hydrate explored sections from localStorage
@@ -140,14 +142,27 @@ export function PlantDetailClient({ plant }: PlantDetailClientProps) {
             </span>
           </nav>
 
-          <button
-            type="button"
-            onClick={() => setModalOpen(true)}
-            className="inline-flex items-center justify-center gap-2 text-xs sm:text-sm font-semibold bg-[#174C35] hover:bg-[#203027] text-white px-4 sm:px-6 py-2.5 rounded-xl shadow-xs transition-all hover:shadow cursor-pointer min-h-[44px] w-full sm:w-auto shrink-0"
-          >
-            <Plus size={16} />
-            <span>Add to My Garden</span>
-          </button>
+          <div className="flex items-center gap-2 w-full sm:w-auto shrink-0">
+            <button
+              type="button"
+              onClick={() => setAskPlantOpen(true)}
+              className="inline-flex items-center justify-center gap-1.5 text-xs sm:text-sm font-semibold bg-[#EAF1E4] hover:bg-[#D9E7D0] text-[#174C35] border border-[#78A95A]/40 px-3.5 sm:px-4 py-2.5 rounded-xl transition-all cursor-pointer min-h-[44px] shrink-0"
+              title="Ask Your Plant"
+            >
+              <span>🌱</span>
+              <span className="hidden sm:inline">Ask about this plant</span>
+              <span className="sm:hidden">Ask Plant</span>
+            </button>
+
+            <button
+              type="button"
+              onClick={() => setModalOpen(true)}
+              className="inline-flex items-center justify-center gap-2 text-xs sm:text-sm font-semibold bg-[#174C35] hover:bg-[#203027] text-white px-4 sm:px-6 py-2.5 rounded-xl shadow-xs transition-all hover:shadow cursor-pointer min-h-[44px] flex-1 sm:flex-initial shrink-0"
+            >
+              <Plus size={16} />
+              <span>Add to My Garden</span>
+            </button>
+          </div>
         </div>
       </header>
 
@@ -210,15 +225,24 @@ export function PlantDetailClient({ plant }: PlantDetailClientProps) {
                   {plant.scientificName}
                 </p>
 
-                {/* Primary CTA */}
-                <div className="pt-1">
+                {/* Primary CTA & Ask Your Plant Action */}
+                <div className="pt-1 flex flex-wrap items-center gap-3">
                   <button
                     type="button"
                     onClick={() => setModalOpen(true)}
-                    className="inline-flex items-center justify-center gap-2 font-medium bg-[#174C35] hover:bg-[#123C2A] text-white px-6 py-3 rounded-2xl shadow-xs transition-all cursor-pointer text-sm sm:text-base min-h-[46px]"
+                    className="inline-flex items-center justify-center gap-2 font-semibold bg-[#174C35] hover:bg-[#123C2A] text-white px-6 py-3 rounded-2xl shadow-xs transition-all cursor-pointer text-sm sm:text-base min-h-[46px] active:scale-95 touch-manipulation"
                   >
                     <Plus size={18} />
                     <span>+ Add to My Garden</span>
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={() => setAskPlantOpen(true)}
+                    className="inline-flex items-center justify-center gap-2 font-semibold bg-[#EAF1E4] hover:bg-[#D9E7D0] text-[#174C35] border border-[#78A95A]/40 px-5 py-3 rounded-2xl shadow-2xs transition-all cursor-pointer text-sm sm:text-base min-h-[46px] active:scale-95 touch-manipulation"
+                  >
+                    <span className="text-base">🌱</span>
+                    <span>Ask about this plant</span>
                   </button>
                 </div>
 
@@ -1434,6 +1458,13 @@ export function PlantDetailClient({ plant }: PlantDetailClientProps) {
         plant={plant}
         isOpen={modalOpen}
         onClose={() => setModalOpen(false)}
+      />
+
+      {/* Ask Your Plant Context-Aware Chat Assistant */}
+      <AskPlantAssistant
+        plant={plant}
+        isOpen={askPlantOpen}
+        onClose={() => setAskPlantOpen(false)}
       />
     </div>
   );

@@ -42,6 +42,8 @@ export interface ExecuteCopilotQueryParams {
   userId?: string;
   activePlantId?: string | null;
   activePlantNickname?: string | null;
+  activePlantSlug?: string | null;
+  botanicalPlant?: any | null;
   plants: UserPlant[];
   conditions?: GrowingConditionObservation[];
   feedings?: FeedingRecord[];
@@ -65,6 +67,8 @@ export async function executeCopilotQuery(
     userId = 'user-local',
     activePlantId,
     activePlantNickname,
+    activePlantSlug,
+    botanicalPlant,
     plants = [],
     conditions = [],
     feedings = [],
@@ -101,12 +105,14 @@ export async function executeCopilotQuery(
     query: safety.sanitizedQuery,
     activePlantId,
     activePlantNickname,
+    activePlantSlug,
     plants,
   });
 
   const intent = classification.intent;
   const targetPlantId = classification.targetPlantId;
   const targetPlantNickname = classification.targetPlantNickname;
+  const resolvedPlantSlug = classification.activePlantSlug || activePlantSlug || null;
 
   // Handle Unsupported Questions safely per Section 5
   if (intent === 'unsupported') {
@@ -133,6 +139,8 @@ export async function executeCopilotQuery(
     intent,
     targetPlantId,
     targetPlantNickname,
+    activePlantSlug: resolvedPlantSlug,
+    botanicalPlant,
     plants,
     conditions,
     feedings,
@@ -603,6 +611,191 @@ export function generateDeterministicCopilotResponse(params: {
       break;
     }
 
+    // =========================================================================
+    // BOTANICAL & PLANT-DETAIL CONTEXTUAL INTENTS (Ask Your Plant)
+    // =========================================================================
+    case 'botanical_sunlight': {
+      const bp = context.botanicalPlant;
+      const plantName = bp?.commonName || context.targetPlantNickname || 'This plant';
+      const sunReq = bp ? bp.sunlight.replace('-', ' ') : 'adequate bright light';
+      const sunHours = bp?.sunlightHours || '6–8 hours of light daily';
+
+      answer = `${plantName} performs best in ${sunReq} (${sunHours}). ☀️\n\nIf it receives too little sunlight, you may notice longer, weaker ('leggy') stems, slower leaf production, and paler foliage as the plant stretches for light.`;
+      whatGrowAiFound.push(`Botanical Light Spec: ${sunReq} (${sunHours})`);
+      why = 'Sunlight powers photosynthesis; insufficient light reduces chlorophyll synthesis and cellular structural density.';
+      recommendedNextStep = 'Gradually move the plant to a brighter south- or west-facing window or balcony location, or supplement with an LED grow light.';
+
+      suggestedQuestions.push(
+        'What happens if I forget to water it?',
+        'What should I look for on its leaves?',
+        'How can I help it grow better?'
+      );
+      break;
+    }
+
+    case 'botanical_watering': {
+      const bp = context.botanicalPlant;
+      const plantName = bp?.commonName || context.targetPlantNickname || 'This plant';
+      const moisture = bp?.watering?.moistureLevel || 'moderate';
+      const guidance = bp?.watering?.guidance || 'Allow the top layer of soil to dry slightly before watering again.';
+      const freq = bp?.watering?.frequency || 'When topsoil feels dry to touch';
+
+      answer = `Missing one watering is usually manageable and does not mean ${plantName} is permanently damaged. 🌿\n\nWhen thirsty, foliage may slightly droop as cell turgor pressure drops. However, overwatering or keeping the root zone waterlogged is far more dangerous, as it suffocates roots and invites fungal rot.`;
+      whatGrowAiFound.push(`Preferred Moisture: ${moisture}. Frequency: ${freq}`);
+      why = `${guidance} Always do the finger test: check the top 2–3 cm of soil before adding water.`;
+      recommendedNextStep = 'If the top 2–3 cm of potting mix is dry, water deeply at the base until moisture drains freely, then empty the catchment saucer. Never overcompensate with excessive standing water.';
+
+      suggestedQuestions.push(
+        'Why are the leaves turning yellow?',
+        'What kind of soil does it prefer?',
+        'When is it ready to harvest?'
+      );
+      break;
+    }
+
+    case 'botanical_problems': {
+      const bp = context.botanicalPlant;
+      const plantName = bp?.commonName || context.targetPlantNickname || 'This plant';
+      const problems = bp?.commonProblems || [];
+
+      if (problems.length > 0) {
+        const top = problems[0];
+        answer = `On ${plantName}, watch out for common symptoms like ${top.issue.toLowerCase()} (${top.symptoms.toLowerCase()}). Yellow leaves are frequently a sign of either overwatering, insufficient light, or natural aging of lower leaves.`;
+        whatGrowAiFound.push(...problems.map((p: any) => `${p.issue}: ${p.symptoms} (Prevention: ${p.prevention})`));
+        why = `Prevention: ${top.prevention}. Organic remedy: ${top.organicRemedy}`;
+        recommendedNextStep = `Inspect leaf undersides and soil drainage. ${top.organicRemedy}`;
+      } else {
+        answer = `For ${plantName}, inspect foliage regularly for discoloration, wilting, or insect activity. Yellowing leaves typically reflect overwatering, root-bound conditions, or light stress.`;
+        why = 'Environmental stress manifests first in leaf discoloration and stem rigidity.';
+        recommendedNextStep = 'Inspect the undersides of leaves and check root aeration and container drainage.';
+      }
+
+      suggestedQuestions.push(
+        'What if it gets less sunlight?',
+        'What if I forget to water it?',
+        'How can I help it grow better?'
+      );
+      break;
+    }
+
+    case 'botanical_benefits': {
+      const bp = context.botanicalPlant;
+      const plantName = bp?.commonName || context.targetPlantNickname || 'This plant';
+      const uses = bp?.practicalUses || [];
+      const edibility = bp?.medicinalProfile?.suitabilityForConsumption;
+
+      const usesStr = uses.length > 0 ? uses.join(', ') : 'culinary herbs and container gardening';
+      const edibleNote = edibility
+        ? edibility.isEdible
+          ? `Edible parts: ${edibility.edibilityNotes}`
+          : `Note: ${edibility.edibilityNotes}`
+        : bp?.safetyNotes || 'Follow standard garden safety.';
+
+      answer = `${plantName} offers verified practical benefits: ${usesStr}. 🍃\n\n${edibleNote}`;
+      whatGrowAiFound.push(`Documented Uses: ${usesStr}`);
+      if (bp?.safetyNotes) whatGrowAiFound.push(`Safety Profile: ${bp.safetyNotes}`);
+      why = 'All documented benefits are grounded strictly in verified botanical and agricultural records.';
+      recommendedNextStep = 'Harvest outer mature growth in the morning for peak aroma and flavour, leaving inner leaves to continue growing.';
+
+      suggestedQuestions.push(
+        'Can this plant be used as medicine?',
+        'When is it ready to harvest?',
+        'How can I help it grow better?'
+      );
+      break;
+    }
+
+    case 'botanical_medicinal': {
+      const bp = context.botanicalPlant;
+      const plantName = bp?.commonName || context.targetPlantNickname || 'This plant';
+      const med = bp?.medicinalProfile;
+
+      if (med && (med.traditionalMedicineRole || med.medicinalValueSummary)) {
+        answer = `In traditional herbal and culinary history, ${plantName} is noted for ${med.traditionalMedicineRole || 'nutritive dietary support'}. Research studies have investigated active compounds for properties such as ${med.medicinalValueSummary || 'antioxidant and digestive support'}.\n\n⚠️ Educational Notice: Information about traditional or researched plant uses is educational, not medical advice. GrowAI never prescribes dosages or treatments. Ask a qualified healthcare professional before using plants medicinally.`;
+        if (med.traditionalMedicineRole) whatGrowAiFound.push(`Traditional Role: ${med.traditionalMedicineRole}`);
+        if (med.medicinalValueSummary) whatGrowAiFound.push(`Scientific Summary: ${med.medicinalValueSummary}`);
+        if (bp.safetyNotes) whatGrowAiFound.push(`Safety & Precautions: ${bp.safetyNotes}`);
+      } else {
+        answer = `${plantName} is cultivated primarily for culinary, nutritional, or ornamental garden purposes. GrowAI has no verified medicinal properties documented for this species.\n\n⚠️ Educational Notice: Information about plant uses is educational, not medical advice. Always ask a qualified healthcare professional before using any plant medicinally.`;
+      }
+
+      why = 'Traditional use differs from approved medical treatments. Clinical effectiveness requires professional oversight.';
+      recommendedNextStep = 'Enjoy this plant for its verified culinary and ecological qualities. For human health symptoms, consult a healthcare provider.';
+
+      suggestedQuestions.push(
+        'What can I use this plant for?',
+        'What kind of soil does it prefer?',
+        'What if I forget to water it?'
+      );
+      break;
+    }
+
+    case 'botanical_harvest': {
+      const bp = context.botanicalPlant;
+      const plantName = bp?.commonName || context.targetPlantNickname || 'This plant';
+      const days = bp?.timelines?.harvestDays;
+      const notes = bp?.timelines?.timelineNotes || 'Look for vibrant color and firm texture.';
+
+      const timeStr = days ? `${days.min}–${days.max} days from sowing` : 'when fully mature';
+      answer = `${plantName} is typically ready for harvest around ${timeStr}. ✂️\n\n${notes}`;
+      whatGrowAiFound.push(`Harvest Window: ${timeStr}`);
+      if (bp?.timelines?.maturityDays) whatGrowAiFound.push(`Full Maturity: ${bp.timelines.maturityDays.min}–${bp.timelines.maturityDays.max} days`);
+      why = 'Harvesting at peak maturity preserves flavor, nutritional content, and stimulates continued growth in cut-and-come-again varieties.';
+      recommendedNextStep = 'Use clean pruning shears or sharp scissors. Harvest outer leaves first or pick ripe fruit gently at the abscission node without tugging roots.';
+
+      suggestedQuestions.push(
+        'What can I use this plant for?',
+        'How can I help it grow better?',
+        'What should I look for on its leaves?'
+      );
+      break;
+    }
+
+    case 'botanical_soil_ph': {
+      const bp = context.botanicalPlant;
+      const plantName = bp?.commonName || context.targetPlantNickname || 'This plant';
+      const soilType = bp?.soil?.recommendedMix || bp?.soil?.type || 'Well-draining rich potting mix';
+      const phRange = bp?.ph ? `pH ${bp.ph.min}–${bp.ph.max}` : 'neutral pH 6.0–7.0';
+      const potDepth = bp?.potting?.minDepthCm ? `${bp.potting.minDepthCm} cm depth` : 'adequate depth';
+
+      answer = `${plantName} prefers a ${soilType.toLowerCase()} with excellent drainage and a ${phRange}. 🪴\n\nEnsure your planter has a minimum of ${potDepth} and unobstructed bottom drainage holes to prevent anaerobic root rot.`;
+      whatGrowAiFound.push(`Soil Recommendation: ${soilType}`);
+      whatGrowAiFound.push(`pH & Potting: ${phRange}, Min Depth: ${potDepth}`);
+      why = 'Proper soil structure provides both water retention and oxygen diffusion to the root zone.';
+      recommendedNextStep = 'Use a container with drainage holes and blend 20% perlite or pumice into potting soil to maintain permanent aeration pores.';
+
+      suggestedQuestions.push(
+        'What happens if I forget to water it?',
+        'What if it gets less sunlight?',
+        'How can I help it grow better?'
+      );
+      break;
+    }
+
+    case 'botanical_growth_guide':
+    case 'botanical_general': {
+      const bp = context.botanicalPlant;
+      const plantName = bp?.commonName || context.targetPlantNickname || 'This plant';
+      const tempRange = bp ? `${bp.temperatureRange.min}°C – ${bp.temperatureRange.max}°C` : '18°C – 28°C';
+      const ideal = bp?.temperatureRange?.idealRange || 'room temperature with good airflow';
+      const diff = bp?.difficulty?.level || 'beginner-friendly';
+
+      answer = `${plantName} is a ${diff} plant suited for home containers and vertical spaces. It thrives best in temperatures of ${tempRange} (${ideal}). 🌿\n\nProvide consistent light, avoid waterlogged soil, and keep airflow gentle and steady.`;
+      whatGrowAiFound.push(`Difficulty: ${diff.toUpperCase()}`);
+      whatGrowAiFound.push(`Temperature: ${tempRange} (${ideal})`);
+      if (bp?.environments) whatGrowAiFound.push(`Recommended Environments: ${bp.environments.join(', ')}`);
+      why = 'Steady environmental conditions prevent vegetative stress and promote vigorous root and leaf development.';
+      recommendedNextStep = 'Observe your plant daily, conduct quick soil moisture checks, and celebrate every new leaf or bud.';
+
+      suggestedQuestions.push(
+        'What if it gets less sunlight?',
+        'What happens if I forget to water it?',
+        'What should I look for on its leaves?',
+        'What can I use this plant for?'
+      );
+      break;
+    }
+
     default: {
       answer = `Your garden contains ${relevantPlants.length} plant(s) with ${relevantReminders.filter((r) => r.status === 'overdue').length} overdue care item(s).`;
       break;
@@ -646,7 +839,35 @@ async function generateGeminiCopilotResponse(params: {
     .map((e) => `- [${e.provenance.toUpperCase()}] ${e.description}`)
     .join('\n');
 
+  const bp = context.botanicalPlant;
+  const botanicalSection = bp
+    ? `
+ACTIVE BOTANICAL SPECIMEN:
+- Common Name: ${bp.commonName} (${bp.scientificName})
+- Light: ${bp.sunlight} (${bp.sunlightHours || '6-8 hours direct light'})
+- Watering: ${bp.watering.frequency} - ${bp.watering.guidance} (Moisture: ${bp.watering.moistureLevel})
+- Soil & Potting: ${bp.soil.type} (${bp.soil.recommendedMix}), pH ${bp.ph.min}-${bp.ph.max}, Depth: ${bp.potting.minDepthCm} cm
+- Temperature: ${bp.temperatureRange.min}°C - ${bp.temperatureRange.max}°C (Ideal: ${bp.temperatureRange.idealRange})
+- Timelines: Ready in ${bp.timelines.harvestDays.min}-${bp.timelines.harvestDays.max} days. ${bp.timelines.timelineNotes}
+- Common Problems: ${bp.commonProblems.map((p: any) => `${p.issue}: ${p.symptoms}`).join('; ')}
+- Uses & Safety: ${bp.practicalUses.join(', ')}. Safety: ${bp.safetyNotes}
+- Traditional/Medicinal: ${bp.medicinalProfile?.traditionalMedicineRole || 'None'}. Value: ${bp.medicinalProfile?.medicinalValueSummary || 'None'}
+
+BOTANICAL RESPONSE INSTRUCTIONS:
+- Tone: Friendly, knowledgeable gardening companion for home and student growers.
+- Length: Concise, approximately 50-150 words.
+- Format:
+  1. Direct, clear answer.
+  2. Why it happens.
+  3. Actionable next step for the grower.
+  4. Safety / uncertainty / medicinal note when applicable.
+- For missed watering: Explain that missing one watering is rarely fatal; advise checking top 2-3 cm of soil before watering. NEVER tell growers to flood or overwater to compensate.
+- For medicinal questions: Explain documented traditional roles and research properties; NEVER prescribe, never recommend dosages, never recommend homemade disease cures, and ALWAYS append: "Information about traditional or researched plant uses is educational, not medical advice. Ask a qualified healthcare professional before using plants medicinally."
+- Distinguish PUBLIC BOTANICAL KNOWLEDGE from USER GARDEN RECORDS. Do NOT invent user records.`
+    : '';
+
   const systemInstructions = `You are the GrowAI Grower Copilot, a calm, precise, botanical intelligence assistant for urban and home gardeners.
+${botanicalSection}
 
 CRITICAL RULES AND SAFETY BOUNDARIES:
 1. GrowAI structured records are the ONLY source of truth.

@@ -87,6 +87,16 @@ export type CopilotIntent =
   // Navigation & Space
   | 'space_advisory'
   | 'navigation'
+  // Botanical & Species-Specific (Ask Your Plant)
+  | 'botanical_sunlight'
+  | 'botanical_watering'
+  | 'botanical_soil_ph'
+  | 'botanical_growth_guide'
+  | 'botanical_harvest'
+  | 'botanical_problems'
+  | 'botanical_benefits'
+  | 'botanical_medicinal'
+  | 'botanical_general'
   // Safety & Fallback
   | 'human_medical_redirect'
   | 'unsupported';
@@ -203,6 +213,7 @@ export interface CopilotSession {
   sessionId: string;
   activePlantId?: string | null;
   activePlantNickname?: string | null;
+  activePlantSlug?: string | null;
   messages: CopilotMessage[];
   createdAt: string;
   updatedAt: string;
@@ -217,6 +228,8 @@ export interface CopilotQueryContext {
   intent: CopilotIntent;
   targetPlantId?: string | null;
   targetPlantNickname?: string | null;
+  activePlantSlug?: string | null;
+  botanicalPlant?: any | null;
   relevantPlants: UserPlant[];
   relevantHealthRecords: SavedDiagnosisRecord[];
   relevantConditions: GrowingConditionObservation[];

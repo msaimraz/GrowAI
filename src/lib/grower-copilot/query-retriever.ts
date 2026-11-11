@@ -20,6 +20,8 @@ import {
 } from '@/types/grow-intelligence';
 import { Reminder } from '@/types/reminder';
 import { PlantTimelineEvent } from '@/types/timeline';
+import { Plant } from '@/types/plant';
+import { PLANTS_DATA } from '@/data/plants';
 import {
   CopilotIntent,
   CopilotQueryContext,
@@ -35,6 +37,8 @@ export interface RetrieveParams {
   intent: CopilotIntent;
   targetPlantId?: string | null;
   targetPlantNickname?: string | null;
+  activePlantSlug?: string | null;
+  botanicalPlant?: Plant | null;
   plants: UserPlant[];
   conditions?: GrowingConditionObservation[];
   feedings?: FeedingRecord[];
@@ -53,6 +57,8 @@ export function retrieveCopilotContext(params: RetrieveParams): CopilotQueryCont
     intent,
     targetPlantId,
     targetPlantNickname,
+    activePlantSlug,
+    botanicalPlant: passedBotanicalPlant,
     plants = [],
     conditions = [],
     feedings = [],
@@ -67,21 +73,33 @@ export function retrieveCopilotContext(params: RetrieveParams): CopilotQueryCont
 
   // Filter plants according to target scope
   const targetPlant = targetPlantId ? plants.find((p) => p.id === targetPlantId) : null;
-  const relevantPlants = targetPlant ? [targetPlant] : plants;
+  const relevantPlants = targetPlant
+    ? [targetPlant]
+    : activePlantSlug
+    ? plants.filter((p) => p.plantSlug === activePlantSlug)
+    : plants;
+
+  const relevantPlantIds = new Set(relevantPlants.map((p) => p.id));
 
   // Relevant health diagnoses
   const relevantHealthRecords = targetPlantId
     ? diagnoses.filter((d) => d.userPlantId === targetPlantId)
+    : activePlantSlug
+    ? diagnoses.filter((d) => !!d.userPlantId && relevantPlantIds.has(d.userPlantId))
     : diagnoses;
 
   // Relevant conditions
   const relevantConditions = targetPlantId
     ? conditions.filter((c) => !c.plantId || c.plantId === targetPlantId)
+    : activePlantSlug
+    ? conditions.filter((c) => !c.plantId || (!!c.plantId && relevantPlantIds.has(c.plantId)))
     : conditions;
 
   // Relevant feedings
   const relevantFeedingRecords = targetPlantId
     ? feedings.filter((f) => !f.plantId || f.plantId === targetPlantId)
+    : activePlantSlug
+    ? feedings.filter((f) => !f.plantId || (!!f.plantId && relevantPlantIds.has(f.plantId)))
     : feedings;
 
   // Relevant propagations
@@ -89,21 +107,33 @@ export function retrieveCopilotContext(params: RetrieveParams): CopilotQueryCont
     ? propagations.filter(
         (p) => p.parentPlantId === targetPlantId || p.offspringPlantId === targetPlantId
       )
+    : activePlantSlug
+    ? propagations.filter(
+        (p) =>
+          (!!p.parentPlantId && relevantPlantIds.has(p.parentPlantId)) ||
+          (!!p.offspringPlantId && relevantPlantIds.has(p.offspringPlantId))
+      )
     : propagations;
 
   // Relevant production cycles
   const relevantProductionCycles = targetPlant
     ? cycles.filter((c) => c.plantSlug === targetPlant.plantSlug)
+    : activePlantSlug
+    ? cycles.filter((c) => c.plantSlug === activePlantSlug)
     : cycles;
 
   // Relevant harvests
   const relevantHarvests = targetPlantId
     ? harvests.filter((h) => h.plantId === targetPlantId)
+    : activePlantSlug
+    ? harvests.filter((h) => !!h.plantId && relevantPlantIds.has(h.plantId))
     : harvests;
 
   // Relevant reminders
   const relevantReminders = targetPlantId
     ? reminders.filter((r) => !r.plantId || r.plantId === targetPlantId)
+    : activePlantSlug
+    ? reminders.filter((r) => r.plantId && relevantPlantIds.has(r.plantId))
     : reminders;
 
   // Relevant grow plans (Phase 13)
@@ -270,6 +300,129 @@ export function retrieveCopilotContext(params: RetrieveParams): CopilotQueryCont
     });
   }
 
+  // 7.5. Botanical catalog facts & user garden linkage (Ask Your Plant)
+  const resolvedBotanical: Plant | null =
+    passedBotanicalPlant ||
+    (activePlantSlug ? PLANTS_DATA.find((p) => p.slug === activePlantSlug) || null : null) ||
+    (targetPlant ? PLANTS_DATA.find((p) => p.slug === targetPlant.plantSlug) || null : null) ||
+    null;
+
+  if (resolvedBotanical) {
+    // Check if user has instances of this plant in their garden
+    const userMatches = plants.filter((p) => p.plantSlug === resolvedBotanical.slug);
+    if (userMatches.length > 0) {
+      const u = userMatches[0];
+      evidence.push({
+        sourceType: 'user_plant',
+        plantId: u.id,
+        plantNickname: u.nickname,
+        field: 'garden_instance',
+        value: u.currentStage,
+        recordedAt: u.plantedDate,
+        provenance: 'recorded',
+        description: `Personal Garden Record: You have "${u.nickname}" in stage "${u.currentStage}", planted on ${u.plantedDate}.`,
+        route: `/app/my-garden/${u.id}`,
+      });
+    } else {
+      evidence.push({
+        sourceType: 'user_plant',
+        field: 'garden_instance',
+        value: null,
+        provenance: 'unknown',
+        description: `Personal Garden Record: No user instances of ${resolvedBotanical.commonName} are currently recorded in your garden. Providing verified public botanical catalog knowledge.`,
+      });
+    }
+
+    // Add structured botanical catalog facts
+    evidence.push({
+      sourceType: 'botanical_catalog',
+      field: 'sunlight',
+      value: resolvedBotanical.sunlight,
+      provenance: 'recorded',
+      description: `Light Requirement: ${resolvedBotanical.sunlight} (${resolvedBotanical.sunlightHours || '6-8 hours direct'}).`,
+      route: `/app/plants/${resolvedBotanical.slug}#growing-guide`,
+    });
+
+    evidence.push({
+      sourceType: 'botanical_catalog',
+      field: 'watering',
+      value: resolvedBotanical.watering.moistureLevel,
+      provenance: 'recorded',
+      description: `Watering: ${resolvedBotanical.watering.frequency}. Moisture: ${resolvedBotanical.watering.moistureLevel}. Guidance: ${resolvedBotanical.watering.guidance}`,
+      route: `/app/plants/${resolvedBotanical.slug}#growing-guide`,
+    });
+
+    const phStr = resolvedBotanical.ph
+      ? `pH ${resolvedBotanical.ph.min}–${resolvedBotanical.ph.max}`
+      : 'neutral pH 6.0–7.0';
+
+    evidence.push({
+      sourceType: 'botanical_catalog',
+      field: 'soil',
+      value: resolvedBotanical.soil.type,
+      provenance: 'recorded',
+      description: `Soil & pH: ${resolvedBotanical.soil.type} (${resolvedBotanical.soil.recommendedMix}). ${phStr}. Container depth: ${resolvedBotanical.potting.minDepthCm} cm.`,
+      route: `/app/plants/${resolvedBotanical.slug}#growing-guide`,
+    });
+
+    const harvestDaysStr = resolvedBotanical.timelines?.harvestDays
+      ? `${resolvedBotanical.timelines.harvestDays.min}–${resolvedBotanical.timelines.harvestDays.max} days`
+      : 'standard maturity window';
+
+    evidence.push({
+      sourceType: 'botanical_catalog',
+      field: 'timelines',
+      value: harvestDaysStr,
+      provenance: 'recorded',
+      description: `Harvest & Timeline: Ready in ${harvestDaysStr}. ${resolvedBotanical.timelines?.timelineNotes || ''}`,
+      route: `/app/plants/${resolvedBotanical.slug}#growth-timeline`,
+    });
+
+    if (resolvedBotanical.commonProblems.length > 0) {
+      evidence.push({
+        sourceType: 'botanical_catalog',
+        field: 'common_problems',
+        value: resolvedBotanical.commonProblems.map((p) => p.issue).join(', '),
+        provenance: 'recorded',
+        description: `Common Problems: ${resolvedBotanical.commonProblems.map((p) => `${p.issue} (${p.symptoms})`).join('; ')}`,
+        route: `/app/plants/${resolvedBotanical.slug}#problems`,
+      });
+    }
+
+    if (resolvedBotanical.practicalUses.length > 0 || resolvedBotanical.safetyNotes) {
+      evidence.push({
+        sourceType: 'botanical_catalog',
+        field: 'practical_uses',
+        value: resolvedBotanical.practicalUses.join(', '),
+        provenance: 'recorded',
+        description: `Uses & Edibility: ${resolvedBotanical.practicalUses.join(', ')}. Safety: ${resolvedBotanical.safetyNotes}`,
+        route: `/app/plants/${resolvedBotanical.slug}#safety-toxicity`,
+      });
+    }
+
+    if (resolvedBotanical.medicinalProfile) {
+      evidence.push({
+        sourceType: 'botanical_catalog',
+        field: 'medicinal_profile',
+        value: resolvedBotanical.medicinalProfile.suitabilityForConsumption.isEdible ? 'Edible' : 'Non-edible',
+        provenance: 'recorded',
+        description: `Traditional Role: ${resolvedBotanical.medicinalProfile.traditionalMedicineRole}. Summary: ${resolvedBotanical.medicinalProfile.medicinalValueSummary}`,
+        route: `/app/plants/${resolvedBotanical.slug}#medicinal-properties`,
+      });
+    }
+
+    if (resolvedBotanical.sourceUrls.length > 0) {
+      evidence.push({
+        sourceType: 'botanical_catalog',
+        field: 'scientific_references',
+        value: resolvedBotanical.sourceUrls.join(', '),
+        provenance: 'recorded',
+        description: `Verified Botanical Citations: ${resolvedBotanical.sourceUrls.join(', ')}`,
+        route: `/app/plants/${resolvedBotanical.slug}#scientific-references`,
+      });
+    }
+  }
+
   // 8. Track explicit unknown gaps
   const unknowns: string[] = [];
   if (relevantConditions.length === 0) {
@@ -289,7 +442,9 @@ export function retrieveCopilotContext(params: RetrieveParams): CopilotQueryCont
     userId,
     intent,
     targetPlantId,
-    targetPlantNickname: targetPlant?.nickname || targetPlantNickname,
+    targetPlantNickname: targetPlant?.nickname || targetPlantNickname || resolvedBotanical?.commonName,
+    activePlantSlug: resolvedBotanical?.slug || activePlantSlug || null,
+    botanicalPlant: resolvedBotanical || null,
     relevantPlants,
     relevantHealthRecords,
     relevantConditions,
